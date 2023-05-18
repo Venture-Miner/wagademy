@@ -9,7 +9,7 @@ import {
 import {
   AccountTypeRoutingModule,
   AccountTypeComponent,
-} from '@/access-portal';
+} from '../account-type';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
