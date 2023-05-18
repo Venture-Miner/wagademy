@@ -12,8 +12,8 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { SquadService } from './squad.service';
-import { CreateSquadDto, UpdateSquadDto } from '@@/dtos';
-import { AuthGuard } from '@@/infra';
+import { CreateSquadDto, UpdateSquadDto } from '../../dtos';
+import { AuthGuard } from '../../infra';
 
 @Controller('squad')
 export class SquadController {
