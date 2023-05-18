@@ -1,4 +1,4 @@
-import { GraphQLService } from '@@/modules';
+import { GraphQLService } from '../../modules/graphql/graphql.service';
 import {
   CanActivate,
   ExecutionContext,
