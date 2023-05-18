@@ -1,0 +1,60 @@
+<div class="flex gap-6">
+  <div
+    class="flex items-center gap-2 border-b-2"
+    [ngClass]="
+      selectedBlock === 'STUDENTS' ? 'border-secondary' : 'border-neutral-2'
+    "
+    role="button"
+    (click)="changeSelectedBlock('STUDENTS')"
+  >
+    <div class="mb-1">
+      <img
+        src="../../assets/img/person-icon-secondary.svg"
+        alt="person icon"
+        class="w-6"
+        *ngIf="selectedBlock === 'STUDENTS'"
+      />
+      <img
+        src="../../assets/img/person-icon-neutral-2.svg"
+        alt="person icon"
+        *ngIf="selectedBlock !== 'STUDENTS'"
+      />
+    </div>
+    <span
+      class="font-mono font-bold"
+      [ngClass]="
+        selectedBlock === 'STUDENTS' ? 'text-secondary' : 'text-neutral-2'
+      "
+      >Students</span
+    >
+  </div>
+  <div
+    class="flex items-center gap-2 border-b-2"
+    [ngClass]="
+      selectedBlock === 'SQUADS' ? 'border-secondary' : 'border-neutral-2'
+    "
+    role="button"
+    (click)="changeSelectedBlock('SQUADS')"
+  >
+    <div class="mb-1">
+      <img
+        src="../../assets/img/people-icon.svg"
+        alt="people icon"
+        class="w-6"
+        *ngIf="selectedBlock === 'SQUADS'"
+      />
+      <img
+        src="../../assets/img/people-icon-neutral-2.svg"
+        alt="people icon"
+        *ngIf="selectedBlock !== 'SQUADS'"
+      />
+    </div>
+    <span
+      class="font-mono font-bold"
+      [ngClass]="
+        selectedBlock === 'SQUADS' ? 'text-secondary' : 'text-neutral-2'
+      "
+      >Squads</span
+    >
+  </div>
+</div>

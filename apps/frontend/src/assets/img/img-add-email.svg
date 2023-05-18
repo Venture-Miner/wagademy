@@ -1,0 +1,13 @@
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="6" y="6" width="32" height="32" rx="16" fill="#ABFE2C"/>
+<path d="M26 12V16" stroke="#00501E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18 12V16" stroke="#00501E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13 19H31" stroke="#00501E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M29 14H15C13.895 14 13 14.895 13 16V29C13 30.105 13.895 31 15 31H29C30.105 31 31 30.105 31 29V16C31 14.895 30.105 14 29 14Z" stroke="#00501E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.0129 22.729C16.8749 22.729 16.7629 22.841 16.7639 22.979C16.7639 23.117 16.8759 23.229 17.0139 23.229C17.1519 23.229 17.2639 23.117 17.2639 22.979C17.2639 22.841 17.1519 22.729 17.0129 22.729" stroke="#00501E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.0129 22.729C21.8749 22.729 21.7629 22.841 21.7639 22.979C21.7639 23.117 21.8759 23.229 22.0139 23.229C22.1519 23.229 22.2639 23.117 22.2639 22.979C22.2639 22.841 22.1519 22.729 22.0129 22.729" stroke="#00501E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M27.0129 22.729C26.8749 22.729 26.7629 22.841 26.7639 22.979C26.7639 23.117 26.8759 23.229 27.0139 23.229C27.1519 23.229 27.2639 23.117 27.2639 22.979C27.2639 22.841 27.1519 22.729 27.0129 22.729" stroke="#00501E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.0129 26.729C16.8749 26.729 16.7629 26.841 16.7639 26.979C16.7639 27.117 16.8759 27.229 17.0139 27.229C17.1519 27.229 17.2639 27.117 17.2639 26.979C17.2639 26.841 17.1519 26.729 17.0129 26.729" stroke="#00501E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.0129 26.729C21.8749 26.729 21.7629 26.841 21.7639 26.979C21.7639 27.117 21.8759 27.229 22.0139 27.229C22.1519 27.229 22.2639 27.117 22.2639 26.979C22.2639 26.841 22.1519 26.729 22.0129 26.729" stroke="#00501E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="3" y="3" width="38" height="38" rx="19" stroke="#ABFE2C" stroke-opacity="0.3" stroke-width="6"/>
+</svg>

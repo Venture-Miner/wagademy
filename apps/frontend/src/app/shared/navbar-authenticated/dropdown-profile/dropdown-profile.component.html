@@ -1,0 +1,43 @@
+<div class="relative z-10 cursor-pointer">
+  <img
+    src="https://i.pravatar.cc/300"
+    alt="avatar example"
+    class="h-8 w-8 rounded-full object-cover"
+    (click)="showDropdown = !showDropdown"
+  />
+  <div
+    *ngIf="showDropdown"
+    class="absolute top-full flex -translate-x-1/2 flex-col gap-4 rounded-md bg-neutral-4 p-4 shadow-md"
+  >
+    <button
+      class="text-neutral-2 hover:font-bold hover:text-secondary"
+      [routerLink]="['/home/profile']"
+    >
+      Profile
+    </button>
+    <button
+      class="text-neutral-2 hover:font-bold hover:text-secondary"
+      [routerLink]="['/squads']"
+    >
+      Squads
+    </button>
+    <button
+      class="text-neutral-2 hover:font-bold hover:text-secondary"
+      [routerLink]="['/recommendations']"
+    >
+      Recommendations
+    </button>
+    <!-- <button
+      class="text-neutral-2 hover:font-bold hover:text-secondary"
+      [routerLink]="['/friend-requests']"
+    >
+      Friends requests
+    </button> -->
+    <button
+      class="text-neutral-2 hover:font-bold hover:text-secondary"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+  </div>
+</div>

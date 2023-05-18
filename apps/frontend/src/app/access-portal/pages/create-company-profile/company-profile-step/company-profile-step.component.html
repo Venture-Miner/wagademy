@@ -1,0 +1,48 @@
+<form [formGroup]="form" class="mt-10 flex grow flex-col gap-4">
+  <legend
+    class="text-secondary mb-2 text-2xl font-bold"
+    *ngIf="mode === 'VIEW'"
+  >
+    Company
+  </legend>
+  <lens-academy-form-field [control]="getControl('name')" label="Name">
+    <lens-academy-input
+      type="text"
+      placeholder="Name"
+      formControlName="name"
+    ></lens-academy-input>
+  </lens-academy-form-field>
+  <lens-academy-form-field
+    [control]="getControl('areaOfExpertise')"
+    label="Area of Expertise"
+  >
+    <lens-academy-input
+      type="text"
+      placeholder="Area of Expertise"
+      formControlName="areaOfExpertise"
+    ></lens-academy-input>
+  </lens-academy-form-field>
+  <lens-academy-form-field
+    [control]="getControl('description')"
+    label="Description"
+  >
+    <lens-academy-text-area
+      placeholder="Description"
+      formControlName="description"
+    ></lens-academy-text-area>
+  </lens-academy-form-field>
+  <div
+    class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
+    (click)="edit.emit()"
+    *ngIf="mode === 'VIEW'"
+  >
+    <span class="mb-1 font-mono font-bold">Edit</span>
+    <i class="bi bi-pencil text-secondary"></i>
+  </div>
+  <lens-academy-button-primary
+    class="mt-12 w-full self-end sm:w-52"
+    *ngIf="mode !== 'VIEW'"
+    (click)="mode === 'CREATE' ? nextStep.emit() : saveEdit.emit()"
+    >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</lens-academy-button-primary
+  >
+</form>

@@ -1,0 +1,119 @@
+<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<section class="container mx-auto mb-12 px-6">
+  <div class="mx-auto mb-10 mt-8 max-w-lg 2xl:max-w-xl">
+    <lens-academy-widget></lens-academy-widget>
+  </div>
+  <div class="mb-6 flex flex-col gap-8 sm:flex-row">
+    <lens-academy-input
+      type="search"
+      placeholder="Search"
+      class="grow"
+    ></lens-academy-input>
+    <lens-academy-input-select></lens-academy-input-select>
+  </div>
+  <div
+    class="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row"
+  >
+    <h3 class="text-neutral-1 text-center text-2xl font-bold">Courses</h3>
+    <a role="link" class="text-secondary cursor-pointer font-mono">SEE ALL</a>
+  </div>
+  <div
+    class="mb-6 grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 xl:grid-cols-4"
+  >
+    <div class="max-w-[304px] cursor-pointer">
+      <lens-academy-course-card
+        [routerLink]="['/home/course-details']"
+      ></lens-academy-course-card>
+    </div>
+    <div class="max-w-[304px] cursor-pointer">
+      <lens-academy-course-card
+        [routerLink]="['/home/course-details']"
+      ></lens-academy-course-card>
+    </div>
+    <div class="max-w-[304px] cursor-pointer">
+      <lens-academy-course-card
+        [routerLink]="['/home/course-details']"
+      ></lens-academy-course-card>
+    </div>
+    <div class="max-w-[304px] cursor-pointer">
+      <lens-academy-course-card
+        [routerLink]="['/home/course-details']"
+      ></lens-academy-course-card>
+    </div>
+  </div>
+  <div class="mb-8 flex justify-end">
+    <lens-academy-pagination></lens-academy-pagination>
+  </div>
+  <div
+    class="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row"
+  >
+    <h3 class="text-neutral-1 text-center text-2xl font-bold">Jobs</h3>
+    <a role="link" class="text-secondary cursor-pointer font-mono">SEE ALL</a>
+  </div>
+  <div
+    class="mb-6 grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 xl:grid-cols-4"
+  >
+    <div class="max-w-[304px] cursor-pointer">
+      <lens-academy-job-card></lens-academy-job-card>
+    </div>
+    <div class="max-w-[304px] cursor-pointer">
+      <lens-academy-job-card></lens-academy-job-card>
+    </div>
+    <div class="max-w-[304px] cursor-pointer">
+      <lens-academy-job-card></lens-academy-job-card>
+    </div>
+    <div class="max-w-[304px] cursor-pointer">
+      <lens-academy-job-card></lens-academy-job-card>
+    </div>
+  </div>
+  <div class="flex justify-end">
+    <lens-academy-pagination></lens-academy-pagination>
+  </div>
+</section>
+<section class="bg-secondary">
+  <div class="container mx-auto px-6 py-14">
+    <div
+      class="flex flex-col items-end justify-between gap-10 xl:flex-row xl:items-center"
+    >
+      <div class="flex flex-col items-center gap-8 sm:flex-row">
+        <img
+          src="../../assets/img/united-hands.jpg"
+          alt="united hands"
+          class="w-[230px] rounded-md xl:w-auto"
+        />
+        <p class="text-neutral-4 font-mono xl:w-[640px]">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+          sint. Velit officia consequat duis enim velit mollit. Exercitation
+          veniam consequat sunt nostrud amet. Do you want to join a squad? Amet
+          minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
+          Velit officia consequat duis enim velit mollit. Exercitation veniam
+          consequat sunt nostrud amet.
+        </p>
+      </div>
+      <i class="bi-arrow-right text-primary cursor-pointer text-4xl"></i>
+    </div>
+  </div>
+</section>
+<section class="container mx-auto mb-16 mt-12 px-6">
+  <div
+    class="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row"
+  >
+    <h3 class="text-neutral-1 text-center text-2xl font-bold">
+      Friends Activity
+    </h3>
+    <a role="link" class="text-secondary cursor-pointer font-mono">SEE ALL</a>
+  </div>
+  <div
+    class="grid grid-cols-1 place-items-center gap-8 lg:grid-cols-2 2xl:grid-cols-3"
+  >
+    <div class="max-w-[416px] cursor-pointer">
+      <lens-academy-friend-card></lens-academy-friend-card>
+    </div>
+    <div class="max-w-[416px] cursor-pointer">
+      <lens-academy-friend-card></lens-academy-friend-card>
+    </div>
+    <div class="max-w-[416px] cursor-pointer">
+      <lens-academy-friend-card></lens-academy-friend-card>
+    </div>
+  </div>
+</section>

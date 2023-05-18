@@ -1,0 +1,22 @@
+<div class="bg-neutral-3 rounded-md">
+  <div
+    [ngClass]="listType === 'grid' ? 'flex-col' : 'justify-between'"
+    class="flex items-center gap-8 px-4 py-8"
+  >
+    <div
+      [ngClass]="listType === 'grid' ? 'w-full flex-col' : 'w-10/12'"
+      class="flex items-center gap-8"
+    >
+      <img src="../../../assets/img/books-icon.svg" alt="books icon" />
+      <span class="text-neutral-2 font-mono"
+        >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+        sint</span
+      >
+    </div>
+    <div [ngClass]="listType === 'grid' ? 'w-9/12' : 'w-2/12'">
+      <lens-academy-button-primary (click)="claim.emit()"
+        >CLAIM</lens-academy-button-primary
+      >
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div>
+  <h3 class="mb-4 text-2xl font-bold text-secondary">Areas of expertise</h3>
+  <div
+    class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
+  >
+    <span
+      class="break-all bg-neutral-3 px-2 py-1 font-mono text-sm"
+      *ngFor="let expertise of data.expertise"
+      >{{ expertise }}</span
+    >
+  </div>
+</div>

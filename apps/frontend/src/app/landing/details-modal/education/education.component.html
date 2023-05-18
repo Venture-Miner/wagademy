@@ -1,0 +1,17 @@
+<div class="flex flex-col gap-4">
+  <h3 class="text-2xl font-bold text-secondary">Education</h3>
+  <ng-container *ngFor="let education of data.academicEducation">
+    <div class="flex flex-col gap-2">
+      <span class="text-sm font-bold text-neutral-1">EDUCATION</span>
+      <span class="font-mono text-neutral-2">{{ education.education }} </span>
+    </div>
+    <div class="flex flex-col gap-2">
+      <span class="text-sm font-bold text-neutral-1">DEGREE</span>
+      <span class="font-mono text-neutral-2">{{ education.course }} </span>
+    </div>
+    <div class="flex flex-col gap-2">
+      <span class="text-sm font-bold text-neutral-1">DESCRIPTION</span>
+      <span class="font-mono text-neutral-2">{{ education.description }} </span>
+    </div>
+  </ng-container>
+</div>

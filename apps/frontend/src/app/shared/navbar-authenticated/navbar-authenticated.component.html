@@ -1,0 +1,56 @@
+<div class="shadow-md">
+  <div
+    class="flex flex-col items-start gap-4 px-5 py-3 md:container md:mx-auto md:flex-row md:items-center md:justify-between"
+  >
+    <img src="../../assets/img/lens-logo.svg" alt="lens logo" />
+    <div class="flex flex-col gap-3 md:flex-row md:gap-8">
+      <a
+        [routerLink]="['/home']"
+        [routerLinkActive]="['active']"
+        #home="routerLinkActive"
+        [ngClass]="{
+          'text-neutral-2 hover:text-secondary': !home.isActive,
+          'text-secondary font-bold': home.isActive
+        }"
+        >Home</a
+      >
+      <a
+        [routerLink]="['/my-courses']"
+        [routerLinkActive]="['active']"
+        #myCourses="routerLinkActive"
+        [ngClass]="{
+          'text-neutral-2 hover:text-secondary hover:font-bold':
+            !myCourses.isActive,
+          'text-secondary font-bold': myCourses.isActive
+        }"
+        >My courses</a
+      >
+      <a
+        [routerLink]="['/my-certificates']"
+        [routerLinkActive]="['active']"
+        #myCertificates="routerLinkActive"
+        [ngClass]="{
+          'text-neutral-2 hover:text-secondary hover:font-bold':
+            !myCertificates.isActive,
+          'text-secondary font-bold': myCertificates.isActive
+        }"
+        >My certificates</a
+      >
+      <a
+        [routerLink]="['/my-contacts']"
+        [routerLinkActive]="['active']"
+        #myContacts="routerLinkActive"
+        [ngClass]="{
+          'text-neutral-2 hover:text-secondary hover:font-bold':
+            !myContacts.isActive,
+          'text-secondary font-bold': myContacts.isActive
+        }"
+        >My contacts</a
+      >
+    </div>
+    <div class="text-neutral-2 flex items-center gap-6">
+      <lens-academy-dropdown-language></lens-academy-dropdown-language>
+      <lens-academy-dropdown-profile></lens-academy-dropdown-profile>
+    </div>
+  </div>
+</div>

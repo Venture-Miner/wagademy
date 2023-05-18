@@ -1,0 +1,40 @@
+<form [formGroup]="areaForm" class="mt-10">
+  <legend class="text-secondary mb-6 text-2xl font-bold">
+    Areas of expertise
+  </legend>
+  <ng-container>
+    <h5 class="mb-2 text-center font-mono font-bold">
+      You need to fill up to 10 words to describe your areas of expertise
+    </h5>
+    <lens-academy-input
+      formControlName="area"
+      type="text"
+      placeholder="Area"
+      (keyup.enter)="addArea()"
+    ></lens-academy-input>
+    <div class="mt-4">
+      <lens-academy-button-primary
+        (click)="addArea()"
+        [disabled]="areas.length >= 10 || areaControl.invalid"
+        >ADD</lens-academy-button-primary
+      >
+    </div>
+  </ng-container>
+  <div class="mb-12 mt-8 grid gap-6 sm:grid-cols-2">
+    <div
+      class="bg-neutral-3 flex items-center justify-between px-2 py-1"
+      *ngFor="let area of areas; let i = index"
+    >
+      <span class="break-all font-mono text-sm">{{ area }}</span>
+      <i
+        class="bi bi-x text-danger mt-1 cursor-pointer text-2xl"
+        (click)="removeArea(i)"
+      ></i>
+    </div>
+  </div>
+  <lens-academy-button-primary
+    class="w-full self-end sm:w-52"
+    (click)="saveEdit.emit()"
+    >SAVE</lens-academy-button-primary
+  >
+</form>

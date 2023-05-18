@@ -1,0 +1,27 @@
+<label class="font-mono font-bold">{{ label }}</label>
+<div class="mt-2">
+  <ng-content></ng-content>
+  <div class="mt-1 text-danger">
+    <ng-container *ngIf="hasError()" [ngSwitch]="errorKey">
+      <span *ngSwitchCase="'min'">Minimum {{ getError(errorKey!).min }}</span>
+      <span *ngSwitchCase="'email'">Invalid email</span>
+      <span *ngSwitchCase="'max'">Maximum {{ getError(errorKey!).max }}</span>
+      <span *ngSwitchCase="'required'">This field is required</span>
+      <span *ngSwitchCase="'minlength'"
+        >At least
+        {{ getError(errorKey!).requiredLength }}
+        characters</span
+      >
+      <span *ngSwitchCase="'maxlength'"
+        >No more than
+        {{ errorKey && getError(errorKey).requiredLength }}
+        characters</span
+      >
+      <span *ngSwitchCase="'customvalidator'">{{ getError(errorKey!) }}</span>
+      <span *ngSwitchCase="'pattern'">
+        <span *ngIf="patternError">{{ patternError }}</span>
+        <span *ngIf="!patternError">Pattern does not match</span>
+      </span>
+    </ng-container>
+  </div>
+</div>

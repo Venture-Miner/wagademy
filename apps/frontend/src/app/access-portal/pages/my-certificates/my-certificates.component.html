@@ -1,0 +1,128 @@
+<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<section (window:resize)="onResize($event)" class="container mx-auto">
+  <div class="mx-3 mt-8 flex gap-4 md:mx-0 md:mt-0 md:gap-6">
+    <div class="w-full md:w-9/12 md:self-end">
+      <lens-academy-input></lens-academy-input>
+    </div>
+    <div class="flex gap-4 md:mt-10 md:w-3/12 md:justify-between">
+      <lens-academy-input-select
+        class="w-full md:w-8/12"
+      ></lens-academy-input-select>
+      <div class="mb-2 hidden gap-2 self-end md:flex">
+        <button (click)="exhibitionStyle = 'list'">
+          <img
+            title="LIST"
+            *ngIf="exhibitionStyle === 'list'"
+            src="../../assets/img/list-active-icon.svg"
+            alt="person icon"
+            class="h-8"
+          />
+          <img
+            title="LIST"
+            *ngIf="exhibitionStyle === 'grid'"
+            src="../../assets/img/list-inactive-icon.svg"
+            alt="person icon"
+            class="h-8"
+          />
+        </button>
+        <button (click)="exhibitionStyle = 'grid'">
+          <img
+            title="GRID"
+            *ngIf="exhibitionStyle === 'list'"
+            src="../../assets/img/grid-inactive-icon.svg"
+            alt="person icon"
+            class="h-8"
+          />
+          <img
+            title="GRID"
+            *ngIf="exhibitionStyle === 'grid'"
+            src="../../assets/img/grid-active-icon.svg"
+            alt="person icon"
+            class="h-8"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    [ngClass]="
+      exhibitionStyle === 'grid'
+        ? 'grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 xl:grid-cols-4'
+        : 'flex-col '
+    "
+    class="mx-3 my-6 md:mx-0"
+  >
+    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
+      <lens-academy-certificates-card
+        [listType]="exhibitionStyle"
+        (claim)="toggleMyCertificateModal()"
+      ></lens-academy-certificates-card>
+    </div>
+    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
+      <lens-academy-certificates-card
+        [listType]="exhibitionStyle"
+        (claim)="toggleMyCertificateModal()"
+      ></lens-academy-certificates-card>
+    </div>
+    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
+      <lens-academy-certificates-card
+        [listType]="exhibitionStyle"
+        (claim)="toggleMyCertificateModal()"
+      ></lens-academy-certificates-card>
+    </div>
+    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
+      <lens-academy-certificates-card
+        [listType]="exhibitionStyle"
+        (claim)="toggleMyCertificateModal()"
+      ></lens-academy-certificates-card>
+    </div>
+    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
+      <lens-academy-certificates-card
+        [listType]="exhibitionStyle"
+        (claim)="toggleMyCertificateModal()"
+      ></lens-academy-certificates-card>
+    </div>
+    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
+      <lens-academy-certificates-card
+        [listType]="exhibitionStyle"
+        (claim)="toggleMyCertificateModal()"
+      ></lens-academy-certificates-card>
+    </div>
+  </div>
+</section>
+<lens-academy-base-modal
+  title="DETAILS"
+  *ngIf="myCertificateModal"
+  (modalClosed)="myCertificateModal = false"
+>
+  <div class="p-3 sm:p-6">
+    <div class="mb-10 flex flex-col space-y-8 self-center py-10 sm:px-4">
+      <img
+        src="../../../assets/img/books-icon.svg"
+        alt="books icon"
+        class="self-center"
+      />
+      <div class="space-y-2">
+        <h1 class="text-secondary text-2xl font-bold">Course Name</h1>
+        <p class="font-mono">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+          sint Amet minim mollit non deserunt ullamco est sit aliqua.
+        </p>
+      </div>
+      <div class="space-y-2">
+        <h1 class="text-secondary text-2xl font-bold">Total Conclusion</h1>
+        <p class="font-mono">100%</p>
+      </div>
+    </div>
+    <div class="flex w-full justify-center">
+      <lens-academy-button-primary
+        (click)="toggleClaimedCertificateModal()"
+        class="w-full sm:w-2/5"
+        >CLAIM</lens-academy-button-primary
+      >
+    </div>
+  </div>
+</lens-academy-base-modal>
+<lens-academy-certificate-modal
+  *ngIf="claimedCertificateModal"
+></lens-academy-certificate-modal>

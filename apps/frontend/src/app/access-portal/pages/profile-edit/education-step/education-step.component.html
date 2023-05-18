@@ -1,0 +1,58 @@
+<form [formGroup]="form" class="my-10 flex flex-col gap-10">
+  <button
+    class="bg-primary self-end rounded py-1 pl-2 pr-3 font-mono font-bold"
+    (click)="addEducation()"
+  >
+    Add +
+  </button>
+  <legend class="text-secondary -mb-4 text-2xl font-bold">Education</legend>
+  <ng-container formArrayName="academicEducation">
+    <ng-container
+      *ngFor="let educationForm of academicEducation.controls; let i = index"
+    >
+      <div [formGroup]="educationForm" class="flex flex-col gap-4">
+        <lens-academy-form-field
+          [control]="educationForm.get('education')!"
+          label="Education"
+        >
+          <lens-academy-input
+            type="text"
+            placeholder="Education"
+            formControlName="education"
+          ></lens-academy-input>
+        </lens-academy-form-field>
+        <lens-academy-form-field
+          [control]="educationForm.get('course')!"
+          label="Degree course"
+        >
+          <lens-academy-input
+            type="text"
+            placeholder="Degree course"
+            formControlName="course"
+          ></lens-academy-input>
+        </lens-academy-form-field>
+        <lens-academy-form-field
+          [control]="educationForm.get('description')!"
+          label="Description"
+        >
+          <lens-academy-text-area
+            placeholder="Description"
+            formControlName="description"
+          ></lens-academy-text-area>
+        </lens-academy-form-field>
+        <div
+          class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
+          (click)="removeEducation(i)"
+        >
+          <span class="mb-1 font-mono font-bold">Remove</span>
+          <i class="bi bi-trash text-danger"></i>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <lens-academy-button-primary
+    class="mt-12 w-full self-end sm:w-52"
+    (click)="saveEdit.emit()"
+    >SAVE</lens-academy-button-primary
+  >
+</form>

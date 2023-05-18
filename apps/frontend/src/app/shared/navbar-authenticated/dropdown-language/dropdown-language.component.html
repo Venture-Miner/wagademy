@@ -1,0 +1,29 @@
+<div class="relative z-10 cursor-pointer">
+  <div class="flex gap-2 text-neutral-2" (click)="showDropdown = !showDropdown">
+    <span> en - US </span>
+    <i class="bi bi-chevron-down"></i>
+  </div>
+  <div
+    *ngIf="showDropdown"
+    class="absolute right-0 top-full flex flex-col gap-4 rounded-md bg-neutral-4 p-4 shadow-md"
+  >
+    <span
+      [ngClass]="
+        selectedLanguage === 'pt'
+          ? 'font-bold text-secondary'
+          : 'text-neutral-2 hover:font-bold hover:text-secondary'
+      "
+      (click)="selectedLanguage = 'pt'"
+      >PT</span
+    >
+    <span
+      [ngClass]="
+        selectedLanguage === 'en'
+          ? 'font-bold text-secondary'
+          : 'text-neutral-2 hover:font-bold hover:text-secondary'
+      "
+      (click)="selectedLanguage = 'en'"
+      >EN</span
+    >
+  </div>
+</div>

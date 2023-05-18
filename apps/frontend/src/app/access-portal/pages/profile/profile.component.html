@@ -1,0 +1,43 @@
+<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<div class="container mx-auto my-9 px-3">
+  <div class="flex items-center justify-between">
+    <div
+      class="text-secondary flex cursor-pointer items-center gap-2"
+      [routerLink]="['/home']"
+    >
+      <i class="bi-arrow-left text-xl"></i>
+      <span class="font-mono font-bold">Back</span>
+    </div>
+    <img src="../../assets/img/alert-icon.svg" alt="alert icon" />
+  </div>
+  <div class="mx-auto max-w-[786px]">
+    <div class="divide-neutral-3 grid gap-8 divide-y-2 divide-solid">
+      <lens-academy-about class="pt-8" [about]="about"></lens-academy-about>
+      <lens-academy-education
+        class="pt-8"
+        [education]="academicEducation"
+      ></lens-academy-education>
+      <lens-academy-professional-experience
+        class="pt-8"
+        [experience]="experience"
+      ></lens-academy-professional-experience>
+      <lens-academy-areas-of-expertise
+        class="pt-8"
+        [expertise]="expertise"
+      ></lens-academy-areas-of-expertise>
+      <lens-academy-areas-of-interest
+        class="pt-8"
+        [interest]="interest"
+      ></lens-academy-areas-of-interest>
+      <lens-academy-skills-and-competencies
+        class="pt-8"
+        [skillsAndCompetencies]="skillsAndCompetencies"
+      ></lens-academy-skills-and-competencies>
+      <div class="flex justify-center pt-8">
+        <lens-academy-button-primary class="w-full sm:w-52"
+          >SAVE</lens-academy-button-primary
+        >
+      </div>
+    </div>
+  </div>
+</div>

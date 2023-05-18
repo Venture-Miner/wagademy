@@ -1,0 +1,36 @@
+<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<div class="container mx-auto px-3">
+  <div
+    class="text-secondary mt-9 flex cursor-pointer items-center gap-2"
+    [routerLink]="['/home/profile']"
+  >
+    <i class="bi-arrow-left text-xl"></i>
+    <span class="font-mono font-bold">Back</span>
+  </div>
+  <div class="mx-auto md:w-2/3 2xl:w-2/5">
+    <lens-academy-profile-step
+      [form]="form"
+      *ngIf="stepToEdit === 'PROFILE'"
+    ></lens-academy-profile-step>
+    <lens-academy-education-step
+      [form]="form"
+      *ngIf="stepToEdit === 'EDUCATION'"
+    ></lens-academy-education-step>
+    <lens-academy-professional-experience-step
+      [form]="form"
+      *ngIf="stepToEdit === 'EXPERIENCE'"
+    ></lens-academy-professional-experience-step>
+    <lens-academy-area-of-expertise-step
+      [form]="form"
+      *ngIf="stepToEdit === 'EXPERTISE'"
+    ></lens-academy-area-of-expertise-step>
+    <lens-academy-area-of-interest-step
+      [form]="form"
+      *ngIf="stepToEdit === 'INTEREST'"
+    ></lens-academy-area-of-interest-step>
+    <lens-academy-skills-and-competencies-step
+      [form]="form"
+      *ngIf="stepToEdit === 'SKILL'"
+    ></lens-academy-skills-and-competencies-step>
+  </div>
+</div>

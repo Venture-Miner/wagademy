@@ -1,0 +1,23 @@
+<div class="flex gap-2 items-center">
+  <i
+    class="bi-arrow-left text-xl"
+    [ngClass]="
+      currentPage === 1
+        ? 'text-neutral-2 pointer-events-none'
+        : 'text-secondary cursor-pointer'
+    "
+    (click)="previousPage.emit()"
+  ></i>
+  <div class="w-6 h-6 bg-secondary rounded-sm flex items-center justify-center">
+    <span class="text-neutral-4 font-mono font-bold">{{ currentPage }}</span>
+  </div>
+  <i
+    class="bi-arrow-right text-xl"
+    [ngClass]="
+      currentPage === totalPages
+        ? 'text-neutral-2 pointer-events-none'
+        : 'text-secondary cursor-pointer'
+    "
+    (click)="nextPage.emit()"
+  ></i>
+</div>

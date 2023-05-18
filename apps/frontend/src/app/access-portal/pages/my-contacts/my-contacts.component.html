@@ -1,0 +1,147 @@
+<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<section class="container mx-auto">
+  <div class="flex flex-col gap-4 md:flex-row md:gap-6">
+    <div class="mt-8 w-10/12"><lens-academy-input></lens-academy-input></div>
+    <div class="w-5/12 md:mt-10 md:w-2/12">
+      <lens-academy-button-primary (click)="followModal = true"
+        >FOLLOW</lens-academy-button-primary
+      >
+    </div>
+  </div>
+  <ng-container *ngFor="let contact of contacts">
+    <div
+      class="border-neutral-5 flex flex-col justify-between border-b py-6 pl-4 md:flex-row md:pl-0"
+    >
+      <div class="flex flex-col md:flex-row">
+        <div class="flex-col space-y-4">
+          <img
+            [ngClass]="
+              contact.status === 'Online'
+                ? 'border-primary'
+                : 'border-secondary'
+            "
+            src="https://i.pravatar.cc/300"
+            alt="avatar example"
+            class="h-28 w-28 rounded-full border-4 object-cover"
+          />
+          <div
+            [ngClass]="
+              contact.status === 'Online'
+                ? 'bg-primary/20 text-secondary'
+                : 'bg-neutral-2/20 text-neutral-2'
+            "
+            class="ml-3 flex w-20 items-center justify-center rounded-full py-1"
+          >
+            <div
+              [ngClass]="
+                contact.status === 'Online' ? 'bg-secondary' : 'bg-neutral-2 '
+              "
+              class="mr-2 h-2 w-2 rounded-full"
+            ></div>
+            {{ contact.status }}
+          </div>
+        </div>
+        <div
+          class="text-neutral-2 ml-6 mt-3 flex flex-col space-y-2 self-start"
+        >
+          <div>
+            <span class="text-neutral-1 mr-10 text-sm font-bold">NAME</span
+            >{{ contact.name }}
+          </div>
+          <div>
+            <span class="text-neutral-1 mr-[52px] text-sm font-bold">AGE</span
+            >{{ contact.age }}
+          </div>
+          <p class="text-neutral-1 text-sm font-bold">INTEREST</p>
+          <div
+            class="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+          >
+            <div
+              *ngFor="let interest of contact.interest"
+              class="bg-neutral-2/5 w-20 rounded-full p-1 text-center"
+            >
+              {{ interest }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <lens-academy-button-secondary
+        class="mt-6 w-60 self-center pr-4 md:self-end"
+        (click)="addRecommendationModal = true"
+        >ADD RECOMENDATION</lens-academy-button-secondary
+      >
+    </div>
+  </ng-container>
+</section>
+<lens-academy-base-modal
+  title="ADD RECOMMENDATION"
+  *ngIf="addRecommendationModal"
+  (modalClosed)="addRecommendationModal = false"
+>
+  <div class="flex flex-col items-center gap-4 py-6">
+    <img
+      src="https://i.pravatar.cc/300"
+      alt="avatar example"
+      class="border-primary mb-2 h-28 w-28 rounded-full border-4 object-cover"
+    />
+    <p class="text-2xl font-bold">Name Example</p>
+    <form [formGroup]="form" class="mt-10 flex grow flex-col gap-4">
+      <lens-academy-form-field [control]="getControl('description')">
+        <lens-academy-text-area
+          placeholder="Add recommendation"
+          formControlName="description"
+        ></lens-academy-text-area>
+      </lens-academy-form-field>
+      <lens-academy-button-primary class="w-60" (click)="send()"
+        >SEND</lens-academy-button-primary
+      >
+    </form>
+  </div>
+</lens-academy-base-modal>
+<lens-academy-base-modal
+  title="FOLLOW"
+  *ngIf="followModal"
+  (modalClosed)="followModal = false"
+>
+  <ng-container *ngFor="let contact of contacts | slice : 0 : 3">
+    <div
+      class="border-neutral-5 mx-0 flex flex-col justify-between border-b py-6 md:mx-10 md:flex-row"
+    >
+      <div class="flex flex-col items-center md:flex-row md:items-start">
+        <div class="min-w-fit flex-col space-y-4">
+          <img
+            src="https://i.pravatar.cc/300"
+            alt="avatar example"
+            class="border-secondary ml-4 mt-3 h-10 w-10 rounded-full border-2 object-cover md:ml-0"
+          />
+        </div>
+        <div
+          class="text-neutral-2 mt-3 flex flex-col space-y-2 self-center md:ml-6"
+        >
+          <div>
+            <span class="text-neutral-1 mr-10 text-sm font-bold">NAME</span
+            >{{ contact.name }}
+          </div>
+          <div>
+            <span class="text-neutral-1 mr-[52px] text-sm font-bold">AGE</span
+            >{{ contact.age }}
+          </div>
+          <p class="text-neutral-1 text-sm font-bold">INTEREST</p>
+          <div class="grid grid-cols-3 gap-x-4 gap-y-2">
+            <div
+              *ngFor="let interest of contact.interest"
+              class="bg-neutral-2/5 w-16 rounded-full p-1 text-center text-sm"
+            >
+              {{ interest }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <lens-academy-button-primary
+        (click)="follow()"
+        class="mt-4 w-40 self-center md:self-start md:pr-4"
+        >FOLLOW</lens-academy-button-primary
+      >
+    </div>
+  </ng-container>
+</lens-academy-base-modal>

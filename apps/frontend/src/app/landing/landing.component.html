@@ -1,0 +1,125 @@
+<div>
+  <lens-academy-navbar-landing></lens-academy-navbar-landing>
+  <section class="relative h-[60vh]">
+    <img
+      src="../../assets/img/landing-background.jpg"
+      alt="landing background"
+      class="h-full w-full object-cover"
+    />
+    <h2
+      class="text-neutral-4 absolute bottom-1/4 left-1/2 w-3/4 -translate-x-1/2 text-center text-xl font-bold tracking-wider md:text-3xl lg:w-[640px]"
+    >
+      Have a unique curriculum through Lens protocol, and share the same
+      information among other communication channels
+    </h2>
+    <div class="mx-auto w-52 -translate-y-1/2">
+      <lens-academy-button-primary [routerLink]="['/account-type']"
+        >GET STARTED</lens-academy-button-primary
+      >
+    </div>
+  </section>
+  <section class="container mx-auto mb-16 mt-28 px-6 sm:mb-36">
+    <div
+      class="mb-14 flex flex-col items-center justify-between gap-4 sm:mb-28 sm:flex-row"
+    >
+      <h2 class="text-neutral-1 text-center text-3xl font-bold">
+        Featured resumes
+      </h2>
+      <lens-academy-resumes-toggler
+        (selectedBlockChange)="selectedBlock = $event"
+      ></lens-academy-resumes-toggler>
+    </div>
+    <div
+      class="grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 xl:grid-cols-4"
+      *ngIf="selectedBlock === 'STUDENTS'"
+    >
+      <div
+        class="h-full w-full max-w-[304px] cursor-pointer"
+        (click)="detailsModalType = 'RESUME'; detailsModalData = student"
+        *ngFor="let student of students"
+      >
+        <lens-academy-card
+          [avatarURL]="student.avatarURL"
+          [about]="student.about"
+          [name]="student.name"
+        ></lens-academy-card>
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 xl:grid-cols-4"
+      *ngIf="selectedBlock === 'SQUADS'"
+    >
+      <div
+        class="h-full w-full max-w-[304px] cursor-pointer"
+        (click)="detailsModalType = 'SQUAD'; detailsModalData = team"
+        *ngFor="let team of teams"
+      >
+        <lens-academy-card
+          [avatarURL]="team.avatarURL"
+          [about]="team.about"
+          [name]="team.name"
+        ></lens-academy-card>
+      </div>
+    </div>
+  </section>
+  <section class="bg-secondary">
+    <div class="container mx-auto px-6 py-14">
+      <div
+        class="flex flex-col items-end justify-between gap-10 xl:flex-row xl:items-center"
+      >
+        <div class="flex flex-col items-center gap-8 sm:flex-row">
+          <img
+            src="../../assets/img/united-hands.jpg"
+            alt="united hands"
+            class="w-[230px] rounded-md xl:w-auto"
+          />
+          <p class="text-neutral-4 font-mono xl:w-[640px]">
+            Harness the power of this extraordinary curriculum platform,
+            designed to revolutionize the way professionals connect and
+            collaborate. Embrace the future of education, where the burden of
+            duplicating curriculum information becomes a distant memory. Our
+            forward-thinking approach not only streamlines workflows but also
+            fosters a vibrant community of interdisciplinary professionals,
+            united by their shared dedication to excellence.
+          </p>
+        </div>
+        <i class="bi-arrow-right text-primary cursor-pointer text-4xl"></i>
+      </div>
+    </div>
+  </section>
+  <section class="container mx-auto mb-16 mt-28 px-6 sm:mb-36">
+    <div
+      class="mb-14 flex flex-col items-center justify-between gap-4 sm:mb-28 sm:flex-row"
+    >
+      <h2 class="text-neutral-1 text-center text-3xl font-bold">
+        Our teachers
+      </h2>
+      <img
+        src="../../assets/img/graduation-cap-icon.svg"
+        alt="graduation cap icon"
+      />
+    </div>
+    <div
+      class="grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 xl:grid-cols-4"
+    >
+      <div
+        class="h-full w-full max-w-[304px] cursor-pointer"
+        (click)="detailsModalType = 'TEACHER'; detailsModalData = teacher"
+        *ngFor="let teacher of teachers"
+      >
+        <lens-academy-card
+          [avatarURL]="teacher.avatarURL"
+          [about]="teacher.about"
+          [name]="teacher.name"
+        ></lens-academy-card>
+      </div>
+    </div>
+  </section>
+  <lens-academy-footer></lens-academy-footer>
+</div>
+<lens-academy-details-modal
+  *ngIf="detailsModalType"
+  [type]="detailsModalType"
+  [data]="detailsModalData"
+  (modalClosed)="detailsModalType = null"
+></lens-academy-details-modal>

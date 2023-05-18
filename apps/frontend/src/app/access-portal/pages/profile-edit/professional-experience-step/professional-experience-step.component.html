@@ -1,0 +1,60 @@
+<form [formGroup]="form" class="mt-10 flex flex-col gap-10">
+  <button
+    class="bg-primary self-end rounded py-1 pl-2 pr-3 font-mono font-bold"
+    (click)="addExperience()"
+  >
+    Add +
+  </button>
+  <legend class="text-secondary -mb-4 text-2xl font-bold">
+    Professional experience
+  </legend>
+  <ng-container formArrayName="experience">
+    <ng-container
+      *ngFor="let experienceForm of experience.controls; let i = index"
+    >
+      <div [formGroup]="experienceForm" class="flex flex-col gap-4">
+        <lens-academy-form-field
+          [control]="experienceForm.get('company')!"
+          label="Company"
+        >
+          <lens-academy-input
+            type="text"
+            placeholder="Company"
+            formControlName="company"
+          ></lens-academy-input>
+        </lens-academy-form-field>
+        <lens-academy-form-field
+          [control]="experienceForm.get('job')!"
+          label="Job Title"
+        >
+          <lens-academy-input
+            type="text"
+            placeholder="Job Title"
+            formControlName="job"
+          ></lens-academy-input>
+        </lens-academy-form-field>
+        <lens-academy-form-field
+          [control]="experienceForm.get('description')!"
+          label="Description"
+        >
+          <lens-academy-text-area
+            placeholder="Description"
+            formControlName="description"
+          ></lens-academy-text-area>
+        </lens-academy-form-field>
+        <div
+          class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
+          (click)="removeExperience(i)"
+        >
+          <span class="mb-1 font-mono font-bold">Remove</span>
+          <i class="bi bi-trash text-danger"></i>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <lens-academy-button-primary
+    class="mt-12 w-full self-end sm:w-52"
+    (click)="saveEdit.emit()"
+    >SAVE</lens-academy-button-primary
+  >
+</form>

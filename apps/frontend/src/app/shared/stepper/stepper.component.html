@@ -1,0 +1,29 @@
+<div class="flex items-center gap-1 font-mono text-base sm:gap-3">
+  <ng-container *ngFor="let step of steps; let i = index">
+    <div
+      class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+      [ngClass]="
+        i + 1 < currentStep
+          ? 'bg-secondary'
+          : i + 1 === currentStep
+          ? 'bg-primary'
+          : 'bg-neutral-3'
+      "
+    >
+      <span
+        [ngClass]="
+          i + 1 < currentStep
+            ? 'text-neutral-4'
+            : i + 1 === currentStep
+            ? 'text-neutral-1'
+            : 'text-neutral-2'
+        "
+        >{{ i + 1 }}</span
+      >
+    </div>
+    <span class="text-neutral-1 hidden whitespace-nowrap sm:block">{{
+      step
+    }}</span>
+    <i class="bi-chevron-right text-neutral-2" *ngIf="i + 1 < steps.length"></i>
+  </ng-container>
+</div>

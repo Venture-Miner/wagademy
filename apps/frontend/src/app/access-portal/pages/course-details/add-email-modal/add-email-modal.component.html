@@ -1,0 +1,30 @@
+<div class="absolute inset-0 backdrop-blur-sm">
+  <div class="flex h-screen items-center justify-center">
+    <div
+      class="bg-neutral-4 flex w-[496px] flex-col items-center rounded-md px-8 py-8 shadow-lg"
+    >
+      <img src="../../../assets/img/img-add-email.svg" alt="add email icon" />
+      <p class="text-neutral-1 py-6 font-mono">
+        Do you want add a reminder to your email?
+      </p>
+      <div
+        class="grid w-full grid-cols-1 gap-x-4 gap-y-4 pt-6 md:grid-cols-2 md:gap-y-0"
+      >
+        <lens-academy-button-secondary (click)="emailConfirm()"
+          >NO</lens-academy-button-secondary
+        >
+        <lens-academy-button-primary (click)="showEmailConfirmModal = true"
+          >YES</lens-academy-button-primary
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<lens-academy-email-confirm-modal
+  *ngIf="showEmailConfirmModal"
+  (cancel)="showEmailConfirmModal = false"
+></lens-academy-email-confirm-modal>
+<lens-academy-success-modal
+  *ngIf="congratulationsMessage"
+  [message]="congratulationsMessage"
+></lens-academy-success-modal>

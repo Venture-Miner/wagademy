@@ -1,0 +1,49 @@
+<div class="flex min-h-screen flex-col">
+  <lens-academy-navbar></lens-academy-navbar>
+  <div class="flex flex-1 flex-col items-center py-9">
+    <div class="container mx-auto flex px-3" *ngIf="mode === 'VIEW'">
+      <div
+        class="text-secondary mr-4 flex cursor-pointer items-center gap-2 sm:mr-0"
+        (click)="back()"
+      >
+        <i class="bi-arrow-left text-xl"></i>
+        <span class="font-mono font-bold">Back</span>
+      </div>
+      <h2 class="text-neutral-1 mx-auto text-3xl font-bold">
+        Confirm your details
+      </h2>
+    </div>
+    <lens-academy-stepper
+      *ngIf="mode !== 'VIEW'"
+      [currentStep]="mode !== 'CREATE' ? 9999 : currentStep"
+      [steps]="steps"
+    ></lens-academy-stepper>
+    <div
+      class="divide-secondary grid w-full gap-10 divide-y-2 divide-solid px-3 md:w-2/3 2xl:w-2/5"
+    >
+      <lens-academy-company-profile-step
+        [form]="form"
+        [mode]="mode"
+        (nextStep)="nextStep()"
+        (edit)="edit(1)"
+        (saveEdit)="showSummary()"
+        *ngIf="currentStep === 1 || mode === 'VIEW'"
+      ></lens-academy-company-profile-step>
+      <lens-academy-interest-step
+        [form]="form"
+        [mode]="mode"
+        (nextStep)="nextStep()"
+        (edit)="edit(2)"
+        (saveEdit)="showSummary()"
+        (previousStep)="previousStep()"
+        *ngIf="currentStep === 2 || mode === 'VIEW'"
+      ></lens-academy-interest-step>
+    </div>
+    <lens-academy-button-primary
+      class="mt-14 w-full px-3 sm:w-52"
+      *ngIf="mode === 'VIEW'"
+      (click)="createProfile()"
+      >SAVE AND CONFIRM</lens-academy-button-primary
+    >
+  </div>
+</div>
