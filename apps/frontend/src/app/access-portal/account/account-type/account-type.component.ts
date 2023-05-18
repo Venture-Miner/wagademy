@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { LensService, TokenService } from '../../../services';
 import { ethers } from 'ethers';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
+import { LensService } from '../../../services/lens/lens.service';
+import { TokenService } from '../../../services/token/token.service';
 
 enum ACCOUNT_TYPE {
   physicalPerson = 'physicalPerson',

@@ -1,4 +1,4 @@
-import { AcademicEducation } from '../../../../../interfaces';
+import { AcademicEducation } from '../../../../../interfaces/types';
 import { Component, Input } from '@angular/core';
 
 @Component({

@@ -1,7 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AuthGuard } from './auth.guard';
-import { LensService, TokenService } from '../services';
+import { TokenService } from '../services/token/token.service';
+import { LensService } from '../services/lens/lens.service';
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
-import { LensService, TokenService } from '../services';
+import { LensService } from '../services/lens/lens.service';
+import { TokenService } from '../services/token/token.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard {
@@ -22,7 +23,10 @@ export class AuthGuard {
         },
       },
     });
-    if (!verify) return this.redirectPage();
+    if (!verify) {
+      this.tokenService.logout();
+      return this.redirectPage();
+    }
     return verify;
   }
 

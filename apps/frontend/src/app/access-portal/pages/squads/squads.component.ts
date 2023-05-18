@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CreateSquadDto } from '../../../dtos';
-import { SquadService,TokenService } from '../../../services';
-import { Squad } from '../../../interfaces';
+import { CreateSquadDto } from '../../../dtos/squad/create-squad.dto';
+import { Squad } from '../../../interfaces/prisma/prisma';
+import { SquadService } from '../../../services/squad/squad.service';
+import { TokenService } from '../../../services/token/token.service';
 
 @Component({
   selector: 'lens-academy-squads',

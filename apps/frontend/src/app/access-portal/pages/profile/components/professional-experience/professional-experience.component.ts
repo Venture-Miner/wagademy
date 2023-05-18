@@ -1,4 +1,4 @@
-import { Experience } from '../../../../../interfaces';
+import { Experience } from '../../../../../interfaces/types';
 import { Component, Input } from '@angular/core';
 
 @Component({

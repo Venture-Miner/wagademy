@@ -1,10 +1,10 @@
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { getHostname } from '../../utils';
-import { Squad } from '../../interfaces';
-import { CreateSquadDto } from '../../dtos';
-import { TokenService } from '../token';
+import { getHostname } from '../../utils/hostname';
+import { Squad } from '../../interfaces/prisma/prisma';
+import { CreateSquadDto } from '../../dtos/squad/create-squad.dto';
+import { TokenService } from '../token/token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +47,7 @@ export class SquadService {
   }
 
   createSquad(createSquadDto: CreateSquadDto) {
-    let headers = new HttpHeaders().set(
+    const headers = new HttpHeaders().set(
       'Authorization',
       'Bearer ' + this.tokenService.getTokenValue()
     );
