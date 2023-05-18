@@ -1,4 +1,4 @@
-import { TokenService } from '@/services';
+import { TokenService } from '../../../services';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 

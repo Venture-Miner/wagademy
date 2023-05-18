@@ -1,9 +1,9 @@
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { getHostname } from '@/utils/hostname';
-import { Squad } from '@/interfaces';
-import { CreateSquadDto } from '@/dtos';
+import { getHostname } from '../../utils';
+import { Squad } from '../../interfaces';
+import { CreateSquadDto } from '../../dtos';
 import { TokenService } from '../token';
 
 @Injectable({

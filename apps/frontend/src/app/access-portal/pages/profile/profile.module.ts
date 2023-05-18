@@ -9,8 +9,11 @@ import {
   ProfessionalExperienceComponent,
   AreasOfInterestComponent,
   SkillsAndCompetenciesComponent,
-} from '@/access-portal';
-import { ButtonPrimaryModule, NavbarAuthenticatedModule } from '@/shared';
+} from '../../pages';
+import {
+  ButtonPrimaryModule,
+  NavbarAuthenticatedModule,
+} from '../../../shared';
 
 @NgModule({
   declarations: [

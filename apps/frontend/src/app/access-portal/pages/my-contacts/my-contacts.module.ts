@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MyContactsRoutingModule, MyContactsComponent } from '@/access-portal';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { MyContactsRoutingModule, MyContactsComponent } from '../my-contacts';
 import {
   BaseModalModule,
   ButtonPrimaryModule,
@@ -10,8 +10,7 @@ import {
   InputModule,
   NavbarAuthenticatedModule,
   TextAreaModule,
-} from '@/shared';
-import { ReactiveFormsModule } from '@angular/forms';
+} from '../../../shared';
 
 @NgModule({
   declarations: [MyContactsComponent],

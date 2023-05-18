@@ -8,13 +8,13 @@ import {
   InputModule,
   NavbarAuthenticatedModule,
   SuccessModalModule,
-} from '@/shared';
+} from '../../../shared';
 import {
   CourseDetailsComponent,
   CourseDetailsRoutingModule,
   AddEmailModalComponent,
   EmailConfirmModalComponent,
-} from '@/access-portal';
+} from '../../pages';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({

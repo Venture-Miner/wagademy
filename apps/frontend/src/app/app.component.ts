@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenService } from '@/services';
+import { TokenService } from './services';
 
 @Component({
   selector: 'lens-academy-root',

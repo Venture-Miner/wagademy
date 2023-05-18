@@ -6,13 +6,13 @@ import {
   InputModule,
   InputSelectModule,
   NavbarAuthenticatedModule,
-} from '@/shared';
+} from '../../../shared';
 import {
   MyCertificatesRoutingModule,
   MyCertificatesComponent,
   CertificatesCardComponent,
   CertificateModalComponent,
-} from '@/access-portal';
+} from '../../pages';
 
 @NgModule({
   declarations: [

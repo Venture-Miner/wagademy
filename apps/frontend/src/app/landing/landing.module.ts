@@ -4,7 +4,7 @@ import {
   BaseModalModule,
   ButtonPrimaryModule,
   ButtonSecondaryModule,
-} from '@/shared';
+} from '../shared';
 import {
   LandingRoutingModule,
   LandingComponent,
@@ -23,7 +23,7 @@ import {
   AvatarsComponent,
   FooterComponent,
   RecommendationsComponent,
-} from '@/landing';
+} from '../landing';
 
 @NgModule({
   declarations: [

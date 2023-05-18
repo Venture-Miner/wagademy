@@ -6,11 +6,11 @@ import {
   NavbarAuthenticatedModule,
   SuccessModalModule,
   WarningModalModule,
-} from '@/shared';
+} from '../../../shared';
 import {
   RecommendationsPageComponent,
   RecommendationsPageRoutingModule,
-} from '@/access-portal';
+} from '../../pages';
 
 @NgModule({
   declarations: [RecommendationsPageComponent],

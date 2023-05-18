@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["apps/frontend/src/app/*"],
       "@prisma-service": ["libs/prisma/src/index.ts"]
     },
     "allowSyntheticDefaultImports": true,

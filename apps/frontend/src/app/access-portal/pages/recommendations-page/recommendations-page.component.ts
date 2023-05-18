@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EthersService, LensService, TokenService } from '@/services';
-import { RecommendedProfileData, FollowRequest } from '@/interfaces';
+import { EthersService, LensService, TokenService } from '../../../services';
+import { RecommendedProfileData, FollowRequest } from '../../../interfaces';
 
 @Component({
   selector: 'lens-academy-recommendations-page',

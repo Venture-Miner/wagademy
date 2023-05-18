@@ -5,7 +5,7 @@ import {
   TokenService,
   EthersService,
   IpfsService,
-} from '@/services';
+} from '../../../services';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({

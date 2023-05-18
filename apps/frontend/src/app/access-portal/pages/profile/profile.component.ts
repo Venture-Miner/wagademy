@@ -1,6 +1,6 @@
-import { LensService, TokenService } from '@/services';
+import { LensService, TokenService } from '../../../services';
 import { Component, OnInit } from '@angular/core';
-import { About, AcademicEducation, Curriculum, Experience } from '@/interfaces';
+import { About, AcademicEducation, Curriculum, Experience } from '../../../interfaces';
 
 @Component({
   selector: 'lens-academy-profile',

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateSquadDto } from '@/dtos';
-import { SquadService } from '@/services';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Squad } from '@/interfaces';
-import { TokenService } from '@/services';
+import { CreateSquadDto } from '../../../dtos';
+import { SquadService,TokenService } from '../../../services';
+import { Squad } from '../../../interfaces';
 
 @Component({
   selector: 'lens-academy-squads',

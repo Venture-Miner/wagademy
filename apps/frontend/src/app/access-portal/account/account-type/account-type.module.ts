@@ -5,7 +5,7 @@ import {
   NavbarModule,
   BaseModalModule,
   InputModule,
-} from '@/shared';
+} from '../../../shared';
 import {
   AccountTypeRoutingModule,
   AccountTypeComponent,

@@ -8,8 +8,8 @@ import {
   TeacherEducationComponent,
   TeacherProfessionalExperienceComponent,
   RecommendationsComponent,
-} from '@/access-portal';
-import { NavbarAuthenticatedModule } from '@/shared';
+} from '../../pages';
+import { NavbarAuthenticatedModule } from '../../../shared';
 
 @NgModule({
   declarations: [

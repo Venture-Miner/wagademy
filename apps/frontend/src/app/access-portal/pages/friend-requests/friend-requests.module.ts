@@ -4,11 +4,11 @@ import {
   ButtonPrimaryModule,
   ButtonSecondaryModule,
   NavbarAuthenticatedModule,
-} from '@/shared';
+} from '../../../shared';
 import {
   FriendRequestsComponent,
   FriendRequestRoutingModule,
-} from '@/access-portal';
+} from '../friend-requests';
 
 @NgModule({
   declarations: [FriendRequestsComponent],

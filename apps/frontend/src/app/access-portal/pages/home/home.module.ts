@@ -7,13 +7,13 @@ import {
   WidgetComponent,
   JobCardComponent,
   CourseCardComponent,
-} from '@/access-portal';
+} from '../../pages';
 import {
   InputModule,
   NavbarAuthenticatedModule,
   InputSelectModule,
   PaginationModule,
-} from '@/shared';
+} from '../../../shared';
 
 @NgModule({
   declarations: [

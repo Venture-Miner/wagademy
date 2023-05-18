@@ -1,4 +1,4 @@
-import { omit } from '@/utils';
+import { omit } from '../../utils';
 import { Injectable } from '@angular/core';
 import { TypedDataDomain } from '@ethersproject/abstract-signer';
 import { ethers, utils } from 'ethers';

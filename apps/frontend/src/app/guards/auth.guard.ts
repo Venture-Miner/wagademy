@@ -1,6 +1,6 @@
-import { LensService, TokenService } from '@/services';
 import { Injectable } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
+import { LensService, TokenService } from '../services';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard {

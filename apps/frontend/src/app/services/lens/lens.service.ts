@@ -24,10 +24,10 @@ import {
   recommendedProfiles,
   refreshToken,
   verify,
-} from '@/graphql';
+} from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
-import { EthersService } from '@/services';
+import { EthersService } from '../ethers';
 import LENS_HUB_ABI from '../../../assets/abis/lens-hub-contract-abi.json';
 import LENS_PERIPHERY_ABI from '../../../assets/abis/lens-periphery-data-provider.json';
 

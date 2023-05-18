@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LensService, TokenService } from '@/services';
+import { LensService, TokenService } from '../../../services';
 import { ethers } from 'ethers';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';

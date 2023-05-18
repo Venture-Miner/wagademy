@@ -11,7 +11,7 @@ import {
   AreaOfInterestStepComponent,
   SkillsAndCompetenciesStepComponent,
   JoinSquadComponent,
-} from '@/access-portal';
+} from '../../pages';
 import {
   NavbarModule,
   InputModule,
@@ -19,7 +19,7 @@ import {
   ButtonPrimaryModule,
   TextAreaModule,
   ButtonSecondaryModule,StepperModule
-} from '@/shared';
+} from '../../../shared';
 
 @NgModule({
   declarations: [

@@ -6,7 +6,7 @@ import {
   CreateCompanyProfileComponent,
   CompanyProfileStepComponent,
   InterestStepComponent,
-} from '@/access-portal';
+} from '../../pages';
 import {
   NavbarModule,
   InputModule,
@@ -15,7 +15,7 @@ import {
   TextAreaModule,
   ButtonSecondaryModule,
   StepperModule,
-} from '@/shared';
+} from '../../../shared';
 
 @NgModule({
   declarations: [
