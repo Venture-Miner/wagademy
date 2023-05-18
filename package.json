@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "start": "nx run frontend:serve"
+    "start": "nx run frontend:serve",
+    "api": "prisma generate && nx  run api:serve"
   },
   "private": true,
   "dependencies": {
@@ -21,10 +22,16 @@
     "@ethersproject/abstract-signer": "^5.7.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/jwt": "^10.0.3",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.3.0",
     "@nrwl/angular": "15.8.6",
+    "@prisma/client": "^4.14.1",
     "axios": "^1.0.0",
     "bootstrap-icons": "^1.10.5",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "cross-fetch": "^3.1.6",
     "ethers": "^5.7.2",
     "graphql": "^16.6.0",
     "ipfs-http-client": "^60.0.0",
@@ -79,6 +86,7 @@
     "postcss": "^8.4.5",
     "prettier": "^2.6.2",
     "prettier-plugin-tailwindcss": "^0.2.4",
+    "prisma": "^4.14.1",
     "tailwindcss": "^3.0.2",
     "ts-jest": "^29.0.5",
     "ts-node": "10.9.1",

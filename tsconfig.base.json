@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": { "@/*": ["apps/frontend/src/app/*"] },
+    "paths": {
+      "@/*": ["apps/frontend/src/app/*"],
+      "@@/*": ["apps/api/src/*"],
+      "@prisma-service": ["libs/prisma/src/index.ts"]
+    },
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "esModuleInterop": true
