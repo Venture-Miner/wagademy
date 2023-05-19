@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AvatarsComponent } from './avatars.component';
 
 describe('AvatarsComponent', () => {
@@ -8,13 +7,10 @@ describe('AvatarsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AvatarsComponent ]
-    })
-    .compileComponents();
-
+      declarations: [AvatarsComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(AvatarsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
