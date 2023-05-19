@@ -5,7 +5,8 @@
   "scripts": {
     "prepare": "husky install",
     "start": "nx run frontend:serve",
-    "api": "prisma generate && nx  run api:serve"
+    "api": "prisma generate && nx  run api:serve",
+    "test": "nx test"
   },
   "private": true,
   "dependencies": {
