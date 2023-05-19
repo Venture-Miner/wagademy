@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AddEmailModalComponent } from './add-email-modal.component';
 
 describe('AddEmailModalComponent', () => {
   let component: AddEmailModalComponent;
