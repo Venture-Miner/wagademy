@@ -42,4 +42,11 @@ describe('TokenService', () => {
     service.setToken(token);
     expect(service.getTokenValue()).toEqual(token);
   });
+
+  it('should set token expiration', () => {
+    service.setTokenExpiration(token);
+    const expirationDate = new Date(0);
+    expirationDate.setUTCSeconds(exp);
+    expect(new Date(service.getTokenExpirationValue())).toEqual(expirationDate);
+  });
 });
