@@ -10,10 +10,8 @@ describe('ResumesTogglerComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ResumesTogglerComponent],
     }).compileComponents();
-
     fixture = TestBed.createComponent(ResumesTogglerComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create the component resumes toggler', () => {

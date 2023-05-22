@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { WarningModalComponent } from './warning-modal.component';
+import { ButtonSecondaryModule } from '../button-secondary/button-secondary.module';
+import { ButtonPrimaryModule } from '../button-primary/button-primary.module';
 
 describe('WarningModalComponent', () => {
   let component: WarningModalComponent;
@@ -8,13 +9,11 @@ describe('WarningModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WarningModalComponent ]
-    })
-    .compileComponents();
-
+      declarations: [WarningModalComponent],
+      imports: [ButtonSecondaryModule, ButtonPrimaryModule],
+    }).compileComponents();
     fixture = TestBed.createComponent(WarningModalComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

@@ -12,7 +12,6 @@ describe('LearningComponent', () => {
       declarations: [LearningComponent],
       imports: [RouterTestingModule],
     }).compileComponents();
-
     fixture = TestBed.createComponent(LearningComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -12,7 +12,6 @@ describe('NavbarLandingComponent', () => {
       declarations: [NavbarLandingComponent],
       imports: [RouterTestingModule],
     }).compileComponents();
-
     fixture = TestBed.createComponent(NavbarLandingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

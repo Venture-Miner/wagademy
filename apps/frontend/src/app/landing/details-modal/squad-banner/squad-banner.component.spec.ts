@@ -9,10 +9,8 @@ describe('SquadBannerComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [SquadBannerComponent],
     }).compileComponents();
-
     fixture = TestBed.createComponent(SquadBannerComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

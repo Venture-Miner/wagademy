@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { InterestStepComponent } from './interest-step.component';
 
 describe('InterestStepComponent', () => {
@@ -10,10 +9,8 @@ describe('InterestStepComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [InterestStepComponent],
     }).compileComponents();
-
     fixture = TestBed.createComponent(InterestStepComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

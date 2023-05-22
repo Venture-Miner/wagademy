@@ -1,11 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LandingComponent } from './landing.component';
+import { NavbarLandingComponent } from './navbar-landing';
+import { ButtonPrimaryModule } from '../shared/button-primary/button-primary.module';
+import { ButtonSecondaryModule } from '../shared/button-secondary/button-secondary.module';
+import { FooterComponent } from './footer';
+import { ResumesTogglerComponent } from './resumes-toggler';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CardComponent } from './card';
-import { FooterComponent } from './footer';
-import { NavbarLandingComponent } from './navbar-landing';
-import { ResumesTogglerComponent } from './resumes-toggler';
 
 describe('LandingComponent', () => {
   let component: LandingComponent;
@@ -15,12 +17,16 @@ describe('LandingComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         LandingComponent,
-        CardComponent,
         NavbarLandingComponent,
         FooterComponent,
         ResumesTogglerComponent,
+        CardComponent,
       ],
-      imports: [RouterTestingModule],
+      imports: [
+        ButtonPrimaryModule,
+        ButtonSecondaryModule,
+        RouterTestingModule,
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(LandingComponent);
     component = fixture.componentInstance;
