@@ -95,4 +95,9 @@ describe('TokenService', () => {
     expirationDate.setUTCSeconds(refreshExp);
     expect(new Date(response)).toEqual(expirationDate);
   });
+
+  it('should getWalletAddress', () => {
+    const response = service.getWalletAddress();
+    expect(response).toEqual(wallet);
+  });
 });
