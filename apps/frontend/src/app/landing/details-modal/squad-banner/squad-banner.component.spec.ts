@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SquadBannerComponent } from './squad-banner.component';
 
 describe('SquadBannerComponent', () => {
@@ -8,9 +7,8 @@ describe('SquadBannerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SquadBannerComponent ]
-    })
-    .compileComponents();
+      declarations: [SquadBannerComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SquadBannerComponent);
     component = fixture.componentInstance;

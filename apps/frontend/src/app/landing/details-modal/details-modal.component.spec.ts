@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DetailsModalComponent } from './details-modal.component';
 
 describe('DetailsModalComponent', () => {
@@ -7,17 +6,12 @@ describe('DetailsModalComponent', () => {
   let fixture: ComponentFixture<DetailsModalComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ DetailsModalComponent ]
-    })
-    .compileComponents();
-
+    await TestBed.configureTestingModule({}).compileComponents();
     fixture = TestBed.createComponent(DetailsModalComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component details modal', () => {
     expect(component).toBeTruthy();
   });
 });
