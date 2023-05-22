@@ -46,17 +46,17 @@ describe('LandingComponent', () => {
   });
 
   it('should display a list of student', () => {
-    component.selectedBlock === 'STUDENTS';
+    component.selectedBlock = 'STUDENTS';
     fixture.detectChanges();
     const studentList = fixture.debugElement.queryAll(By.css('#student-list'));
     expect(studentList.length).toBe(4);
   });
 
   it('should display a list of team', () => {
-    component.selectedBlock === 'SQUADS';
+    component.selectedBlock = 'SQUADS';
     fixture.detectChanges();
     const teamList = fixture.debugElement.queryAll(By.css('#team-list'));
-    expect(teamList.length).toBe(0);
+    expect(teamList.length).toBe(1);
   });
 
   it('should display a list of teacher', () => {
