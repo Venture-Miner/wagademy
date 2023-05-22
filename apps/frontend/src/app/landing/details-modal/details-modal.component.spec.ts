@@ -27,7 +27,7 @@ describe('DetailsModalComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it('should create the component details modal', () => {
     expect(component).toBeTruthy();
   });
 });
