@@ -76,4 +76,9 @@ describe('TokenService', () => {
     const response = service.getTokenValue();
     expect(response).toEqual(token);
   });
+
+  it('should getRefreshTokenValue', () => {
+    const response = service.getRefreshTokenValue();
+    expect(response).toEqual(refreshToken);
+  });
 });
