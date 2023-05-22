@@ -2,8 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LandingComponent } from './landing.component';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ButtonPrimaryModule } from '../shared/button-primary/button-primary.module';
-import { ButtonSecondaryModule } from '../shared/button-secondary/button-secondary.module';
 import { CardComponent } from './card';
 import { FooterComponent } from './footer';
 import { NavbarLandingComponent } from './navbar-landing';
@@ -22,13 +20,8 @@ describe('LandingComponent', () => {
         FooterComponent,
         ResumesTogglerComponent,
       ],
-      imports: [
-        ButtonSecondaryModule,
-        RouterTestingModule,
-        ButtonPrimaryModule,
-      ],
+      imports: [RouterTestingModule],
     }).compileComponents();
-
     fixture = TestBed.createComponent(LandingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
