@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RecommendationsComponent } from './recommendations.component';
 
 describe('RecommendationsComponent', () => {
@@ -8,13 +7,10 @@ describe('RecommendationsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecommendationsComponent ]
-    })
-    .compileComponents();
-
+      declarations: [RecommendationsComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(RecommendationsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

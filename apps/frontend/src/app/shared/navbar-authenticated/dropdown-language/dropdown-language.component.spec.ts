@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DropdownLanguageComponent } from './dropdown-language.component';
 
 describe('DropdownLanguageComponent', () => {
@@ -8,13 +7,10 @@ describe('DropdownLanguageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DropdownLanguageComponent ]
-    })
-    .compileComponents();
-
+      declarations: [DropdownLanguageComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(DropdownLanguageComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

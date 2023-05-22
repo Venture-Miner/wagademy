@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DropdownProfileComponent } from './dropdown-profile.component';
+
+jest.mock('ethers');
 
 describe('DropdownProfileComponent', () => {
   let component: DropdownProfileComponent;
@@ -8,13 +9,10 @@ describe('DropdownProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DropdownProfileComponent ]
-    })
-    .compileComponents();
-
+      declarations: [DropdownProfileComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(DropdownProfileComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

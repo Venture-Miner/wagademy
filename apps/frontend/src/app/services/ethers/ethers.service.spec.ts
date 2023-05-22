@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-import { TokenService } from './token.service';
+import { EthersService } from './ethers.service';
 
 jest.mock('ethers');
 
-describe('TokenService', () => {
-  let service: TokenService;
+describe('EthersService', () => {
+  let service: EthersService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TokenService);
+    service = TestBed.inject(EthersService);
   });
 
   it('should be created', () => {
