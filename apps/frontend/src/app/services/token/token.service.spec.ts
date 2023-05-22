@@ -49,4 +49,9 @@ describe('TokenService', () => {
     expirationDate.setUTCSeconds(exp);
     expect(new Date(service.getTokenExpirationValue())).toEqual(expirationDate);
   });
+
+  it('should setRefreshToken', () => {
+    service.setRefreshToken(refreshToken);
+    expect(service.getRefreshTokenValue()).toEqual(refreshToken);
+  });
 });
