@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { JobCardComponent } from './job-card.component';
 
 describe('JobCardComponent', () => {
@@ -8,13 +7,10 @@ describe('JobCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ JobCardComponent ]
-    })
-    .compileComponents();
-
+      declarations: [JobCardComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(JobCardComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

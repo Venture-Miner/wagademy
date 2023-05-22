@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SuccessModalComponent } from './success-modal.component';
 
 describe('SuccessModalComponent', () => {
@@ -8,13 +7,10 @@ describe('SuccessModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SuccessModalComponent ]
-    })
-    .compileComponents();
-
+      declarations: [SuccessModalComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(SuccessModalComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

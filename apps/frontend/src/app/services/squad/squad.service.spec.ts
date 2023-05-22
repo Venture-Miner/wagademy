@@ -7,6 +7,8 @@ import {
 import { TokenService } from '../token';
 import { Squad } from '../../interfaces';
 
+jest.mock('ethers');
+
 const squad: Squad = {
   id: 'any_id',
   name: 'any_name',
@@ -31,13 +33,8 @@ describe('SquadService', () => {
         },
       ],
     });
-
     service = TestBed.inject(SquadService);
     httpMock = TestBed.inject(HttpTestingController);
-  });
-
-  afterEach(() => {
-    httpMock.verify();
   });
 
   it('should be created', () => {

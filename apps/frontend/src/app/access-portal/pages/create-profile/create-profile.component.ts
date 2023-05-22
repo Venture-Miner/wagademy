@@ -106,22 +106,27 @@ export class CreateProfileComponent implements OnInit {
   }
 
   async createCurriculum() {
-    const ipfsResult = await this.ipfsService.uploadIpfs({
-      version: '2.0.0',
-      mainContentFocus: 'TEXT_ONLY',
-      description: 'Academy Curriculum',
-      metadata_id: uuidv4(),
-      locale: 'en-US',
-      content: JSON.stringify(this.form.value),
-      external_url: null,
-      image: null,
-      imageMimeType: null,
-      name: `@${this.handle} Curriculum`,
-      attributes: [],
-      tags: [],
-      appId: 'Academy',
-    });
-    this.createPost(ipfsResult.path);
+    this.ipfsService
+      .uploadIpfs({
+        version: '2.0.0',
+        mainContentFocus: 'TEXT_ONLY',
+        description: 'Academy Curriculum',
+        metadata_id: uuidv4(),
+        locale: 'en-US',
+        content: JSON.stringify(this.form.value),
+        external_url: null,
+        image: null,
+        imageMimeType: null,
+        name: `@${this.handle} Curriculum`,
+        attributes: [],
+        tags: [],
+        appId: 'Academy',
+      })
+      .subscribe({
+        next: (ipfsResult) => {
+          this.createPost(ipfsResult.path);
+        },
+      });
   }
 
   async createPost(path: string) {

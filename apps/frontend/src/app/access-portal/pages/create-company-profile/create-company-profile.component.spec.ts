@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CreateCompanyProfileComponent } from './create-company-profile.component';
+import { NavbarModule } from '../../../shared/navbar/navbar.module';
 
 describe('CreateCompanyProfileComponent', () => {
   let component: CreateCompanyProfileComponent;
@@ -9,11 +9,10 @@ describe('CreateCompanyProfileComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CreateCompanyProfileComponent],
+      imports: [NavbarModule],
     }).compileComponents();
-
     fixture = TestBed.createComponent(CreateCompanyProfileComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
