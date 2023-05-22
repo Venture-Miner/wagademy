@@ -63,4 +63,12 @@ describe('TokenService', () => {
       expirationDate
     );
   });
+
+  it('should getToken', () => {
+    let response;
+    service.getToken().subscribe((res) => {
+      response = res;
+    });
+    expect(response).toEqual(token);
+  });
 });
