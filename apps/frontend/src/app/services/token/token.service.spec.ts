@@ -88,4 +88,11 @@ describe('TokenService', () => {
     expirationDate.setUTCSeconds(exp);
     expect(new Date(response)).toEqual(expirationDate);
   });
+
+  it('should getRefreshTokenExpirationValue', () => {
+    const response = service.getRefreshTokenExpirationValue();
+    const expirationDate = new Date(0);
+    expirationDate.setUTCSeconds(refreshExp);
+    expect(new Date(response)).toEqual(expirationDate);
+  });
 });
