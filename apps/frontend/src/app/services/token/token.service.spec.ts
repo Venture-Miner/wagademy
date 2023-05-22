@@ -71,4 +71,9 @@ describe('TokenService', () => {
     });
     expect(response).toEqual(token);
   });
+
+  it('should getTokenValue', () => {
+    const response = service.getTokenValue();
+    expect(response).toEqual(token);
+  });
 });
