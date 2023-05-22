@@ -23,7 +23,7 @@
       />
     </div>
   </div>
-  <div class="px-6 pb-4">
+  <div class="px-4 pb-4 md:px-6">
     <p class="text-neutral-1 pt-8 text-2xl font-bold md:pt-0">Company Name</p>
     <div class="grid grid-cols-1 md:grid-cols-2">
       <p class="text-neutral-2 py-2 font-mono">
@@ -33,21 +33,22 @@
       </p>
     </div>
     <p class="text-neutral-1 pb-4 text-sm font-bold">310 FOLLOWERS</p>
-    <div class="grid grid-cols-1 md:grid-cols-2">
-      <div class="flex gap-x-4 gap-y-4 pt-6 md:gap-y-0">
-        <div class="cursor-pointer">
-          <p class="text-neutral-1 rounded-3xl px-4 py-2 font-mono text-base">
-            Follow +
-          </p>
+    <div class="justify-between pt-6 md:flex md:items-center">
+      <div class="flex gap-x-4 gap-y-4 md:gap-y-0">
+        <div
+          class="text-neutral-1 flex cursor-pointer py-2 font-mono text-base"
+        >
+          <p>Follow</p>
+          <i class="bi bi-plus" aria-hidden="true"></i>
         </div>
-        <div class="w-full md:w-52">
+        <div class="w-full sm:w-24 md:w-32 lg:w-52">
           <lens-academy-button-primary>JOBS</lens-academy-button-primary>
         </div>
-        <div class="w-full md:w-52">
+        <div class="w-full sm:w-24 md:w-32 lg:w-52">
           <lens-academy-button-secondary>MORE</lens-academy-button-secondary>
         </div>
       </div>
-      <div class="flex items-center justify-end gap-x-4">
+      <div class="items-center justify-end gap-x-4 pt-4 sm:flex sm:pt-0">
         <p>Employees</p>
         <img
           class="cursor-pointer"
@@ -67,14 +68,14 @@
           veniam consequat sunt nostrud amet.
         </p>
       </div>
-      <div class="flex items-baseline">
+      <div class="flex items-center">
         <i class="bi bi-briefcase text-secondary pr-2 text-2xl"></i>
         <p class="text-neutral-1 font-mono">Full remote work</p>
       </div>
     </div>
   </div>
   <div class="pt-10">
-    <div class="px-6 py-4">
+    <div class="px-4 py-4 md:px-6">
       <p class="text-neutral-1 pb-4 text-2xl font-bold">Company Publications</p>
       <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
         <div class="max-w-[416px] cursor-pointer">
