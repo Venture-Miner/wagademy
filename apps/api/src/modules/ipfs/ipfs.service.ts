@@ -9,7 +9,7 @@ export class IpfsService {
     port: 5001,
     protocol: 'https',
     headers: {
-      authorization: `Basic ${Buffer.from(
+      Authorization: `Basic ${Buffer.from(
         `${process.env.API_KEY}:${process.env.API_SECRET}`,
         'utf-8'
       ).toString('base64')}`,
