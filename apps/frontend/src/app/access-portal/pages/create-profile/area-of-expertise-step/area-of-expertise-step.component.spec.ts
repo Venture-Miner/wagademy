@@ -52,4 +52,16 @@ describe('AreaOfExpertiseStepComponent', () => {
     addAreaInput.dispatchEvent(event);
     expect(addArea).toHaveBeenCalledTimes(1);
   });
+
+  it('should call previousStep.emit()', async () => {
+    component.mode = 'CREATE';
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const previousStep = jest.spyOn(component.previousStep, 'emit');
+    const previousStepButton = fixture.debugElement.query(
+      By.css('#previous-step')
+    ).nativeElement;
+    previousStepButton.click();
+    expect(previousStep).toHaveBeenCalledTimes(1);
+  });
 });
