@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ParticipantsComponent } from './participants.component';
-import { BaseModalModule } from 'apps/frontend/src/app/shared/base-modal/base-modal.module';
+import { BaseModalModule } from '../../../../shared/base-modal/base-modal.module';
 
 describe('ParticipantsComponent', () => {
   let component: ParticipantsComponent;
