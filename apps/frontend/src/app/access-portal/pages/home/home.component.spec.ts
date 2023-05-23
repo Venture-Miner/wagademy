@@ -51,4 +51,11 @@ describe('HomeComponent', () => {
       .nativeElement.getAttribute('ng-reflect-router-link');
     expect(routerLink).toBe('/home/course-details');
   });
+
+  it('should redirect to "jobs details"', () => {
+    const routerLink = fixture.debugElement
+      .query(By.css('#jobs-details'))
+      .nativeElement.getAttribute('ng-reflect-router-link');
+    expect(routerLink).toBe('/home/jobs-details');
+  });
 });
