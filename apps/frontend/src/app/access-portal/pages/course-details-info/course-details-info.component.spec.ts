@@ -9,6 +9,7 @@ import {
 } from './components';
 import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/navbar-authenticated.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 jest.mock('ethers');
 
@@ -30,9 +31,17 @@ describe('CourseDetailsInfoComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(CourseDetailsInfoComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component course details info', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should redirect to "course details"', () => {
+    const routerLink = fixture.debugElement
+      .query(By.css('#redirect-course'))
+      .nativeElement.getAttribute('ng-reflect-router-link');
+    expect(routerLink).toBe('/home/course-details');
   });
 });
