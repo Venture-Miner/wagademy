@@ -1,19 +1,45 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AreaOfExpertiseStepComponent } from './area-of-expertise-step.component';
+import { InputModule } from '../../../../shared/input/input.module';
+import { ButtonPrimaryModule } from '../../../../shared/button-primary/button-primary.module';
+import { ButtonSecondaryModule } from '../../../../shared/button-secondary/button-secondary.module';
+import { By } from '@angular/platform-browser';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 describe('AreaOfExpertiseStepComponent', () => {
   let component: AreaOfExpertiseStepComponent;
   let fixture: ComponentFixture<AreaOfExpertiseStepComponent>;
+  let fb: FormBuilder;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AreaOfExpertiseStepComponent],
+      imports: [
+        InputModule,
+        ButtonPrimaryModule,
+        ButtonSecondaryModule,
+        ReactiveFormsModule,
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(AreaOfExpertiseStepComponent);
     component = fixture.componentInstance;
+    fb = TestBed.inject(FormBuilder);
+    component.form = fb.group({
+      expertise: fb.control([]),
+    });
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call addArea() clicking the button', () => {
+    const addArea = jest.spyOn(component, 'addArea');
+    const addAreaButton = fixture.debugElement.query(
+      By.css('#add-area')
+    ).nativeElement;
+    addAreaButton.click();
+    expect(addArea).toHaveBeenCalledTimes(1);
   });
 });

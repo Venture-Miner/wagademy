@@ -10,6 +10,7 @@
       You need to fill up to 10 words to describe your areas of expertise
     </h5>
     <lens-academy-input
+      id="add-area-input"
       formControlName="area"
       type="text"
       placeholder="Area"
@@ -17,6 +18,7 @@
     ></lens-academy-input>
     <div class="mt-4">
       <lens-academy-button-primary
+        id="add-area"
         (click)="addArea()"
         [disabled]="areas.length >= 10 || areaControl.invalid"
         >ADD</lens-academy-button-primary
