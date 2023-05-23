@@ -12,6 +12,9 @@ jest.mock('ethers', () => {
         })),
       },
     },
+    utils: {
+      splitSignature: jest.fn(),
+    },
   };
 });
 
@@ -40,5 +43,11 @@ describe('EthersService', () => {
       {}
     );
     expect(signedTypeDataSpyOn).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call splitSignature', () => {
+    const splitSignatureSpyOn = jest.spyOn(service, 'splitSignature');
+    service.splitSignature('any_signature');
+    expect(splitSignatureSpyOn).toHaveBeenCalledTimes(1);
   });
 });
