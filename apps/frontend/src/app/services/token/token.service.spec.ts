@@ -23,9 +23,9 @@ describe('TokenService', () => {
           useValue: {
             ethersService: {},
             client: {
-              mutate: jest
-                .fn()
-                .mockReturnValue({ data: { refresh: { refreshToken } } }),
+              mutate: jest.fn().mockReturnValue({
+                data: { refresh: { refreshToken, accessToken: token } },
+              }),
             },
           },
         },
@@ -99,5 +99,11 @@ describe('TokenService', () => {
   it('should getWalletAddress', () => {
     const response = service.getWalletAddress();
     expect(response).toEqual(wallet);
+  });
+
+  it('should getRefreshToken', async () => {
+    await service.getRefreshToken(refreshToken);
+    expect(service.getTokenValue()).toEqual(token);
+    expect(service.getRefreshTokenValue()).toEqual(refreshToken);
   });
 });
