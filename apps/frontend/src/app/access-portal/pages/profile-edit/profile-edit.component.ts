@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -15,7 +15,7 @@ type StepToEdit =
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.css'],
 })
-export class ProfileEditComponent {
+export class ProfileEditComponent implements OnInit {
   form = this.fb.group({
     name: [''],
     email: [''],

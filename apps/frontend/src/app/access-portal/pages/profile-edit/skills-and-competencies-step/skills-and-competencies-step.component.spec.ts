@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SkillsAndCompetenciesEditStepComponent } from './skills-and-competencies-step.component';
-import { ButtonPrimaryModule } from 'apps/frontend/src/app/shared/button-primary/button-primary.module';
-import { InputModule } from 'apps/frontend/src/app/shared/input/input.module';
+import { ButtonPrimaryModule } from '../../../../shared/button-primary/button-primary.module';
+import { InputModule } from '../../../../shared/input/input.module';
 
 describe('SkillsAndCompetenciesEditStepComponent', () => {
   let component: SkillsAndCompetenciesEditStepComponent;
