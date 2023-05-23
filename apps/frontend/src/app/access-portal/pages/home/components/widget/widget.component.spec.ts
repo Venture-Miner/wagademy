@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WidgetComponent } from './widget.component';
-import { InputModule } from 'apps/frontend/src/app/shared/input/input.module';
+import { InputModule } from '../../../../../shared/input/input.module';
 
 describe('WidgetComponent', () => {
   let component: WidgetComponent;

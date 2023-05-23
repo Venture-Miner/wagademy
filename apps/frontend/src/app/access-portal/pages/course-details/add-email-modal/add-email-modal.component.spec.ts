@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddEmailModalComponent } from './add-email-modal.component';
-import { ButtonPrimaryModule } from 'apps/frontend/src/app/shared/button-primary/button-primary.module';
-import { ButtonSecondaryModule } from 'apps/frontend/src/app/shared/button-secondary/button-secondary.module';
+import { ButtonPrimaryModule } from '../../../../shared/button-primary/button-primary.module';
+import { ButtonSecondaryModule } from '../../../../shared/button-secondary/button-secondary.module';
 
 describe('AddEmailModalComponent', () => {
   let component: AddEmailModalComponent;
