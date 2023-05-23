@@ -106,4 +106,12 @@ describe('TokenService', () => {
     expect(service.getTokenValue()).toEqual(token);
     expect(service.getRefreshTokenValue()).toEqual(refreshToken);
   });
+
+  it('should logout', () => {
+    service.logout();
+    expect(service.getTokenValue()).toBe('');
+    expect(service.getRefreshTokenValue()).toBe('');
+    expect(service.getTokenExpirationValue()).toBe('');
+    expect(service.getRefreshTokenExpirationValue()).toBe('');
+  });
 });
