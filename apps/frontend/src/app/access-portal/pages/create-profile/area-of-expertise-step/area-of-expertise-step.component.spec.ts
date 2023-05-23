@@ -42,4 +42,14 @@ describe('AreaOfExpertiseStepComponent', () => {
     addAreaButton.click();
     expect(addArea).toHaveBeenCalledTimes(1);
   });
+
+  it('should call addArea() when press enter in input', () => {
+    const addArea = jest.spyOn(component, 'addArea');
+    const addAreaInput = fixture.debugElement.query(
+      By.css('#add-area-input')
+    ).nativeElement;
+    const event = new KeyboardEvent('keyup', { key: 'Enter' });
+    addAreaInput.dispatchEvent(event);
+    expect(addArea).toHaveBeenCalledTimes(1);
+  });
 });
