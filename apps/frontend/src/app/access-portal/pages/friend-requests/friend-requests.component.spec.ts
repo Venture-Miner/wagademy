@@ -43,7 +43,7 @@ describe('FriendRequestsComponent', () => {
     expect(requestsList.length).toBe(4);
   });
 
-  it('should display a list of interest', () => {
+  it('should display a list of interests', () => {
     const interestList = fixture.debugElement.queryAll(
       By.css('#interest-list')
     );
