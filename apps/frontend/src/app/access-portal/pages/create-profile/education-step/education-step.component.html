@@ -73,6 +73,7 @@
     *ngIf="mode !== 'VIEW'"
   >
     <lens-academy-button-secondary
+      id="previous-step"
       class="sm:w-52"
       (click)="previousStep.emit()"
       *ngIf="mode === 'CREATE'"

@@ -58,4 +58,15 @@ describe('EducationStepComponent', () => {
     editButton.click();
     expect(edit).toHaveBeenCalledTimes(1);
   });
+
+  it('should call previousStep.emit()', () => {
+    component.mode = 'CREATE';
+    fixture.detectChanges();
+    const previousStep = jest.spyOn(component.previousStep, 'emit');
+    const previousStepButton = fixture.debugElement.query(
+      By.css('#previous-step')
+    ).nativeElement;
+    previousStepButton.click();
+    expect(previousStep).toHaveBeenCalledTimes(1);
+  });
 });
