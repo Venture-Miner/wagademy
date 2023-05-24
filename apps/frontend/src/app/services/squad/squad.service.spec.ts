@@ -4,7 +4,6 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { TokenService } from '../token';
 import { Squad } from '../../interfaces';
 
 jest.mock('ethers');
@@ -23,15 +22,6 @@ describe('SquadService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        {
-          provide: TokenService,
-          useValue: {
-            lensService: { ethersService: {} },
-            getTokenValue: jest.fn().mockReturnValue('any_valid_token'),
-          },
-        },
-      ],
     });
     service = TestBed.inject(SquadService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -95,7 +85,7 @@ describe('SquadService', () => {
     request.flush(squad);
   });
 
-  it('should quit a squad', (done) => {
+  it('should quit from a squad', (done) => {
     const id = squad.id;
     service.quitSquad(id).subscribe((response) => {
       expect(response).toEqual(squad);
