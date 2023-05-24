@@ -32,6 +32,7 @@
     >
       <span class="break-all font-mono text-sm">{{ area }}</span>
       <i
+        id="remove-area"
         [ngClass]="{ invisible: mode === 'VIEW' }"
         class="bi bi-x text-danger mt-1 cursor-pointer text-2xl"
         (click)="removeArea(i)"

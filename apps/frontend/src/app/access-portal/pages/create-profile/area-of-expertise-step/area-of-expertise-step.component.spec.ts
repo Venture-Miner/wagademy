@@ -53,10 +53,9 @@ describe('AreaOfExpertiseStepComponent', () => {
     expect(addArea).toHaveBeenCalledTimes(1);
   });
 
-  it('should call previousStep.emit()', async () => {
+  it('should call previousStep.emit()', () => {
     component.mode = 'CREATE';
     fixture.detectChanges();
-    await fixture.whenStable();
     const previousStep = jest.spyOn(component.previousStep, 'emit');
     const previousStepButton = fixture.debugElement.query(
       By.css('#previous-step')
@@ -65,10 +64,9 @@ describe('AreaOfExpertiseStepComponent', () => {
     expect(previousStep).toHaveBeenCalledTimes(1);
   });
 
-  it('should call nextStep.emit()', async () => {
+  it('should call nextStep.emit()', () => {
     component.mode = 'CREATE';
     fixture.detectChanges();
-    await fixture.whenStable();
     const nextStep = jest.spyOn(component.nextStep, 'emit');
     const nextStepButton = fixture.debugElement.query(
       By.css('#next-or-save')
@@ -77,10 +75,9 @@ describe('AreaOfExpertiseStepComponent', () => {
     expect(nextStep).toHaveBeenCalledTimes(1);
   });
 
-  it('should call saveEdit.emit()', async () => {
+  it('should call saveEdit.emit()', () => {
     component.mode = 'EDIT';
     fixture.detectChanges();
-    await fixture.whenStable();
     const saveEdit = jest.spyOn(component.saveEdit, 'emit');
     const saveEditButton = fixture.debugElement.query(
       By.css('#next-or-save')
@@ -89,15 +86,24 @@ describe('AreaOfExpertiseStepComponent', () => {
     expect(saveEdit).toHaveBeenCalledTimes(1);
   });
 
-  it('should call edit.emit()', async () => {
+  it('should call edit.emit()', () => {
     component.mode = 'VIEW';
     fixture.detectChanges();
-    await fixture.whenStable();
     const edit = jest.spyOn(component.edit, 'emit');
     const editButton = fixture.debugElement.query(
       By.css('#edit')
     ).nativeElement;
     editButton.click();
     expect(edit).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call removeArea(i)', () => {
+    component.mode = 'CREATE';
+    component.areasControl.setValue(['Area 1', 'Area 2', 'Area 3']);
+    fixture.detectChanges();
+    const removeArea = jest.spyOn(component, 'removeArea');
+    const removeAreaButton = fixture.debugElement.query(By.css('#remove-area'));
+    removeAreaButton.nativeElement.click();
+    expect(removeArea).toHaveBeenCalledTimes(1);
   });
 });
