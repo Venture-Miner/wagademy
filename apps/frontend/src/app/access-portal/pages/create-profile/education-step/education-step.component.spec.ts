@@ -29,7 +29,7 @@ describe('EducationStepComponent', () => {
     component = fixture.componentInstance;
     fb = TestBed.inject(FormBuilder);
     component.form = fb.group({
-      academicEducation: fb.control([]),
+      academicEducation: fb.array([]),
     });
     fixture.detectChanges();
   });
@@ -46,5 +46,16 @@ describe('EducationStepComponent', () => {
     ).nativeElement;
     addEducationButton.click();
     expect(addEducation).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call edit.emit()', () => {
+    component.mode = 'VIEW';
+    fixture.detectChanges();
+    const edit = jest.spyOn(component.edit, 'emit');
+    const editButton = fixture.debugElement.query(
+      By.css('#edit')
+    ).nativeElement;
+    editButton.click();
+    expect(edit).toHaveBeenCalledTimes(1);
   });
 });

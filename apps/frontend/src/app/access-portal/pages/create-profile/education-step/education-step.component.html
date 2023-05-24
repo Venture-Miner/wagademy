@@ -48,6 +48,7 @@
           ></lens-academy-text-area>
         </lens-academy-form-field>
         <div
+          id="remove-education"
           class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
           (click)="removeEducation(i)"
           *ngIf="mode !== 'VIEW'"
@@ -59,6 +60,7 @@
     </ng-container>
   </ng-container>
   <div
+    id="edit"
     class="-mt-10 flex cursor-pointer items-center gap-2 self-end"
     (click)="edit.emit()"
     *ngIf="mode === 'VIEW'"
