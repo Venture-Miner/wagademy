@@ -69,4 +69,26 @@ describe('EducationStepComponent', () => {
     previousStepButton.click();
     expect(previousStep).toHaveBeenCalledTimes(1);
   });
+
+  it('should call nextStep.emit()', () => {
+    component.mode = 'CREATE';
+    fixture.detectChanges();
+    const nextStep = jest.spyOn(component.nextStep, 'emit');
+    const nextStepButton = fixture.debugElement.query(
+      By.css('#next-or-save')
+    ).nativeElement;
+    nextStepButton.click();
+    expect(nextStep).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call saveEdit.emit()', () => {
+    component.mode = 'EDIT';
+    fixture.detectChanges();
+    const saveEdit = jest.spyOn(component.saveEdit, 'emit');
+    const saveEditButton = fixture.debugElement.query(
+      By.css('#next-or-save')
+    ).nativeElement;
+    saveEditButton.click();
+    expect(saveEdit).toHaveBeenCalledTimes(1);
+  });
 });
