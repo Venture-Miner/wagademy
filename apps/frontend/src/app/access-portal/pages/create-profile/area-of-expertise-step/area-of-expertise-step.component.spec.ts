@@ -88,4 +88,16 @@ describe('AreaOfExpertiseStepComponent', () => {
     saveEditButton.click();
     expect(saveEdit).toHaveBeenCalledTimes(1);
   });
+
+  it('should call edit.emit()', async () => {
+    component.mode = 'VIEW';
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const edit = jest.spyOn(component.edit, 'emit');
+    const editButton = fixture.debugElement.query(
+      By.css('#edit')
+    ).nativeElement;
+    editButton.click();
+    expect(edit).toHaveBeenCalledTimes(1);
+  });
 });
