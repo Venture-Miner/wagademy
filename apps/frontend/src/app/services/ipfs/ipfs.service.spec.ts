@@ -22,6 +22,7 @@ const ipfsBody = {
   tags: [],
   appId: 'Academy',
 };
+
 describe('IpfsService', () => {
   let service: IpfsService;
   let httpMock: HttpTestingController;
