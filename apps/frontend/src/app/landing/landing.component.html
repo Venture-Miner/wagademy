@@ -13,7 +13,9 @@
       information among other communication channels
     </h2>
     <div class="mx-auto w-52 -translate-y-1/2">
-      <lens-academy-button-primary [routerLink]="['/account-type']"
+      <lens-academy-button-primary
+        id="account-type"
+        [routerLink]="['/account-type']"
         >GET STARTED</lens-academy-button-primary
       >
     </div>
@@ -36,6 +38,7 @@
       <div
         class="h-full w-full max-w-[304px] cursor-pointer"
         (click)="detailsModalType = 'RESUME'; detailsModalData = student"
+        id="student-list"
         *ngFor="let student of students"
       >
         <lens-academy-card
@@ -52,6 +55,7 @@
       <div
         class="h-full w-full max-w-[304px] cursor-pointer"
         (click)="detailsModalType = 'SQUAD'; detailsModalData = team"
+        id="team-list"
         *ngFor="let team of teams"
       >
         <lens-academy-card
@@ -106,6 +110,7 @@
         class="h-full w-full max-w-[304px] cursor-pointer"
         (click)="detailsModalType = 'TEACHER'; detailsModalData = teacher"
         *ngFor="let teacher of teachers"
+        id="teacher-list"
       >
         <lens-academy-card
           [avatarURL]="teacher.avatarURL"

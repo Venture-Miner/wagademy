@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddEmailModalComponent } from './add-email-modal.component';
-import { ButtonSecondaryModule } from 'apps/frontend/src/app/shared/button-secondary/button-secondary.module';
-import { ButtonPrimaryModule } from 'apps/frontend/src/app/shared/button-primary/button-primary.module';
+import { ButtonPrimaryModule } from '../../../../shared/button-primary/button-primary.module';
+import { ButtonSecondaryModule } from '../../../../shared/button-secondary/button-secondary.module';
 import { By } from '@angular/platform-browser';
 
 describe('AddEmailModalComponent', () => {
@@ -11,12 +11,10 @@ describe('AddEmailModalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AddEmailModalComponent],
-      imports: [ButtonSecondaryModule, ButtonPrimaryModule],
+      imports: [ButtonPrimaryModule, ButtonSecondaryModule],
     }).compileComponents();
-
     fixture = TestBed.createComponent(AddEmailModalComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create the component add email modal', () => {

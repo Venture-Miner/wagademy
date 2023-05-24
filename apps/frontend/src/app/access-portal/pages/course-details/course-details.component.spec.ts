@@ -5,6 +5,8 @@ import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
+jest.mock('ethers');
+
 describe('CourseDetailsComponent', () => {
   let component: CourseDetailsComponent;
   let fixture: ComponentFixture<CourseDetailsComponent>;
@@ -18,7 +20,6 @@ describe('CourseDetailsComponent', () => {
         RouterTestingModule,
       ],
     }).compileComponents();
-
     fixture = TestBed.createComponent(CourseDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

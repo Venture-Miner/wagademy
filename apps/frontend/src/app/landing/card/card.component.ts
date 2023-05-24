@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./card.component.css'],
 })
 export class CardComponent {
-  @Input() avatarURL: string = '';
-  @Input() about: string = '';
-  @Input() name: string = '';
+  @Input() avatarURL = '';
+  @Input() about = '';
+  @Input() name = '';
 }
