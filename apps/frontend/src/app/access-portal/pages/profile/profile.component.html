@@ -8,7 +8,11 @@
       <i class="bi-arrow-left text-xl"></i>
       <span class="font-mono font-bold">Back</span>
     </div>
-    <img src="../../assets/img/alert-icon.svg" alt="alert icon" />
+    <img
+      *ngIf="!completed"
+      src="../../assets/img/alert-icon.svg"
+      alt="alert icon"
+    />
   </div>
   <div class="mx-auto max-w-[786px]">
     <div class="divide-neutral-3 grid gap-8 divide-y-2 divide-solid">
