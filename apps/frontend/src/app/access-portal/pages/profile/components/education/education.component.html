@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-4">
   <div class="flex items-start justify-between gap-4">
-    <h3 class="break-all text-2xl font-bold text-secondary">Education</h3>
+    <h3 class="text-secondary break-all text-2xl font-bold">Education</h3>
     <div
       class="flex shrink-0 items-center rounded-full bg-opacity-10"
       [ngClass]="completed === 100 ? 'bg-secondary' : 'bg-danger'"
@@ -12,32 +12,33 @@
       >
     </div>
   </div>
-  <div class="divide-y-2 divide-solid divide-neutral-3">
+  <div class="divide-neutral-3 divide-y-2 divide-solid">
     <div
       *ngFor="let academicEducation of academicEducation"
       class="flex flex-col gap-4 py-4 first:pt-0 last:pb-0"
     >
       <div class="flex flex-col gap-2">
-        <span class="text-sm font-bold text-neutral-1">EDUCATION</span>
-        <span class="font-mono text-neutral-2"
+        <span class="text-neutral-1 text-sm font-bold">EDUCATION</span>
+        <span class="text-neutral-2 font-mono"
           >{{ academicEducation?.education }}
         </span>
       </div>
       <div class="flex flex-col gap-2">
-        <span class="text-sm font-bold text-neutral-1">DEGREE</span>
-        <span class="font-mono text-neutral-2"
+        <span class="text-neutral-1 text-sm font-bold">DEGREE</span>
+        <span class="text-neutral-2 font-mono"
           >{{ academicEducation?.course }}
         </span>
       </div>
       <div class="flex flex-col gap-2">
-        <span class="text-sm font-bold text-neutral-1">DESCRIPTION</span>
-        <span class="font-mono text-neutral-2"
+        <span class="text-neutral-1 text-sm font-bold">DESCRIPTION</span>
+        <span class="text-neutral-2 font-mono"
           >{{ academicEducation?.description }}
         </span>
       </div>
     </div>
   </div>
   <div
+    id="redirect-profile-edit"
     class="mt-4 flex cursor-pointer items-center gap-2 self-end"
     [routerLink]="['/home/profile/profile-edit']"
     [queryParams]="{ stepToEdit: 'EDUCATION' }"
