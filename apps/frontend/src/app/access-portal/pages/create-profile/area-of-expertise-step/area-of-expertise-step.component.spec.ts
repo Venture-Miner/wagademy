@@ -64,4 +64,16 @@ describe('AreaOfExpertiseStepComponent', () => {
     previousStepButton.click();
     expect(previousStep).toHaveBeenCalledTimes(1);
   });
+
+  it('should call nextStep.emit()', async () => {
+    component.mode = 'CREATE';
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const nextStep = jest.spyOn(component.nextStep, 'emit');
+    const nextStepButton = fixture.debugElement.query(
+      By.css('#next-or-save')
+    ).nativeElement;
+    nextStepButton.click();
+    expect(nextStep).toHaveBeenCalledTimes(1);
+  });
 });

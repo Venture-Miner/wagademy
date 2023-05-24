@@ -58,6 +58,7 @@
       >PREVIOUS</lens-academy-button-secondary
     >
     <lens-academy-button-primary
+      id="next-or-save"
       class="sm:w-52"
       (click)="mode === 'CREATE' ? nextStep.emit() : saveEdit.emit()"
       >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</lens-academy-button-primary
