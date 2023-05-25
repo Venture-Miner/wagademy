@@ -7,6 +7,7 @@
       You need to fill up to 10 words to describe your skills and competencies
     </h5>
     <lens-academy-input
+      id="add-skill-input"
       formControlName="skill"
       type="text"
       placeholder="Skill"
@@ -14,6 +15,7 @@
     ></lens-academy-input>
     <div class="mt-4">
       <lens-academy-button-primary
+        id="add-skill"
         (click)="addSkill()"
         [disabled]="skills.length >= 10 || skillControl.invalid"
         >ADD</lens-academy-button-primary
@@ -27,12 +29,14 @@
     >
       <span class="break-all font-mono text-sm">{{ skill }}</span>
       <i
+        id="remove-skill"
         class="bi bi-x text-danger mt-1 cursor-pointer text-2xl"
         (click)="removeSkill(i)"
       ></i>
     </div>
   </div>
   <lens-academy-button-primary
+    id="save-button"
     class="w-full self-end sm:w-52"
     (click)="saveEdit.emit()"
     >SAVE</lens-academy-button-primary
