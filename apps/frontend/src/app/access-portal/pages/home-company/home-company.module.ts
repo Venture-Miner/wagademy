@@ -1,0 +1,29 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HomeCompanyRoutingModule } from './home-company-routing.module';
+import { HomeCompanyComponent } from './home-company.component';
+import { NavbarAuthenticatedCompanyModule } from '../../../shared/navbar-authenticated-company/navbar-authenticated-company.module';
+import { InputModule } from '../../../shared/input/input.module';
+import { InputSelectModule } from '../../../shared/input-select/input-select.module';
+import { WidgetModule } from '../../../shared/widget/widget.module';
+import { CompanyCardComponent } from './components/company-card';
+import { CompaniesActiviesComponent } from './components/companies-activities';
+import { ButtonPrimaryModule } from '../../../shared/button-primary/button-primary.module';
+
+@NgModule({
+  declarations: [
+    HomeCompanyComponent,
+    CompanyCardComponent,
+    CompaniesActiviesComponent,
+  ],
+  imports: [
+    CommonModule,
+    HomeCompanyRoutingModule,
+    NavbarAuthenticatedCompanyModule,
+    InputModule,
+    InputSelectModule,
+    WidgetModule,
+    ButtonPrimaryModule,
+  ],
+})
+export class HomeCompanyModule {}
