@@ -26,6 +26,7 @@ import {
   verify,
   getProfile,
   updateProfile,
+  getProfileAttributes,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
@@ -120,4 +121,6 @@ export class LensService {
   getProfile = gql(getProfile);
 
   updateProfile = gql(updateProfile);
+
+  getProfileAttributes = gql(getProfileAttributes);
 }
