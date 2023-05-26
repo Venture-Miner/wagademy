@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeCompanyComponent } from './home-company.component';
-import { CompaniesActiviesComponent, CompanyCardComponent } from './components';
+import {
+  CompaniesActivitiesComponent,
+  CompanyCardComponent,
+} from './components';
 import { NavbarAuthenticatedCompanyModule } from '../../../shared/navbar-authenticated-company/navbar-authenticated-company.module';
 import { WidgetModule } from '../../../shared/widget/widget.module';
 import { InputModule } from '../../../shared/input/input.module';
@@ -17,7 +20,7 @@ describe('HomeCompanyComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         HomeCompanyComponent,
-        CompaniesActiviesComponent,
+        CompaniesActivitiesComponent,
         CompanyCardComponent,
       ],
       imports: [

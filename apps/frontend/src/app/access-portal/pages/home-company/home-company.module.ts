@@ -7,14 +7,14 @@ import { InputModule } from '../../../shared/input/input.module';
 import { InputSelectModule } from '../../../shared/input-select/input-select.module';
 import { WidgetModule } from '../../../shared/widget/widget.module';
 import { CompanyCardComponent } from './components/company-card';
-import { CompaniesActiviesComponent } from './components/companies-activities';
+import { CompaniesActivitiesComponent } from './components/companies-activities';
 import { ButtonPrimaryModule } from '../../../shared/button-primary/button-primary.module';
 
 @NgModule({
   declarations: [
     HomeCompanyComponent,
     CompanyCardComponent,
-    CompaniesActiviesComponent,
+    CompaniesActivitiesComponent,
   ],
   imports: [
     CommonModule,
