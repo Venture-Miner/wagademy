@@ -6,12 +6,12 @@ import { LensService } from '../../../services/lens/lens.service';
 import { TokenService } from '../../../services/token/token.service';
 import { EthersService, IpfsService } from '../../../services';
 import { v4 as uuidv4 } from 'uuid';
-import { ProfileMetadata, MetadataVersions } from '../../../interfaces';
+import {
+  ProfileMetadata,
+  MetadataVersions,
+  ACCOUNT_TYPE,
+} from '../../../interfaces';
 import { BroadcastDocument } from '../../../interfaces/generated';
-enum ACCOUNT_TYPE {
-  physicalPerson = 'physicalPerson',
-  company = 'company',
-}
 
 @Component({
   selector: 'lens-academy-account-type',
