@@ -4,7 +4,6 @@ import {
   CourseCardComponent,
   FriendCardComponent,
   JobCardComponent,
-  WidgetComponent,
 } from './components';
 import { PaginationComponent } from '../../../shared/pagination/pagination.component';
 import { InputSelectModule } from '../../../shared/input-select/input-select.module';
@@ -12,6 +11,7 @@ import { InputModule } from '../../../shared/input/input.module';
 import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/navbar-authenticated.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
+import { WidgetModule } from '../../../shared/widget/widget.module';
 
 jest.mock('ethers');
 
@@ -27,13 +27,13 @@ describe('HomeComponent', () => {
         FriendCardComponent,
         PaginationComponent,
         JobCardComponent,
-        WidgetComponent,
       ],
       imports: [
         InputSelectModule,
         InputModule,
         NavbarAuthenticatedModule,
         RouterTestingModule,
+        WidgetModule,
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(HomeComponent);
