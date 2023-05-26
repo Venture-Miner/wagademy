@@ -187,3 +187,9 @@ export interface ProfileMetadata {
    */
   attributes: AttributeData[];
 }
+
+
+export enum ACCOUNT_TYPE {
+  physicalPerson = 'physicalPerson',
+  company = 'company',
+}
