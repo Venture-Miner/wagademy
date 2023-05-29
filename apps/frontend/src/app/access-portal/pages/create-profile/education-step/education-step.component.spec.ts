@@ -91,4 +91,23 @@ describe('EducationStepComponent', () => {
     saveEditButton.click();
     expect(saveEdit).toHaveBeenCalledTimes(1);
   });
+
+  it('should call removeEducation(i)', () => {
+    component.mode = 'CREATE';
+    component.academicEducation.push(
+      fb.group({
+        education: ['any_education'],
+        course: ['any_course'],
+        description: ['any_description'],
+      })
+    );
+    fixture.detectChanges();
+    const removeEducation = jest.spyOn(component, 'removeEducation');
+    const removeEducationButton = fixture.debugElement.query(
+      By.css('#remove-education')
+    );
+    removeEducationButton.nativeElement.click();
+    expect(component.academicEducation.value).toEqual([]);
+    expect(removeEducation).toHaveBeenCalledTimes(1);
+  });
 });
