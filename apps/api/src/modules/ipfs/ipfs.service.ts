@@ -17,7 +17,8 @@ export class IpfsService {
   });
 
   async uploadIpfs(data: any) {
-    const result = await this.client.add(JSON.stringify(data));
-    return result;
+    const entry = Buffer.isBuffer(data) ? data : JSON.stringify(data);
+    const { cid } = await this.client.add(entry);
+    return { cid: cid.toString() };
   }
 }

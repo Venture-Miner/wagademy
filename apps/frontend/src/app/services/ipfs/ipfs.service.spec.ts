@@ -7,6 +7,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 jest.mock('ethers');
+
 const ipfsBody = {
   version: '2.0.0',
   mainContentFocus: 'TEXT_ONLY',
@@ -14,9 +15,6 @@ const ipfsBody = {
   metadata_id: uuidv4(),
   locale: 'en-US',
   content: JSON.stringify({ curriculum: 'curriculum' }),
-  external_url: null,
-  image: null,
-  imageMimeType: null,
   name: `@any_handle Curriculum`,
   attributes: [],
   tags: [],
@@ -40,7 +38,7 @@ describe('IpfsService', () => {
   });
 
   it('should save a post in ipfs', (done) => {
-    service.uploadIpfs(ipfsBody).subscribe((response) => {
+    service.createPost(ipfsBody).subscribe((response) => {
       expect(response).toEqual(ipfsBody);
       done();
     });
