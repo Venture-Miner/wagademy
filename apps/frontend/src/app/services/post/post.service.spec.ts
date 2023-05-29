@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { PostService } from './post.service';
 
+jest.mock('ethers');
+
 describe('PostService', () => {
   let service: PostService;
 
