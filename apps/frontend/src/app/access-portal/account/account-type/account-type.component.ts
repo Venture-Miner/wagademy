@@ -10,6 +10,7 @@ import {
   ProfileMetadata,
   MetadataVersions,
   ACCOUNT_TYPE,
+  AttributeData,
 } from '../../../interfaces';
 import { BroadcastDocument } from '../../../interfaces/generated';
 
@@ -149,10 +150,10 @@ export class AccountTypeComponent {
       data: { profile },
     }: { data: { profile: ProfileMetadata } } =
       await this.lensService.client.query({
-        query: this.lensService.getProfile,
+        query: this.lensService.getProfileAttributes,
         variables: { request: { profileId } },
       });
-    const attributes = profile.attributes.filter(
+    const attributes: AttributeData[] = profile.attributes.filter(
       ({ key }) => key === 'ACCOUNT_TYPE'
     );
     if (!attributes.length)
