@@ -159,6 +159,7 @@ export class AccountTypeComponent {
     if (!attributes.length)
       await this.setAccountTypeAttribute(profile, profileId, academyPosts);
     else {
+      this.tokenService.setAccountType(attributes[0].value);
       if (attributes[0].value === ACCOUNT_TYPE.physicalPerson) {
         if (!academyPosts[0]) await this.router.navigate(['/create-profile']);
         else await this.router.navigate(['/home']);
@@ -180,6 +181,7 @@ export class AccountTypeComponent {
       attributes.push({ key, value });
     });
     const accountType = this.accountType as string;
+    this.tokenService.setAccountType(accountType);
     const profileMetadata: ProfileMetadata = {
       name: profile.name,
       metadata_id: uuidv4(),

@@ -12,19 +12,7 @@ export class AccountTypeCompanyGuard {
   ) {}
 
   async canActivate(): Promise<boolean | UrlTree> {
-    const {
-      data: {
-        profile: { attributes },
-      },
-    }: { data: { profile: ProfileMetadata } } =
-      await this.lensService.client.query({
-        query: this.lensService.getProfileAttributes,
-        variables: { request: { profileId: '0x7ffe' } },
-      });
-    const accountTypeAttribute = attributes.filter(
-      ({ key }) => key === 'ACCOUNT_TYPE'
-    );
-    if (accountTypeAttribute[0].value === ACCOUNT_TYPE.physicalPerson) {
+    if (this.tokenService.getAccountType() === ACCOUNT_TYPE.physicalPerson) {
       this.tokenService.logout();
       return this.redirectPage();
     }
