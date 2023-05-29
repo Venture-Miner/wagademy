@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './home-company.component.html',
   styleUrls: ['./home-company.component.css'],
 })
-export class HomeCompanyComponent {}
+export class HomeCompanyComponent {
+  showDetailsModal = false;
+}

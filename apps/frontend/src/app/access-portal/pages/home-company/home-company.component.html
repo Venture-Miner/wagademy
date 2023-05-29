@@ -1,7 +1,16 @@
 <lens-academy-navbar-authenticated-company></lens-academy-navbar-authenticated-company>
 <section class="container mx-auto mb-12 px-6">
   <div class="mx-auto mb-10 mt-8 max-w-lg 2xl:max-w-xl">
-    <lens-academy-widget></lens-academy-widget>
+    <lens-academy-widget>
+      <div class="button pt-3">
+        <button
+          class="bg-secondary text-neutral-4 hover:bg-primary hover:text-neutral-1 rounded-lg px-4"
+          (click)="showDetailsModal = true"
+        >
+          Post Certificate
+        </button>
+      </div>
+    </lens-academy-widget>
   </div>
   <div class="mb-10 flex flex-col gap-8 sm:flex-row">
     <lens-academy-input
@@ -48,3 +57,7 @@
     </div>
   </div>
 </section>
+<lens-academy-details-modal
+  *ngIf="showDetailsModal"
+  (cancel)="showDetailsModal = false"
+></lens-academy-details-modal>

@@ -9,12 +9,14 @@ import { WidgetModule } from '../../../shared/widget/widget.module';
 import { CompanyCardComponent } from './components/company-card';
 import { CompaniesActivitiesComponent } from './components/companies-activities';
 import { ButtonPrimaryModule } from '../../../shared/button-primary/button-primary.module';
+import { DetailsModalComponent } from './components/details-modal';
 
 @NgModule({
   declarations: [
     HomeCompanyComponent,
     CompanyCardComponent,
     CompaniesActivitiesComponent,
+    DetailsModalComponent,
   ],
   imports: [
     CommonModule,
