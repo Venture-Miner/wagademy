@@ -33,6 +33,7 @@ import { EthersService } from '../ethers';
 import LENS_HUB_ABI from '../../../assets/abis/lens-hub-contract-abi.json';
 import LENS_PERIPHERY_ABI from '../../../assets/abis/lens-periphery-data-provider.json';
 import fetch from 'cross-fetch';
+import { createCollectTypedData } from '../../graphql/collect/collect';
 
 @Injectable({
   providedIn: 'root',
@@ -120,4 +121,6 @@ export class LensService {
   following = gql(createFollowingTypedData);
 
   getProfile = gql(getProfile);
+
+  collect = gql(createCollectTypedData);
 }
