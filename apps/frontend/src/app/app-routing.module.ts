@@ -19,6 +19,13 @@ const routes: Routes = [
           ).then((m) => m.AccountTypeModule),
       },
       {
+        path: 'account',
+        loadChildren: () =>
+          import('./access-portal/account/account/account.module').then(
+            (m) => m.AccountModule
+          ),
+      },
+      {
         path: 'create-profile',
         canActivate: [AuthGuard],
         loadChildren: () =>
