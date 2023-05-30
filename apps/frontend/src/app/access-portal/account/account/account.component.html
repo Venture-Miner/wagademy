@@ -1,0 +1,103 @@
+<div class="flex min-h-screen flex-col">
+  <lens-academy-navbar></lens-academy-navbar>
+  <div class="flex flex-1 flex-col items-center justify-center py-8 sm:py-0">
+    <lens-academy-button-primary
+      class="mt-12 w-52"
+      (click)="showConnectWalletModal = true"
+      >CONNECT WALLET</lens-academy-button-primary
+    >
+    <a
+      class="text-secondary mt-24 px-10 text-center text-lg"
+      [routerLink]="['/account-type']"
+      >Click here and access Academy as a <b>Company</b> or
+      <b>Physical Person</b>
+    </a>
+  </div>
+</div>
+<lens-academy-base-modal
+  title="CONNECT WALLET"
+  *ngIf="showConnectWalletModal"
+  (modalClosed)="showConnectWalletModal = false"
+>
+  <div class="flex flex-col items-center gap-4 py-6">
+    <img src="../../assets/img/metamask-logo.svg" alt="metamask logo" />
+    <span
+      class="text-secondary cursor-pointer font-mono font-bold tracking-wider underline"
+      (click)="connectWithMetamask()"
+      >Sign in with Metamask</span
+    >
+  </div>
+</lens-academy-base-modal>
+<lens-academy-base-modal
+  title="CREATE LENS PROFILE"
+  *ngIf="doesNotHaveAccount"
+  (modalClosed)="doesNotHaveAccount = false"
+>
+  <form
+    class="flex flex-col items-center gap-4 px-6 py-6 font-mono"
+    [formGroup]="form"
+  >
+    <img src="../../assets/img/lens-logo.svg" alt="lens logo" />
+    <p>
+      It looks like you don't have a profile linked to this wallet yet. Would
+      you like to create one? If yes, please provide us with the handle you
+      would like to have in your brand new Lens profile.
+    </p>
+    <lens-academy-input
+      class="mt-6"
+      formControlName="handle"
+      placeholder="Profile handle"
+    ></lens-academy-input>
+    <p
+      *ngIf="handleTaken"
+      class="text-danger flex justify-center text-center text-sm"
+    >
+      Handle already taken.
+    </p>
+    <p
+      *ngIf="
+        form.invalid && form.touched && form.controls['handle'].value === ''
+      "
+      class="text-danger flex justify-center text-center text-sm"
+    >
+      You need to provide a handle.
+    </p>
+    <p
+      *ngIf="
+        form.invalid &&
+        form.touched &&
+        form.controls['handle'].value!.length > 31
+      "
+      class="text-danger flex justify-center text-center text-sm"
+    >
+      The handle is too big.
+    </p>
+    <p
+      *ngIf="
+        form.invalid &&
+        form.touched &&
+        form.controls['handle'].value!.length < 5 &&
+        form.controls['handle'].value!.length > 0
+      "
+      class="text-danger flex justify-center text-center text-sm"
+    >
+      The handle is too small.
+    </p>
+    <div class="flex h-20">
+      <button
+        [disabled]="form.invalid"
+        *ngIf="!isLoading"
+        class="text-secondary flex cursor-pointer self-center font-mono font-bold tracking-wider underline disabled:cursor-default disabled:opacity-30"
+        (click)="createProfileRequest()"
+      >
+        Create
+      </button>
+      <img
+        class="h-20 w-20"
+        *ngIf="isLoading"
+        src="../../assets/img/loading-icon.svg"
+        alt="loading icon"
+      />
+    </div>
+  </form>
+</lens-academy-base-modal>
