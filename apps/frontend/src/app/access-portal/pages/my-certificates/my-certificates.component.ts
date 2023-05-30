@@ -11,7 +11,7 @@ export class MyCertificatesComponent {
   claimedCertificateModal = false;
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  onResize() {
     if (window.innerWidth < 640) {
       this.exhibitionStyle = 'grid';
     }

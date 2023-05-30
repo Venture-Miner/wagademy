@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ParticipantsComponent } from './participants.component';
+import { BaseModalModule } from '../../../../shared/base-modal/base-modal.module';
 
 describe('ParticipantsComponent', () => {
   let component: ParticipantsComponent;
@@ -8,13 +8,11 @@ describe('ParticipantsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ParticipantsComponent ]
-    })
-    .compileComponents();
-
+      declarations: [ParticipantsComponent],
+      imports: [BaseModalModule],
+    }).compileComponents();
     fixture = TestBed.createComponent(ParticipantsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

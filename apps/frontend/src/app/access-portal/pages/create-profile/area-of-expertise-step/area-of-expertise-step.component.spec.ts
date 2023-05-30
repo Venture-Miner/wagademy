@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AreaOfExpertiseStepComponent } from './area-of-expertise-step.component';
 
 describe('AreaOfExpertiseStepComponent', () => {
@@ -8,13 +7,10 @@ describe('AreaOfExpertiseStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AreaOfExpertiseStepComponent ]
-    })
-    .compileComponents();
-
+      declarations: [AreaOfExpertiseStepComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(AreaOfExpertiseStepComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

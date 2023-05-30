@@ -1,26 +1,46 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { create } from 'ipfs-http-client';
-import { Buffer } from 'buffer';
 import { environment } from '../../../environments/environment';
+import { getHostname } from '../../utils';
+import { TokenService } from '../token';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IpfsService {
-  client = create({
-    host: 'ipfs.infura.io',
-    port: 5001,
-    protocol: 'https',
-    headers: {
-      authorization: `Basic ${Buffer.from(
-        `${environment.API_KEY}:${environment.API_SECRET}`,
-        'utf-8'
-      ).toString('base64')}`,
-    },
-  });
+  URL = '';
 
-  async uploadIpfs(data: any) {
-    const result = await this.client.add(JSON.stringify(data));
-    return result;
+  constructor(private http: HttpClient, private tokenService: TokenService) {
+    this.URL = environment.urlBase[getHostname()];
+  }
+
+  createPost(data: any) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.tokenService.getTokenValue()
+    );
+    return this.http.post<{ cid: string }>(
+      `${this.URL}/ipfs/create-post`,
+      data,
+      {
+        headers,
+      }
+    );
+  }
+
+  uploadImage(blob: Blob) {
+    const formData = new FormData();
+    formData.append('file', blob, 'certificate');
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.tokenService.getTokenValue()
+    );
+    return this.http.post<{ cid: string }>(
+      `${this.URL}/ipfs/upload-image`,
+      formData,
+      {
+        headers,
+      }
+    );
   }
 }

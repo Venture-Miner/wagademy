@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SkillsAndCompetenciesStepComponent } from './skills-and-competencies-step.component';
 
 describe('SkillsAndCompetenciesStepComponent', () => {
@@ -8,13 +7,10 @@ describe('SkillsAndCompetenciesStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SkillsAndCompetenciesStepComponent ]
-    })
-    .compileComponents();
-
+      declarations: [SkillsAndCompetenciesStepComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(SkillsAndCompetenciesStepComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
