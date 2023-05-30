@@ -24,6 +24,8 @@ import {
   recommendedProfiles,
   refreshToken,
   verify,
+  createFollowingTypedData,
+  getProfile,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
@@ -115,6 +117,10 @@ export class LensService {
   refreshToken = gql(refreshToken);
 
   verifyToken = gql(verify);
+
+  following = gql(createFollowingTypedData);
+
+  getProfile = gql(getProfile);
 
   collect = gql(createCollectTypedData);
 }
