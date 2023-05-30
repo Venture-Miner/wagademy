@@ -8,14 +8,34 @@
       class="flex items-center gap-8"
     >
       <img src="../../../assets/img/books-icon.svg" alt="books icon" />
-      <span class="text-neutral-2 font-mono"
-        >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-        sint</span
-      >
+      <div class="grid gap-3">
+        <span class="text-neutral-2 font-mono"
+          >Congratulations on completing the
+          <span class="font-bold">{{ attributes.courseName }}</span> course! 🎉
+        </span>
+        <span class="text-neutral-2 font-mono text-sm"
+          >Please click the button below to download and claim your
+          well-deserved certificate.</span
+        >
+      </div>
     </div>
-    <div [ngClass]="listType === 'grid' ? 'w-9/12' : 'w-2/12'">
+    <div
+      [ngClass]="listType === 'grid' ? 'w-9/12' : 'w-2/12'"
+      class="text-center"
+    >
       <lens-academy-button-primary (click)="claim.emit()"
         >CLAIM</lens-academy-button-primary
+      >
+      <a
+        class="text-secondary cursor-pointer text-xs hover:underline"
+        (click)="
+          downloadPDFCertificate(
+            attributes.participant,
+            attributes.courseName,
+            attributes.conductor
+          )
+        "
+        >DOWNLOAD PDF</a
       >
     </div>
   </div>
