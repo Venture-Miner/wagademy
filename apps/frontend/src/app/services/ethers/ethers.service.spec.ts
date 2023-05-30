@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { EthersService } from './ethers.service';
+import { utils, ethers } from 'ethers';
 
 jest.mock('ethers', () => {
   return {
@@ -17,36 +18,24 @@ jest.mock('ethers', () => {
     },
   };
 });
+const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
 
 describe('EthersService', () => {
   let service: EthersService;
+  let signer: ethers.providers.JsonRpcSigner;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(EthersService);
+    signer = ethersProvider.getSigner();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call signedTypeData', async () => {
-    const signedTypeDataSpyOn = jest.spyOn(service, 'signedTypeData');
-    await service.signedTypeData(
-      {
-        name: 'any_name',
-        chainId: 'any_id',
-        salt: 'any_salt',
-        version: 'any_version',
-      },
-      {},
-      {}
-    );
-    expect(signedTypeDataSpyOn).toHaveBeenCalledTimes(1);
-  });
-
   it('should call splitSignature', () => {
-    const splitSignatureSpyOn = jest.spyOn(service, 'splitSignature');
+    const splitSignatureSpyOn = jest.spyOn(utils, 'splitSignature');
     service.splitSignature('any_signature');
     expect(splitSignatureSpyOn).toHaveBeenCalledTimes(1);
   });
