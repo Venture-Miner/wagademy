@@ -1,5 +1,5 @@
-export const getProfile = `query Profile {
-  profile(request: { profileId: "0x7e29" }) {
+export const getProfile = `query Profile($request: SingleProfileQueryRequest!) {
+  profile(request: $request) {
     id
     name
     bio
