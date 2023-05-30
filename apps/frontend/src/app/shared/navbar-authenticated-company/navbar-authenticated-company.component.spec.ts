@@ -1,25 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NavbarAuthenticatedComponent } from './navbar-authenticated.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DropdownLanguageComponent } from './dropdown-language/dropdown-language.component';
-import { DropdownProfileComponent } from './dropdown-profile/dropdown-profile.component';
+import { NavbarAuthenticatedCompanyComponent } from './navbar-authenticated-company.component';
+import { DropdownProfileCompanyComponent } from './dropdown-profile-company/dropdown-profile-company.component';
+import { DropdownLanguageModule } from '../dropdown-language/dropdown-language.module';
 
 jest.mock('ethers');
 
-describe('NavbarAuthenticatedComponent', () => {
-  let component: NavbarAuthenticatedComponent;
-  let fixture: ComponentFixture<NavbarAuthenticatedComponent>;
+describe('NavbarAuthenticatedCompanyComponent', () => {
+  let component: NavbarAuthenticatedCompanyComponent;
+  let fixture: ComponentFixture<NavbarAuthenticatedCompanyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        NavbarAuthenticatedComponent,
-        DropdownLanguageComponent,
-        DropdownProfileComponent,
+        NavbarAuthenticatedCompanyComponent,
+        DropdownProfileCompanyComponent,
       ],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, DropdownLanguageModule],
     }).compileComponents();
-    fixture = TestBed.createComponent(NavbarAuthenticatedComponent);
+    fixture = TestBed.createComponent(NavbarAuthenticatedCompanyComponent);
     component = fixture.componentInstance;
   });
 

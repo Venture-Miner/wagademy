@@ -8,7 +8,6 @@ import { InputSelectModule } from '../../../shared/input-select/input-select.mod
 import { WidgetModule } from '../../../shared/widget/widget.module';
 import { CompanyCardComponent } from './components/company-card';
 import { CompaniesActivitiesComponent } from './components/companies-activities';
-import { ButtonPrimaryModule } from '../../../shared/button-primary/button-primary.module';
 import { DetailsModalComponent } from './components/details-modal';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { DetailsModalComponent } from './components/details-modal';
     InputModule,
     InputSelectModule,
     WidgetModule,
-    ButtonPrimaryModule,
   ],
 })
 export class HomeCompanyModule {}
