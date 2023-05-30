@@ -10,6 +10,7 @@
       You need to fill in up to 10 words to describe what you are looking for
     </h5>
     <lens-academy-input
+      id="add-interest-input"
       formControlName="interest"
       type="text"
       placeholder="Interest"
@@ -17,6 +18,7 @@
     ></lens-academy-input>
     <div class="mt-4">
       <lens-academy-button-primary
+        id="add-interest"
         (click)="addInterest()"
         [disabled]="interests.length >= 10 || interestControl.invalid"
         >ADD</lens-academy-button-primary
@@ -30,6 +32,7 @@
     >
       <span class="break-all font-mono text-sm">{{ interest }}</span>
       <i
+        id="remove-interest"
         [ngClass]="{ invisible: mode === 'VIEW' }"
         class="bi bi-x text-danger mt-1 cursor-pointer text-2xl"
         (click)="removeInterest(i)"
@@ -37,6 +40,7 @@
     </div>
   </div>
   <div
+    id="edit"
     class="mt-3 flex cursor-pointer items-center justify-end gap-2"
     (click)="edit.emit()"
     *ngIf="mode === 'VIEW'"
@@ -49,12 +53,14 @@
     *ngIf="mode !== 'VIEW'"
   >
     <lens-academy-button-secondary
+      id="previous-step"
       class="sm:w-52"
       (click)="previousStep.emit()"
       *ngIf="mode === 'CREATE'"
       >PREVIOUS</lens-academy-button-secondary
     >
     <lens-academy-button-primary
+      id="next-or-save"
       class="sm:w-52"
       (click)="mode === 'CREATE' ? nextStep.emit() : saveEdit.emit()"
       >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</lens-academy-button-primary
