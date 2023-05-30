@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TextAreaComponent } from './text-area.component';
 
 describe('TextAreaComponent', () => {
@@ -8,13 +7,10 @@ describe('TextAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TextAreaComponent ]
-    })
-    .compileComponents();
-
+      declarations: [TextAreaComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(TextAreaComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

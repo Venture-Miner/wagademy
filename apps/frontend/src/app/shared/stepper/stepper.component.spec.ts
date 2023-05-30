@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StepperComponent } from './stepper.component';
 
 describe('StepperComponent', () => {
@@ -8,13 +7,10 @@ describe('StepperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StepperComponent ]
-    })
-    .compileComponents();
-
+      declarations: [StepperComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(StepperComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

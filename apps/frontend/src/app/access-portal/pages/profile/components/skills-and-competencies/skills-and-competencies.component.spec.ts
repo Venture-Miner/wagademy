@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SkillsAndCompetenciesComponent } from './skills-and-competencies.component';
 
 describe('SkillsAndCompetenciesComponent', () => {
@@ -10,10 +9,8 @@ describe('SkillsAndCompetenciesComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [SkillsAndCompetenciesComponent],
     }).compileComponents();
-
     fixture = TestBed.createComponent(SkillsAndCompetenciesComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

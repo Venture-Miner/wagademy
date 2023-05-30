@@ -9,10 +9,8 @@ describe('HiredComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [HiredComponent],
     }).compileComponents();
-
     fixture = TestBed.createComponent(HiredComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create the component hired', () => {
