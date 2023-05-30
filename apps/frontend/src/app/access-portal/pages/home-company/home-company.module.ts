@@ -9,6 +9,7 @@ import { WidgetModule } from '../../../shared/widget/widget.module';
 import { CompanyCardComponent } from './components/company-card';
 import { CompaniesActivitiesComponent } from './components/companies-activities';
 import { DetailsModalComponent } from './components/details-modal';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { DetailsModalComponent } from './components/details-modal';
     InputModule,
     InputSelectModule,
     WidgetModule,
+    ReactiveFormsModule,
   ],
 })
 export class HomeCompanyModule {}
