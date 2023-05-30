@@ -1,5 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { LensService, TokenService } from '../../../services';
+import {
+  CertificateService,
+  LensService,
+  TokenService,
+} from '../../../services';
 
 @Component({
   selector: 'lens-academy-my-certificates',
@@ -9,12 +13,18 @@ import { LensService, TokenService } from '../../../services';
 export class MyCertificatesComponent implements OnInit {
   exhibitionStyle = 'grid';
   myCertificateModal = false;
-  claimedCertificateModal = false;
   certificates: any[] = [];
+  courseToClaim: { courseName: string; publicationId: string } = {} as {
+    courseName: string;
+    publicationId: string;
+  };
+  isLoading = false;
+  profileId = '';
 
   constructor(
     private lensService: LensService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private certificateService: CertificateService
   ) {}
 
   async ngOnInit() {
@@ -29,11 +39,23 @@ export class MyCertificatesComponent implements OnInit {
         request: { ethereumAddress },
       },
     });
+    this.profileId = id;
+    this.getCertificates();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (window.innerWidth < 640) {
+      this.exhibitionStyle = 'grid';
+    }
+  }
+
+  async getCertificates() {
     const posts = await this.lensService.client.query({
       query: this.lensService.getPosts,
       variables: {
         request: {
-          profileId: id,
+          profileId: this.profileId,
           publicationTypes: ['POST'],
           metadata: { mainContentFocus: ['IMAGE'] },
         },
@@ -46,10 +68,9 @@ export class MyCertificatesComponent implements OnInit {
           item.appId === 'academy' &&
           item.metadata.description === 'Academy Certificate'
       )
-      .map((item: any) => item.metadata)
-      .filter((item: any) => {
+      .filter(({ metadata }: any) => {
         try {
-          const parsedAttr = JSON.parse(item?.attributes[0]?.value || '{}');
+          const parsedAttr = JSON.parse(metadata?.attributes[0]?.value || '{}');
           return (
             parsedAttr.participant &&
             parsedAttr.courseName &&
@@ -61,19 +82,20 @@ export class MyCertificatesComponent implements OnInit {
       });
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    if (window.innerWidth < 640) {
-      this.exhibitionStyle = 'grid';
-    }
-  }
-
   toggleMyCertificateModal() {
     this.myCertificateModal = !this.myCertificateModal;
   }
 
-  toggleClaimedCertificateModal() {
-    this.myCertificateModal = false;
-    this.claimedCertificateModal = !this.claimedCertificateModal;
+  async claimCertificate(publicationId: string) {
+    this.isLoading = true;
+    const tx = await this.certificateService
+      .claimCertificate(publicationId)
+      .catch(() => {
+        this.isLoading = false;
+      });
+    tx.wait().then(() => {
+      this.isLoading = false;
+      this.toggleMyCertificateModal();
+    });
   }
 }
