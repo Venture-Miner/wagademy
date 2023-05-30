@@ -12,7 +12,9 @@
       </div>
       <div class="bg-neutral-4">
         <div class="py-6 px-5">
-          <p class="text-neutral-1 pb-2 text-2xl font-bold">For who?</p>
+          <p class="text-neutral-1 pb-2 font-sans text-2xl font-bold">
+            For who?
+          </p>
           <div class="mb-10 flex flex-col gap-8 sm:flex-row">
             <lens-academy-input
               type="search"
@@ -27,28 +29,31 @@
               src="./assets/img/img-details-user.svg"
               alt="details user"
             />
-            <div class="text-neutral-1 text-2xl font-bold">
+            <div class="text-neutral-1 font-sans text-2xl font-bold">
               <p>User Name</p>
               <p>Course Name</p>
             </div>
           </div>
-          <div class="pt-7">
+          <form [formGroup]="form" class="pt-7">
             <div class="pb-3">
-              <p class="border-neutral-2 text-neutral-2 border p-2">
-                Course name
-              </p>
+              <lens-academy-input
+                formControlName="course"
+                placeholder="Course name"
+              ></lens-academy-input>
             </div>
             <div class="pb-3">
-              <p class="border-neutral-2 text-neutral-2 border p-2">
-                Institution Name
-              </p>
+              <lens-academy-input
+                formControlName="institution"
+                placeholder="Institution Name"
+              ></lens-academy-input>
             </div>
             <div class="pb-6">
-              <p class="border-neutral-2 text-neutral-2 border p-2">
-                Hours Completed
-              </p>
+              <lens-academy-input
+                formControlName="hours"
+                placeholder="Hours Completed"
+              ></lens-academy-input>
             </div>
-          </div>
+          </form>
           <div class="relative shadow-lg">
             <div
               class="bg-secondary from-neutral-3 text-neutral-3 flex-col space-y-4 px-3 py-10 text-center sm:px-6"
