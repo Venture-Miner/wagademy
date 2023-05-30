@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AboutCourseComponent } from './about.component';
 
+jest.mock('ethers');
+
 describe('AboutCourseComponent', () => {
   let component: AboutCourseComponent;
   let fixture: ComponentFixture<AboutCourseComponent>;

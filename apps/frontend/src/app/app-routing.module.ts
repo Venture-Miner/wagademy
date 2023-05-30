@@ -119,6 +119,22 @@ const routes: Routes = [
             './access-portal/pages/my-certificates/my-certificates.module'
           ).then((m) => m.MyCertificatesModule),
       },
+      {
+        path: 'hired',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./access-portal/pages/hired/hired.module').then(
+            (m) => m.HiredModule
+          ),
+      },
+      {
+        path: 'jobs-details',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./access-portal/pages/jobs-details/jobs-details.module').then(
+            (m) => m.JobsDetailsModule
+          ),
+      },
     ],
   },
 ];
