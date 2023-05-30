@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-learning',
+  selector: 'wagademy-learning',
   templateUrl: './learning.component.html',
   styleUrls: ['./learning.component.css'],
 })

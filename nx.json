@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "lens-academy",
+  "npmScope": "wagademy",
   "affected": {
     "defaultBase": "main"
   },

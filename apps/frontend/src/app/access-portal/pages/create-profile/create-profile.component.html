@@ -1,5 +1,5 @@
 <div class="flex min-h-screen flex-col">
-  <lens-academy-navbar></lens-academy-navbar>
+  <wagademy-navbar></wagademy-navbar>
   <div
     class="flex flex-1 flex-col items-center py-9"
     [ngClass]="{ 'justify-center': mode === 'CREATED' }"
@@ -17,23 +17,23 @@
           Confirm your details
         </h2>
       </div>
-      <lens-academy-stepper
+      <wagademy-stepper
         *ngIf="mode !== 'VIEW'"
         [currentStep]="mode !== 'CREATE' ? 9999 : currentStep"
         [steps]="steps"
-      ></lens-academy-stepper>
+      ></wagademy-stepper>
       <div
         class="divide-secondary grid w-full gap-10 divide-y-2 divide-solid px-3 md:w-2/3 2xl:w-2/5"
       >
-        <lens-academy-profile-step
+        <wagademy-profile-step
           [form]="form"
           [mode]="mode"
           (nextStep)="nextStep()"
           (edit)="edit(1)"
           (saveEdit)="showSummary()"
           *ngIf="currentStep === 1 || mode === 'VIEW'"
-        ></lens-academy-profile-step>
-        <lens-academy-education-step
+        ></wagademy-profile-step>
+        <wagademy-education-step
           [form]="form"
           [mode]="mode"
           (nextStep)="nextStep()"
@@ -41,8 +41,8 @@
           (saveEdit)="showSummary()"
           (previousStep)="previousStep()"
           *ngIf="currentStep === 2 || mode === 'VIEW'"
-        ></lens-academy-education-step>
-        <lens-academy-area-of-expertise-step
+        ></wagademy-education-step>
+        <wagademy-area-of-expertise-step
           [form]="form"
           [mode]="mode"
           (edit)="edit(3)"
@@ -50,8 +50,8 @@
           (nextStep)="nextStep()"
           (previousStep)="previousStep()"
           *ngIf="currentStep === 3 || mode === 'VIEW'"
-        ></lens-academy-area-of-expertise-step>
-        <lens-academy-professional-experience-step
+        ></wagademy-area-of-expertise-step>
+        <wagademy-professional-experience-step
           [form]="form"
           [mode]="mode"
           (edit)="edit(4)"
@@ -59,8 +59,8 @@
           (nextStep)="nextStep()"
           (previousStep)="previousStep()"
           *ngIf="currentStep === 4 || mode === 'VIEW'"
-        ></lens-academy-professional-experience-step>
-        <lens-academy-area-of-interest-step
+        ></wagademy-professional-experience-step>
+        <wagademy-area-of-interest-step
           [form]="form"
           [mode]="mode"
           (edit)="edit(5)"
@@ -68,8 +68,8 @@
           (nextStep)="nextStep()"
           (previousStep)="previousStep()"
           *ngIf="currentStep === 5 || mode === 'VIEW'"
-        ></lens-academy-area-of-interest-step>
-        <lens-academy-skills-and-competencies-step
+        ></wagademy-area-of-interest-step>
+        <wagademy-skills-and-competencies-step
           [form]="form"
           [mode]="mode"
           (edit)="edit(6)"
@@ -77,13 +77,13 @@
           (nextStep)="nextStep()"
           (previousStep)="previousStep()"
           *ngIf="currentStep === 6 || mode === 'VIEW'"
-        ></lens-academy-skills-and-competencies-step>
+        ></wagademy-skills-and-competencies-step>
       </div>
-      <lens-academy-button-primary
+      <wagademy-button-primary
         class="mt-14 w-full px-3 sm:w-52"
         *ngIf="mode === 'VIEW'"
         (click)="createCurriculum()"
-        >SAVE AND CONFIRM</lens-academy-button-primary
+        >SAVE AND CONFIRM</wagademy-button-primary
       >
     </ng-container>
     <div *ngIf="mode === 'CREATED'" class="px-3">
@@ -100,11 +100,11 @@
         join in the future.
       </p>
       <div class="flex flex-col gap-6 sm:flex-row">
-        <lens-academy-button-secondary class="sm:w-52" [routerLink]="['/home']"
-          >SKIP</lens-academy-button-secondary
+        <wagademy-button-secondary class="sm:w-52" [routerLink]="['/home']"
+          >SKIP</wagademy-button-secondary
         >
-        <lens-academy-button-primary class="sm:w-52" [routerLink]="['/squads']"
-          >YES</lens-academy-button-primary
+        <wagademy-button-primary class="sm:w-52" [routerLink]="['/squads']"
+          >YES</wagademy-button-primary
         >
       </div>
     </div>

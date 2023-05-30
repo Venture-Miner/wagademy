@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-friend-card',
+  selector: 'wagademy-friend-card',
   templateUrl: './friend-card.component.html',
   styleUrls: ['./friend-card.component.css'],
 })

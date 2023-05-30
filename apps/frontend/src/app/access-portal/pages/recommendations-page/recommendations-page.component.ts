@@ -8,7 +8,7 @@ import { EthersService } from '../../../services/ethers/ethers.service';
 import { TokenService } from '../../../services/token/token.service';
 
 @Component({
-  selector: 'lens-academy-recommendations-page',
+  selector: 'wagademy-recommendations-page',
   templateUrl: './recommendations-page.component.html',
   styleUrls: ['./recommendations-page.component.css'],
 })

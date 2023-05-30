@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
-  selector: 'lens-academy-form-field',
+  selector: 'wagademy-form-field',
   templateUrl: './form-field.component.html',
   styleUrls: ['./form-field.component.css'],
 })

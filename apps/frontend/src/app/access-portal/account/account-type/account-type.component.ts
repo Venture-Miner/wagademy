@@ -11,7 +11,7 @@ enum ACCOUNT_TYPE {
 }
 
 @Component({
-  selector: 'lens-academy-account-type',
+  selector: 'wagademy-account-type',
   templateUrl: './account-type.component.html',
   styleUrls: ['./account-type.component.css'],
 })

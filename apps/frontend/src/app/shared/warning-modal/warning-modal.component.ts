@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-warning-modal',
+  selector: 'wagademy-warning-modal',
   templateUrl: './warning-modal.component.html',
   styleUrls: ['./warning-modal.component.css'],
 })

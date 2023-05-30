@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-certificate-modal',
+  selector: 'wagademy-certificate-modal',
   templateUrl: './certificate-modal.component.html',
   styleUrls: ['./certificate-modal.component.css'],
 })

@@ -11,7 +11,7 @@ type StepToEdit =
   | 'SKILL';
 
 @Component({
-  selector: 'lens-academy-profile-edit',
+  selector: 'wagademy-profile-edit',
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.css'],
 })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'lens-academy-my-contacts',
+  selector: 'wagademy-my-contacts',
   templateUrl: './my-contacts.component.html',
   styleUrls: ['./my-contacts.component.css'],
 })
