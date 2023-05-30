@@ -1,5 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HiredComponent } from './hired.component';
+import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/navbar-authenticated.module';
+import { InputSelectModule } from '../../../shared/input-select/input-select.module';
+import { PaginationModule } from '../../../shared/pagination/pagination.module';
+import { RouterTestingModule } from '@angular/router/testing';
+
+jest.mock('ethers');
 
 describe('HiredComponent', () => {
   let component: HiredComponent;
@@ -8,6 +14,12 @@ describe('HiredComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HiredComponent],
+      imports: [
+        NavbarAuthenticatedModule,
+        InputSelectModule,
+        PaginationModule,
+        RouterTestingModule,
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(HiredComponent);
     component = fixture.componentInstance;
