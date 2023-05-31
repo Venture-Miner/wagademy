@@ -25,6 +25,7 @@ module.exports = {
         3: '#F6F7F9',
         4: '#FFFFFF',
         5: '#DADDEC',
+        6: '#D1DED8',
       },
       danger: '#FF511A',
     },
