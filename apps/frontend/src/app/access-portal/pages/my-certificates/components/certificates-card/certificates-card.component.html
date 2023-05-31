@@ -21,11 +21,19 @@
     </div>
     <div
       [ngClass]="listType === 'grid' ? 'w-9/12' : 'w-2/12'"
-      class="text-center"
+      class="grid gap-1 text-center"
     >
-      <lens-academy-button-primary (click)="claim.emit()"
+      <lens-academy-button-primary
+        *ngIf="!hasCollectedByMe"
+        (click)="
+          claim.emit({
+            courseName: attributes.courseName,
+            publicationId
+          })
+        "
         >CLAIM</lens-academy-button-primary
       >
+      <span *ngIf="hasCollectedByMe" class="text-neutral-2 my-2">CLAIMED</span>
       <a
         class="text-secondary cursor-pointer text-xs hover:underline"
         (click)="
