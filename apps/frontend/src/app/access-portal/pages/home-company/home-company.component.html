@@ -41,16 +41,14 @@
       </div>
     </div>
   </div>
-  <div class="pb-14">
-    <p class="text-neutral-1 pb-8 text-2xl font-bold">Companies Activities</p>
-    <div
-      class="cursor-pointer pb-8 md:max-h-[416px]"
-      *ngFor="let publication of publications"
-    >
-      <lens-academy-companies-activities
-        [publication]="publication"
-      ></lens-academy-companies-activities>
-    </div>
+  <p class="text-neutral-1 mb-14 text-2xl font-bold">Companies Activities</p>
+  <div
+    class="mb-12 cursor-pointer md:mb-16 md:max-h-[416px]"
+    *ngFor="let publication of publications"
+  >
+    <lens-academy-companies-activities
+      [publication]="publication"
+    ></lens-academy-companies-activities>
   </div>
 </section>
 <lens-academy-details-modal

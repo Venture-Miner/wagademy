@@ -52,7 +52,6 @@ export class HomeCompanyComponent implements OnInit {
         },
       });
       this.publications = publications.data.publications.items;
-      console.log(this.publications);
     } catch (err) {
       return;
     }
