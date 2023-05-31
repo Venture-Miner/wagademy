@@ -7,6 +7,7 @@ import { InputSelectModule } from '../../../shared/input-select/input-select.mod
 import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/navbar-authenticated.module';
 import { ButtonPrimaryModule } from '../../../shared/button-primary/button-primary.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 jest.mock('ethers');
 
@@ -24,6 +25,7 @@ describe('MyCertificatesComponent', () => {
         NavbarAuthenticatedModule,
         ButtonPrimaryModule,
         RouterTestingModule,
+        HttpClientTestingModule,
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(MyCertificatesComponent);

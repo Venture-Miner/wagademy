@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
-import { LensService, TokenService } from '../services';
-import { ProfileMetadata, ACCOUNT_TYPE } from '../interfaces';
+import { TokenService } from '../services';
+import { ACCOUNT_TYPE } from '../interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class AccountTypePersonGuard {

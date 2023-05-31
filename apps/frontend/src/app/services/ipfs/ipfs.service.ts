@@ -14,15 +14,33 @@ export class IpfsService {
     this.URL = environment.urlBase[getHostname()];
   }
 
-  uploadIpfs(data: any) {
+  createPost(data: any) {
     const headers = new HttpHeaders().set(
       'Authorization',
       'Bearer ' + this.tokenService.getTokenValue()
     );
-    return this.http.post<{ path: string }>(
+    return this.http.post<{ cid: string }>(
       `${this.URL}/ipfs/create-post`,
       data,
-      { headers }
+      {
+        headers,
+      }
+    );
+  }
+
+  uploadImage(blob: Blob) {
+    const formData = new FormData();
+    formData.append('file', blob, 'certificate');
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.tokenService.getTokenValue()
+    );
+    return this.http.post<{ cid: string }>(
+      `${this.URL}/ipfs/upload-image`,
+      formData,
+      {
+        headers,
+      }
     );
   }
 }

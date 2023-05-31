@@ -196,13 +196,9 @@ export class AccountTypeComponent {
       ],
       version: MetadataVersions.one,
     };
-    this.ipfsService.uploadIpfs(profileMetadata).subscribe({
-      next: (ipfsResult) => {
-        this.updateProfileAttribute(
-          `ipfs://${ipfsResult.path}`,
-          profileId,
-          academyPosts
-        )
+    this.ipfsService.createPost(profileMetadata).subscribe({
+      next: ({ cid }) => {
+        this.updateProfileAttribute(`ipfs://${cid}`, profileId, academyPosts)
           .then()
           .catch((err) => console.error(err));
       },
