@@ -1,19 +1,39 @@
-<div class="flex flex-col gap-4 p-4 shadow-md">
+<div class="flex h-full w-full flex-col gap-4 p-4 shadow-md">
   <div class="flex items-center gap-4">
     <img
-      src="https://i.pravatar.cc/300"
+      [src]="sanitizeUrl(publication.profile.picture?.original?.url)"
       alt="avatar example"
       class="h-12 w-12 rounded-full object-cover"
     />
-    <span class="font-bold text-neutral-1">User name</span>
+    <p class="text-neutral-1 font-bold">
+      {{ publication.profile.name || publication.profile.handle }}
+    </p>
   </div>
   <img
-    src="../../../assets/img/friend-card-example.jpg"
-    alt="activity example"
+    *ngIf="
+      publication.metadata.media.length &&
+      publication.metadata.media[0].original.mimeType.includes('image')
+    "
+    [src]="sanitizeUrl(publication.metadata.media[0].original.url)"
+    alt="post media"
   />
-  <span class="font-mono text-sm text-neutral-2"
-    >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
-    Velit officia consequat duis enim velit mollit. Exercitation veniam
-    consequat sunt nostrud amet.</span
+  <video
+    controls
+    *ngIf="
+      publication.metadata.media.length &&
+      publication.metadata.media[0].original.mimeType.includes('video')
+    "
   >
+    <source
+      [src]="sanitizeUrl(publication.metadata.media[0].original.url)"
+      type="video/mp4"
+    />
+    Your browser does not support the video.
+  </video>
+  <p
+    class="text-neutral-2 break-all font-mono text-sm"
+    *ngIf="publication.metadata.content"
+  >
+    {{ publication.metadata.content }}
+  </p>
 </div>

@@ -24,11 +24,12 @@ import {
   recommendedProfiles,
   refreshToken,
   verify,
-  getProfile,
   updateProfile,
   getProfileAttributes,
-  createFollowingTypedData,
   createCollectTypedData,
+  following,
+  getProfile,
+  publications,
   checkProfileExistence,
 } from '../../graphql';
 import { ethers } from 'ethers';
@@ -121,15 +122,17 @@ export class LensService {
 
   verifyToken = gql(verify);
 
+  following = gql(following);
+
   getProfile = gql(getProfile);
 
   updateProfile = gql(updateProfile);
 
   getProfileAttributes = gql(getProfileAttributes);
 
-  following = gql(createFollowingTypedData);
-
   collect = gql(createCollectTypedData);
+
+  publications = gql(publications);
 
   checkProfileExistence = gql(checkProfileExistence);
 }

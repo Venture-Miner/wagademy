@@ -11,6 +11,7 @@ import { PostService } from '../post';
 import { LensService } from '../lens';
 import { EthersService } from '../ethers';
 import { TokenService } from '../token';
+import { ACCOUNT_TYPE } from '../../interfaces/types';
 
 @Injectable({
   providedIn: 'root',
@@ -158,6 +159,7 @@ export class CertificateService {
               },
             },
           ],
+          tags: [ACCOUNT_TYPE.company],
           appId: 'Academy',
         });
       }),
