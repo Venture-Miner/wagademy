@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { EthersService } from './ethers.service';
-import { utils, ethers } from 'ethers';
+import { utils } from 'ethers';
 
 jest.mock('ethers', () => {
   return {
@@ -18,16 +18,13 @@ jest.mock('ethers', () => {
     },
   };
 });
-const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
 
 describe('EthersService', () => {
   let service: EthersService;
-  let signer: ethers.providers.JsonRpcSigner;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(EthersService);
-    signer = ethersProvider.getSigner();
   });
 
   it('should be created', () => {

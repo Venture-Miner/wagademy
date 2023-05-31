@@ -5,6 +5,7 @@ import { FormFieldModule } from '../../../../shared/form-field/form-field.module
 import { TextAreaModule } from '../../../../shared/text-area/text-area.module';
 import { By } from '@angular/platform-browser';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ButtonPrimaryModule } from '../../../../shared/button-primary/button-primary.module';
 
 describe('ProfileStepComponent', () => {
   let component: ProfileStepComponent;
@@ -19,6 +20,7 @@ describe('ProfileStepComponent', () => {
         FormFieldModule,
         TextAreaModule,
         ReactiveFormsModule,
+        ButtonPrimaryModule,
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(ProfileStepComponent);
