@@ -1,8 +1,11 @@
-<div class="flex flex-col items-center gap-8 rounded-md bg-neutral-3 px-4 py-8">
+<div class="border-neutral-6 flex items-center gap-8 rounded-md border-4 p-4">
   <img src="../../../assets/img/books-icon.svg" alt="books icon" />
-  <span class="font-mono text-neutral-2"
-    >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
-    Velit officia consequat duis enim velit mollit. Exercitation veniam
-    consequat sunt nostrud amet.</span
-  >
+  <div>
+    <ng-content .select="title"></ng-content>
+    <span class="text-neutral-2 font-mono"
+      >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
+      Velit officia consequat duis enim velit mollit. Exercitation veniam
+      consequat sunt nostrud amet.</span
+    >
+  </div>
 </div>
