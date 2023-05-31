@@ -4,7 +4,7 @@ import {
   LensService,
   TokenService,
 } from '../../../services';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 
 @Component({
