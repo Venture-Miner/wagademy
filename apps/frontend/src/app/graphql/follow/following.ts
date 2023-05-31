@@ -1,4 +1,4 @@
-export const createFollowingTypedData = `query Following($request: FollowingRequest!) {
+export const following = `query Following($request: FollowingRequest!) {
   following(request: $request) {
     items {
       profile {

@@ -1,34 +1,48 @@
 <div class="bg-neutral-3 flex flex-col gap-4 rounded-sm p-4">
-  <div class="grid grid-cols-1 md:grid-cols-2">
-    <div>
+  <div class="flex w-full flex-col md:flex-row">
+    <div
+      [ngClass]="publication.metadata.media.length ? 'w-1/2' : 'w-full'"
+      class="flex flex-col"
+    >
       <div class="flex items-center gap-4 pb-4">
         <img
-          src="https://i.pravatar.cc/300"
+          [src]="sanitizeUrl(publication.profile.picture?.original?.url)"
           alt="avatar example"
           class="h-12 w-12 rounded-full object-cover"
         />
-        <span class="text-neutral-1 font-mono text-base font-bold"
-          >Company Name</span
-        >
+        <p class="text-neutral-1 font-mono text-base font-bold">
+          {{ publication.profile.name || publication.profile.handle }}
+        </p>
       </div>
-      <p class="text-neutral-2 mr-4 font-mono text-sm">
-        Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-        cillum dolor. Voluptate exercitation incididunt aliquip deserunt
-        reprehenderit elit laborum.
-      </p>
-      <p class="text-neutral-2 mr-4 py-4 font-mono text-sm">
-        Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui
-        esse pariatur duis deserunt mollit dolore cillum minim tempor enim. Elit
-        aute irure tempor cupidatat incididunt sint deserunt ut voluptate aute
-        id deserunt nisi. 🚀🤘
+      <p
+        class="text-neutral-2 break-all font-mono text-sm"
+        *ngIf="publication.metadata.content"
+      >
+        {{ publication.metadata.content }}
       </p>
     </div>
-    <div class="flex justify-end pt-4 md:pt-0">
+    <div *ngIf="publication.metadata.media.length" class="w-full md:w-1/2">
       <img
-        class="object-scale-down md:max-h-[416px]"
-        src="../../../assets/img/img-home-company.svg"
-        alt="activity example"
+        *ngIf="
+          publication.metadata.media.length &&
+          publication.metadata.media[0].original.mimeType.includes('image')
+        "
+        [src]="sanitizeUrl(publication.metadata.media[0].original.url)"
+        alt="post media"
       />
+      <video
+        controls
+        *ngIf="
+          publication.metadata.media.length &&
+          publication.metadata.media[0].original.mimeType.includes('video')
+        "
+      >
+        <source
+          [src]="sanitizeUrl(publication.metadata.media[0].original.url)"
+          type="video/mp4"
+        />
+        Your browser does not support the video.
+      </video>
     </div>
   </div>
 </div>

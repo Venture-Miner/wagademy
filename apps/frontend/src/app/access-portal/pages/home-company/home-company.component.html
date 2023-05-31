@@ -43,17 +43,13 @@
   </div>
   <div class="pb-14">
     <p class="text-neutral-1 pb-8 text-2xl font-bold">Companies Activities</p>
-    <div class="cursor-pointer pb-8 md:max-h-[416px]">
-      <lens-academy-companies-activities></lens-academy-companies-activities>
-    </div>
-    <div class="cursor-pointer pb-8 md:max-h-[416px]">
-      <lens-academy-companies-activities></lens-academy-companies-activities>
-    </div>
-    <div class="cursor-pointer pb-8 md:max-h-[416px]">
-      <lens-academy-companies-activities></lens-academy-companies-activities>
-    </div>
-    <div class="cursor-pointer md:max-h-[416px]">
-      <lens-academy-companies-activities></lens-academy-companies-activities>
+    <div
+      class="cursor-pointer pb-8 md:max-h-[416px]"
+      *ngFor="let publication of publications"
+    >
+      <lens-academy-companies-activities
+        [publication]="publication"
+      ></lens-academy-companies-activities>
     </div>
   </div>
 </section>
