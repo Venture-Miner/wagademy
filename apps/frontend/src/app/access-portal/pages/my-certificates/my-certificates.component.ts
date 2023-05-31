@@ -23,7 +23,7 @@ export class MyCertificatesComponent implements OnInit {
   isLoading = false;
   profileId = '';
   form = this.fb.group({
-    search: ['', Validators.required],
+    search: [''],
   });
   filteredCertificates: any[] = [];
 

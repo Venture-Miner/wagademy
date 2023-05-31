@@ -29,6 +29,7 @@ import {
   getProfileAttributes,
   createFollowingTypedData,
   createCollectTypedData,
+  checkProfileExistence,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
@@ -129,4 +130,6 @@ export class LensService {
   following = gql(createFollowingTypedData);
 
   collect = gql(createCollectTypedData);
+
+  checkProfileExistence = gql(checkProfileExistence);
 }
