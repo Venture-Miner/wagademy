@@ -10,93 +10,86 @@
           (click)="cancel.emit()"
         />
       </div>
-      <div class="bg-neutral-4">
-        <div class="py-6 px-5">
-          <p class="text-neutral-1 pb-2 font-sans text-2xl font-bold">
-            For who?
-          </p>
-          <div class="mb-10 flex flex-col gap-8 sm:flex-row">
+      <div class="bg-neutral-4 py-6 px-5">
+        <p class="text-neutral-1 pb-2 font-sans text-2xl font-bold">For who?</p>
+        <form class="mb-4 flex flex-col gap-8 sm:flex-row" [formGroup]="search">
+          <div class="grid grow gap-2">
             <lens-academy-input
+              formControlName="handle"
               type="search"
               placeholder="Search"
               class="grow"
             ></lens-academy-input>
-            <lens-academy-input-select></lens-academy-input-select>
+            <span>{{ handleMessage }}</span>
           </div>
-          <div class="flex gap-x-4 pt-6">
-            <img
-              class="h-28 w-28"
-              src="./assets/img/img-details-user.svg"
-              alt="details user"
-            />
-            <div class="text-neutral-1 font-sans text-2xl font-bold">
-              <p>User Name</p>
-              <p>Course Name</p>
-            </div>
+          <lens-academy-input-select></lens-academy-input-select>
+        </form>
+        <div class="flex gap-x-4 pt-6">
+          <img
+            class="h-28 w-28 rounded-full"
+            [src]="profileImageURL"
+            alt="details user"
+          />
+          <div class="text-neutral-1 font-sans text-2xl font-bold">
+            <p>{{ this.form.controls.student.value || 'User Name' }}</p>
+            <p>{{ this.form.controls.course.value || 'Course Name' }}</p>
+            <p>
+              {{ this.form.controls.institution.value || 'Institution Name' }}
+            </p>
           </div>
-          <form [formGroup]="form" class="pt-7">
-            <div class="pb-3">
-              <lens-academy-input
-                formControlName="course"
-                placeholder="Course name"
-              ></lens-academy-input>
-            </div>
-            <div class="pb-3">
-              <lens-academy-input
-                formControlName="institution"
-                placeholder="Institution Name"
-              ></lens-academy-input>
-            </div>
-            <div class="pb-6">
-              <lens-academy-input
-                formControlName="hours"
-                placeholder="Hours Completed"
-              ></lens-academy-input>
-            </div>
-          </form>
-          <div class="relative shadow-lg">
-            <div
-              class="bg-secondary from-neutral-3 text-neutral-3 flex-col space-y-4 px-3 py-10 text-center sm:px-6"
-            >
-              <img
-                class="absolute top-36 h-24 sm:h-36"
-                src="./assets/img/certificate-badge-icon.svg"
-                alt="certificate badge"
-              />
-              <p class="text-sm">COURSE</p>
-              <h1 class="text-neutral-3 text-4xl font-bold sm:text-5xl">
-                Certificate
-              </h1>
-            </div>
-            <div class="bg-neutral-3">
-              <div class="space-y-4 px-3 pb-14 pt-20 sm:px-10 md:px-24">
-                <h2
-                  class="text-secondary text-center text-2xl font-bold sm:text-3xl"
-                >
-                  User Name
-                </h2>
-                <p class="font-mono">
-                  has successfully completed
-                  <strong>Name course, 09/05/2023</strong> Amet minim mollit non
-                  deserunt ullamco est sit aliqua dolor do amet sint Amet minim
-                  mollit non deserunt ullamco est sit aliqua.
-                </p>
-              </div>
-              <div class="flex justify-between px-3 pb-16 sm:px-10 md:px-24">
-                <div class="border-neutral-1 mb-5 w-2/4 border-b text-center">
-                  Name
-                </div>
-                <img src="./assets/img/lens-logo.svg" alt="lens-logo" />
-              </div>
-            </div>
+        </div>
+        <form [formGroup]="form" class="pt-7">
+          <div class="pb-3">
+            <lens-academy-input
+              formControlName="student"
+              placeholder="Student name"
+            ></lens-academy-input>
           </div>
-          <div class="flex justify-center pt-4">
-            <button
-              class="bg-secondary text-neutral-4 hover:bg-primary hover:text-neutral-1 mx-auto rounded-lg px-4 text-3xl"
-            >
-              Generate
-            </button>
+          <div class="pb-3">
+            <lens-academy-input
+              formControlName="course"
+              placeholder="Course name"
+            ></lens-academy-input>
           </div>
+          <div class="pb-6">
+            <lens-academy-input
+              formControlName="institution"
+              placeholder="Institution name"
+            ></lens-academy-input>
+          </div>
+        </form>
+        <div class="relative mx-auto max-w-4xl">
+          <img
+            src="../../../../../../assets/img/certificate.png"
+            alt="certificate"
+          />
+          <span
+            class="text-secondary absolute top-[40%] w-full truncate px-8 text-center font-bold lg:text-3xl"
+            >{{ this.form.controls.student.value }}</span
+          >
+          <span
+            class="text-neutral-2 absolute top-[55%] w-full truncate px-8 text-center font-mono text-sm sm:top-1/2 md:whitespace-normal lg:text-lg"
+            >{{ certificateMessage }}</span
+          >
+          <span
+            class="text-neutral-1 absolute top-[86%] left-[24%] -translate-x-1/2 font-mono text-[0.50rem] md:text-xs lg:text-sm"
+            >{{ this.form.controls.institution.value }}</span
+          >
+        </div>
+        <div class="flex justify-center pt-4">
+          <lens-academy-button-primary
+            (click)="generateCertificate()"
+            class="w-full sm:w-52"
+            *ngIf="!isLoading"
+            [disabled]="form.invalid || !handleExists"
+            >GENERATE</lens-academy-button-primary
+          >
+          <img
+            class="h-20 w-20"
+            *ngIf="isLoading"
+            src="../../assets/img/loading-icon.svg"
+            alt="loading icon"
+          />
         </div>
       </div>
     </div>

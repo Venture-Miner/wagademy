@@ -30,6 +30,7 @@ import {
   following,
   getProfile,
   publications,
+  checkProfileExistence,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
@@ -132,4 +133,6 @@ export class LensService {
   collect = gql(createCollectTypedData);
 
   publications = gql(publications);
+
+  checkProfileExistence = gql(checkProfileExistence);
 }

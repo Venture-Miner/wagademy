@@ -7,3 +7,4 @@ export * from './set-default-profile';
 export * from './recommended-profiles';
 export * from './update-profile';
 export * from './get-profile-attributes';
+export * from './check-profile-existence';

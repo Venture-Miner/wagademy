@@ -8,6 +8,7 @@ import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/
 import { MyCertificatesRoutingModule } from './my-certificates-routing.module';
 import { MyCertificatesComponent } from './my-certificates.component';
 import { CertificatesCardComponent } from './components/certificates-card/certificates-card.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [MyCertificatesComponent, CertificatesCardComponent],
@@ -19,6 +20,7 @@ import { CertificatesCardComponent } from './components/certificates-card/certif
     InputModule,
     InputSelectModule,
     BaseModalModule,
+    ReactiveFormsModule,
   ],
 })
 export class MyCertificatesModule {}
