@@ -10,7 +10,6 @@
       You need to fill up to 10 words to describe your areas of expertise
     </h5>
     <lens-academy-input
-      id="add-area-input"
       formControlName="area"
       type="text"
       placeholder="Area"
@@ -18,7 +17,6 @@
     ></lens-academy-input>
     <div class="mt-4">
       <lens-academy-button-primary
-        id="add-area"
         (click)="addArea()"
         [disabled]="areas.length >= 10 || areaControl.invalid"
         >ADD</lens-academy-button-primary
@@ -32,7 +30,6 @@
     >
       <span class="break-all font-mono text-sm">{{ area }}</span>
       <i
-        id="remove-area"
         [ngClass]="{ invisible: mode === 'VIEW' }"
         class="bi bi-x text-danger mt-1 cursor-pointer text-2xl"
         (click)="removeArea(i)"
@@ -40,7 +37,6 @@
     </div>
   </div>
   <div
-    id="edit"
     class="mt-3 flex cursor-pointer items-center justify-end gap-2"
     (click)="edit.emit()"
     *ngIf="mode === 'VIEW'"
@@ -53,14 +49,12 @@
     *ngIf="mode !== 'VIEW'"
   >
     <lens-academy-button-secondary
-      id="previous-step"
       class="sm:w-52"
       (click)="previousStep.emit()"
       *ngIf="mode === 'CREATE'"
       >PREVIOUS</lens-academy-button-secondary
     >
     <lens-academy-button-primary
-      id="next-or-save"
       class="sm:w-52"
       (click)="mode === 'CREATE' ? nextStep.emit() : saveEdit.emit()"
       >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</lens-academy-button-primary

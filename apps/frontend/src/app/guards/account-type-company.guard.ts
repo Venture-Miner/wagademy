@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
-import { ACCOUNT_TYPE } from '../interfaces';
+import { ProfileMetadata, ACCOUNT_TYPE } from '../interfaces';
 import { TokenService, LensService } from '../services';
 
 @Injectable({ providedIn: 'root' })

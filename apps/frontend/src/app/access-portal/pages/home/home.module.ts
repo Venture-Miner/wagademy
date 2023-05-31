@@ -7,14 +7,15 @@ import { PaginationModule } from '../../../shared/pagination/pagination.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { FriendCardComponent } from './components/friend-card/friend-card.component';
+import { WidgetComponent } from './components/widget/widget.component';
 import { JobCardComponent } from './components/job-card/job-card.component';
 import { CourseCardComponent } from './components/course-card/course-card.component';
-import { WidgetModule } from '../../../shared/widget/widget.module';
 
 @NgModule({
   declarations: [
     HomeComponent,
     FriendCardComponent,
+    WidgetComponent,
     JobCardComponent,
     CourseCardComponent,
   ],
@@ -25,7 +26,6 @@ import { WidgetModule } from '../../../shared/widget/widget.module';
     InputModule,
     InputSelectModule,
     PaginationModule,
-    WidgetModule,
   ],
 })
 export class HomeModule {}

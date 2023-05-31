@@ -1,6 +1,5 @@
 <form [formGroup]="form" class="mt-10 flex flex-col gap-10">
   <button
-    id="add-education"
     class="bg-primary self-end rounded py-1 pl-2 pr-3 font-mono font-bold"
     (click)="addEducation()"
     *ngIf="mode !== 'VIEW'"
@@ -48,7 +47,6 @@
           ></lens-academy-text-area>
         </lens-academy-form-field>
         <div
-          id="remove-education"
           class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
           (click)="removeEducation(i)"
           *ngIf="mode !== 'VIEW'"
@@ -60,7 +58,6 @@
     </ng-container>
   </ng-container>
   <div
-    id="edit"
     class="-mt-10 flex cursor-pointer items-center gap-2 self-end"
     (click)="edit.emit()"
     *ngIf="mode === 'VIEW'"
@@ -73,14 +70,12 @@
     *ngIf="mode !== 'VIEW'"
   >
     <lens-academy-button-secondary
-      id="previous-step"
       class="sm:w-52"
       (click)="previousStep.emit()"
       *ngIf="mode === 'CREATE'"
       >PREVIOUS</lens-academy-button-secondary
     >
     <lens-academy-button-primary
-      id="next-or-save"
       class="sm:w-52"
       (click)="mode === 'CREATE' ? nextStep.emit() : saveEdit.emit()"
       >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</lens-academy-button-primary

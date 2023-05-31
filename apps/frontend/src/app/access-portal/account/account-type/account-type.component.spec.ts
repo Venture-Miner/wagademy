@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountTypeComponent } from './account-type.component';
 import { ButtonPrimaryModule } from '../../../shared/button-primary/button-primary.module';
 import { NavbarModule } from '../../../shared/navbar/navbar.module';
-import { HttpClientModule } from '@angular/common/http';
 
 jest.mock('ethers');
 
@@ -13,7 +12,7 @@ describe('AccountTypeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AccountTypeComponent],
-      imports: [ButtonPrimaryModule, NavbarModule, HttpClientModule],
+      imports: [ButtonPrimaryModule, NavbarModule],
     }).compileComponents();
     fixture = TestBed.createComponent(AccountTypeComponent);
     component = fixture.componentInstance;
