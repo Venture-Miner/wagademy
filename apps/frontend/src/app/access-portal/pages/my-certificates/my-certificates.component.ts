@@ -4,6 +4,8 @@ import {
   LensService,
   TokenService,
 } from '../../../services';
+import { FormBuilder, Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'lens-academy-my-certificates',
@@ -20,14 +22,32 @@ export class MyCertificatesComponent implements OnInit {
   };
   isLoading = false;
   profileId = '';
+  form = this.fb.group({
+    search: ['', Validators.required],
+  });
+  filteredCertificates: any[] = [];
 
   constructor(
     private lensService: LensService,
     private tokenService: TokenService,
-    private certificateService: CertificateService
+    private certificateService: CertificateService,
+    private fb: FormBuilder
   ) {}
 
   async ngOnInit() {
+    this.form.valueChanges.pipe(debounceTime(600)).subscribe(({ search }) => {
+      this.filteredCertificates = this.certificates.filter(({ metadata }) => {
+        const { participant, courseName, conductor } = JSON.parse(
+          metadata?.attributes[0]?.value || '{}'
+        );
+        if (search) search = search.toLowerCase();
+        return (
+          participant.toLowerCase().includes(search) ||
+          courseName.toLowerCase().includes(search) ||
+          conductor.toLowerCase().includes(search)
+        );
+      });
+    });
     const ethereumAddress = this.tokenService.getWalletAddress();
     const {
       data: {
@@ -80,6 +100,7 @@ export class MyCertificatesComponent implements OnInit {
           return false;
         }
       });
+    this.filteredCertificates = this.certificates;
   }
 
   toggleMyCertificateModal() {
