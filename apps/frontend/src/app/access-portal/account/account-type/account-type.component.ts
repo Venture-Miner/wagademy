@@ -4,11 +4,15 @@ import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LensService } from '../../../services/lens/lens.service';
 import { TokenService } from '../../../services/token/token.service';
-
-enum ACCOUNT_TYPE {
-  physicalPerson = 'physicalPerson',
-  company = 'company',
-}
+import { EthersService, IpfsService } from '../../../services';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  ProfileMetadata,
+  MetadataVersions,
+  ACCOUNT_TYPE,
+  AttributeData,
+} from '../../../interfaces';
+import { BroadcastDocument } from '../../../interfaces/generated';
 
 @Component({
   selector: 'lens-academy-account-type',
@@ -35,7 +39,9 @@ export class AccountTypeComponent {
     private lensService: LensService,
     private tokenService: TokenService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private ipfsService: IpfsService,
+    private ethersService: EthersService
   ) {
     this.token$ = this.tokenService.getToken();
   }
@@ -136,8 +142,102 @@ export class AccountTypeComponent {
         items.appId === 'academy' &&
         items.metadata.description === 'Academy Curriculum'
     );
-    if (!academyPosts[0]) this.router.navigate(['/create-profile']);
-    else this.router.navigate(['/home']);
+    await this.verifyAttribute(profileId, academyPosts);
+  }
+
+  async verifyAttribute(profileId: string, academyPosts: unknown[]) {
+    const {
+      data: { profile },
+    }: { data: { profile: ProfileMetadata } } =
+      await this.lensService.client.query({
+        query: this.lensService.getProfileAttributes,
+        variables: { request: { profileId } },
+      });
+    const attributes: AttributeData[] = profile.attributes.filter(
+      ({ key }) => key === 'ACCOUNT_TYPE'
+    );
+    if (!attributes.length)
+      await this.setAccountTypeAttribute(profile, profileId, academyPosts);
+    else {
+      this.tokenService.setAccountType(attributes[0].value);
+      if (attributes[0].value === ACCOUNT_TYPE.physicalPerson) {
+        if (!academyPosts[0]) await this.router.navigate(['/create-profile']);
+        else await this.router.navigate(['/home']);
+      } else {
+        if (!academyPosts[0])
+          await this.router.navigate(['/create-company-profile']);
+        else await this.router.navigate(['/company-home']);
+      }
+    }
+  }
+
+  async setAccountTypeAttribute(
+    profile: ProfileMetadata,
+    profileId: string,
+    academyPosts: unknown[]
+  ) {
+    const attributes: { key: string; value: string }[] = [];
+    profile.attributes.forEach(({ key, value }) => {
+      attributes.push({ key, value });
+    });
+    const accountType = this.accountType as string;
+    this.tokenService.setAccountType(accountType);
+    const profileMetadata: ProfileMetadata = {
+      name: profile.name,
+      metadata_id: uuidv4(),
+      bio: profile.bio,
+      cover_picture: profile.cover_picture ? profile.cover_picture : null,
+      attributes: [
+        {
+          key: 'ACCOUNT_TYPE',
+          value: accountType,
+        },
+        ...attributes,
+      ],
+      version: MetadataVersions.one,
+    };
+    this.ipfsService.createPost(profileMetadata).subscribe({
+      next: ({ cid }) => {
+        this.updateProfileAttribute(`ipfs://${cid}`, profileId, academyPosts)
+          .then()
+          .catch((err) => console.error(err));
+      },
+    });
+  }
+
+  async updateProfileAttribute(
+    metadata: string,
+    profileId: string,
+    academyPosts: unknown[]
+  ) {
+    const { data } = await this.lensService.client.mutate({
+      mutation: this.lensService.updateProfile,
+      variables: { request: { profileId, metadata } },
+    });
+    const { domain, types, value } =
+      data.createSetProfileMetadataTypedData.typedData;
+    const signature = await this.ethersService.signedTypeData(
+      domain,
+      types,
+      value
+    );
+    await this.lensService.client.mutate({
+      mutation: BroadcastDocument,
+      variables: {
+        request: {
+          id: data.createSetProfileMetadataTypedData.id,
+          signature,
+        },
+      },
+    });
+    if (this.accountType === ACCOUNT_TYPE.physicalPerson) {
+      if (!academyPosts[0]) await this.router.navigate(['/create-profile']);
+      else await this.router.navigate(['/home']);
+    } else {
+      if (!academyPosts[0])
+        await this.router.navigate(['/create-company-profile']);
+      else await this.router.navigate(['/company-home']);
+    }
   }
 
   async createProfileRequest() {

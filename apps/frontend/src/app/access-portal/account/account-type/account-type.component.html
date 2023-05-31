@@ -1,7 +1,7 @@
 <div class="flex min-h-screen flex-col">
   <lens-academy-navbar></lens-academy-navbar>
   <div class="flex flex-1 flex-col items-center justify-center py-8 sm:py-0">
-    <h2 class="mb-10 text-3xl font-bold text-neutral-1">What you are?</h2>
+    <h2 class="text-neutral-1 mb-10 text-3xl font-bold">What are you?</h2>
     <div class="flex flex-col gap-8 sm:flex-row">
       <div
         class="flex h-60 w-60 cursor-pointer flex-col items-center justify-center rounded-lg hover:shadow-md sm:h-64 sm:w-64"
@@ -61,6 +61,7 @@
     <lens-academy-button-primary
       class="mt-12 w-52"
       (click)="showConnectWalletModal = true"
+      [disabled]="accountType !== undefined ? false : true"
       >CONNECT WALLET</lens-academy-button-primary
     >
   </div>
@@ -73,7 +74,7 @@
   <div class="flex flex-col items-center gap-4 py-6">
     <img src="../../assets/img/metamask-logo.svg" alt="metamask logo" />
     <span
-      class="cursor-pointer font-mono font-bold tracking-wider text-secondary underline"
+      class="text-secondary cursor-pointer font-mono font-bold tracking-wider underline"
       (click)="connectWithMetamask()"
       >Sign in with Metamask</span
     >
@@ -101,7 +102,7 @@
     ></lens-academy-input>
     <p
       *ngIf="handleTaken"
-      class="flex justify-center text-center text-sm text-danger"
+      class="text-danger flex justify-center text-center text-sm"
     >
       Handle already taken.
     </p>
@@ -109,7 +110,7 @@
       *ngIf="
         form.invalid && form.touched && form.controls['handle'].value === ''
       "
-      class="flex justify-center text-center text-sm text-danger"
+      class="text-danger flex justify-center text-center text-sm"
     >
       You need to provide a handle.
     </p>
@@ -119,7 +120,7 @@
         form.touched &&
         form.controls['handle'].value!.length > 31
       "
-      class="flex justify-center text-center text-sm text-danger"
+      class="text-danger flex justify-center text-center text-sm"
     >
       The handle is too big.
     </p>
@@ -130,7 +131,7 @@
         form.controls['handle'].value!.length < 5 &&
         form.controls['handle'].value!.length > 0
       "
-      class="flex justify-center text-center text-sm text-danger"
+      class="text-danger flex justify-center text-center text-sm"
     >
       The handle is too small.
     </p>
@@ -138,7 +139,7 @@
       <button
         [disabled]="form.invalid"
         *ngIf="!isLoading"
-        class="flex cursor-pointer self-center font-mono font-bold tracking-wider text-secondary underline disabled:cursor-default disabled:opacity-30"
+        class="text-secondary flex cursor-pointer self-center font-mono font-bold tracking-wider underline disabled:cursor-default disabled:opacity-30"
         (click)="createProfileRequest()"
       >
         Create
