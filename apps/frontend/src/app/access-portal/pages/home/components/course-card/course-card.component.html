@@ -1,5 +1,7 @@
-<div class="border-neutral-6 flex items-center gap-8 rounded-md border-4 p-4">
-  <img src="../../../assets/img/books-icon.svg" alt="books icon" />
+<div
+  class="border-neutral-6 items-center gap-8 rounded-md border-4 p-4 lg:flex"
+>
+  <img class="lg:px-10" alt="books icon" [src]="image" />
   <div>
     <ng-content .select="title"></ng-content>
     <span class="text-neutral-2 font-mono"
