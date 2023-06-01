@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-friend-requests',
+  selector: 'wagademy-friend-requests',
   templateUrl: './friend-requests.component.html',
   styleUrls: ['./friend-requests.component.css'],
 })

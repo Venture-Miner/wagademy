@@ -23,7 +23,7 @@
       [ngClass]="listType === 'grid' ? 'w-9/12' : 'w-2/12'"
       class="grid gap-1 text-center"
     >
-      <lens-academy-button-primary
+      <wagademy-button-primary
         *ngIf="!hasCollectedByMe"
         (click)="
           claim.emit({
@@ -31,7 +31,7 @@
             publicationId
           })
         "
-        >CLAIM</lens-academy-button-primary
+        >CLAIM</wagademy-button-primary
       >
       <span *ngIf="hasCollectedByMe" class="text-neutral-2 my-2">CLAIMED</span>
       <a

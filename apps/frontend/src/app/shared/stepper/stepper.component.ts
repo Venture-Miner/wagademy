@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-stepper',
+  selector: 'wagademy-stepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.css'],
 })

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'lens-academy-professional-experience-step',
+  selector: 'wagademy-professional-experience-step',
   templateUrl: './professional-experience-step.component.html',
   styleUrls: ['./professional-experience-step.component.css'],
 })

@@ -1,30 +1,28 @@
-<lens-academy-base-modal title="DETAILS" (modalClosed)="modalClosed.emit()">
+<wagademy-base-modal title="DETAILS" (modalClosed)="modalClosed.emit()">
   <div class="flex flex-col gap-8 p-6">
-    <lens-academy-squad-banner
-      *ngIf="type === 'SQUAD'"
-    ></lens-academy-squad-banner>
-    <lens-academy-avatars [type]="type" [data]="data"></lens-academy-avatars>
-    <lens-academy-personal-info [data]="data"></lens-academy-personal-info>
-    <lens-academy-about [data]="data"></lens-academy-about>
-    <lens-academy-education [data]="data"></lens-academy-education>
-    <lens-academy-professional-experience
+    <wagademy-squad-banner *ngIf="type === 'SQUAD'"></wagademy-squad-banner>
+    <wagademy-avatars [type]="type" [data]="data"></wagademy-avatars>
+    <wagademy-personal-info [data]="data"></wagademy-personal-info>
+    <wagademy-about [data]="data"></wagademy-about>
+    <wagademy-education [data]="data"></wagademy-education>
+    <wagademy-professional-experience
       [data]="data"
-    ></lens-academy-professional-experience>
-    <lens-academy-areas-of-expertise
+    ></wagademy-professional-experience>
+    <wagademy-areas-of-expertise
       *ngIf="type !== 'TEACHER'"
       [data]="data"
-    ></lens-academy-areas-of-expertise>
-    <lens-academy-areas-of-interest
+    ></wagademy-areas-of-expertise>
+    <wagademy-areas-of-interest
       *ngIf="type !== 'TEACHER'"
       [data]="data"
-    ></lens-academy-areas-of-interest>
-    <lens-academy-skills-and-competencies
+    ></wagademy-areas-of-interest>
+    <wagademy-skills-and-competencies
       *ngIf="type !== 'TEACHER'"
       [data]="data"
-    ></lens-academy-skills-and-competencies>
-    <lens-academy-recommendations
+    ></wagademy-skills-and-competencies>
+    <wagademy-recommendations
       *ngIf="type === 'TEACHER'"
       [data]="data"
-    ></lens-academy-recommendations>
+    ></wagademy-recommendations>
   </div>
-</lens-academy-base-modal>
+</wagademy-base-modal>

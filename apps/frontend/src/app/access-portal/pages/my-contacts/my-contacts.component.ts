@@ -9,7 +9,7 @@ import {
 } from '../../../interfaces';
 
 @Component({
-  selector: 'lens-academy-my-contacts',
+  selector: 'wagademy-my-contacts',
   templateUrl: './my-contacts.component.html',
   styleUrls: ['./my-contacts.component.css'],
 })

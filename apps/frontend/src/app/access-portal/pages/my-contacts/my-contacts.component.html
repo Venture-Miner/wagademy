@@ -1,9 +1,9 @@
-<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<wagademy-navbar-authenticated></wagademy-navbar-authenticated>
 <section class="container mx-auto">
   <div class="flex flex-col items-center gap-4 md:flex-row md:gap-6">
-    <div class="mt-8 w-10/12"><lens-academy-input></lens-academy-input></div>
+    <div class="mt-8 w-10/12"><wagademy-input></wagademy-input></div>
     <div class="w-5/12 md:mt-10 md:w-2/12">
-      <lens-academy-button-primary>FOLLOW</lens-academy-button-primary>
+      <wagademy-button-primary>FOLLOW</wagademy-button-primary>
     </div>
   </div>
   <ng-container *ngFor="let contact of following; let i = index">
@@ -42,16 +42,16 @@
           </div>
         </div>
       </div>
-      <lens-academy-button-secondary
+      <wagademy-button-secondary
         id="recommendation-button"
         class="mt-6 w-60 self-center pr-4 md:self-end"
         (click)="addRecommendationModal = true"
-        >ADD RECOMMENDATION</lens-academy-button-secondary
+        >ADD RECOMMENDATION</wagademy-button-secondary
       >
     </div>
   </ng-container>
 </section>
-<lens-academy-base-modal
+<wagademy-base-modal
   title="ADD RECOMMENDATION"
   *ngIf="addRecommendationModal"
   (modalClosed)="addRecommendationModal = false"
@@ -64,22 +64,19 @@
     />
     <p class="text-2xl font-bold">Name Example</p>
     <form [formGroup]="form" class="mt-10 flex grow flex-col gap-4">
-      <lens-academy-form-field [control]="getControl('description')">
-        <lens-academy-text-area
+      <wagademy-form-field [control]="getControl('description')">
+        <wagademy-text-area
           placeholder="Add recommendation"
           formControlName="description"
-        ></lens-academy-text-area>
-      </lens-academy-form-field>
-      <lens-academy-button-primary
-        id="send-button"
-        class="w-60"
-        (click)="send()"
-        >SEND</lens-academy-button-primary
+        ></wagademy-text-area>
+      </wagademy-form-field>
+      <wagademy-button-primary id="send-button" class="w-60" (click)="send()"
+        >SEND</wagademy-button-primary
       >
     </form>
   </div>
-</lens-academy-base-modal>
-<!-- <lens-academy-base-modal
+</wagademy-base-modal>
+<!-- <wagademy-base-modal
   title="FOLLOW"
   *ngIf="followModal"
   (modalClosed)="followModal = false"
@@ -118,12 +115,12 @@
           </div>
         </div>
       </div>
-      <lens-academy-button-primary
+      <wagademy-button-primary
         id="follow-button"
         (click)="follow()"
         class="mt-4 w-40 self-center md:self-start md:pr-4"
-        >FOLLOW</lens-academy-button-primary
+        >FOLLOW</wagademy-button-primary
       >
     </div>
   </ng-container>
-</lens-academy-base-modal> -->
+</wagademy-base-modal> -->

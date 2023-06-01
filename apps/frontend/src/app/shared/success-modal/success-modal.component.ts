@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-success-modal',
+  selector: 'wagademy-success-modal',
   templateUrl: './success-modal.component.html',
   styleUrls: ['./success-modal.component.css'],
 })

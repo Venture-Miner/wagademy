@@ -14,15 +14,15 @@
         <p class="text-neutral-1 pb-2 font-sans text-2xl font-bold">For who?</p>
         <form class="mb-4 flex flex-col gap-8 sm:flex-row" [formGroup]="search">
           <div class="grid grow gap-2">
-            <lens-academy-input
+            <wagademy-input
               formControlName="handle"
               type="search"
               placeholder="Search"
               class="grow"
-            ></lens-academy-input>
+            ></wagademy-input>
             <span>{{ handleMessage }}</span>
           </div>
-          <lens-academy-input-select></lens-academy-input-select>
+          <wagademy-input-select></wagademy-input-select>
         </form>
         <div class="flex gap-x-4 pt-6">
           <img
@@ -40,22 +40,22 @@
         </div>
         <form [formGroup]="form" class="pt-7">
           <div class="pb-3">
-            <lens-academy-input
+            <wagademy-input
               formControlName="student"
               placeholder="Student name"
-            ></lens-academy-input>
+            ></wagademy-input>
           </div>
           <div class="pb-3">
-            <lens-academy-input
+            <wagademy-input
               formControlName="course"
               placeholder="Course name"
-            ></lens-academy-input>
+            ></wagademy-input>
           </div>
           <div class="pb-6">
-            <lens-academy-input
+            <wagademy-input
               formControlName="institution"
               placeholder="Institution name"
-            ></lens-academy-input>
+            ></wagademy-input>
           </div>
         </form>
         <div class="relative mx-auto max-w-4xl">
@@ -77,12 +77,12 @@
           >
         </div>
         <div class="flex justify-center pt-4">
-          <lens-academy-button-primary
+          <wagademy-button-primary
             (click)="generateCertificate()"
             class="w-full sm:w-52"
             *ngIf="!isLoading"
             [disabled]="form.invalid || !handleExists"
-            >GENERATE</lens-academy-button-primary
+            >GENERATE</wagademy-button-primary
           >
           <img
             class="h-20 w-20"

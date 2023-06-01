@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LensService, TokenService } from '../../../services';
 
 @Component({
-  selector: 'lens-academy-home',
+  selector: 'wagademy-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
