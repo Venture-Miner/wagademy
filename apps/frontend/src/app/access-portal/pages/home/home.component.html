@@ -131,9 +131,7 @@
       class="h-full w-full max-w-[416px] cursor-pointer"
       *ngFor="let publication of publications | slice : 0 : display"
     >
-      <lens-academy-friend-card
-        [publication]="publication"
-      ></lens-academy-friend-card>
+      <wagademy-friend-card [publication]="publication"></wagademy-friend-card>
     </div>
   </div>
 </section>

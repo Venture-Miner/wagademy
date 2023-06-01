@@ -3,7 +3,7 @@ import { TokenService, LensService } from '../../../services';
 import { ACCOUNT_TYPE } from '../../../interfaces/types';
 
 @Component({
-  selector: 'lens-academy-home-company',
+  selector: 'wagademy-home-company',
   templateUrl: './home-company.component.html',
   styleUrls: ['./home-company.component.css'],
 })
