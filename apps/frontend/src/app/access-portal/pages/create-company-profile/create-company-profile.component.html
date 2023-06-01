@@ -1,5 +1,5 @@
 <div class="flex min-h-screen flex-col">
-  <lens-academy-navbar></lens-academy-navbar>
+  <wagademy-navbar></wagademy-navbar>
   <div class="flex flex-1 flex-col items-center py-9">
     <div class="container mx-auto flex px-3" *ngIf="mode === 'VIEW'">
       <div
@@ -13,23 +13,23 @@
         Confirm your details
       </h2>
     </div>
-    <lens-academy-stepper
+    <wagademy-stepper
       *ngIf="mode !== 'VIEW'"
       [currentStep]="mode !== 'CREATE' ? 9999 : currentStep"
       [steps]="steps"
-    ></lens-academy-stepper>
+    ></wagademy-stepper>
     <div
       class="divide-secondary grid w-full gap-10 divide-y-2 divide-solid px-3 md:w-2/3 2xl:w-2/5"
     >
-      <lens-academy-company-profile-step
+      <wagademy-company-profile-step
         [form]="form"
         [mode]="mode"
         (nextStep)="nextStep()"
         (edit)="edit(1)"
         (saveEdit)="showSummary()"
         *ngIf="currentStep === 1 || mode === 'VIEW'"
-      ></lens-academy-company-profile-step>
-      <lens-academy-interest-step
+      ></wagademy-company-profile-step>
+      <wagademy-interest-step
         [form]="form"
         [mode]="mode"
         (nextStep)="nextStep()"
@@ -37,13 +37,13 @@
         (saveEdit)="showSummary()"
         (previousStep)="previousStep()"
         *ngIf="currentStep === 2 || mode === 'VIEW'"
-      ></lens-academy-interest-step>
+      ></wagademy-interest-step>
     </div>
-    <lens-academy-button-primary
+    <wagademy-button-primary
       class="mt-14 w-full px-3 sm:w-52"
       *ngIf="mode === 'VIEW'"
       (click)="createProfile()"
-      >SAVE AND CONFIRM</lens-academy-button-primary
+      >SAVE AND CONFIRM</wagademy-button-primary
     >
   </div>
 </div>

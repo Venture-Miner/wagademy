@@ -11,35 +11,35 @@
       *ngFor="let educationForm of academicEducation.controls; let i = index"
     >
       <div [formGroup]="educationForm" class="flex flex-col gap-4">
-        <lens-academy-form-field
+        <wagademy-form-field
           [control]="educationForm.get('education')!"
           label="Education"
         >
-          <lens-academy-input
+          <wagademy-input
             type="text"
             placeholder="Education"
             formControlName="education"
-          ></lens-academy-input>
-        </lens-academy-form-field>
-        <lens-academy-form-field
+          ></wagademy-input>
+        </wagademy-form-field>
+        <wagademy-form-field
           [control]="educationForm.get('course')!"
           label="Degree course"
         >
-          <lens-academy-input
+          <wagademy-input
             type="text"
             placeholder="Degree course"
             formControlName="course"
-          ></lens-academy-input>
-        </lens-academy-form-field>
-        <lens-academy-form-field
+          ></wagademy-input>
+        </wagademy-form-field>
+        <wagademy-form-field
           [control]="educationForm.get('description')!"
           label="Description"
         >
-          <lens-academy-text-area
+          <wagademy-text-area
             placeholder="Description"
             formControlName="description"
-          ></lens-academy-text-area>
-        </lens-academy-form-field>
+          ></wagademy-text-area>
+        </wagademy-form-field>
         <div
           class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
           (click)="removeEducation(i)"
@@ -50,9 +50,9 @@
       </div>
     </ng-container>
   </ng-container>
-  <lens-academy-button-primary
+  <wagademy-button-primary
     class="mt-12 w-full self-end sm:w-52"
     (click)="saveEdit.emit()"
-    >SAVE</lens-academy-button-primary
+    >SAVE</wagademy-button-primary
   >
 </form>

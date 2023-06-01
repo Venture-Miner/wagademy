@@ -17,7 +17,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'lens-academy-input',
+  selector: 'wagademy-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
   providers: [

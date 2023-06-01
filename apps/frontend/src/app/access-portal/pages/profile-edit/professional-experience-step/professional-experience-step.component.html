@@ -13,35 +13,35 @@
       *ngFor="let experienceForm of experience.controls; let i = index"
     >
       <div [formGroup]="experienceForm" class="flex flex-col gap-4">
-        <lens-academy-form-field
+        <wagademy-form-field
           [control]="experienceForm.get('company')!"
           label="Company"
         >
-          <lens-academy-input
+          <wagademy-input
             type="text"
             placeholder="Company"
             formControlName="company"
-          ></lens-academy-input>
-        </lens-academy-form-field>
-        <lens-academy-form-field
+          ></wagademy-input>
+        </wagademy-form-field>
+        <wagademy-form-field
           [control]="experienceForm.get('job')!"
           label="Job Title"
         >
-          <lens-academy-input
+          <wagademy-input
             type="text"
             placeholder="Job Title"
             formControlName="job"
-          ></lens-academy-input>
-        </lens-academy-form-field>
-        <lens-academy-form-field
+          ></wagademy-input>
+        </wagademy-form-field>
+        <wagademy-form-field
           [control]="experienceForm.get('description')!"
           label="Description"
         >
-          <lens-academy-text-area
+          <wagademy-text-area
             placeholder="Description"
             formControlName="description"
-          ></lens-academy-text-area>
-        </lens-academy-form-field>
+          ></wagademy-text-area>
+        </wagademy-form-field>
         <div
           class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
           (click)="removeExperience(i)"
@@ -52,9 +52,9 @@
       </div>
     </ng-container>
   </ng-container>
-  <lens-academy-button-primary
+  <wagademy-button-primary
     class="mt-12 w-full self-end sm:w-52"
     (click)="saveEdit.emit()"
-    >SAVE</lens-academy-button-primary
+    >SAVE</wagademy-button-primary
   >
 </form>

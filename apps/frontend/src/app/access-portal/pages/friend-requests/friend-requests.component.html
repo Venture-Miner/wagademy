@@ -1,4 +1,4 @@
-<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<wagademy-navbar-authenticated></wagademy-navbar-authenticated>
 <section class="container mx-auto">
   <div class="ml-3">
     <div
@@ -58,14 +58,14 @@
           *ngIf="request.status === 'pending'"
           class="flex grow items-end justify-end gap-4"
         >
-          <lens-academy-button-secondary class="w-full sm:max-w-[208px]"
-            >DELETE</lens-academy-button-secondary
+          <wagademy-button-secondary class="w-full sm:max-w-[208px]"
+            >DELETE</wagademy-button-secondary
           >
-          <lens-academy-button-primary
+          <wagademy-button-primary
             id="accept-button"
             class="w-full sm:max-w-[208px]"
             (click)="request.status = 'accepted'; accept()"
-            >ACCEPT</lens-academy-button-primary
+            >ACCEPT</wagademy-button-primary
           >
         </div>
         <div

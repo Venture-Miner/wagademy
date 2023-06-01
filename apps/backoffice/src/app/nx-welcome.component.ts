@@ -3,7 +3,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 /* eslint-disable */
 
 @Component({
-  selector: 'lens-academy-nx-welcome',
+  selector: 'wagademy-nx-welcome',
   template: `
     <!--
      * * * * * * * * * * * * * * * * * * * * * * * * * * * *

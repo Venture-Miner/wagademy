@@ -13,7 +13,7 @@ import { ethers } from 'ethers';
 import LENS_FOLLOW_NFT_ABI from '../../../../assets/abis/lens-follow-nft-contract-abi.json';
 
 @Component({
-  selector: 'lens-academy-my-contacts',
+  selector: 'wagademy-my-contacts',
   templateUrl: './my-contacts.component.html',
   styleUrls: ['./my-contacts.component.css'],
 })

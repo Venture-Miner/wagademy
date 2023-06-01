@@ -1,13 +1,11 @@
-<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<wagademy-navbar-authenticated></wagademy-navbar-authenticated>
 <section (window:resize)="onResize()" class="container mx-auto">
   <div class="mx-3 mt-8 flex gap-4 md:mx-0 md:mt-0 md:gap-6">
     <form class="w-full md:w-9/12 md:self-end" [formGroup]="form">
-      <lens-academy-input formControlName="search"></lens-academy-input>
+      <wagademy-input formControlName="search"></wagademy-input>
     </form>
     <div class="flex gap-4 md:mt-10 md:w-3/12 md:justify-between">
-      <lens-academy-input-select
-        class="w-full md:w-8/12"
-      ></lens-academy-input-select>
+      <wagademy-input-select class="w-full md:w-8/12"></wagademy-input-select>
       <div class="mb-2 hidden gap-2 self-end md:flex">
         <button (click)="exhibitionStyle = 'list'">
           <img
@@ -56,15 +54,15 @@
       [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'"
       *ngFor="let certificate of filteredCertificates"
     >
-      <lens-academy-certificates-card
+      <wagademy-certificates-card
         [listType]="exhibitionStyle"
         (claim)="toggleMyCertificateModal(); courseToClaim = $event"
         [certificate]="certificate"
-      ></lens-academy-certificates-card>
+      ></wagademy-certificates-card>
     </div>
   </div>
 </section>
-<lens-academy-base-modal
+<wagademy-base-modal
   title="DETAILS"
   *ngIf="myCertificateModal"
   (modalClosed)="myCertificateModal = false"
@@ -91,11 +89,11 @@
       </div>
     </div>
     <div class="flex w-full justify-center">
-      <lens-academy-button-primary
+      <wagademy-button-primary
         *ngIf="!isLoading"
         (click)="claimCertificate(courseToClaim.publicationId)"
         class="w-full sm:w-2/5"
-        >CLAIM</lens-academy-button-primary
+        >CLAIM</wagademy-button-primary
       >
       <img
         class="h-20 w-20"
@@ -105,4 +103,4 @@
       />
     </div>
   </div>
-</lens-academy-base-modal>
+</wagademy-base-modal>

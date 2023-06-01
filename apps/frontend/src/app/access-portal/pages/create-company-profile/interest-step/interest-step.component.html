@@ -9,19 +9,19 @@
     <h5 class="mb-2 text-center font-mono font-bold">
       You need to fill in up to 10 words to describe what you are looking for
     </h5>
-    <lens-academy-input
+    <wagademy-input
       id="add-interest-input"
       formControlName="interest"
       type="text"
       placeholder="Interest"
       (keyup.enter)="addInterest()"
-    ></lens-academy-input>
+    ></wagademy-input>
     <div class="mt-4">
-      <lens-academy-button-primary
+      <wagademy-button-primary
         id="add-interest"
         (click)="addInterest()"
         [disabled]="interests.length >= 10 || interestControl.invalid"
-        >ADD</lens-academy-button-primary
+        >ADD</wagademy-button-primary
       >
     </div>
   </ng-container>
@@ -52,18 +52,18 @@
     class="mt-12 flex flex-col justify-end gap-6 sm:flex-row"
     *ngIf="mode !== 'VIEW'"
   >
-    <lens-academy-button-secondary
+    <wagademy-button-secondary
       id="previous-step"
       class="sm:w-52"
       (click)="previousStep.emit()"
       *ngIf="mode === 'CREATE'"
-      >PREVIOUS</lens-academy-button-secondary
+      >PREVIOUS</wagademy-button-secondary
     >
-    <lens-academy-button-primary
+    <wagademy-button-primary
       id="next-or-save"
       class="sm:w-52"
       (click)="mode === 'CREATE' ? nextStep.emit() : saveEdit.emit()"
-      >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</lens-academy-button-primary
+      >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</wagademy-button-primary
     >
   </div>
 </form>

@@ -9,7 +9,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'lens-academy-widget',
+  selector: 'wagademy-widget',
   templateUrl: './widget.component.html',
   styleUrls: ['./widget.component.css'],
 })

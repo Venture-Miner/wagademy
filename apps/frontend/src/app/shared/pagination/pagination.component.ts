@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-pagination',
+  selector: 'wagademy-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
 })
