@@ -3,8 +3,8 @@ import { FormBuilder } from '@angular/forms';
 import {
   LensService,
   TokenService,
-  EthersService,
   IpfsService,
+  PostService,
 } from '../../../services';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -55,10 +55,10 @@ export class CreateProfileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private lensService: LensService,
     private tokenService: TokenService,
-    private ethersService: EthersService,
-    private ipfsService: IpfsService
+    private lensService: LensService,
+    private ipfsService: IpfsService,
+    private postService: PostService
   ) {}
 
   async ngOnInit() {
@@ -105,69 +105,27 @@ export class CreateProfileComponent implements OnInit {
     this.currentStep = this.steps.length;
   }
 
-  async createCurriculum() {
+  createCurriculum() {
     this.ipfsService
-      .uploadIpfs({
+      .createPost({
         version: '2.0.0',
         mainContentFocus: 'TEXT_ONLY',
         description: 'Academy Curriculum',
         metadata_id: uuidv4(),
         locale: 'en-US',
         content: JSON.stringify(this.form.value),
-        external_url: null,
-        image: null,
-        imageMimeType: null,
         name: `@${this.handle} Curriculum`,
         attributes: [],
-        tags: [],
+        tags: [this.tokenService.getAccountType()],
         appId: 'Academy',
       })
       .subscribe({
-        next: (ipfsResult) => {
-          this.createPost(ipfsResult.path);
+        next: async ({ cid }) => {
+          const tx = await this.postService.createPost(this.lensId, cid, false);
+          tx.wait().then(() => {
+            this.mode = 'CREATED';
+          });
         },
       });
-  }
-
-  async createPost(path: string) {
-    const post = await this.lensService.client.mutate({
-      mutation: this.lensService.post,
-      variables: {
-        request: {
-          profileId: this.lensId,
-          contentURI: `ipfs://${path}`,
-          collectModule: {
-            revertCollectModule: true,
-          },
-          referenceModule: {
-            followerOnlyReferenceModule: false,
-          },
-        },
-      },
-    });
-    const { domain, types, value } = post.data!.createPostTypedData.typedData;
-    const signedResult = await this.ethersService.signedTypeData(
-      domain,
-      types,
-      value
-    );
-    const { v, r, s } = this.ethersService.splitSignature(signedResult);
-    const tx = await this.lensService.lensHub['postWithSig']({
-      profileId: value.profileId,
-      contentURI: value.contentURI,
-      collectModule: value.collectModule,
-      collectModuleInitData: value.collectModuleInitData,
-      referenceModule: value.referenceModule,
-      referenceModuleInitData: value.referenceModuleInitData,
-      sig: {
-        v,
-        r,
-        s,
-        deadline: value.deadline,
-      },
-    });
-    tx.wait().then(() => {
-      this.mode = 'CREATED';
-    });
   }
 }

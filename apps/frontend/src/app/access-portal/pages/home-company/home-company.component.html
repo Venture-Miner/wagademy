@@ -1,0 +1,57 @@
+<lens-academy-navbar-authenticated-company></lens-academy-navbar-authenticated-company>
+<section class="container mx-auto mb-12 px-6">
+  <div class="mx-auto mb-10 mt-8 max-w-lg 2xl:max-w-xl">
+    <lens-academy-widget>
+      <div class="button pt-3">
+        <button
+          class="bg-secondary text-neutral-4 hover:bg-primary hover:text-neutral-1 rounded-lg px-4"
+          (click)="showDetailsModal = true"
+        >
+          Post Certificate
+        </button>
+      </div>
+    </lens-academy-widget>
+  </div>
+  <div class="mb-10 flex flex-col gap-8 sm:flex-row">
+    <lens-academy-input
+      type="search"
+      placeholder="Search"
+      class="grow"
+    ></lens-academy-input>
+    <lens-academy-input-select></lens-academy-input-select>
+  </div>
+  <div class="pb-14">
+    <p class="text-neutral-1 pb-6 text-2xl font-bold">
+      Companies you might like
+    </p>
+    <div
+      class="grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6"
+    >
+      <div class="cursor-pointer md:max-w-[192px]">
+        <lens-academy-company-card></lens-academy-company-card>
+      </div>
+      <div class="cursor-pointer md:max-w-[192px]">
+        <lens-academy-company-card></lens-academy-company-card>
+      </div>
+      <div class="cursor-pointer md:max-w-[192px]">
+        <lens-academy-company-card></lens-academy-company-card>
+      </div>
+      <div class="cursor-pointer md:max-w-[192px]">
+        <lens-academy-company-card></lens-academy-company-card>
+      </div>
+    </div>
+  </div>
+  <p class="text-neutral-1 mb-14 text-2xl font-bold">Companies Activities</p>
+  <div
+    class="mb-12 cursor-pointer md:mb-16 md:max-h-[416px]"
+    *ngFor="let publication of publications"
+  >
+    <lens-academy-companies-activities
+      [publication]="publication"
+    ></lens-academy-companies-activities>
+  </div>
+</section>
+<lens-academy-details-modal
+  *ngIf="showDetailsModal"
+  (cancel)="showDetailsModal = false"
+></lens-academy-details-modal>

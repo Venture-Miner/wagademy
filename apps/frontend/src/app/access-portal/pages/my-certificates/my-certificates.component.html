@@ -1,9 +1,9 @@
 <lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
 <section (window:resize)="onResize()" class="container mx-auto">
   <div class="mx-3 mt-8 flex gap-4 md:mx-0 md:mt-0 md:gap-6">
-    <div class="w-full md:w-9/12 md:self-end">
-      <lens-academy-input></lens-academy-input>
-    </div>
+    <form class="w-full md:w-9/12 md:self-end" [formGroup]="form">
+      <lens-academy-input formControlName="search"></lens-academy-input>
+    </form>
     <div class="flex gap-4 md:mt-10 md:w-3/12 md:justify-between">
       <lens-academy-input-select
         class="w-full md:w-8/12"
@@ -52,40 +52,14 @@
     "
     class="mx-3 my-6 md:mx-0"
   >
-    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
+    <div
+      [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'"
+      *ngFor="let certificate of filteredCertificates"
+    >
       <lens-academy-certificates-card
         [listType]="exhibitionStyle"
-        (claim)="toggleMyCertificateModal()"
-      ></lens-academy-certificates-card>
-    </div>
-    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
-      <lens-academy-certificates-card
-        [listType]="exhibitionStyle"
-        (claim)="toggleMyCertificateModal()"
-      ></lens-academy-certificates-card>
-    </div>
-    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
-      <lens-academy-certificates-card
-        [listType]="exhibitionStyle"
-        (claim)="toggleMyCertificateModal()"
-      ></lens-academy-certificates-card>
-    </div>
-    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
-      <lens-academy-certificates-card
-        [listType]="exhibitionStyle"
-        (claim)="toggleMyCertificateModal()"
-      ></lens-academy-certificates-card>
-    </div>
-    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
-      <lens-academy-certificates-card
-        [listType]="exhibitionStyle"
-        (claim)="toggleMyCertificateModal()"
-      ></lens-academy-certificates-card>
-    </div>
-    <div [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'">
-      <lens-academy-certificates-card
-        [listType]="exhibitionStyle"
-        (claim)="toggleMyCertificateModal()"
+        (claim)="toggleMyCertificateModal(); courseToClaim = $event"
+        [certificate]="certificate"
       ></lens-academy-certificates-card>
     </div>
   </div>
@@ -103,7 +77,9 @@
         class="self-center"
       />
       <div class="space-y-2">
-        <h1 class="text-secondary text-2xl font-bold">Course Name</h1>
+        <h1 class="text-secondary text-2xl font-bold">
+          {{ courseToClaim.courseName }}
+        </h1>
         <p class="font-mono">
           Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
           sint Amet minim mollit non deserunt ullamco est sit aliqua.
@@ -116,13 +92,17 @@
     </div>
     <div class="flex w-full justify-center">
       <lens-academy-button-primary
-        (click)="toggleClaimedCertificateModal()"
+        *ngIf="!isLoading"
+        (click)="claimCertificate(courseToClaim.publicationId)"
         class="w-full sm:w-2/5"
         >CLAIM</lens-academy-button-primary
       >
+      <img
+        class="h-20 w-20"
+        *ngIf="isLoading"
+        src="../../assets/img/loading-icon.svg"
+        alt="loading icon"
+      />
     </div>
   </div>
 </lens-academy-base-modal>
-<lens-academy-certificate-modal
-  *ngIf="claimedCertificateModal"
-></lens-academy-certificate-modal>

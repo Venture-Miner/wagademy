@@ -1,0 +1,48 @@
+<div class="bg-neutral-3 flex flex-col gap-4 rounded-sm p-4">
+  <div class="flex w-full flex-col md:flex-row">
+    <div
+      [ngClass]="publication.metadata.media.length ? 'w-1/2' : 'w-full'"
+      class="flex flex-col"
+    >
+      <div class="flex items-center gap-4 pb-4">
+        <img
+          [src]="sanitizeUrl(publication.profile.picture?.original?.url)"
+          alt="avatar example"
+          class="h-12 w-12 rounded-full object-cover"
+        />
+        <p class="text-neutral-1 font-mono text-base font-bold">
+          {{ publication.profile.name || publication.profile.handle }}
+        </p>
+      </div>
+      <p
+        class="text-neutral-2 break-all font-mono text-sm"
+        *ngIf="publication.metadata.content"
+      >
+        {{ publication.metadata.content }}
+      </p>
+    </div>
+    <div *ngIf="publication.metadata.media.length" class="w-full md:w-1/2">
+      <img
+        *ngIf="
+          publication.metadata.media.length &&
+          publication.metadata.media[0].original.mimeType.includes('image')
+        "
+        [src]="sanitizeUrl(publication.metadata.media[0].original.url)"
+        alt="post media"
+      />
+      <video
+        controls
+        *ngIf="
+          publication.metadata.media.length &&
+          publication.metadata.media[0].original.mimeType.includes('video')
+        "
+      >
+        <source
+          [src]="sanitizeUrl(publication.metadata.media[0].original.url)"
+          type="video/mp4"
+        />
+        Your browser does not support the video.
+      </video>
+    </div>
+  </div>
+</div>
