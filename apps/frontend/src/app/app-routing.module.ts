@@ -136,7 +136,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'jobs-details',
+        path: 'home/jobs-details',
         canActivate: [AuthGuard],
         loadChildren: () =>
           import('./access-portal/pages/jobs-details/jobs-details.module').then(
