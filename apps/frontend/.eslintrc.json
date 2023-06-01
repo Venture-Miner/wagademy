@@ -12,7 +12,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "Wagademy",
+            "prefix": "wagademy",
             "style": "camelCase"
           }
         ],
