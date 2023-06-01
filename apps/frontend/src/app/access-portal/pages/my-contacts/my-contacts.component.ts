@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { LensService, TokenService } from '../../../services';
+import { EthersService, LensService, TokenService } from '../../../services';
 import {
   Curriculum,
   About,
   AcademicEducation,
   Experience,
+  FollowRequest,
 } from '../../../interfaces';
+import { debounceTime } from 'rxjs';
+import { ethers } from 'ethers';
+import LENS_FOLLOW_NFT_ABI from '../../../../assets/abis/lens-follow-nft-contract-abi.json';
 
 @Component({
   selector: 'lens-academy-my-contacts',
@@ -14,7 +18,7 @@ import {
   styleUrls: ['./my-contacts.component.css'],
 })
 export class MyContactsComponent implements OnInit {
-  // followModal = false;
+  followModal = false;
   addRecommendationModal = false;
   form = this.fb.group({
     description: [''],
@@ -29,14 +33,26 @@ export class MyContactsComponent implements OnInit {
   experience: Experience[] = [];
   skillsAndCompetencies: string[] = [];
   curriculums: (undefined | Curriculum)[] = [];
+  profile: any = null;
+  isLoading = false;
+  followForm = this.fb.group({
+    search: [''],
+  });
+  profileImageURL = '';
 
   constructor(
     private fb: FormBuilder,
     private tokenService: TokenService,
-    private lensService: LensService
+    private lensService: LensService,
+    private ethersService: EthersService
   ) {}
 
   async ngOnInit() {
+    this.followForm.valueChanges
+      .pipe(debounceTime(600))
+      .subscribe(({ search }) => {
+        this.getProfile(search);
+      });
     try {
       const ethereumAddress = this.tokenService.getWalletAddress();
       const following = await this.lensService.client.query({
@@ -49,7 +65,7 @@ export class MyContactsComponent implements OnInit {
         },
       });
       this.following = following.data.following.items;
-      this.getProfileImage(this.following);
+      this.getProfileImages(this.following);
       const curriculums = this.following.map(({ profile: { id } }) =>
         this.getProfileCurriculum(id)
       );
@@ -59,7 +75,31 @@ export class MyContactsComponent implements OnInit {
     }
   }
 
-  getProfileImage(following: any[]) {
+  async getProfile(handle: string | null | undefined) {
+    const profile = await this.lensService.client.query({
+      query: this.lensService.getProfile,
+      variables: { request: { handle } },
+    });
+    this.profile = profile.data.profile;
+    this.getProfileImage(this.profile?.picture?.original?.url);
+    console.log(this.profile.isFollowedByMe);
+  }
+
+  getProfileImage(url: string | null) {
+    url = url || '';
+    if (url.includes('http')) {
+      this.profileImageURL = url;
+    } else if (url.includes('ipfs://')) {
+      this.profileImageURL = `https://ipfs.io/ipfs/${url.split('ipfs://')[1]}`;
+    } else if (url.includes('ar://')) {
+      this.profileImageURL = `https://arweave.net/${url.split('ar://')[1]}`;
+    } else {
+      this.profileImageURL =
+        'https://lens.infura-ipfs.io/ipfs/QmY9dUwYu67puaWBMxRKW98LPbXCznPwHUbhX5NeWnCJbX';
+    }
+  }
+
+  getProfileImages(following: any[]) {
     for (const profile of following) {
       if (!profile.picture)
         this.profilePicture.push(
@@ -125,7 +165,76 @@ export class MyContactsComponent implements OnInit {
     //
   }
 
-  follow() {
-    //
+  createUnfollowTypedData = async (request: any) => {
+    const result = await this.lensService.client.mutate({
+      mutation: this.lensService.unfollow,
+      variables: { request },
+    });
+    return result.data!.createUnfollowTypedData;
+  };
+
+  async unfollow(profileId: string) {
+    this.isLoading = true;
+    const result = await this.createUnfollowTypedData({
+      profile: profileId,
+    });
+    const { domain, types, value } = result.typedData;
+    const signature = await this.ethersService.signedTypeData(
+      domain,
+      types,
+      value
+    );
+    const { v, r, s } = this.ethersService.splitSignature(signature);
+    const followNftContract = new ethers.Contract(
+      domain.verifyingContract,
+      LENS_FOLLOW_NFT_ABI,
+      this.ethersService.ethersProvider.getSigner()
+    );
+    const sig = {
+      v,
+      r,
+      s,
+      deadline: value.deadline,
+    };
+    const tx = await followNftContract['burnWithSig'](value.tokenId, sig);
+    tx.wait().then(() => {
+      this.isLoading = false;
+    });
+  }
+
+  async createFollowTypedData(request: FollowRequest) {
+    const result = await this.lensService.client.mutate({
+      mutation: this.lensService.follow,
+      variables: { request },
+    });
+    return result.data!.createFollowTypedData;
+  }
+
+  async follow(profileId: string) {
+    this.isLoading = true;
+    const result = await this.createFollowTypedData({
+      follow: [{ profile: profileId }],
+    });
+    const { domain, types, value } = result.typedData;
+    const signature = await this.ethersService.signedTypeData(
+      domain,
+      types,
+      value
+    );
+    const { v, r, s } = this.ethersService.splitSignature(signature);
+    const tx = await this.lensService.lensHub['followWithSig']({
+      follower: this.tokenService.getWalletAddress(),
+      profileIds: value.profileIds,
+      datas: value.datas,
+      sig: {
+        v,
+        r,
+        s,
+        deadline: value.deadline,
+      },
+    });
+    tx.wait().then(() => {
+      this.isLoading = false;
+    });
   }
 }

@@ -3,12 +3,13 @@
   <div class="flex flex-col items-center gap-4 md:flex-row md:gap-6">
     <div class="mt-8 w-10/12"><lens-academy-input></lens-academy-input></div>
     <div class="w-5/12 md:mt-10 md:w-2/12">
-      <lens-academy-button-primary>FOLLOW</lens-academy-button-primary>
+      <lens-academy-button-primary (click)="followModal = true"
+        >FOLLOW</lens-academy-button-primary
+      >
     </div>
   </div>
   <ng-container *ngFor="let contact of following; let i = index">
     <div
-      id="contact-list"
       class="border-neutral-5 flex flex-col justify-between border-b py-6 pl-4 md:flex-row md:pl-0"
     >
       <div class="flex flex-col md:flex-row">
@@ -33,7 +34,6 @@
             class="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
           >
             <div
-              id="interest-list"
               *ngFor="let interest of curriculums[i]?.interest"
               class="bg-neutral-2/5 w-20 rounded-full p-1 text-center"
             >
@@ -43,7 +43,6 @@
         </div>
       </div>
       <lens-academy-button-secondary
-        id="recommendation-button"
         class="mt-6 w-60 self-center pr-4 md:self-end"
         (click)="addRecommendationModal = true"
         >ADD RECOMMENDATION</lens-academy-button-secondary
@@ -70,60 +69,75 @@
           formControlName="description"
         ></lens-academy-text-area>
       </lens-academy-form-field>
-      <lens-academy-button-primary
-        id="send-button"
-        class="w-60"
-        (click)="send()"
+      <lens-academy-button-primary class="w-60" (click)="send()"
         >SEND</lens-academy-button-primary
       >
     </form>
   </div>
 </lens-academy-base-modal>
-<!-- <lens-academy-base-modal
+<lens-academy-base-modal
   title="FOLLOW"
   *ngIf="followModal"
   (modalClosed)="followModal = false"
 >
-  <ng-container *ngFor="let contact of contacts | slice : 0 : 3">
-    <div
-      class="border-neutral-5 mx-0 flex flex-col justify-between border-b py-6 md:mx-10 md:flex-row"
-    >
-      <div class="flex flex-col items-center md:flex-row md:items-start">
-        <div class="min-w-fit flex-col space-y-4">
-          <img
-            src="https://i.pravatar.cc/300"
-            alt="avatar example"
-            class="border-secondary ml-4 mt-3 h-10 w-10 rounded-full border-2 object-cover md:ml-0"
-          />
+  <form [formGroup]="followForm">
+    <lens-academy-input
+      type="search"
+      placeholder="Search"
+      formControlName="search"
+      class="my-6 w-full px-5"
+    ></lens-academy-input>
+  </form>
+  <div class="mb-6" *ngIf="!profile">
+    <span class="px-5">NO PROFILE FOUND</span>
+  </div>
+  <div
+    class="mb-6 flex items-center justify-between gap-4 px-5"
+    *ngIf="profile"
+  >
+    <div class="flex gap-5">
+      <img
+        [src]="profileImageURL"
+        alt="profile image"
+        class="border-secondary h-10 w-10 rounded-full border-2"
+      />
+      <div class="text-neutral-2">
+        <div class="flex items-center gap-3">
+          <span class="text-neutral-1 text-sm font-bold">NAME</span
+          ><span class="grow" *ngIf="profile.name">
+            {{ profile.name }}
+          </span>
+          <span class="grow italic" *ngIf="!profile.name"> no name </span>
         </div>
-        <div
-          class="text-neutral-2 mt-3 flex flex-col space-y-2 self-center md:ml-6"
-        >
-          <div>
-            <span class="text-neutral-1 mr-10 text-sm font-bold">NAME</span
-            >{{ contact.name }}
-          </div>
-          <div>
-            <span class="text-neutral-1 mr-[52px] text-sm font-bold">AGE</span
-            >{{ contact.age }}
-          </div>
-          <p class="text-neutral-1 text-sm font-bold">INTEREST</p>
-          <div class="grid grid-cols-3 gap-x-4 gap-y-2">
-            <div
-              *ngFor="let interest of contact.interest"
-              class="bg-neutral-2/5 w-16 rounded-full p-1 text-center text-sm"
-            >
-              {{ interest }}
-            </div>
-          </div>
+        <div class="flex items-center gap-3">
+          <span class="text-neutral-1 text-sm font-bold">BIO</span>
+          <span class="grow truncate whitespace-nowrap" *ngIf="profile.bio">
+            {{ profile.bio }}
+          </span>
+          <span class="grow whitespace-nowrap italic" *ngIf="!profile.bio">
+            no bio
+          </span>
         </div>
       </div>
-      <lens-academy-button-primary
-        id="follow-button"
-        (click)="follow()"
-        class="mt-4 w-40 self-center md:self-start md:pr-4"
-        >FOLLOW</lens-academy-button-primary
-      >
     </div>
-  </ng-container>
-</lens-academy-base-modal> -->
+    <div class="flex w-40 justify-end">
+      <lens-academy-button-primary
+        *ngIf="!isLoading"
+        id="follow-button"
+        (click)="
+          profile.isFollowedByMe ? unfollow(profile.id) : follow(profile.id)
+        "
+        class="w-40"
+        >{{
+          profile.isFollowedByMe ? 'UNFOLLOW' : 'FOLLOW'
+        }}</lens-academy-button-primary
+      >
+      <img
+        class="h-14 w-14"
+        *ngIf="isLoading"
+        src="../../assets/img/loading-icon.svg"
+        alt="loading icon"
+      />
+    </div>
+  </div>
+</lens-academy-base-modal>
