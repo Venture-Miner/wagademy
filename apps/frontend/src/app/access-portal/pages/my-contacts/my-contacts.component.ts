@@ -82,7 +82,6 @@ export class MyContactsComponent implements OnInit {
     });
     this.profile = profile.data.profile;
     this.getProfileImage(this.profile?.picture?.original?.url);
-    console.log(this.profile.isFollowedByMe);
   }
 
   getProfileImage(url: string | null) {
