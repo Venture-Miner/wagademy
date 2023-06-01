@@ -18,8 +18,20 @@
       </div>
       <div class="bg-neutral-3">
         <div class="px-5 py-6">
-          <div class="pb-4">
-            <lens-academy-post-card> </lens-academy-post-card>
+          <div
+            class="pb-4"
+            *ngFor="let publication of publications | slice : 0 : display"
+          >
+            <lens-academy-post-card [publication]="publication">
+            </lens-academy-post-card>
+          </div>
+          <div class="flex justify-end">
+            <button
+              class="text-secondary cursor-pointer text-xl font-semibold"
+              (click)="display = display + 47; getPublications()"
+            >
+              Show More
+            </button>
           </div>
         </div>
       </div>
