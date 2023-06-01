@@ -38,16 +38,16 @@
     </div>
   </div>
 </div>
-<lens-academy-base-modal
+<wagademy-base-modal
   title="POST"
   *ngIf="showPostModal"
   (modalClosed)="showPostModal = false"
 >
   <form class="p-5" [formGroup]="form">
-    <lens-academy-text-area
+    <wagademy-text-area
       placeholder="What do you want to talk about?"
       formControlName="post"
-    ></lens-academy-text-area>
+    ></wagademy-text-area>
     <div class="flex justify-between">
       <i
         class="cursor-pointer"
@@ -57,12 +57,12 @@
         (emojiPickerSelect)="handleSelection($event)"
         >😄</i
       >
-      <lens-academy-button-primary
+      <wagademy-button-primary
         *ngIf="!isLoading"
         class="mt-5 w-52"
         (click)="post()"
         [disabled]="form.invalid"
-        >POST</lens-academy-button-primary
+        >POST</wagademy-button-primary
       >
       <img
         class="h-20 w-20"
@@ -72,4 +72,4 @@
       />
     </div>
   </form>
-</lens-academy-base-modal>
+</wagademy-base-modal>
