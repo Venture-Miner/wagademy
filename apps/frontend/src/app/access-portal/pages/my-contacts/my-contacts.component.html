@@ -81,12 +81,12 @@
   (modalClosed)="followModal = false"
 >
   <form [formGroup]="followForm">
-    <lens-academy-input
+    <wagademy-input
       type="search"
       placeholder="Search"
       formControlName="search"
       class="my-6 w-full px-5"
-    ></lens-academy-input>
+    ></wagademy-input>
   </form>
   <div class="mb-6" *ngIf="!profile">
     <span class="px-5">NO PROFILE FOUND</span>
