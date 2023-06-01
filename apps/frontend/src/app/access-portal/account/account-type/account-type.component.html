@@ -2,7 +2,7 @@
   <lens-academy-navbar></lens-academy-navbar>
   <div class="container mx-auto grid grid-cols-1 gap-8 md:grid-cols-2">
     <div
-      class="border-primary mt-8 flex flex-1 flex-col items-center justify-center px-5 py-8 sm:py-0 md:border-r-4"
+      class="border-primary mt-8 flex flex-1 flex-col items-center justify-center border-r-0 border-b-4 px-5 py-8 sm:py-0 md:border-b-0 md:border-r-4"
     >
       <h2 class="text-neutral-1 mb-10 pt-14 text-center text-3xl font-bold">
         Create an account to Wagademy
@@ -64,7 +64,7 @@
         </div>
       </div>
       <lens-academy-button-primary
-        class="mt-12 w-52"
+        class="mt-12 w-52 pb-24 md:pb-0"
         (click)="showConnectWalletModal = true"
         [disabled]="accountType !== undefined ? false : true"
         >Register</lens-academy-button-primary
