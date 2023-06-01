@@ -33,6 +33,7 @@
   </wagademy-form-field>
   <div
     class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
+    id="edit"
     (click)="edit.emit()"
     *ngIf="mode === 'VIEW'"
   >
@@ -40,6 +41,7 @@
     <i class="bi bi-pencil text-secondary"></i>
   </div>
   <wagademy-button-primary
+    id="next-or-save"
     class="mt-12 w-full self-end sm:w-52"
     *ngIf="mode !== 'VIEW'"
     (click)="mode === 'CREATE' ? nextStep.emit() : saveEdit.emit()"

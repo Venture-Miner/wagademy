@@ -3,12 +3,28 @@ import jsPDF from 'jspdf';
 import SpaceGrotesk from '../../../assets/fonts/SpaceGrotesk';
 import NotoSans from '../../../assets/fonts/NotoSans';
 import * as PDFJS from 'pdfjs-dist';
+import { IpfsService } from '../ipfs';
+import { concatMap } from 'rxjs';
 PDFJS.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS.version}/pdf.worker.js`;
+import { v4 as uuidv4 } from 'uuid';
+import { PostService } from '../post';
+import { LensService } from '../lens';
+import { EthersService } from '../ethers';
+import { TokenService } from '../token';
+import { ACCOUNT_TYPE } from '../../interfaces/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CertificateService {
+  constructor(
+    private ipfsService: IpfsService,
+    private postService: PostService,
+    private lensService: LensService,
+    private ethersService: EthersService,
+    private tokenService: TokenService
+  ) {}
+
   private generateCertificate(
     participant: string,
     courseName: string,
@@ -105,5 +121,85 @@ export class CertificateService {
     });
   }
 
-  postCertificate() {}
+  async postCertificate(
+    participantName: string,
+    courseName: string,
+    conductor: string,
+    participantHandle: string,
+    conductorLensId: string
+  ) {
+    const blob = await this.generatePNGBlobCertificate(
+      participantName,
+      courseName,
+      conductor
+    );
+    return this.ipfsService.uploadImage(blob).pipe(
+      concatMap(({ cid }) => {
+        return this.ipfsService.createPost({
+          version: '2.0.0',
+          mainContentFocus: 'IMAGE',
+          description: 'Academy Certificate',
+          metadata_id: uuidv4(),
+          locale: 'en-US',
+          image: `ipfs://${cid}`,
+          imageMimeType: 'image/png',
+          media: [
+            {
+              item: `ipfs://${cid}`,
+              type: 'image/png',
+            },
+          ],
+          name: `@${participantHandle} Certificate`,
+          attributes: [
+            {
+              value: {
+                participant: participantName,
+                courseName,
+                conductor,
+              },
+            },
+          ],
+          tags: [ACCOUNT_TYPE.company],
+          appId: 'Academy',
+        });
+      }),
+      concatMap(({ cid }) =>
+        this.postService.createPost(conductorLensId, cid, true)
+      )
+    );
+  }
+
+  async claimCertificate(publicationId: string) {
+    const result = await this.lensService.client.mutate({
+      mutation: this.lensService.collect,
+      variables: {
+        request: {
+          publicationId,
+        },
+      },
+    });
+    const { domain, types, value } =
+      result.data!.createCollectTypedData.typedData;
+    const signature = await this.ethersService.signedTypeData(
+      domain,
+      types,
+      value
+    );
+    const { v, r, s } = this.ethersService.splitSignature(signature);
+    return this.lensService.lensHub['collectWithSig'](
+      {
+        collector: this.tokenService.getWalletAddress(),
+        profileId: value.profileId,
+        pubId: value.pubId,
+        data: value.data,
+        sig: {
+          v,
+          r,
+          s,
+          deadline: value.deadline,
+        },
+      },
+      { gasLimit: 1000000 }
+    );
+  }
 }

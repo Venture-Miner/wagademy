@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HiredComponent } from './hired.component';
-import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/navbar-authenticated.module';
-import { InputSelectModule } from '../../../shared/input-select/input-select.module';
 import { PaginationModule } from '../../../shared/pagination/pagination.module';
+import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/navbar-authenticated.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { InputSelectModule } from '../../../shared/input-select/input-select.module';
 
 jest.mock('ethers');
 
@@ -19,6 +19,10 @@ describe('HiredComponent', () => {
         InputSelectModule,
         PaginationModule,
         RouterTestingModule,
+        PaginationModule,
+        NavbarAuthenticatedModule,
+        RouterTestingModule,
+        InputSelectModule,
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(HiredComponent);

@@ -116,7 +116,7 @@ export class CreateProfileComponent implements OnInit {
         content: JSON.stringify(this.form.value),
         name: `@${this.handle} Curriculum`,
         attributes: [],
-        tags: [],
+        tags: [this.tokenService.getAccountType()],
         appId: 'Academy',
       })
       .subscribe({

@@ -1,9 +1,9 @@
 <wagademy-navbar-authenticated></wagademy-navbar-authenticated>
 <section (window:resize)="onResize()" class="container mx-auto">
   <div class="mx-3 mt-8 flex gap-4 md:mx-0 md:mt-0 md:gap-6">
-    <div class="w-full md:w-9/12 md:self-end">
-      <wagademy-input></wagademy-input>
-    </div>
+    <form class="w-full md:w-9/12 md:self-end" [formGroup]="form">
+      <wagademy-input formControlName="search"></wagademy-input>
+    </form>
     <div class="flex gap-4 md:mt-10 md:w-3/12 md:justify-between">
       <wagademy-input-select class="w-full md:w-8/12"></wagademy-input-select>
       <div class="mb-2 hidden gap-2 self-end md:flex">
@@ -52,11 +52,11 @@
   >
     <div
       [ngClass]="exhibitionStyle === 'grid' ? 'max-w-[304px]' : 'mb-6'"
-      *ngFor="let certificate of certificates"
+      *ngFor="let certificate of filteredCertificates"
     >
       <wagademy-certificates-card
         [listType]="exhibitionStyle"
-        (claim)="toggleMyCertificateModal()"
+        (claim)="toggleMyCertificateModal(); courseToClaim = $event"
         [certificate]="certificate"
       ></wagademy-certificates-card>
     </div>
@@ -75,7 +75,9 @@
         class="self-center"
       />
       <div class="space-y-2">
-        <h1 class="text-secondary text-2xl font-bold">Course Name</h1>
+        <h1 class="text-secondary text-2xl font-bold">
+          {{ courseToClaim.courseName }}
+        </h1>
         <p class="font-mono">
           Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
           sint Amet minim mollit non deserunt ullamco est sit aliqua.
@@ -88,13 +90,17 @@
     </div>
     <div class="flex w-full justify-center">
       <wagademy-button-primary
-        (click)="toggleClaimedCertificateModal()"
+        *ngIf="!isLoading"
+        (click)="claimCertificate(courseToClaim.publicationId)"
         class="w-full sm:w-2/5"
         >CLAIM</wagademy-button-primary
       >
+      <img
+        class="h-20 w-20"
+        *ngIf="isLoading"
+        src="../../assets/img/loading-icon.svg"
+        alt="loading icon"
+      />
     </div>
   </div>
 </wagademy-base-modal>
-<wagademy-certificate-modal
-  *ngIf="claimedCertificateModal"
-></wagademy-certificate-modal>
