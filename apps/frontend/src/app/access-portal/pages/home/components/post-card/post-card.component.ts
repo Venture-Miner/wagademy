@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'wagademy-friend-card',
-  templateUrl: './friend-card.component.html',
-  styleUrls: ['./friend-card.component.css'],
+  selector: 'wagademy-post-card',
+  templateUrl: './post-card.component.html',
+  styleUrls: ['./post-card.component.css'],
 })
-export class FriendCardComponent {
+export class PostCardComponent {
   @Input() publication: any;
 
   sanitizeUrl(url: string | null) {

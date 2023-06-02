@@ -1,11 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
-import {
-  CourseCardComponent,
-  FriendCardComponent,
-  JobCardComponent,
-} from './components';
-import { PaginationComponent } from '../../../shared/pagination/pagination.component';
+import { CourseCardComponent, PostCardComponent } from './components';
 import { InputSelectModule } from '../../../shared/input-select/input-select.module';
 import { InputModule } from '../../../shared/input/input.module';
 import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/navbar-authenticated.module';
@@ -22,13 +17,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        HomeComponent,
-        CourseCardComponent,
-        FriendCardComponent,
-        PaginationComponent,
-        JobCardComponent,
-      ],
+      declarations: [HomeComponent, CourseCardComponent, PostCardComponent],
       imports: [
         InputSelectModule,
         InputModule,
@@ -56,7 +45,7 @@ describe('HomeComponent', () => {
 
   it('should redirect to "jobs details"', () => {
     const routerLink = fixture.debugElement
-      .query(By.css('#jobs-details'))
+      .query(By.css('#redirect-jobs-details'))
       .nativeElement.getAttribute('ng-reflect-router-link');
     expect(routerLink).toBe('/home/jobs-details');
   });
