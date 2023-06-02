@@ -31,7 +31,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Run tests
-        run: yarn test
+        run: npx nx run-many --all --target=test
 
       - name: Run lint
-        run: yarn lint
+        run: npx nx run-many --all --target=lint
