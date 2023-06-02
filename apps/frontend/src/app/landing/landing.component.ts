@@ -210,7 +210,7 @@ export class LandingComponent {
       avatarURL: 'https://i.pravatar.cc/300',
       name: 'Team 1',
       about:
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet',
+        'Data Analytics, Cybersecurity, Cloud Architecture, and Software Development.'
     },
   ];
 }
