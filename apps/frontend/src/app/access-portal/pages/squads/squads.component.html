@@ -1,4 +1,4 @@
-<lens-academy-navbar></lens-academy-navbar>
+<wagademy-navbar></wagademy-navbar>
 <div class="container px-3 sm:mx-auto">
   <div class="mt-6 flex flex-col gap-8 sm:flex-row sm:items-center">
     <div
@@ -8,15 +8,15 @@
       <i class="bi-arrow-left text-xl"></i>
       <span class="font-mono font-bold">Back</span>
     </div>
-    <lens-academy-input
+    <wagademy-input
       type="search"
       class="flex-1"
       placeholder="Search"
-    ></lens-academy-input>
-    <lens-academy-button-secondary
+    ></wagademy-input>
+    <wagademy-button-secondary
       class="sm:w-52"
       (click)="showCreateSquadModal = true"
-      >CREATE SQUAD</lens-academy-button-secondary
+      >CREATE SQUAD</wagademy-button-secondary
     >
   </div>
   <div class="mb-4 mt-8 flex items-baseline gap-2">
@@ -31,22 +31,22 @@
   >
     <ng-container *ngIf="mode === 'JOIN'">
       <ng-container *ngFor="let squad of squadsToJoin">
-        <lens-academy-card
+        <wagademy-card
           [squad]="squad"
           [mode]="mode"
           (join)="joinSquad($event)"
           (showParticipants)="showParticipantsModal = true"
-        ></lens-academy-card>
+        ></wagademy-card>
       </ng-container>
     </ng-container>
     <ng-container *ngIf="mode === 'MANAGE'">
       <ng-container *ngFor="let squad of squadsBelonged">
-        <lens-academy-card
+        <wagademy-card
           [squad]="squad"
           [mode]="mode"
           (quit)="squadIndexToQuit = $event"
           (showParticipants)="showParticipantsModal = true"
-        ></lens-academy-card>
+        ></wagademy-card>
       </ng-container>
       <div class="relative flex h-64 w-64 items-center justify-center">
         <div
@@ -64,7 +64,7 @@
     </ng-container>
   </div>
 </div>
-<lens-academy-base-modal
+<wagademy-base-modal
   title="CREATE SQUAD"
   *ngIf="showCreateSquadModal"
   (modalClosed)="showCreateSquadModal = false"
@@ -75,39 +75,39 @@
       alt="avatar example"
       class="h-24 w-24 rounded-full object-cover"
     />
-    <lens-academy-form-field
+    <wagademy-form-field
       label="Squad Name"
       [control]="getControl('name')"
       class="w-full"
     >
-      <lens-academy-input
+      <wagademy-input
         type="text"
         placeholder="Squad Name"
         formControlName="name"
-      ></lens-academy-input>
-    </lens-academy-form-field>
-    <lens-academy-button-primary
+      ></wagademy-input>
+    </wagademy-form-field>
+    <wagademy-button-primary
       class="mt-14 w-full sm:w-52"
       (click)="createSquad()"
-      >CREATE</lens-academy-button-primary
+      >CREATE</wagademy-button-primary
     >
   </form>
-</lens-academy-base-modal>
-<lens-academy-success-modal
+</wagademy-base-modal>
+<wagademy-success-modal
   *ngIf="congratulationsMessage"
   [message]="congratulationsMessage"
-></lens-academy-success-modal>
+></wagademy-success-modal>
 <div *ngFor="let squad of squadsBelonged">
-  <lens-academy-warning-modal
+  <wagademy-warning-modal
     *ngIf="squadIndexToQuit"
     (yes)="quitSquad(squadIndexToQuit)"
     (cancel)="squadIndexToQuit = false"
     title="Do you really want to leave this squad?"
     text="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
         sint. Velit officia consequat duis enim velit mollit."
-  ></lens-academy-warning-modal>
+  ></wagademy-warning-modal>
 </div>
-<lens-academy-participants
+<wagademy-participants
   *ngIf="showParticipantsModal"
   (modalClosed)="showParticipantsModal = false"
-></lens-academy-participants>
+></wagademy-participants>

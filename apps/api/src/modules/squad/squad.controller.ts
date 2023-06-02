@@ -30,7 +30,7 @@ export class SquadController {
       user: {
         address: string;
       };
-    },
+    }
   ) {
     return this.squadService.create({
       name,
@@ -61,7 +61,7 @@ export class SquadController {
       user: {
         address: string;
       };
-    },
+    }
   ) {
     const squad = await this.squadService.findOne(id);
     if (!squad) return new BadRequestException('Squad not found');
@@ -82,10 +82,12 @@ export class SquadController {
       user: {
         address: string;
       };
-    },
+    }
   ) {
     const squad = await this.squadService.findOne(id);
     if (!squad) return new BadRequestException('Squad not found');
+    if (squad.members.length >= 4)
+      return new BadRequestException('Squad is full');
     if (squad.members.includes(address)) {
       return new BadRequestException('You are already a member of this squad');
     }
@@ -107,7 +109,7 @@ export class SquadController {
       user: {
         address: string;
       };
-    },
+    }
   ) {
     const squad = await this.squadService.findOne(id);
     if (!squad) return new BadRequestException('Squad not found');
@@ -132,7 +134,7 @@ export class SquadController {
       user: {
         address: string;
       };
-    },
+    }
   ) {
     const squad = await this.squadService.findOne(id);
     if (!squad) return new BadRequestException('Squad not found');

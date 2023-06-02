@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-details-modal',
+  selector: 'wagademy-details-modal',
   templateUrl: './details-modal.component.html',
   styleUrls: ['./details-modal.component.css'],
 })

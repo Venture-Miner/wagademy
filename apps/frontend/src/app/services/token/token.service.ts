@@ -12,6 +12,7 @@ export class TokenService {
   private refreshToken = new BehaviorSubject<string>('');
   private expirationTime = new BehaviorSubject<string>('');
   private refreshTokenExpirationTime = new BehaviorSubject<string>('');
+  private accountType = new BehaviorSubject<string>('');
 
   constructor(private lensService: LensService, private router: Router) {}
 
@@ -44,6 +45,11 @@ export class TokenService {
     localStorage.setItem('refreshToken', refreshToken);
     this.refreshToken.next(refreshToken);
     this.setRefreshTokenExpirationTime(refreshToken);
+  }
+
+  setAccountType(accountType: string) {
+    localStorage.setItem('accountType', accountType);
+    this.accountType.next(accountType);
   }
 
   getToken() {
@@ -92,6 +98,12 @@ export class TokenService {
     });
     this.setRefreshToken(refresh.refreshToken);
     this.setToken(refresh.accessToken);
+  }
+
+  getAccountType() {
+    if (!this.accountType.value)
+      this.accountType.next(localStorage.getItem('accountType') || '');
+    return this.accountType.value;
   }
 
   autoRefresh() {

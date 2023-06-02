@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TeacherProfessionalExperienceComponent } from './professional-experience.component';
 
 describe('TeacherProfessionalExperienceComponent', () => {
@@ -8,13 +7,10 @@ describe('TeacherProfessionalExperienceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TeacherProfessionalExperienceComponent ]
-    })
-    .compileComponents();
-
+      declarations: [TeacherProfessionalExperienceComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(TeacherProfessionalExperienceComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

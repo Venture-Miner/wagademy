@@ -1,5 +1,5 @@
 <div>
-  <lens-academy-navbar-landing></lens-academy-navbar-landing>
+  <wagademy-navbar-landing></wagademy-navbar-landing>
   <section class="relative h-[60vh]">
     <img
       src="../../assets/img/landing-background.jpg"
@@ -13,8 +13,10 @@
       information among other communication channels
     </h2>
     <div class="mx-auto w-52 -translate-y-1/2">
-      <lens-academy-button-primary [routerLink]="['/account-type']"
-        >GET STARTED</lens-academy-button-primary
+      <wagademy-button-primary
+        id="account-type"
+        [routerLink]="['/account-type']"
+        >GET STARTED</wagademy-button-primary
       >
     </div>
   </section>
@@ -25,9 +27,9 @@
       <h2 class="text-neutral-1 text-center text-3xl font-bold">
         Featured resumes
       </h2>
-      <lens-academy-resumes-toggler
+      <wagademy-resumes-toggler
         (selectedBlockChange)="selectedBlock = $event"
-      ></lens-academy-resumes-toggler>
+      ></wagademy-resumes-toggler>
     </div>
     <div
       class="grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 xl:grid-cols-4"
@@ -36,13 +38,14 @@
       <div
         class="h-full w-full max-w-[304px] cursor-pointer"
         (click)="detailsModalType = 'RESUME'; detailsModalData = student"
+        id="student-list"
         *ngFor="let student of students"
       >
-        <lens-academy-card
+        <wagademy-card
           [avatarURL]="student.avatarURL"
           [about]="student.about"
           [name]="student.name"
-        ></lens-academy-card>
+        ></wagademy-card>
       </div>
     </div>
     <div
@@ -52,13 +55,14 @@
       <div
         class="h-full w-full max-w-[304px] cursor-pointer"
         (click)="detailsModalType = 'SQUAD'; detailsModalData = team"
+        id="team-list"
         *ngFor="let team of teams"
       >
-        <lens-academy-card
+        <wagademy-card
           [avatarURL]="team.avatarURL"
           [about]="team.about"
           [name]="team.name"
-        ></lens-academy-card>
+        ></wagademy-card>
       </div>
     </div>
   </section>
@@ -106,20 +110,21 @@
         class="h-full w-full max-w-[304px] cursor-pointer"
         (click)="detailsModalType = 'TEACHER'; detailsModalData = teacher"
         *ngFor="let teacher of teachers"
+        id="teacher-list"
       >
-        <lens-academy-card
+        <wagademy-card
           [avatarURL]="teacher.avatarURL"
           [about]="teacher.about"
           [name]="teacher.name"
-        ></lens-academy-card>
+        ></wagademy-card>
       </div>
     </div>
   </section>
-  <lens-academy-footer></lens-academy-footer>
+  <wagademy-footer></wagademy-footer>
 </div>
-<lens-academy-details-modal
+<wagademy-details-modal
   *ngIf="detailsModalType"
   [type]="detailsModalType"
   [data]="detailsModalData"
   (modalClosed)="detailsModalType = null"
-></lens-academy-details-modal>
+></wagademy-details-modal>

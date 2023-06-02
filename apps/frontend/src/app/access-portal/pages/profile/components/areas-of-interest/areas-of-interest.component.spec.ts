@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AreasOfInterestComponent } from './areas-of-interest.component';
 
 describe('AreasOfInterestComponent', () => {
@@ -8,13 +7,10 @@ describe('AreasOfInterestComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AreasOfInterestComponent ]
-    })
-    .compileComponents();
-
+      declarations: [AreasOfInterestComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(AreasOfInterestComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

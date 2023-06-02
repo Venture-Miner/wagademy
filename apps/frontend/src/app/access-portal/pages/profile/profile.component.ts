@@ -9,11 +9,12 @@ import { LensService } from '../../../services/lens/lens.service';
 import { TokenService } from '../../../services/token/token.service';
 
 @Component({
-  selector: 'lens-academy-profile',
+  selector: 'wagademy-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
+  completed = false;
   profileId = '';
   curriculum!: Curriculum;
   about!: About;
@@ -42,6 +43,20 @@ export class ProfileComponent implements OnInit {
     });
     this.profileId = id;
     this.getProfileCurriculum();
+
+    if (
+      this.academicEducation.length &&
+      !Object.values(this.academicEducation[0]).every((el) => !el) &&
+      this.experience.length &&
+      !Object.values(this.experience[0]).every((el) => !el) &&
+      this.about &&
+      !Object.values(this.about).every((el) => !el) &&
+      this.expertise.length === 10 &&
+      this.skillsAndCompetencies.length === 10 &&
+      this.interest.length === 10
+    ) {
+      this.completed = true;
+    }
   }
 
   async getProfileCurriculum() {

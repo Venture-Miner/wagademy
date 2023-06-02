@@ -1,119 +1,176 @@
-<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<wagademy-navbar-authenticated></wagademy-navbar-authenticated>
 <section class="container mx-auto mb-12 px-6">
-  <div class="mx-auto mb-10 mt-8 max-w-lg 2xl:max-w-xl">
-    <lens-academy-widget></lens-academy-widget>
-  </div>
-  <div class="mb-6 flex flex-col gap-8 sm:flex-row">
-    <lens-academy-input
-      type="search"
-      placeholder="Search"
-      class="grow"
-    ></lens-academy-input>
-    <lens-academy-input-select></lens-academy-input-select>
-  </div>
-  <div
-    class="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row"
-  >
-    <h3 class="text-neutral-1 text-center text-2xl font-bold">Courses</h3>
-    <a role="link" class="text-secondary cursor-pointer font-mono">SEE ALL</a>
-  </div>
-  <div
-    class="mb-6 grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 xl:grid-cols-4"
-  >
-    <div class="max-w-[304px] cursor-pointer">
-      <lens-academy-course-card
-        [routerLink]="['/home/course-details']"
-      ></lens-academy-course-card>
-    </div>
-    <div class="max-w-[304px] cursor-pointer">
-      <lens-academy-course-card
-        [routerLink]="['/home/course-details']"
-      ></lens-academy-course-card>
-    </div>
-    <div class="max-w-[304px] cursor-pointer">
-      <lens-academy-course-card
-        [routerLink]="['/home/course-details']"
-      ></lens-academy-course-card>
-    </div>
-    <div class="max-w-[304px] cursor-pointer">
-      <lens-academy-course-card
-        [routerLink]="['/home/course-details']"
-      ></lens-academy-course-card>
-    </div>
-  </div>
-  <div class="mb-8 flex justify-end">
-    <lens-academy-pagination></lens-academy-pagination>
-  </div>
-  <div
-    class="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row"
-  >
-    <h3 class="text-neutral-1 text-center text-2xl font-bold">Jobs</h3>
-    <a role="link" class="text-secondary cursor-pointer font-mono">SEE ALL</a>
-  </div>
-  <div
-    class="mb-6 grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 xl:grid-cols-4"
-  >
-    <div class="max-w-[304px] cursor-pointer">
-      <lens-academy-job-card></lens-academy-job-card>
-    </div>
-    <div class="max-w-[304px] cursor-pointer">
-      <lens-academy-job-card></lens-academy-job-card>
-    </div>
-    <div class="max-w-[304px] cursor-pointer">
-      <lens-academy-job-card></lens-academy-job-card>
-    </div>
-    <div class="max-w-[304px] cursor-pointer">
-      <lens-academy-job-card></lens-academy-job-card>
-    </div>
-  </div>
-  <div class="flex justify-end">
-    <lens-academy-pagination></lens-academy-pagination>
-  </div>
-</section>
-<section class="bg-secondary">
-  <div class="container mx-auto px-6 py-14">
-    <div
-      class="flex flex-col items-end justify-between gap-10 xl:flex-row xl:items-center"
-    >
-      <div class="flex flex-col items-center gap-8 sm:flex-row">
-        <img
-          src="../../assets/img/united-hands.jpg"
-          alt="united hands"
-          class="w-[230px] rounded-md xl:w-auto"
-        />
-        <p class="text-neutral-4 font-mono xl:w-[640px]">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-          sint. Velit officia consequat duis enim velit mollit. Exercitation
-          veniam consequat sunt nostrud amet. Do you want to join a squad? Amet
-          minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
-          Velit officia consequat duis enim velit mollit. Exercitation veniam
-          consequat sunt nostrud amet.
-        </p>
+  <div class="grid grid-cols-1 gap-x-9 md:grid-cols-2">
+    <div>
+      <h1 class="text-secondary py-14 font-sans text-5xl font-semibold">
+        Home
+      </h1>
+      <div class="mx-auto mb-8 max-w-lg 2xl:max-w-xl">
+        <wagademy-widget>
+          <div class="button pt-3">
+            <button
+              class="bg-secondary text-neutral-4 hover:bg-primary hover:text-neutral-1 rounded-lg px-4"
+            >
+              Post
+            </button>
+          </div>
+        </wagademy-widget>
       </div>
-      <i class="bi-arrow-right text-primary cursor-pointer text-4xl"></i>
+      <div class="bg-neutral-3">
+        <div class="px-5 py-6">
+          <div
+            class="pb-4"
+            *ngFor="let publication of publications | slice : 0 : display"
+          >
+            <wagademy-post-card [publication]="publication">
+            </wagademy-post-card>
+          </div>
+          <div class="flex justify-end">
+            <button
+              *ngIf="display < 50"
+              class="text-secondary cursor-pointer text-xl font-semibold"
+              (click)="display = display + 47; getPublications()"
+            >
+              Show More
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
-<section class="container mx-auto mb-16 mt-12 px-6">
-  <div
-    class="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row"
-  >
-    <h3 class="text-neutral-1 text-center text-2xl font-bold">
-      Friends Activity
-    </h3>
-    <a role="link" class="text-secondary cursor-pointer font-mono">SEE ALL</a>
-  </div>
-  <div
-    class="grid grid-cols-1 place-items-center gap-8 lg:grid-cols-2 2xl:grid-cols-3"
-  >
-    <div class="max-w-[416px] cursor-pointer">
-      <lens-academy-friend-card></lens-academy-friend-card>
-    </div>
-    <div class="max-w-[416px] cursor-pointer">
-      <lens-academy-friend-card></lens-academy-friend-card>
-    </div>
-    <div class="max-w-[416px] cursor-pointer">
-      <lens-academy-friend-card></lens-academy-friend-card>
+    <div class="pt-12">
+      <div class="pb-11">
+        <wagademy-input type="text" placeholder="Search"></wagademy-input>
+      </div>
+      <p class="text-neutral-1 pt-3 font-sans text-3xl font-semibold">
+        Courses
+      </p>
+      <div class="bg-neutral-3">
+        <div class="px-4 py-5">
+          <div class="cursor-pointer pb-4">
+            <wagademy-course-card
+              id="redirect-course-details"
+              [routerLink]="['/home/course-details']"
+              [image]="'../../../assets/img/books-icon.svg'"
+            >
+              <div class="title">
+                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
+                  Course Name
+                </p>
+              </div>
+            </wagademy-course-card>
+          </div>
+          <div class="cursor-pointer pb-4">
+            <wagademy-course-card
+              id="redirect-course-details"
+              [routerLink]="['/home/course-details']"
+              [image]="'../../../assets/img/books-icon.svg'"
+            >
+              <div class="title">
+                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
+                  Course Name
+                </p>
+              </div>
+            </wagademy-course-card>
+          </div>
+          <div class="cursor-pointer pb-4">
+            <wagademy-course-card
+              id="redirect-course-details"
+              [routerLink]="['/home/course-details']"
+              [image]="'../../../assets/img/books-icon.svg'"
+            >
+              <div class="title">
+                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
+                  Course Name
+                </p>
+              </div>
+            </wagademy-course-card>
+          </div>
+          <div class="cursor-pointer">
+            <wagademy-course-card
+              id="redirect-course-details"
+              [routerLink]="['/home/course-details']"
+              [image]="'../../../assets/img/books-icon.svg'"
+            >
+              <div class="title">
+                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
+                  Course Name
+                </p>
+              </div>
+            </wagademy-course-card>
+          </div>
+          <div class="flex justify-end">
+            <button
+              class="text-secondary cursor-pointer pt-5 text-xl font-semibold"
+            >
+              Show More
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="text-neutral-1 pt-8 font-sans text-3xl font-semibold">Jobs</p>
+      <div class="bg-neutral-3">
+        <div class="px-4 py-5">
+          <div class="cursor-pointer pb-4">
+            <wagademy-course-card
+              id="redirect-jobs-details"
+              [routerLink]="['/home/jobs-details']"
+              [image]="'../../../assets/img/briefcase-icon.svg'"
+            >
+              <div class="title">
+                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
+                  Job Title
+                </p>
+              </div>
+            </wagademy-course-card>
+          </div>
+          <div class="cursor-pointer pb-4">
+            <wagademy-course-card
+              id="redirect-jobs-details"
+              [routerLink]="['/home/jobs-details']"
+              [image]="'../../../assets/img/briefcase-icon.svg'"
+            >
+              <div class="title">
+                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
+                  Job Title
+                </p>
+              </div>
+            </wagademy-course-card>
+          </div>
+          <div class="cursor-pointer pb-4">
+            <wagademy-course-card
+              id="redirect-jobs-details"
+              [routerLink]="['/home/jobs-details']"
+              [image]="'../../../assets/img/briefcase-icon.svg'"
+            >
+              <div class="title">
+                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
+                  Job Title
+                </p>
+              </div>
+            </wagademy-course-card>
+          </div>
+          <div class="cursor-pointer">
+            <wagademy-course-card
+              id="redirect-jobs-details"
+              [routerLink]="['/home/jobs-details']"
+              [image]="'../../../assets/img/briefcase-icon.svg'"
+            >
+              <div class="title">
+                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
+                  Job Title
+                </p>
+              </div>
+            </wagademy-course-card>
+          </div>
+          <div class="flex justify-end">
+            <button
+              class="text-secondary cursor-pointer pt-5 text-xl font-semibold"
+            >
+              Show More
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

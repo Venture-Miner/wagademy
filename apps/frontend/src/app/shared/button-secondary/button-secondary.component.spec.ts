@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ButtonSecondaryComponent } from './button-secondary.component';
 
 describe('ButtonSecondaryComponent', () => {
@@ -8,13 +7,10 @@ describe('ButtonSecondaryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonSecondaryComponent ]
-    })
-    .compileComponents();
-
+      declarations: [ButtonSecondaryComponent],
+    }).compileComponents();
     fixture = TestBed.createComponent(ButtonSecondaryComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

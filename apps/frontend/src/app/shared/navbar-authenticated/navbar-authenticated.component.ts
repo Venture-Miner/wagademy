@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-navbar-authenticated',
+  selector: 'wagademy-navbar-authenticated',
   templateUrl: './navbar-authenticated.component.html',
   styleUrls: ['./navbar-authenticated.component.css'],
 })

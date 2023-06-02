@@ -1,5 +1,6 @@
 <form [formGroup]="form" class="mt-10 flex flex-col gap-10">
   <button
+    id="add-education"
     class="bg-primary self-end rounded py-1 pl-2 pr-3 font-mono font-bold"
     (click)="addEducation()"
     *ngIf="mode !== 'VIEW'"
@@ -17,36 +18,37 @@
       *ngFor="let educationForm of academicEducation.controls; let i = index"
     >
       <div [formGroup]="educationForm" class="flex flex-col gap-4">
-        <lens-academy-form-field
+        <wagademy-form-field
           [control]="educationForm.get('education')!"
           label="Education"
         >
-          <lens-academy-input
+          <wagademy-input
             type="text"
             placeholder="Education"
             formControlName="education"
-          ></lens-academy-input>
-        </lens-academy-form-field>
-        <lens-academy-form-field
+          ></wagademy-input>
+        </wagademy-form-field>
+        <wagademy-form-field
           [control]="educationForm.get('course')!"
           label="Degree course"
         >
-          <lens-academy-input
+          <wagademy-input
             type="text"
             placeholder="Degree course"
             formControlName="course"
-          ></lens-academy-input>
-        </lens-academy-form-field>
-        <lens-academy-form-field
+          ></wagademy-input>
+        </wagademy-form-field>
+        <wagademy-form-field
           [control]="educationForm.get('description')!"
           label="Description"
         >
-          <lens-academy-text-area
+          <wagademy-text-area
             placeholder="Description"
             formControlName="description"
-          ></lens-academy-text-area>
-        </lens-academy-form-field>
+          ></wagademy-text-area>
+        </wagademy-form-field>
         <div
+          id="remove-education"
           class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
           (click)="removeEducation(i)"
           *ngIf="mode !== 'VIEW'"
@@ -58,6 +60,7 @@
     </ng-container>
   </ng-container>
   <div
+    id="edit"
     class="-mt-10 flex cursor-pointer items-center gap-2 self-end"
     (click)="edit.emit()"
     *ngIf="mode === 'VIEW'"
@@ -69,16 +72,18 @@
     class="mt-12 flex flex-col justify-end gap-6 sm:flex-row"
     *ngIf="mode !== 'VIEW'"
   >
-    <lens-academy-button-secondary
+    <wagademy-button-secondary
+      id="previous-step"
       class="sm:w-52"
       (click)="previousStep.emit()"
       *ngIf="mode === 'CREATE'"
-      >PREVIOUS</lens-academy-button-secondary
+      >PREVIOUS</wagademy-button-secondary
     >
-    <lens-academy-button-primary
+    <wagademy-button-primary
+      id="next-or-save"
       class="sm:w-52"
       (click)="mode === 'CREATE' ? nextStep.emit() : saveEdit.emit()"
-      >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</lens-academy-button-primary
+      >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</wagademy-button-primary
     >
   </div>
 </form>

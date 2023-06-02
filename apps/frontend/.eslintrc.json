@@ -5,11 +5,14 @@
     {
       "files": ["*.ts"],
       "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-explicit-any": "off",
         "@angular-eslint/directive-selector": [
           "error",
           {
             "type": "attribute",
-            "prefix": "lensAcademy",
+            "prefix": "wagademy",
             "style": "camelCase"
           }
         ],
@@ -17,7 +20,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "lens-academy",
+            "prefix": "wagademy",
             "style": "kebab-case"
           }
         ]
@@ -30,7 +33,7 @@
     {
       "files": ["*.html"],
       "extends": ["plugin:@nrwl/nx/angular-template"],
-      "rules": { "@typescript-eslint/no-non-null-assertion": "off" }
+      "rules": {}
     }
   ]
 }

@@ -24,12 +24,21 @@ import {
   recommendedProfiles,
   refreshToken,
   verify,
+  updateProfile,
+  getProfileAttributes,
+  createCollectTypedData,
+  following,
+  getProfile,
+  publications,
+  checkProfileExistence,
+  createUnfollowTypedData,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
 import { EthersService } from '../ethers';
 import LENS_HUB_ABI from '../../../assets/abis/lens-hub-contract-abi.json';
 import LENS_PERIPHERY_ABI from '../../../assets/abis/lens-periphery-data-provider.json';
+import fetch from 'cross-fetch';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +67,7 @@ export class LensService {
       return forward(operation);
     });
     const API_URL = 'https://api-mumbai.lens.dev';
-    const API_LINK = new HttpLink({ uri: API_URL });
+    const API_LINK = new HttpLink({ uri: API_URL, fetch });
     this.client = new ApolloClient({
       link: concat(authMiddleware, API_LINK),
       cache: new InMemoryCache(),
@@ -113,4 +122,20 @@ export class LensService {
   refreshToken = gql(refreshToken);
 
   verifyToken = gql(verify);
+
+  following = gql(following);
+
+  unfollow = gql(createUnfollowTypedData);
+
+  getProfile = gql(getProfile);
+
+  updateProfile = gql(updateProfile);
+
+  getProfileAttributes = gql(getProfileAttributes);
+
+  collect = gql(createCollectTypedData);
+
+  publications = gql(publications);
+
+  checkProfileExistence = gql(checkProfileExistence);
 }

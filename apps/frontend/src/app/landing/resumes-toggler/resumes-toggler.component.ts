@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-resumes-toggler',
+  selector: 'wagademy-resumes-toggler',
   templateUrl: './resumes-toggler.component.html',
   styleUrls: ['./resumes-toggler.component.css'],
 })

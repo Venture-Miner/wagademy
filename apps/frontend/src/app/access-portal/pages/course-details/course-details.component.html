@@ -1,6 +1,7 @@
-<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<wagademy-navbar-authenticated></wagademy-navbar-authenticated>
 <div class="container mx-auto my-9 px-3">
   <div
+    id="redirect-home"
     class="text-secondary mb-6 flex cursor-pointer items-center gap-2"
     [routerLink]="['/home']"
   >
@@ -48,8 +49,8 @@
     </div>
     <div class="flex justify-end py-10">
       <div class="w-full md:w-52">
-        <lens-academy-button-primary (click)="showAddEmailModal = true"
-          >SUBSCRIBE</lens-academy-button-primary
+        <wagademy-button-primary (click)="showAddEmailModal = true"
+          >SUBSCRIBE</wagademy-button-primary
         >
       </div>
     </div>
@@ -92,6 +93,4 @@
     </div>
   </div>
 </div>
-<lens-academy-add-email-modal
-  *ngIf="showAddEmailModal"
-></lens-academy-add-email-modal>
+<wagademy-add-email-modal *ngIf="showAddEmailModal"></wagademy-add-email-modal>

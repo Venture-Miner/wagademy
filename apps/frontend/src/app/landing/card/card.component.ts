@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-card',
+  selector: 'wagademy-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
 })
 export class CardComponent {
-  @Input() avatarURL: string = '';
-  @Input() about: string = '';
-  @Input() name: string = '';
+  @Input() avatarURL = '';
+  @Input() about = '';
+  @Input() name = '';
 }

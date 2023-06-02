@@ -5,15 +5,17 @@
     <img src="../../assets/img/lens-logo.svg" alt="lens logo" />
     <div class="flex gap-x-8">
       <button
+        id="about"
         class="text-secondary border-b-2 text-lg font-bold"
         [routerLink]="['/about']"
       >
         About
       </button>
-      <lens-academy-button-secondary
+      <wagademy-button-secondary
+        id="connect-wallet"
         class="w-52"
         [routerLink]="['/account-type']"
-        >CONNECT WALLET</lens-academy-button-secondary
+        >ACCESS WALLET</wagademy-button-secondary
       >
     </div>
   </div>
