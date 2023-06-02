@@ -9,6 +9,7 @@ import { WidgetModule } from '../../../shared/widget/widget.module';
 import { InputModule } from '../../../shared/input/input.module';
 import { InputSelectModule } from '../../../shared/input-select/input-select.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 jest.mock('ethers');
 
@@ -29,6 +30,7 @@ describe('HomeCompanyComponent', () => {
         InputModule,
         InputSelectModule,
         RouterTestingModule,
+        HttpClientTestingModule,
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(HomeCompanyComponent);

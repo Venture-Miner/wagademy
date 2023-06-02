@@ -8,7 +8,7 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'lens-academy-text-area',
+  selector: 'wagademy-text-area',
   templateUrl: './text-area.component.html',
   styleUrls: ['./text-area.component.css'],
   providers: [

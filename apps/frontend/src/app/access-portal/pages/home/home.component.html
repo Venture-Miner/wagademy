@@ -1,4 +1,4 @@
-<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<wagademy-navbar-authenticated></wagademy-navbar-authenticated>
 <section class="container mx-auto mb-12 px-6">
   <div class="grid grid-cols-1 gap-x-9 md:grid-cols-2">
     <div>
@@ -6,7 +6,7 @@
         Home
       </h1>
       <div class="mx-auto mb-8 max-w-lg 2xl:max-w-xl">
-        <lens-academy-widget>
+        <wagademy-widget>
           <div class="button pt-3">
             <button
               class="bg-secondary text-neutral-4 hover:bg-primary hover:text-neutral-1 rounded-lg px-4"
@@ -14,7 +14,7 @@
               Post
             </button>
           </div>
-        </lens-academy-widget>
+        </wagademy-widget>
       </div>
       <div class="bg-neutral-3">
         <div class="px-5 py-6">
@@ -22,8 +22,8 @@
             class="pb-4"
             *ngFor="let publication of publications | slice : 0 : display"
           >
-            <lens-academy-post-card [publication]="publication">
-            </lens-academy-post-card>
+            <wagademy-post-card [publication]="publication">
+            </wagademy-post-card>
           </div>
           <div class="flex justify-end">
             <button
@@ -39,10 +39,7 @@
     </div>
     <div class="pt-12">
       <div class="pb-11">
-        <lens-academy-input
-          type="text"
-          placeholder="Search"
-        ></lens-academy-input>
+        <wagademy-input type="text" placeholder="Search"></wagademy-input>
       </div>
       <p class="text-neutral-1 pt-3 font-sans text-3xl font-semibold">
         Courses
@@ -50,7 +47,7 @@
       <div class="bg-neutral-3">
         <div class="px-4 py-5">
           <div class="cursor-pointer pb-4">
-            <lens-academy-course-card
+            <wagademy-course-card
               id="redirect-course-details"
               [routerLink]="['/home/course-details']"
               [image]="'../../../assets/img/books-icon.svg'"
@@ -60,10 +57,10 @@
                   Course Name
                 </p>
               </div>
-            </lens-academy-course-card>
+            </wagademy-course-card>
           </div>
           <div class="cursor-pointer pb-4">
-            <lens-academy-course-card
+            <wagademy-course-card
               id="redirect-course-details"
               [routerLink]="['/home/course-details']"
               [image]="'../../../assets/img/books-icon.svg'"
@@ -73,10 +70,10 @@
                   Course Name
                 </p>
               </div>
-            </lens-academy-course-card>
+            </wagademy-course-card>
           </div>
           <div class="cursor-pointer pb-4">
-            <lens-academy-course-card
+            <wagademy-course-card
               id="redirect-course-details"
               [routerLink]="['/home/course-details']"
               [image]="'../../../assets/img/books-icon.svg'"
@@ -86,10 +83,10 @@
                   Course Name
                 </p>
               </div>
-            </lens-academy-course-card>
+            </wagademy-course-card>
           </div>
           <div class="cursor-pointer">
-            <lens-academy-course-card
+            <wagademy-course-card
               id="redirect-course-details"
               [routerLink]="['/home/course-details']"
               [image]="'../../../assets/img/books-icon.svg'"
@@ -99,7 +96,7 @@
                   Course Name
                 </p>
               </div>
-            </lens-academy-course-card>
+            </wagademy-course-card>
           </div>
           <div class="flex justify-end">
             <button
@@ -114,7 +111,7 @@
       <div class="bg-neutral-3">
         <div class="px-4 py-5">
           <div class="cursor-pointer pb-4">
-            <lens-academy-course-card
+            <wagademy-course-card
               id="redirect-jobs-details"
               [routerLink]="['/home/jobs-details']"
               [image]="'../../../assets/img/briefcase-icon.svg'"
@@ -124,10 +121,10 @@
                   Job Title
                 </p>
               </div>
-            </lens-academy-course-card>
+            </wagademy-course-card>
           </div>
           <div class="cursor-pointer pb-4">
-            <lens-academy-course-card
+            <wagademy-course-card
               id="redirect-jobs-details"
               [routerLink]="['/home/jobs-details']"
               [image]="'../../../assets/img/briefcase-icon.svg'"
@@ -137,10 +134,10 @@
                   Job Title
                 </p>
               </div>
-            </lens-academy-course-card>
+            </wagademy-course-card>
           </div>
           <div class="cursor-pointer pb-4">
-            <lens-academy-course-card
+            <wagademy-course-card
               id="redirect-jobs-details"
               [routerLink]="['/home/jobs-details']"
               [image]="'../../../assets/img/briefcase-icon.svg'"
@@ -150,10 +147,10 @@
                   Job Title
                 </p>
               </div>
-            </lens-academy-course-card>
+            </wagademy-course-card>
           </div>
           <div class="cursor-pointer">
-            <lens-academy-course-card
+            <wagademy-course-card
               id="redirect-jobs-details"
               [routerLink]="['/home/jobs-details']"
               [image]="'../../../assets/img/briefcase-icon.svg'"
@@ -163,7 +160,7 @@
                   Job Title
                 </p>
               </div>
-            </lens-academy-course-card>
+            </wagademy-course-card>
           </div>
           <div class="flex justify-end">
             <button

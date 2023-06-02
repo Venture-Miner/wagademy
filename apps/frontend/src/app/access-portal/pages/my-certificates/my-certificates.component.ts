@@ -8,7 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 
 @Component({
-  selector: 'lens-academy-my-certificates',
+  selector: 'wagademy-my-certificates',
   templateUrl: './my-certificates.component.html',
   styleUrls: ['./my-certificates.component.css'],
 })

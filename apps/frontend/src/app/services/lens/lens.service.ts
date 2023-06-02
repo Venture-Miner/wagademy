@@ -31,6 +31,7 @@ import {
   getProfile,
   publications,
   checkProfileExistence,
+  createUnfollowTypedData,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
@@ -123,6 +124,8 @@ export class LensService {
   verifyToken = gql(verify);
 
   following = gql(following);
+
+  unfollow = gql(createUnfollowTypedData);
 
   getProfile = gql(getProfile);
 

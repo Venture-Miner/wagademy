@@ -9,7 +9,7 @@ import { LensService } from '../../../services/lens/lens.service';
 import { TokenService } from '../../../services/token/token.service';
 
 @Component({
-  selector: 'lens-academy-profile',
+  selector: 'wagademy-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })

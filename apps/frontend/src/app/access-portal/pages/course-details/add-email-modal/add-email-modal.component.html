@@ -10,23 +10,21 @@
       <div
         class="grid w-full grid-cols-1 gap-x-4 gap-y-4 pt-6 md:grid-cols-2 md:gap-y-0"
       >
-        <lens-academy-button-secondary
-          id="email-confirm"
-          (click)="emailConfirm()"
-          >NO</lens-academy-button-secondary
+        <wagademy-button-secondary id="email-confirm" (click)="emailConfirm()"
+          >NO</wagademy-button-secondary
         >
-        <lens-academy-button-primary (click)="showEmailConfirmModal = true"
-          >YES</lens-academy-button-primary
+        <wagademy-button-primary (click)="showEmailConfirmModal = true"
+          >YES</wagademy-button-primary
         >
       </div>
     </div>
   </div>
 </div>
-<lens-academy-email-confirm-modal
+<wagademy-email-confirm-modal
   *ngIf="showEmailConfirmModal"
   (cancel)="showEmailConfirmModal = false"
-></lens-academy-email-confirm-modal>
-<lens-academy-success-modal
+></wagademy-email-confirm-modal>
+<wagademy-success-modal
   *ngIf="congratulationsMessage"
   [message]="congratulationsMessage"
-></lens-academy-success-modal>
+></wagademy-success-modal>

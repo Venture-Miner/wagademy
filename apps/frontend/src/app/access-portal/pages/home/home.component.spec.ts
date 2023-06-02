@@ -7,6 +7,7 @@ import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { WidgetModule } from '../../../shared/widget/widget.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 jest.mock('ethers');
 
@@ -23,6 +24,7 @@ describe('HomeComponent', () => {
         NavbarAuthenticatedModule,
         RouterTestingModule,
         WidgetModule,
+        HttpClientTestingModule,
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(HomeComponent);

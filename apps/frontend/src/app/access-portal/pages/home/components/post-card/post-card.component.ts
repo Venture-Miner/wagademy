@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-post-card',
+  selector: 'wagademy-post-card',
   templateUrl: './post-card.component.html',
   styleUrls: ['./post-card.component.css'],
 })

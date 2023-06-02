@@ -2,7 +2,7 @@ import { About } from '../../../../../interfaces/types';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-about',
+  selector: 'wagademy-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css'],
 })

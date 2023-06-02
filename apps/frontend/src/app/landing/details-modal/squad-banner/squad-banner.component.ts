@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-squad-banner',
+  selector: 'wagademy-squad-banner',
   templateUrl: './squad-banner.component.html',
   styleUrls: ['./squad-banner.component.css'],
 })

@@ -6,17 +6,17 @@
     <h5 class="mb-2 text-center font-mono font-bold">
       You need to fill up to 10 words to describe your skills and competencies
     </h5>
-    <lens-academy-input
+    <wagademy-input
       formControlName="skill"
       type="text"
       placeholder="Skill"
       (keyup.enter)="addSkill()"
-    ></lens-academy-input>
+    ></wagademy-input>
     <div class="mt-4">
-      <lens-academy-button-primary
+      <wagademy-button-primary
         (click)="addSkill()"
         [disabled]="skills.length >= 10 || skillControl.invalid"
-        >ADD</lens-academy-button-primary
+        >ADD</wagademy-button-primary
       >
     </div>
   </ng-container>
@@ -32,9 +32,9 @@
       ></i>
     </div>
   </div>
-  <lens-academy-button-primary
+  <wagademy-button-primary
     class="w-full self-end sm:w-52"
     (click)="saveEdit.emit()"
-    >SAVE</lens-academy-button-primary
+    >SAVE</wagademy-button-primary
   >
 </form>

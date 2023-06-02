@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'lens-academy-dropdown-profile-company',
+  selector: 'wagademy-dropdown-profile-company',
   templateUrl: './dropdown-profile-company.component.html',
   styleUrls: ['./dropdown-profile-company.component.css'],
 })

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'lens-academy-company-profile-step',
+  selector: 'wagademy-company-profile-step',
   templateUrl: './company-profile-step.component.html',
   styleUrls: ['./company-profile-step.component.css'],
 })
