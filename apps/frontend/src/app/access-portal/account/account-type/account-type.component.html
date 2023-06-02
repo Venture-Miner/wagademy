@@ -1,69 +1,85 @@
 <div class="flex min-h-screen flex-col">
   <wagademy-navbar></wagademy-navbar>
-  <div class="flex flex-1 flex-col items-center justify-center py-8 sm:py-0">
-    <h2 class="text-neutral-1 mb-10 text-3xl font-bold">What are you?</h2>
-    <div class="flex flex-col gap-8 sm:flex-row">
-      <div
-        class="flex h-60 w-60 cursor-pointer flex-col items-center justify-center rounded-lg hover:shadow-md sm:h-64 sm:w-64"
-        [ngClass]="{
-          'bg-secondary': accountType === ACCOUNT_TYPE.physicalPerson
-        }"
-        (click)="accountType = ACCOUNT_TYPE.physicalPerson"
-      >
-        <img
-          src="../../assets/img/person-icon-secondary.svg"
-          alt="person icon"
-          *ngIf="accountType !== ACCOUNT_TYPE.physicalPerson"
-        />
-        <img
-          src="../../assets/img/person-icon-primary.svg"
-          alt="person icon"
-          *ngIf="accountType === ACCOUNT_TYPE.physicalPerson"
-        />
-        <h3
-          class="text-2xl font-bold"
-          [ngClass]="
-            accountType === ACCOUNT_TYPE.physicalPerson
-              ? 'text-neutral-4'
-              : 'text-secondary'
-          "
-        >
-          Physical Person
-        </h3>
-      </div>
-      <div
-        class="flex h-60 w-60 cursor-pointer flex-col items-center justify-center rounded-lg hover:shadow-md sm:h-64 sm:w-64"
-        [ngClass]="{ 'bg-secondary': accountType === ACCOUNT_TYPE.company }"
-        (click)="accountType = ACCOUNT_TYPE.company"
-      >
-        <img
-          src="../../assets/img/company-icon-secondary.svg"
-          alt="company icon"
-          *ngIf="accountType !== ACCOUNT_TYPE.company"
-        />
-        <img
-          src="../../assets/img/company-icon-primary.svg"
-          alt="company icon"
-          *ngIf="accountType === ACCOUNT_TYPE.company"
-        />
-        <h3
-          class="text-2xl font-bold"
-          [ngClass]="
-            accountType === ACCOUNT_TYPE.company
-              ? 'text-neutral-4'
-              : 'text-secondary'
-          "
-        >
-          Company
-        </h3>
-      </div>
-    </div>
-    <wagademy-button-primary
-      class="mt-12 w-52"
-      (click)="showConnectWalletModal = true"
-      [disabled]="accountType !== undefined ? false : true"
-      >CONNECT WALLET</wagademy-button-primary
+  <div class="container mx-auto grid grid-cols-1 gap-8 md:grid-cols-2">
+    <div
+      class="border-primary mt-8 flex flex-1 flex-col items-center justify-center border-r-0 border-b-4 px-5 py-8 sm:py-0 md:border-b-0 md:border-r-4"
     >
+      <h2 class="text-neutral-1 mb-10 pt-14 text-center text-3xl font-bold">
+        Create an account to Wagademy
+      </h2>
+      <div class="flex flex-col gap-8 lg:flex-row">
+        <div
+          class="flex h-60 w-60 cursor-pointer flex-col items-center justify-center rounded-lg hover:shadow-md sm:h-52 sm:w-52"
+          [ngClass]="{
+            'bg-secondary': accountType === ACCOUNT_TYPE.physicalPerson
+          }"
+          (click)="accountType = ACCOUNT_TYPE.physicalPerson"
+        >
+          <img
+            src="../../assets/img/person-icon-secondary.svg"
+            alt="person icon"
+            *ngIf="accountType !== ACCOUNT_TYPE.physicalPerson"
+          />
+          <img
+            src="../../assets/img/person-icon-primary.svg"
+            alt="person icon"
+            *ngIf="accountType === ACCOUNT_TYPE.physicalPerson"
+          />
+          <h3
+            class="text-2xl font-bold"
+            [ngClass]="
+              accountType === ACCOUNT_TYPE.physicalPerson
+                ? 'text-neutral-4'
+                : 'text-secondary'
+            "
+          >
+            Physical Person
+          </h3>
+        </div>
+        <div
+          class="flex h-60 w-60 cursor-pointer flex-col items-center justify-center rounded-lg hover:shadow-md sm:h-52 sm:w-52"
+          [ngClass]="{ 'bg-secondary': accountType === ACCOUNT_TYPE.company }"
+          (click)="accountType = ACCOUNT_TYPE.company"
+        >
+          <img
+            src="../../assets/img/company-icon-secondary.svg"
+            alt="company icon"
+            *ngIf="accountType !== ACCOUNT_TYPE.company"
+          />
+          <img
+            src="../../assets/img/company-icon-primary.svg"
+            alt="company icon"
+            *ngIf="accountType === ACCOUNT_TYPE.company"
+          />
+          <h3
+            class="text-2xl font-bold"
+            [ngClass]="
+              accountType === ACCOUNT_TYPE.company
+                ? 'text-neutral-4'
+                : 'text-secondary'
+            "
+          >
+            Company
+          </h3>
+        </div>
+      </div>
+      <wagademy-button-primary
+        class="mt-12 w-52 pb-24 md:pb-0"
+        (click)="register = true"
+        [disabled]="accountType !== undefined ? false : true"
+        >REGISTER</wagademy-button-primary
+      >
+    </div>
+    <div class="mt-8 mb-10 flex flex-1 flex-col items-center px-5">
+      <h2 class="text-neutral-1 mb-10 pt-14 text-center text-3xl font-bold">
+        Already have a registration? Access your account here
+      </h2>
+      <wagademy-button-primary
+        class="mt-12 w-52"
+        (click)="showConnectWalletModal = true"
+        >CONNECT WALLET</wagademy-button-primary
+      >
+    </div>
   </div>
 </div>
 <wagademy-base-modal
@@ -96,7 +112,7 @@
       would like to have in your brand new Lens profile.
     </p>
     <wagademy-input
-      class="mt-6"
+      class="mt-6 w-full"
       formControlName="handle"
       placeholder="Profile handle"
     ></wagademy-input>
@@ -141,6 +157,78 @@
         *ngIf="!isLoading"
         class="text-secondary flex cursor-pointer self-center font-mono font-bold tracking-wider underline disabled:cursor-default disabled:opacity-30"
         (click)="createProfileRequest()"
+      >
+        Create
+      </button>
+      <img
+        class="h-20 w-20"
+        *ngIf="isLoading"
+        src="../../assets/img/loading-icon.svg"
+        alt="loading icon"
+      />
+    </div>
+  </form>
+</wagademy-base-modal>
+<wagademy-base-modal
+  title="CREATE LENS PROFILE"
+  *ngIf="register"
+  (modalClosed)="register = false"
+>
+  <form
+    class="flex flex-col items-center gap-4 px-6 py-6 font-mono"
+    [formGroup]="form"
+  >
+    <img src="../../assets/img/lens-logo.svg" alt="lens logo" />
+    <p>
+      Please provide us with the handle you would like to have in your brand new
+      Lens profile.
+    </p>
+    <wagademy-input
+      class="mt-6 w-full"
+      formControlName="handle"
+      placeholder="Profile handle"
+    ></wagademy-input>
+    <p
+      *ngIf="handleTaken"
+      class="text-danger flex justify-center text-center text-sm"
+    >
+      Handle already taken.
+    </p>
+    <p
+      *ngIf="
+        form.invalid && form.touched && form.controls['handle'].value === ''
+      "
+      class="text-danger flex justify-center text-center text-sm"
+    >
+      You need to provide a handle.
+    </p>
+    <p
+      *ngIf="
+        form.invalid &&
+        form.touched &&
+        form.controls['handle'].value!.length > 31
+      "
+      class="text-danger flex justify-center text-center text-sm"
+    >
+      The handle is too big.
+    </p>
+    <p
+      *ngIf="
+        form.invalid &&
+        form.touched &&
+        form.controls['handle'].value!.length < 5 &&
+        form.controls['handle'].value!.length > 0
+      "
+      class="text-danger flex justify-center text-center text-sm"
+    >
+      The handle is too small.
+    </p>
+    <div class="flex h-20">
+      <button
+        [disabled]="form.invalid"
+        *ngIf="!isLoading"
+        class="text-secondary flex cursor-pointer self-center font-mono font-bold tracking-wider underline disabled:cursor-default disabled:opacity-30"
+        (click)="handleRegister()"
       >
         Create
       </button>
