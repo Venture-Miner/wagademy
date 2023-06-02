@@ -2,7 +2,7 @@ import { AcademicEducation } from '../../../../../interfaces/types';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-education',
+  selector: 'wagademy-education',
   templateUrl: './education.component.html',
   styleUrls: ['./education.component.css'],
 })

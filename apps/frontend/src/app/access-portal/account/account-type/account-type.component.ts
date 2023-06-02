@@ -15,7 +15,7 @@ import {
 import { BroadcastDocument } from '../../../interfaces/generated';
 
 @Component({
-  selector: 'lens-academy-account-type',
+  selector: 'wagademy-account-type',
   templateUrl: './account-type.component.html',
   styleUrls: ['./account-type.component.css'],
 })
@@ -272,11 +272,16 @@ export class AccountTypeComponent {
   }
 
   async pollProfile() {
-    const profile = await this.lensService.client.query({
-      query: this.lensService.userProfiles,
-      variables: { ownedBy: this.address },
-      fetchPolicy: 'no-cache',
-    });
+    const profile = await this.lensService.client
+      .query({
+        query: this.lensService.userProfiles,
+        variables: { ownedBy: this.address },
+        fetchPolicy: 'no-cache',
+      })
+      .catch(() => {
+        this.isLoading = false;
+      });
+    if (!profile) return;
     const {
       data: {
         profiles: { items },

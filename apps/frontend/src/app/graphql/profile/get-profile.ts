@@ -3,6 +3,7 @@ export const getProfile = `query ProfileSettings($request: SingleProfileQueryReq
       id
       name
       bio
+      isFollowedByMe
       attributes {
         traitType
         key

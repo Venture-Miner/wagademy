@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-company-card',
+  selector: 'wagademy-company-card',
   templateUrl: './company-card.component.html',
   styleUrls: ['./company-card.component.css'],
 })

@@ -5,6 +5,7 @@ import { InputModule } from '../../../../shared/input/input.module';
 import { TextAreaModule } from '../../../../shared/text-area/text-area.module';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { ButtonPrimaryModule } from '../../../../shared/button-primary/button-primary.module';
 
 describe('CompanyProfileStepComponent', () => {
   let component: CompanyProfileStepComponent;
@@ -19,6 +20,7 @@ describe('CompanyProfileStepComponent', () => {
         InputModule,
         TextAreaModule,
         ReactiveFormsModule,
+        ButtonPrimaryModule,
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(CompanyProfileStepComponent);

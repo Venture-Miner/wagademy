@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'lens-academy-email-confirm-modal',
+  selector: 'wagademy-email-confirm-modal',
   templateUrl: './email-confirm-modal.component.html',
   styleUrls: ['./email-confirm-modal.component.css'],
 })

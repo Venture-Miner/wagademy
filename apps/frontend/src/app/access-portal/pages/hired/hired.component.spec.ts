@@ -15,6 +15,10 @@ describe('HiredComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [HiredComponent],
       imports: [
+        NavbarAuthenticatedModule,
+        InputSelectModule,
+        PaginationModule,
+        RouterTestingModule,
         PaginationModule,
         NavbarAuthenticatedModule,
         RouterTestingModule,

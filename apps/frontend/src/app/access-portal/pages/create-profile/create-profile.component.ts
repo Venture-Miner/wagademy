@@ -9,7 +9,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'lens-academy-create-profile',
+  selector: 'wagademy-create-profile',
   templateUrl: './create-profile.component.html',
   styleUrls: ['./create-profile.component.css'],
 })

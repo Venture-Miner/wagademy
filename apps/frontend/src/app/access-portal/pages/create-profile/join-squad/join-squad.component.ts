@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-join-squad',
+  selector: 'wagademy-join-squad',
   templateUrl: './join-squad.component.html',
   styleUrls: ['./join-squad.component.css'],
 })
