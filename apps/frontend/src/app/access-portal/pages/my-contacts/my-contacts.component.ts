@@ -174,31 +174,35 @@ export class MyContactsComponent implements OnInit {
 
   async unfollow(profileId: string) {
     this.isLoading = true;
-    const result = await this.createUnfollowTypedData({
-      profile: profileId,
-    });
-    const { domain, types, value } = result.typedData;
-    const signature = await this.ethersService.signedTypeData(
-      domain,
-      types,
-      value
-    );
-    const { v, r, s } = this.ethersService.splitSignature(signature);
-    const followNftContract = new ethers.Contract(
-      domain.verifyingContract,
-      LENS_FOLLOW_NFT_ABI,
-      this.ethersService.ethersProvider.getSigner()
-    );
-    const sig = {
-      v,
-      r,
-      s,
-      deadline: value.deadline,
-    };
-    const tx = await followNftContract['burnWithSig'](value.tokenId, sig);
-    tx.wait().then(() => {
+    try {
+      const result = await this.createUnfollowTypedData({
+        profile: profileId,
+      });
+      const { domain, types, value } = result.typedData;
+      const signature = await this.ethersService.signedTypeData(
+        domain,
+        types,
+        value
+      );
+      const { v, r, s } = this.ethersService.splitSignature(signature);
+      const followNftContract = new ethers.Contract(
+        domain.verifyingContract,
+        LENS_FOLLOW_NFT_ABI,
+        this.ethersService.ethersProvider.getSigner()
+      );
+      const sig = {
+        v,
+        r,
+        s,
+        deadline: value.deadline,
+      };
+      const tx = await followNftContract['burnWithSig'](value.tokenId, sig);
+      tx.wait().then(() => {
+        this.isLoading = false;
+      });
+    } catch (_) {
       this.isLoading = false;
-    });
+    }
   }
 
   async createFollowTypedData(request: FollowRequest) {
@@ -211,29 +215,33 @@ export class MyContactsComponent implements OnInit {
 
   async follow(profileId: string) {
     this.isLoading = true;
-    const result = await this.createFollowTypedData({
-      follow: [{ profile: profileId }],
-    });
-    const { domain, types, value } = result.typedData;
-    const signature = await this.ethersService.signedTypeData(
-      domain,
-      types,
-      value
-    );
-    const { v, r, s } = this.ethersService.splitSignature(signature);
-    const tx = await this.lensService.lensHub['followWithSig']({
-      follower: this.tokenService.getWalletAddress(),
-      profileIds: value.profileIds,
-      datas: value.datas,
-      sig: {
-        v,
-        r,
-        s,
-        deadline: value.deadline,
-      },
-    });
-    tx.wait().then(() => {
+    try {
+      const result = await this.createFollowTypedData({
+        follow: [{ profile: profileId }],
+      });
+      const { domain, types, value } = result.typedData;
+      const signature = await this.ethersService.signedTypeData(
+        domain,
+        types,
+        value
+      );
+      const { v, r, s } = this.ethersService.splitSignature(signature);
+      const tx = await this.lensService.lensHub['followWithSig']({
+        follower: this.tokenService.getWalletAddress(),
+        profileIds: value.profileIds,
+        datas: value.datas,
+        sig: {
+          v,
+          r,
+          s,
+          deadline: value.deadline,
+        },
+      });
+      tx.wait().then(() => {
+        this.isLoading = false;
+      });
+    } catch (_) {
       this.isLoading = false;
-    });
+    }
   }
 }

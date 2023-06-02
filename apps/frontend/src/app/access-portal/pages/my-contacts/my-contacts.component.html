@@ -80,64 +80,50 @@
   *ngIf="followModal"
   (modalClosed)="followModal = false"
 >
-  <form [formGroup]="followForm">
+  <form [formGroup]="followForm" class="p-5">
     <wagademy-input
       type="search"
       placeholder="Search"
       formControlName="search"
-      class="my-6 w-full px-5"
+      class="mb-5 w-full"
     ></wagademy-input>
-  </form>
-  <div class="mb-6" *ngIf="!profile">
-    <span class="px-5">NO PROFILE FOUND</span>
-  </div>
-  <div
-    class="mb-6 flex items-center justify-between gap-4 px-5"
-    *ngIf="profile"
-  >
-    <div class="flex gap-5">
-      <img
-        [src]="profileImageURL"
-        alt="profile image"
-        class="border-secondary h-10 w-10 rounded-full border-2"
-      />
-      <div class="text-neutral-2">
-        <div class="flex items-center gap-3">
+    <span *ngIf="!profile">NO PROFILE FOUND</span>
+    <div
+      class="flex flex-col items-center justify-between gap-4 sm:flex-row"
+      *ngIf="profile"
+    >
+      <div class="flex gap-5">
+        <img
+          [src]="profileImageURL"
+          alt="profile image"
+          class="border-secondary h-10 w-10 rounded-full border-2"
+        />
+        <div class="text-neutral-2 flex items-center gap-3">
           <span class="text-neutral-1 text-sm font-bold">NAME</span
-          ><span class="grow" *ngIf="profile.name">
+          ><span *ngIf="profile.name" class="break-all">
             {{ profile.name }}
           </span>
-          <span class="grow italic" *ngIf="!profile.name"> no name </span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="text-neutral-1 text-sm font-bold">BIO</span>
-          <span class="grow truncate whitespace-nowrap" *ngIf="profile.bio">
-            {{ profile.bio }}
-          </span>
-          <span class="grow whitespace-nowrap italic" *ngIf="!profile.bio">
-            no bio
-          </span>
+          <span class="italic" *ngIf="!profile.name"> no name </span>
         </div>
       </div>
+      <div class="flex w-28 justify-end">
+        <wagademy-button-primary
+          *ngIf="!isLoading"
+          (click)="
+            profile.isFollowedByMe ? unfollow(profile.id) : follow(profile.id)
+          "
+          class="w-28"
+          >{{
+            profile.isFollowedByMe ? 'UNFOLLOW' : 'FOLLOW'
+          }}</wagademy-button-primary
+        >
+        <img
+          class="h-14 w-14"
+          *ngIf="isLoading"
+          src="../../assets/img/loading-icon.svg"
+          alt="loading icon"
+        />
+      </div>
     </div>
-    <div class="flex w-40 justify-end">
-      <wagademy-button-primary
-        *ngIf="!isLoading"
-        id="follow-button"
-        (click)="
-          profile.isFollowedByMe ? unfollow(profile.id) : follow(profile.id)
-        "
-        class="w-40"
-        >{{
-          profile.isFollowedByMe ? 'UNFOLLOW' : 'FOLLOW'
-        }}</wagademy-button-primary
-      >
-      <img
-        class="h-14 w-14"
-        *ngIf="isLoading"
-        src="../../assets/img/loading-icon.svg"
-        alt="loading icon"
-      />
-    </div>
-  </div>
+  </form>
 </wagademy-base-modal>

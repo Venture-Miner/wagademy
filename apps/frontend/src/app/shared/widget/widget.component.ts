@@ -70,7 +70,11 @@ export class WidgetComponent implements OnInit {
       })
       .subscribe({
         next: async ({ cid }) => {
-          const tx = await this.postService.createPost(this.lensId, cid, false);
+          const tx = await this.postService
+            .createPost(this.lensId, cid, false)
+            .catch(() => {
+              this.isLoading = false;
+            });
           tx.wait().then(() => {
             this.isLoading = false;
             this.form.reset();
