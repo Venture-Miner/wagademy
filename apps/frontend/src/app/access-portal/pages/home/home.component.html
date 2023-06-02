@@ -27,6 +27,7 @@
           </div>
           <div class="flex justify-end">
             <button
+              *ngIf="display < 50"
               class="text-secondary cursor-pointer text-xl font-semibold"
               (click)="display = display + 47; getPublications()"
             >
