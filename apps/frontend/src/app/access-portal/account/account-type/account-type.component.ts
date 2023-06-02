@@ -25,6 +25,7 @@ export class AccountTypeComponent {
   ACCOUNT_TYPE = ACCOUNT_TYPE;
   address = '';
   doesNotHaveAccount = false;
+  register = false;
   handleTaken = false;
   isLoading = false;
   token$;
@@ -50,7 +51,8 @@ export class AccountTypeComponent {
     const account = await window.ethereum.send('eth_requestAccounts');
     if (account.result.length) {
       this.address = account.result[0];
-      this.login();
+      await this.login();
+      this.hasProfile();
     }
   }
 
@@ -79,7 +81,6 @@ export class AccountTypeComponent {
       } = authData;
       this.tokenService.setToken(accessToken);
       this.tokenService.setRefreshToken(refreshToken);
-      this.hasProfile();
     } catch (err) {
       console.log('Error signing in: ', err);
     }
@@ -99,6 +100,15 @@ export class AccountTypeComponent {
       await this.hasDefaultProfile(items[0].id);
     } else {
       this.doesNotHaveAccount = true;
+    }
+  }
+
+  async handleRegister() {
+    const account = await window.ethereum.send('eth_requestAccounts');
+    if (account.result.length) {
+      this.address = account.result[0];
+      await this.login();
+      await this.createProfileRequest();
     }
   }
 
