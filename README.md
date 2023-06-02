@@ -43,7 +43,6 @@ Wagademy Back end is an API with services for squads and IPFS. The Backend uses 
 
 ```sh
 DATABASE_URL=''
-MY_NAMESPACE=''
 API_KEY=''
 API_SECRET=''
 ```
@@ -51,9 +50,8 @@ API_SECRET=''
 | Definition       | Description               |
 | ---------------- | ------------------------- |
 | **DATABASE_URL** | Mongodb connection string |
-| **MY_NAMESPACE** |                           |
-| **API_KEY**      |                           |
-| **API_SECRET**   |                           |
+| **API_KEY**      | Infura API key            |
+| **API_SECRET**   | Infura API secret         |
 
 ## Running the API
 
@@ -87,7 +85,7 @@ With the Follow Relevant People feature, users can stay connected with thought l
 
 The wagademy app embraces the growing trend of non-fungible tokens (NFTs) by offering users the ability to Get NFT Certificates. These certificates provide digital proof of ownership for unique digital assets.
 
-## About Lens Protocol
+## 🌿 About Lens Protocol
 
 The Lens Protocol is a technology framework designed to enhance user control, privacy, and security in the management and utilization of personal data. It aims to revolutionize the way personal data is handled in digital platforms, including social networks and applications. The protocol provides a set of guidelines and practices that prioritize user consent, transparency, and data ownership.
 
