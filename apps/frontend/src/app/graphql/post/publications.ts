@@ -2,7 +2,32 @@ export const publications = `query Publications($request: PublicationsQueryReque
   publications(request: $request) {
     items {
       ... on Post {
-        ...PostFields
+        metadata {
+          name
+          description
+          content
+          media {
+            original {
+              ...MediaFields
+            }
+          }
+          attributes {
+            displayType
+            traitType
+            value
+          }
+        }
+        profile {
+          name
+          handle
+          picture {
+            ... on MediaSet {
+              original {
+                ...MediaFields
+              }
+            }
+          }
+        }
       }
     }
     pageInfo {
@@ -16,42 +41,5 @@ export const publications = `query Publications($request: PublicationsQueryReque
 fragment MediaFields on Media {
   url
   mimeType
-}
-
-fragment MetadataOutputFields on MetadataOutput {
-  name
-  description
-  content
-  media {
-    original {
-      ...MediaFields
-    }
-  }
-  attributes {
-    displayType
-    traitType
-    value
-  }
-}
-
-fragment PostFields on Post {
-  metadata {
-    ...MetadataOutputFields
-  }
-  profile {
-    ...ProfileFields
-  }
-}
-
-fragment ProfileFields on Profile {
-  name
-  handle
-  picture {
-    ... on MediaSet {
-      original {
-        ...MediaFields
-      }
-    }
-  }
 }
 `;

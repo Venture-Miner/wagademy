@@ -18,35 +18,35 @@
       *ngFor="let experienceForm of experience.controls; let i = index"
     >
       <div [formGroup]="experienceForm" class="flex flex-col gap-4">
-        <lens-academy-form-field
+        <wagademy-form-field
           [control]="experienceForm.get('company')!"
           label="Company"
         >
-          <lens-academy-input
+          <wagademy-input
             type="text"
             placeholder="Company"
             formControlName="company"
-          ></lens-academy-input>
-        </lens-academy-form-field>
-        <lens-academy-form-field
+          ></wagademy-input>
+        </wagademy-form-field>
+        <wagademy-form-field
           [control]="experienceForm.get('job')!"
           label="Job Title"
         >
-          <lens-academy-input
+          <wagademy-input
             type="text"
             placeholder="Job Title"
             formControlName="job"
-          ></lens-academy-input>
-        </lens-academy-form-field>
-        <lens-academy-form-field
+          ></wagademy-input>
+        </wagademy-form-field>
+        <wagademy-form-field
           [control]="experienceForm.get('description')!"
           label="Description"
         >
-          <lens-academy-text-area
+          <wagademy-text-area
             placeholder="Description"
             formControlName="description"
-          ></lens-academy-text-area>
-        </lens-academy-form-field>
+          ></wagademy-text-area>
+        </wagademy-form-field>
         <div
           id="remove-experience"
           class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
@@ -72,18 +72,18 @@
     class="mt-12 flex flex-col justify-end gap-6 sm:flex-row"
     *ngIf="mode !== 'VIEW'"
   >
-    <lens-academy-button-secondary
+    <wagademy-button-secondary
       id="previous-step"
       class="sm:w-52"
       (click)="previousStep.emit()"
       *ngIf="mode === 'CREATE'"
-      >PREVIOUS</lens-academy-button-secondary
+      >PREVIOUS</wagademy-button-secondary
     >
-    <lens-academy-button-primary
+    <wagademy-button-primary
       id="next-or-save"
       class="sm:w-52"
       (click)="mode === 'CREATE' ? nextStep.emit() : saveEdit.emit()"
-      >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</lens-academy-button-primary
+      >{{ mode === 'CREATE' ? 'NEXT' : 'SAVE' }}</wagademy-button-primary
     >
   </div>
 </form>

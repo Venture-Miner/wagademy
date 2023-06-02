@@ -7,7 +7,7 @@ import { SquadService } from '../../../services/squad/squad.service';
 import { TokenService } from '../../../services/token/token.service';
 
 @Component({
-  selector: 'lens-academy-squads',
+  selector: 'wagademy-squads',
   templateUrl: './squads.component.html',
   styleUrls: ['./squads.component.css'],
 })

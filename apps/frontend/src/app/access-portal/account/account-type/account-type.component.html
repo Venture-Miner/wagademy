@@ -1,5 +1,5 @@
 <div class="flex min-h-screen flex-col">
-  <lens-academy-navbar></lens-academy-navbar>
+  <wagademy-navbar></wagademy-navbar>
   <div class="container mx-auto grid grid-cols-1 gap-8 md:grid-cols-2">
     <div
       class="border-primary mt-8 flex flex-1 flex-col items-center justify-center border-r-0 border-b-4 px-5 py-8 sm:py-0 md:border-b-0 md:border-r-4"
@@ -63,26 +63,26 @@
           </h3>
         </div>
       </div>
-      <lens-academy-button-primary
+      <wagademy-button-primary
         class="mt-12 w-52 pb-24 md:pb-0"
         (click)="register = true"
         [disabled]="accountType !== undefined ? false : true"
-        >REGISTER</lens-academy-button-primary
+        >REGISTER</wagademy-button-primary
       >
     </div>
     <div class="mt-8 mb-10 flex flex-1 flex-col items-center px-5">
       <h2 class="text-neutral-1 mb-10 pt-14 text-center text-3xl font-bold">
         Already have a registration? Access your account here
       </h2>
-      <lens-academy-button-primary
+      <wagademy-button-primary
         class="mt-12 w-52"
         (click)="showConnectWalletModal = true"
-        >CONNECT WALLET</lens-academy-button-primary
+        >CONNECT WALLET</wagademy-button-primary
       >
     </div>
   </div>
 </div>
-<lens-academy-base-modal
+<wagademy-base-modal
   title="CONNECT WALLET"
   *ngIf="showConnectWalletModal"
   (modalClosed)="showConnectWalletModal = false"
@@ -95,8 +95,8 @@
       >Sign in with Metamask</span
     >
   </div>
-</lens-academy-base-modal>
-<lens-academy-base-modal
+</wagademy-base-modal>
+<wagademy-base-modal
   title="CREATE LENS PROFILE"
   *ngIf="doesNotHaveAccount"
   (modalClosed)="doesNotHaveAccount = false"
@@ -111,11 +111,11 @@
       you like to create one? If yes, please provide us with the handle you
       would like to have in your brand new Lens profile.
     </p>
-    <lens-academy-input
+    <wagademy-input
       class="mt-6 w-full"
       formControlName="handle"
       placeholder="Profile handle"
-    ></lens-academy-input>
+    ></wagademy-input>
     <p
       *ngIf="handleTaken"
       class="text-danger flex justify-center text-center text-sm"
@@ -168,8 +168,8 @@
       />
     </div>
   </form>
-</lens-academy-base-modal>
-<lens-academy-base-modal
+</wagademy-base-modal>
+<wagademy-base-modal
   title="CREATE LENS PROFILE"
   *ngIf="register"
   (modalClosed)="register = false"
@@ -183,11 +183,11 @@
       Please provide us with the handle you would like to have in your brand new
       Lens profile.
     </p>
-    <lens-academy-input
+    <wagademy-input
       class="mt-6 w-full"
       formControlName="handle"
       placeholder="Profile handle"
-    ></lens-academy-input>
+    ></wagademy-input>
     <p
       *ngIf="handleTaken"
       class="text-danger flex justify-center text-center text-sm"
@@ -240,4 +240,4 @@
       />
     </div>
   </form>
-</lens-academy-base-modal>
+</wagademy-base-modal>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'lens-academy-add-email-modal',
+  selector: 'wagademy-add-email-modal',
   templateUrl: './add-email-modal.component.html',
   styleUrls: ['./add-email-modal.component.css'],
 })

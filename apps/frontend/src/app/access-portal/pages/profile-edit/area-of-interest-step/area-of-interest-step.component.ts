@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'lens-academy-area-of-interest-step',
+  selector: 'wagademy-area-of-interest-step',
   templateUrl: './area-of-interest-step.component.html',
   styleUrls: ['./area-of-interest-step.component.css'],
 })

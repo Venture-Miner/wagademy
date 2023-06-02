@@ -8,7 +8,7 @@ import {
 import { debounceTime } from 'rxjs';
 
 @Component({
-  selector: 'lens-academy-details-modal',
+  selector: 'wagademy-details-modal',
   templateUrl: './details-modal.component.html',
   styleUrls: ['./details-modal.component.css'],
 })
