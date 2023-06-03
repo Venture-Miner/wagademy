@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'wagademy-add-email-modal',
@@ -9,13 +8,5 @@ import { Router } from '@angular/router';
 export class AddEmailModalComponent {
   showEmailConfirmModal = false;
   congratulationsMessage = '';
-  showAddEmailModal = false;
-
-  constructor(private router: Router) {}
-  emailConfirm() {
-    this.congratulationsMessage = 'You are subscribed';
-    setTimeout(() => {
-      this.congratulationsMessage = '';
-    }, 2000);
-  }
+  @Output() cancel = new EventEmitter<void>();
 }

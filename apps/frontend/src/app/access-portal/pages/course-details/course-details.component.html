@@ -93,4 +93,7 @@
     </div>
   </div>
 </div>
-<wagademy-add-email-modal *ngIf="showAddEmailModal"></wagademy-add-email-modal>
+<wagademy-add-email-modal
+  *ngIf="showAddEmailModal"
+  (cancel)="showAddEmailModal = false"
+></wagademy-add-email-modal>
