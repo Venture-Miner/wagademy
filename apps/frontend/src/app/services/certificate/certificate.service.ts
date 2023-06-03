@@ -138,7 +138,7 @@ export class CertificateService {
         return this.ipfsService.createPost({
           version: '2.0.0',
           mainContentFocus: 'IMAGE',
-          description: 'Academy Certificate',
+          description: 'Wagademy Certificate',
           metadata_id: uuidv4(),
           locale: 'en-US',
           image: `ipfs://${cid}`,
@@ -160,7 +160,7 @@ export class CertificateService {
             },
           ],
           tags: [ACCOUNT_TYPE.company],
-          appId: 'Academy',
+          appId: 'Wagademy',
         });
       }),
       concatMap(({ cid }) =>

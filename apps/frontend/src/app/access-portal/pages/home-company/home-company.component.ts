@@ -41,7 +41,7 @@ export class HomeCompanyComponent implements OnInit {
           request: {
             profileIds,
             publicationTypes: ['POST'],
-            sources: ['Academy'],
+            sources: ['Wagademy'],
             metadata: {
               tags: {
                 oneOf: [ACCOUNT_TYPE.company],

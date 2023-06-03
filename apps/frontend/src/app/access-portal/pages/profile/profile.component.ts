@@ -73,13 +73,13 @@ export class ProfileComponent implements OnInit {
     const items = posts.data.publications.items as [
       { appId: string; metadata: { description: string; content: string } }
     ];
-    const academyPosts = items.filter(
+    const wagademyPosts = items.filter(
       (items) =>
-        items.appId === 'academy' &&
-        items.metadata.description === 'Academy Curriculum'
+        items.appId === 'wagademy' &&
+        items.metadata.description === 'Wagademy Curriculum'
     );
-    if (!academyPosts[0]) return;
-    this.curriculum = JSON.parse(academyPosts[0].metadata.content);
+    if (!wagademyPosts[0]) return;
+    this.curriculum = JSON.parse(wagademyPosts[0].metadata.content);
     this.setProfileComponentsData();
   }
 

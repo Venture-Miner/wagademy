@@ -85,8 +85,8 @@ export class MyCertificatesComponent implements OnInit {
     this.certificates = items
       .filter(
         (item: any) =>
-          item.appId === 'academy' &&
-          item.metadata.description === 'Academy Certificate'
+          item.appId === 'wagademy' &&
+          item.metadata.description === 'Wagademy Certificate'
       )
       .filter(({ metadata }: any) => {
         try {

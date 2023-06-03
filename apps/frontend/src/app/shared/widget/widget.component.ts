@@ -66,7 +66,7 @@ export class WidgetComponent implements OnInit {
         name: `@${this.handle} Post`,
         attributes: [],
         tags: [this.tokenService.getAccountType()],
-        appId: 'Academy',
+        appId: 'Wagademy',
       })
       .subscribe({
         next: async ({ cid }) => {

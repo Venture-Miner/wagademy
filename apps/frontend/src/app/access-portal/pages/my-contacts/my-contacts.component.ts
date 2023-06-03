@@ -137,15 +137,15 @@ export class MyContactsComponent implements OnInit {
     const items = posts.data.publications.items as [
       { appId: string; metadata: { description: string; content: string } }
     ];
-    const academyPosts = items.filter(
+    const wagademyPosts = items.filter(
       (items) =>
-        items.appId === 'academy' &&
-        items.metadata.description === 'Academy Curriculum'
+        items.appId === 'wagademy' &&
+        items.metadata.description === 'Wagademy Curriculum'
     );
-    if (!academyPosts[0]) {
+    if (!wagademyPosts[0]) {
       return;
     }
-    return JSON.parse(academyPosts[0].metadata.content);
+    return JSON.parse(wagademyPosts[0].metadata.content);
   }
 
   getAge(dateString: any) {

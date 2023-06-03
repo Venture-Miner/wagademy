@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
           request: {
             profileIds,
             publicationTypes: ['POST'],
-            sources: ['Academy'],
+            sources: ['Wagademy'],
             limit: this.display,
           },
         },
