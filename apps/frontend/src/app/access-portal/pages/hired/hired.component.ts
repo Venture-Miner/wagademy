@@ -8,24 +8,46 @@ import { Component } from '@angular/core';
 export class HiredComponent {
   jobs = [
     {
-      title: 'Job title',
+      title: 'Software Enginee',
       description:
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat ',
+        'Develop and maintain software applications, utilizing programming languages and frameworks to meet business requirements.',
     },
     {
-      title: 'Job title',
+      title: 'Data Analyst ',
       description:
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat ',
+        'Analyze and interpret complex data sets, providing valuable insights and actionable recommendations.',
     },
     {
-      title: 'Job title',
+      title: 'Network Administrator',
       description:
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat ',
+        'Manage and maintain computer networks, ensuring optimal performance, security, and availability.',
     },
     {
-      title: 'Job title',
+      title: 'UX/UI Designer ',
       description:
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat ',
+        'Create intuitive and visually appealing user interfaces, optimizing user experience and engagement.',
+    },
+  ];
+  squads = [
+    {
+      title: 'Cybersecurity Analyst ',
+      description:
+        'Monitor and respond to security incidents, implement preventive measures, and conduct vulnerability assessments.',
+    },
+    {
+      title: 'Cloud Architect',
+      description:
+        'Design and implement cloud-based solutions, leveraging platforms like AWS, Azure, or Google Cloud.',
+    },
+    {
+      title: 'AI/Machine Learning Engineer',
+      description:
+        'Develop and deploy machine learning algorithms and models for data analysis and automation.',
+    },
+    {
+      title: 'Full Stack Developer ',
+      description:
+        'Build end-to-end web applications, working with both front-end and back-end technologies.',
     },
   ];
 }

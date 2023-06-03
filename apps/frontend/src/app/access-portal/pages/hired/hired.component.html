@@ -23,7 +23,7 @@
         class="grid flex-1 grid-cols-1 place-items-center pb-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
       >
         <ng-container id="job-list" *ngFor="let job of jobs">
-          <wagademy-card [job]="job"
+          <wagademy-card [data]="job"
             ><div class="component">
               <img
                 src="./assets/img/suitcase-portfolio.svg"
@@ -42,8 +42,8 @@
       <div
         class="grid flex-1 grid-cols-1 place-items-center pb-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
       >
-        <ng-container id="squads-list" *ngFor="let job of jobs">
-          <wagademy-card [job]="job"
+        <ng-container id="squads-list" *ngFor="let squad of squads">
+          <wagademy-card [data]="squad"
             ><div class="component">
               <img
                 src="./assets/img/people-icon.svg"

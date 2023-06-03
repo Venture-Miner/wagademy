@@ -28,6 +28,7 @@
     "@nestjs/swagger": "^6.3.0",
     "@nrwl/angular": "15.8.6",
     "@prisma/client": "^4.14.1",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "axios": "^1.0.0",
     "bootstrap-icons": "^1.10.5",
     "class-transformer": "^0.5.1",
