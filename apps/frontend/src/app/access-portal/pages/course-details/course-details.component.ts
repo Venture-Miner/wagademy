@@ -21,11 +21,13 @@ export class CourseDetailsComponent implements OnInit {
           title: 'Christopher Anderson',
           comment:
             'The Data Analytics & ML course was an exceptional learning experience. The instructor"s expertise and hands-on approach allowed me to grasp complex concepts in data manipulation, visualization, and machine learning. I gained practical skills that have been invaluable in many data-driven decision-making processes.',
+          date: '04/24/2023',
         },
         {
           title: 'Sophia Roberts',
           comment:
             'I highly recommend the Data Analytics & ML course. The instructor was very knowledgeable and I am pleased with the results. The course is also a great opportunity to learn more about data science and machine learning.',
+          date: '04/24/2023',
         },
       ],
     },
@@ -41,11 +43,13 @@ export class CourseDetailsComponent implements OnInit {
           title: 'Catherine Hill',
           comment:
             'The Cybersecurity Analyst course provided a comprehensive understanding of threat detection, incident response, and security controls. The hands-on exercises and real-world examples were invaluable in preparing for real-world cybersecurity challenges.',
+          date: '05/24/2023',
         },
         {
           title: 'James Mackenzie',
           comment:
             "I highly recommend the Cybersecurity Analyst course. The instructor's expertise and in-depth knowledge of the subject matter created an engaging learning environment. The practical skills and industry insights gained have been instrumental in advancing my career in cybersecurity.",
+          date: '06/24/2023',
         },
       ],
     },
@@ -61,11 +65,13 @@ export class CourseDetailsComponent implements OnInit {
           title: 'Daiana Mcneal',
           comment:
             "The Cloud Solutions Architect course provided a comprehensive understanding of designing and implementing cloud-based solutions. The instructor's real-world experience and practical examples made the course engaging and highly valuable for my career in cloud architecture.",
+          date: '07/24/2023',
         },
         {
           title: 'John Harriton',
           comment:
             "I highly recommend the Cloud Solutions Architect course. The instructor's deep knowledge of cloud technologies and hands-on approach helped me gain the skills needed to design scalable and secure solutions in cloud environments. The course provided valuable insights and practical experience.",
+          date: '08/24/2023',
         },
       ],
     },
@@ -81,11 +87,13 @@ export class CourseDetailsComponent implements OnInit {
           title: 'Thomas Smith',
           comment:
             "The Software Engineer course was an excellent learning experience. The instructor's deep knowledge and practical approach to software development helped me gain valuable skills and confidence in building high-quality software solutions.",
+          date: '08/24/2023',
         },
         {
           title: 'Matthew Davis',
           comment:
             "I highly recommend the Software Engineer course. The instructor's expertise and hands-on teaching style allowed me to grasp complex concepts and apply them in real-world projects. The course provided a solid foundation for my career as a software engineer.",
+          date: '09/24/2023',
         },
       ],
     },
@@ -101,11 +109,13 @@ export class CourseDetailsComponent implements OnInit {
           title: 'Thomas Smith',
           comment:
             "The Software Engineer course was an excellent learning experience. The instructor's deep knowledge and practical approach to software development helped me gain valuable skills and confidence in building high-quality software solutions.",
+          date: '10/24/2023',
         },
         {
           title: 'Matthew Davis',
           comment:
             "I highly recommend the Software Engineer course. The instructor's expertise and hands-on teaching style allowed me to grasp complex concepts and apply them in real-world projects. The course provided a solid foundation for my career as a software engineer.",
+          date: '11/24/2023',
         },
       ],
     },
