@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'lens-academy-create-company-profile',
+  selector: 'wagademy-create-company-profile',
   templateUrl: './create-company-profile.component.html',
   styleUrls: ['./create-company-profile.component.css'],
 })

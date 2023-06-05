@@ -1,4 +1,4 @@
-<lens-academy-navbar-authenticated></lens-academy-navbar-authenticated>
+<wagademy-navbar-authenticated></wagademy-navbar-authenticated>
 <section class="container mx-auto">
   <div class="ml-3">
     <div
@@ -27,16 +27,16 @@
       <div
         class="mt-8 flex w-8/12 flex-col items-center gap-2 md:ml-10 md:mt-0 md:w-1/5 md:flex-row"
       >
-        <lens-academy-button-primary
+        <wagademy-button-primary
           class="w-full"
           (click)="follow(recommendation.id)"
-          >FOLLOW</lens-academy-button-primary
+          >FOLLOW</wagademy-button-primary
         >
       </div>
     </div>
   </ng-container>
 </section>
-<lens-academy-success-modal
+<wagademy-success-modal
   *ngIf="followModal"
   [message]="'Recommendation successfully followed'"
-></lens-academy-success-modal>
+></wagademy-success-modal>

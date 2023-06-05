@@ -1,0 +1,61 @@
+<wagademy-navbar-authenticated></wagademy-navbar-authenticated>
+<section class="container mx-auto">
+  <div class="px-3">
+    <div
+      id="home"
+      class="text-secondary my-10 flex cursor-pointer items-center gap-2"
+      [routerLink]="['/home']"
+    >
+      <i class="bi-arrow-left text-xl"></i>
+      <span class="font-mono font-bold">Back</span>
+    </div>
+    <div class="flex items-center justify-between pb-8">
+      <p class="text-secondary text-2xl font-bold">Hired</p>
+      <div class="w-40">
+        <wagademy-input-select></wagademy-input-select>
+      </div>
+    </div>
+    <div class="pb-14">
+      <p class="text-neutral-1 pb-2 text-sm font-bold uppercase">
+        Professionals
+      </p>
+      <div
+        class="grid flex-1 grid-cols-1 place-items-center pb-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+      >
+        <ng-container id="job-list" *ngFor="let job of jobs">
+          <wagademy-card [data]="job"
+            ><div class="component">
+              <img
+                src="./assets/img/suitcase-portfolio.svg"
+                alt="suitcase portfolio icon"
+                class="h-14 w-14"
+              /></div
+          ></wagademy-card>
+        </ng-container>
+      </div>
+      <div class="flex justify-end">
+        <wagademy-pagination></wagademy-pagination>
+      </div>
+    </div>
+    <div class="pb-14">
+      <p class="text-neutral-1 pb-2 text-sm font-bold uppercase">Squads</p>
+      <div
+        class="grid flex-1 grid-cols-1 place-items-center pb-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+      >
+        <ng-container id="squads-list" *ngFor="let squad of squads">
+          <wagademy-card [data]="squad"
+            ><div class="component">
+              <img
+                src="./assets/img/people-icon.svg"
+                alt="people icon"
+                class="h-14 w-14"
+              /></div
+          ></wagademy-card>
+        </ng-container>
+      </div>
+      <div class="flex justify-end">
+        <wagademy-pagination></wagademy-pagination>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-course-card',
+  selector: 'wagademy-course-card',
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.css'],
 })
-export class CourseCardComponent {}
+export class CourseCardComponent {
+  @Input() image = '';
+  @Input() description = '';
+}

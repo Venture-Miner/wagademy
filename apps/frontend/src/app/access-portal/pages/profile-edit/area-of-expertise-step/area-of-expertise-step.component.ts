@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'lens-academy-area-of-expertise-step',
+  selector: 'wagademy-area-of-expertise-step',
   templateUrl: './area-of-expertise-step.component.html',
   styleUrls: ['./area-of-expertise-step.component.css'],
 })

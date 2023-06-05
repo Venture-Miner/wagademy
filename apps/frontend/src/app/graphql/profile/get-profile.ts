@@ -1,82 +1,42 @@
-export const getProfile = `query Profile {
-  profile(request: { profileId: "0x7e29" }) {
-    id
-    name
-    bio
-    attributes {
-      displayType
-      traitType
-      key
-      value
+export const getProfile = `query ProfileSettings($request: SingleProfileQueryRequest!) {
+  profile(request: $request) {
+      id
+      name
+      bio
+      isFollowedByMe
+      attributes {
+        traitType
+        key
+        value
+        __typename
     }
-    followNftAddress
-    metadata
-    isDefault
-    picture {
-      ... on NftImage {
-        contractAddress
-        tokenId
-        uri
-        verified
-      }
-      ... on MediaSet {
-        original {
-          url
-          mimeType
-        }
-      }
-      __typename
-    }
-    handle
     coverPicture {
-      ... on NftImage {
-        contractAddress
-        tokenId
-        uri
-        verified
-      }
-      ... on MediaSet {
-        original {
-          url
-          mimeType
+        ... on MediaSet {
+          original {
+            url
+            __typename
         }
+        __typename
       }
       __typename
     }
-    ownedBy
-    dispatcher {
-      address
-      canUseRelay
-    }
-    stats {
-      totalFollowers
-      totalFollowing
-      totalPosts
-      totalComments
-      totalMirrors
-      totalPublications
-      totalCollects
-    }
-    followModule {
-      ... on FeeFollowModuleSettings {
-        type
-        amount {
-          asset {
-            symbol
-            name
-            decimals
-            address
-          }
-          value
+    picture {
+        ... on MediaSet {
+          original {
+            url
+            __typename
         }
-        recipient
+        __typename
       }
-      ... on ProfileFollowModuleSettings {
-        type
+      ... on NftImage {
+          uri
+          tokenId
+          contractAddress
+          chainId
+          __typename
       }
-      ... on RevertFollowModuleSettings {
-        type
-      }
+      __typename
     }
+    __typename
   }
 }`;

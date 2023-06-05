@@ -9,11 +9,12 @@ import { LensService } from '../../../services/lens/lens.service';
 import { TokenService } from '../../../services/token/token.service';
 
 @Component({
-  selector: 'lens-academy-profile',
+  selector: 'wagademy-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
+  completed = false;
   profileId = '';
   curriculum!: Curriculum;
   about!: About;
@@ -29,22 +30,32 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    try {
-      const ethereumAddress = this.tokenService.getWalletAddress();
-      const {
-        data: {
-          defaultProfile: { id },
-        },
-      } = await this.lensService.client.query({
-        query: this.lensService.defaultProfileId,
-        variables: {
-          request: { ethereumAddress },
-        },
-      });
-      this.profileId = id;
-      this.getProfileCurriculum();
-    } catch (err) {
-      console.log(err);
+    const ethereumAddress = this.tokenService.getWalletAddress();
+    const {
+      data: {
+        defaultProfile: { id },
+      },
+    } = await this.lensService.client.query({
+      query: this.lensService.defaultProfileId,
+      variables: {
+        request: { ethereumAddress },
+      },
+    });
+    this.profileId = id;
+    this.getProfileCurriculum();
+
+    if (
+      this.academicEducation.length &&
+      !Object.values(this.academicEducation[0]).every((el) => !el) &&
+      this.experience.length &&
+      !Object.values(this.experience[0]).every((el) => !el) &&
+      this.about &&
+      !Object.values(this.about).every((el) => !el) &&
+      this.expertise.length === 10 &&
+      this.skillsAndCompetencies.length === 10 &&
+      this.interest.length === 10
+    ) {
+      this.completed = true;
     }
   }
 
@@ -62,13 +73,13 @@ export class ProfileComponent implements OnInit {
     const items = posts.data.publications.items as [
       { appId: string; metadata: { description: string; content: string } }
     ];
-    const academyPosts = items.filter(
+    const wagademyPosts = items.filter(
       (items) =>
-        items.appId === 'academy' &&
-        items.metadata.description === 'Academy Curriculum'
+        items.appId === 'wagademy' &&
+        items.metadata.description === 'Wagademy Curriculum'
     );
-    if (!academyPosts[0]) return;
-    this.curriculum = JSON.parse(academyPosts[0].metadata.content);
+    if (!wagademyPosts[0]) return;
+    this.curriculum = JSON.parse(wagademyPosts[0].metadata.content);
     this.setProfileComponentsData();
   }
 

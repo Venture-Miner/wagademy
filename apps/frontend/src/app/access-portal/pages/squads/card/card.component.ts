@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-card',
+  selector: 'wagademy-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
 })
