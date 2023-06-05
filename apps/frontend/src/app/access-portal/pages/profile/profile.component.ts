@@ -30,20 +30,23 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const ethereumAddress = this.tokenService.getWalletAddress();
-    const {
-      data: {
-        defaultProfile: { id },
-      },
-    } = await this.lensService.client.query({
-      query: this.lensService.defaultProfileId,
-      variables: {
-        request: { ethereumAddress },
-      },
-    });
-    this.profileId = id;
-    this.getProfileCurriculum();
-
+    try {
+      const ethereumAddress = this.tokenService.getWalletAddress();
+      const {
+        data: {
+          defaultProfile: { id },
+        },
+      } = await this.lensService.client.query({
+        query: this.lensService.defaultProfileId,
+        variables: {
+          request: { ethereumAddress },
+        },
+      });
+      this.profileId = id;
+      this.getProfileCurriculum();
+    } catch (err) {
+      console.log(err);
+    }
     if (
       this.academicEducation.length &&
       !Object.values(this.academicEducation[0]).every((el) => !el) &&
