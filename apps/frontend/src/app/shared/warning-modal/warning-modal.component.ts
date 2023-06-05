@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class WarningModalComponent {
   @Input() title = '';
   @Input() text = '';
+  @Input() error = false;
   @Output() yes = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 }

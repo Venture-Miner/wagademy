@@ -8,12 +8,17 @@
         {{ title }}
       </h3>
       <span class="text-neutral-1 font-mono">{{ text }}</span>
-      <div class="mt-6 flex w-full flex-col gap-4 sm:flex-row">
+      <div *ngIf="!error" class="mt-6 flex w-full flex-col gap-4 sm:flex-row">
         <wagademy-button-secondary class="flex-1" (click)="cancel.emit()"
           >CANCEL</wagademy-button-secondary
         >
         <wagademy-button-primary class="flex-1" (click)="yes.emit()"
           >YES</wagademy-button-primary
+        >
+      </div>
+      <div *ngIf="error" class="mt-6 flex w-full flex-col gap-4 sm:flex-row">
+        <wagademy-button-primary class="flex-1" (click)="yes.emit()"
+          >OK</wagademy-button-primary
         >
       </div>
     </div>

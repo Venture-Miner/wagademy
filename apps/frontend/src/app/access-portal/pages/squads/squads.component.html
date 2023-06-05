@@ -97,6 +97,13 @@
   *ngIf="congratulationsMessage"
   [message]="congratulationsMessage"
 ></wagademy-success-modal>
+<wagademy-warning-modal
+  *ngIf="warningMessage"
+  (yes)="ok()"
+  [text]="warningMessage"
+  [error]="true"
+  [title]="warningTitle"
+></wagademy-warning-modal>
 <div *ngFor="let squad of squadsBelonged">
   <wagademy-warning-modal
     *ngIf="squadIndexToQuit"
