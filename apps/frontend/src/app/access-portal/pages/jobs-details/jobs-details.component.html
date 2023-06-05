@@ -24,12 +24,12 @@
     </div>
   </div>
   <div class="px-4 pb-4 md:px-6">
-    <p class="text-neutral-1 pt-8 text-2xl font-bold md:pt-0">Company Name</p>
+    <p class="text-neutral-1 pt-8 text-2xl font-bold md:pt-0">
+      {{ job.company }}
+    </p>
     <div class="grid grid-cols-1 md:grid-cols-2">
       <p class="text-neutral-2 py-2 font-mono">
-        Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-        sint. Velit officia consequat duis enim velit mollit. Exercitation
-        veniam consequat sunt nostrud amet.
+        {{ job.description }}
       </p>
     </div>
     <p class="text-neutral-1 pb-4 text-sm font-bold">310 FOLLOWERS</p>
@@ -63,9 +63,7 @@
       <p class="text-neutral-1 pb-2 text-2xl font-bold">About</p>
       <div class="grid grid-cols-1 md:grid-cols-2">
         <p class="text-neutral-2 pb-4 font-mono">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-          sint. Velit officia consequat duis enim velit mollit. Exercitation
-          veniam consequat sunt nostrud amet.
+          {{ job.about }}
         </p>
       </div>
       <div class="flex items-center">
@@ -78,17 +76,14 @@
     <div class="px-4 py-4 md:px-6">
       <p class="text-neutral-1 pb-4 text-2xl font-bold">Company Publications</p>
       <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-        <div class="max-w-[416px] cursor-pointer">
-          <wagademy-job-card-details></wagademy-job-card-details>
-        </div>
-        <div class="max-w-[416px] cursor-pointer">
-          <wagademy-job-card-details></wagademy-job-card-details>
-        </div>
-        <div class="max-w-[416px] cursor-pointer">
-          <wagademy-job-card-details></wagademy-job-card-details>
-        </div>
-        <div class="max-w-[416px] cursor-pointer">
-          <wagademy-job-card-details></wagademy-job-card-details>
+        <div
+          class="max-w-[416px] cursor-pointer"
+          *ngFor="let post of job.posts"
+        >
+          <wagademy-job-card-details
+            [company]="job.company"
+            [post]="post"
+          ></wagademy-job-card-details>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ export class HiredComponent {
         'Develop and maintain software applications, utilizing programming languages and frameworks to meet business requirements.',
     },
     {
-      title: 'Data Analyst ',
+      title: 'Data Analyst',
       description:
         'Analyze and interpret complex data sets, providing valuable insights and actionable recommendations.',
     },
@@ -23,14 +23,14 @@ export class HiredComponent {
         'Manage and maintain computer networks, ensuring optimal performance, security, and availability.',
     },
     {
-      title: 'UX/UI Designer ',
+      title: 'UX/UI Designer',
       description:
         'Create intuitive and visually appealing user interfaces, optimizing user experience and engagement.',
     },
   ];
   squads = [
     {
-      title: 'Cybersecurity Analyst ',
+      title: 'Cybersecurity Analyst',
       description:
         'Monitor and respond to security incidents, implement preventive measures, and conduct vulnerability assessments.',
     },
@@ -45,7 +45,7 @@ export class HiredComponent {
         'Develop and deploy machine learning algorithms and models for data analysis and automation.',
     },
     {
-      title: 'Full Stack Developer ',
+      title: 'Full Stack Developer',
       description:
         'Build end-to-end web applications, working with both front-end and back-end technologies.',
     },
