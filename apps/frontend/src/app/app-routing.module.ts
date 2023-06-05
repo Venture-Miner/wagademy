@@ -120,7 +120,7 @@ const routes: Routes = [
           ).then((m) => m.MyCertificatesModule),
       },
       {
-        path: 'home-company',
+        path: 'company-home',
         canActivate: [AuthGuard],
         loadChildren: () =>
           import('./access-portal/pages/home-company/home-company.module').then(

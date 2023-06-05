@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-4">
   <div class="flex items-start justify-between gap-4">
-    <h3 class="break-all text-2xl font-bold text-secondary">
+    <h3 class="text-secondary break-all text-2xl font-bold">
       Professional experience
     </h3>
     <div
@@ -14,26 +14,27 @@
       >
     </div>
   </div>
-  <div class="divide-y-2 divide-solid divide-neutral-3">
+  <div class="divide-neutral-3 divide-y-2 divide-solid">
     <div
       *ngFor="let exp of _experience"
       class="flex flex-col gap-4 py-4 first:pt-0 last:pb-0"
     >
       <div class="flex flex-col gap-2">
-        <span class="text-sm font-bold text-neutral-1">COMPANY</span>
-        <span class="font-mono text-neutral-2">{{ exp?.company }} </span>
+        <span class="text-neutral-1 text-sm font-bold">COMPANY</span>
+        <span class="text-neutral-2 font-mono">{{ exp?.company }} </span>
       </div>
       <div class="flex flex-col gap-2">
-        <span class="text-sm font-bold text-neutral-1">JOB TITLE</span>
-        <span class="font-mono text-neutral-2">{{ exp?.job }} </span>
+        <span class="text-neutral-1 text-sm font-bold">JOB TITLE</span>
+        <span class="text-neutral-2 font-mono">{{ exp?.job }} </span>
       </div>
       <div class="flex flex-col gap-2">
-        <span class="text-sm font-bold text-neutral-1">DESCRIPTION</span>
-        <span class="font-mono text-neutral-2">{{ exp?.description }} </span>
+        <span class="text-neutral-1 text-sm font-bold">DESCRIPTION</span>
+        <span class="text-neutral-2 font-mono">{{ exp?.description }} </span>
       </div>
     </div>
   </div>
   <div
+    id="redirect-profile-edit"
     class="mt-4 flex cursor-pointer items-center gap-2 self-end"
     [routerLink]="['/home/profile/profile-edit']"
     [queryParams]="{ stepToEdit: 'EXPERIENCE' }"
