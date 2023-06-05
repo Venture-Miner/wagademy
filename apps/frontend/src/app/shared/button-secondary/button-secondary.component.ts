@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-button-secondary',
+  selector: 'wagademy-button-secondary',
   templateUrl: './button-secondary.component.html',
   styleUrls: ['./button-secondary.component.css'],
 })

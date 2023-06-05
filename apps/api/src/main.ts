@@ -11,7 +11,7 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
-    }),
+    })
   );
   const corsOptions = {
     origin: '*',
@@ -23,10 +23,10 @@ async function bootstrap() {
   };
   app.enableCors(corsOptions);
   const config = new DocumentBuilder()
-    .setTitle('ACADEMY API')
-    .setDescription('ACADEMY API')
+    .setTitle('WAGADEMY API')
+    .setDescription('WAGADEMY API')
     .setVersion('1.0')
-    .addTag('ACADEMY API')
+    .addTag('WAGADEMY API')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);

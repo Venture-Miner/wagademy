@@ -6,77 +6,77 @@
   />
   <div class="flex grow flex-col gap-4">
     <legend class="text-secondary mb-2 text-2xl font-bold">Profile</legend>
-    <lens-academy-form-field [control]="getControl('name')" label="Name">
-      <lens-academy-input
+    <wagademy-form-field [control]="getControl('name')" label="Name">
+      <wagademy-input
         type="text"
         placeholder="Name"
         formControlName="name"
-      ></lens-academy-input>
-    </lens-academy-form-field>
-    <lens-academy-form-field [control]="getControl('email')" label="Email">
-      <lens-academy-input
+      ></wagademy-input>
+    </wagademy-form-field>
+    <wagademy-form-field [control]="getControl('email')" label="Email">
+      <wagademy-input
         type="email"
         placeholder="Email"
         formControlName="email"
-      ></lens-academy-input>
-    </lens-academy-form-field>
+      ></wagademy-input>
+    </wagademy-form-field>
     <div class="flex flex-col gap-4 lg:flex-row lg:gap-8">
-      <lens-academy-form-field
+      <wagademy-form-field
         [control]="getControl('dateOfBirth')"
         label="Date of Birth"
         class="flex-1"
       >
-        <lens-academy-input
+        <wagademy-input
           type="date"
           formControlName="dateOfBirth"
-        ></lens-academy-input>
-      </lens-academy-form-field>
-      <lens-academy-form-field
+        ></wagademy-input>
+      </wagademy-form-field>
+      <wagademy-form-field
         [control]="getControl('cellphone')"
         label="Contact Number"
         class="flex-1"
       >
-        <lens-academy-input
+        <wagademy-input
           type="tel"
           placeholder="Contact Number"
           formControlName="cellphone"
-        ></lens-academy-input>
-      </lens-academy-form-field>
+        ></wagademy-input>
+      </wagademy-form-field>
     </div>
     <div class="flex flex-col gap-4 lg:flex-row lg:gap-8">
-      <lens-academy-form-field
+      <wagademy-form-field
         [control]="getControl('country')"
         label="Country"
         class="flex-1"
       >
-        <lens-academy-input
+        <wagademy-input
           type="text"
           placeholder="Country"
           formControlName="country"
-        ></lens-academy-input>
-      </lens-academy-form-field>
-      <lens-academy-form-field
+        ></wagademy-input>
+      </wagademy-form-field>
+      <wagademy-form-field
         [control]="getControl('state')"
         label="State"
         class="flex-1"
       >
-        <lens-academy-input
+        <wagademy-input
           type="text"
           placeholder="State"
           formControlName="state"
-        ></lens-academy-input>
-      </lens-academy-form-field>
+        ></wagademy-input>
+      </wagademy-form-field>
     </div>
-    <lens-academy-form-field [control]="getControl('about')" label="About">
-      <lens-academy-text-area
+    <wagademy-form-field [control]="getControl('about')" label="About">
+      <wagademy-text-area
         placeholder="About"
         formControlName="about"
-      ></lens-academy-text-area>
-    </lens-academy-form-field>
-    <lens-academy-button-primary
+      ></wagademy-text-area>
+    </wagademy-form-field>
+    <wagademy-button-primary
       class="mt-12 w-full self-end sm:w-52"
       (click)="saveEdit.emit()"
-      >SAVE</lens-academy-button-primary
+      >SAVE</wagademy-button-primary
     >
   </div>
 </form>

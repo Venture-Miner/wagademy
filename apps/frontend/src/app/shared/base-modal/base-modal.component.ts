@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'lens-academy-base-modal',
+  selector: 'wagademy-base-modal',
   templateUrl: './base-modal.component.html',
   styleUrls: ['./base-modal.component.css'],
 })

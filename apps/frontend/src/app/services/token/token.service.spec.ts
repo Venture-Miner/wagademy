@@ -3,6 +3,7 @@ import { TokenService } from './token.service';
 import { LensService } from '../lens';
 
 jest.mock('ethers');
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const jwt_decode = jest.mock('jwt-decode');
 const token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjB4ODI1RkIyOTNCNDM5OTVEODQ5NDY5MTA0YUFiRDQ1MDNCZDZiRDI3MSIsInJvbGUiOiJub3JtYWwiLCJpYXQiOjE2ODQ3ODgyMjEsImV4cCI6MTY4NDc5MDAyMX0.X6DFcIK9elkFK8TpPZTLTbI5DNQr4mOLmu-en19NSQM';

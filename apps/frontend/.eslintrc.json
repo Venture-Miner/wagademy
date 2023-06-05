@@ -12,7 +12,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "lensAcademy",
+            "prefix": "wagademy",
             "style": "camelCase"
           }
         ],
@@ -20,7 +20,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "lens-academy",
+            "prefix": "wagademy",
             "style": "kebab-case"
           }
         ]

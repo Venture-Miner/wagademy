@@ -21,12 +21,10 @@ describe('AddEmailModalComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call emailConfirm()', () => {
-    const emailConfirm = jest.spyOn(component, 'emailConfirm');
-    const emailConfirmButton = fixture.debugElement.query(
-      By.css('#email-confirm')
-    );
-    emailConfirmButton.nativeElement.click();
-    expect(emailConfirm).toHaveBeenCalledTimes(1);
+  it('should call cancel.emit()', () => {
+    const cancel = jest.spyOn(component.cancel, 'emit');
+    const cancelButton = fixture.debugElement.query(By.css('#cancel'));
+    cancelButton.nativeElement.click();
+    expect(cancel).toHaveBeenCalledTimes(1);
   });
 });
