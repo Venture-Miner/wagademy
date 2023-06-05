@@ -3,6 +3,10 @@ import { ProfileEditComponent } from './profile-edit.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/navbar-authenticated.module';
 import { By } from '@angular/platform-browser';
+import { ProfileStepComponent } from '../create-profile';
+import { FormFieldModule } from '../../../shared/form-field/form-field.module';
+import { InputModule } from '../../../shared/input/input.module';
+import { TextAreaModule } from '../../../shared/text-area/text-area.module';
 
 jest.mock('ethers');
 
@@ -12,8 +16,14 @@ describe('ProfileEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ProfileEditComponent],
-      imports: [RouterTestingModule, NavbarAuthenticatedModule],
+      declarations: [ProfileEditComponent, ProfileStepComponent],
+      imports: [
+        RouterTestingModule,
+        NavbarAuthenticatedModule,
+        FormFieldModule,
+        InputModule,
+        TextAreaModule,
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(ProfileEditComponent);
     component = fixture.componentInstance;
