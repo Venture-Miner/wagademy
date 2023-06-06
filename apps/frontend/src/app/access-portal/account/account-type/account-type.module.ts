@@ -7,6 +7,7 @@ import { NavbarModule } from '../../../shared/navbar/navbar.module';
 import { InputModule } from '../../../shared/input/input.module';
 import { AccountTypeComponent } from './account-type.component';
 import { AccountTypeRoutingModule } from './account-type-routing.module';
+import { WarningModalModule } from '../../../shared/warning-modal/warning-modal.module';
 
 @NgModule({
   declarations: [AccountTypeComponent],
@@ -18,6 +19,7 @@ import { AccountTypeRoutingModule } from './account-type-routing.module';
     NavbarModule,
     InputModule,
     ReactiveFormsModule,
+    WarningModalModule,
   ],
 })
 export class AccountTypeModule {}
