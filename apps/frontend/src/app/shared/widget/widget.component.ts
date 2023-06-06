@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./widget.component.css'],
 })
 export class WidgetComponent implements OnInit {
-  congratulationMessage = '';
+  congratulationsMessage = '';
   failMessage = '';
   showDropdown = false;
   showPostModal = false;
@@ -97,9 +97,9 @@ export class WidgetComponent implements OnInit {
   postSuccessful() {
     this.isLoading = false;
     this.showPostModal = false;
-    this.congratulationMessage = 'Your post has been published';
+    this.congratulationsMessage = 'Your post has been published';
     setTimeout(() => {
-      this.congratulationMessage = '';
+      this.congratulationsMessage = '';
     }, 3000);
   }
 
