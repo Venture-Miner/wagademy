@@ -45,5 +45,9 @@
       (click)="createProfile()"
       >SAVE AND CONFIRM</wagademy-button-primary
     >
+    <wagademy-success-modal
+      *ngIf="mode === 'CREATED'"
+      [message]="congratulationsMessage"
+    ></wagademy-success-modal>
   </div>
 </div>

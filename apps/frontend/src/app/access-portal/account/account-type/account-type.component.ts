@@ -24,7 +24,8 @@ export class AccountTypeComponent {
   accountType: ACCOUNT_TYPE | undefined;
   ACCOUNT_TYPE = ACCOUNT_TYPE;
   address = '';
-  doesNotHaveAccount = false;
+  warningMessage = '';
+  warningTitle = '';
   register = false;
   handleTaken = false;
   isLoading = false;
@@ -99,8 +100,15 @@ export class AccountTypeComponent {
     if (items.length) {
       await this.hasDefaultProfile(items[0].id);
     } else {
-      this.doesNotHaveAccount = true;
+      this.showConnectWalletModal = false;
+      this.warningTitle = 'ACCOUNT ERROR!';
+      this.warningMessage = `YOU DON'T HAVE AN ACCOUNT YET, PLEASE CREATE ONE.`;
     }
+  }
+
+  ok() {
+    this.warningTitle = '';
+    this.warningMessage = '';
   }
 
   async handleRegister() {
@@ -150,7 +158,8 @@ export class AccountTypeComponent {
     const wagademyPosts = items.filter(
       (items) =>
         items.appId === 'wagademy' &&
-        items.metadata.description === 'Wagademy Curriculum'
+        (items.metadata.description === 'Wagademy Curriculum' ||
+          items.metadata.description === 'Wagademy Company Profile')
     );
     await this.verifyAttribute(profileId, wagademyPosts);
   }
