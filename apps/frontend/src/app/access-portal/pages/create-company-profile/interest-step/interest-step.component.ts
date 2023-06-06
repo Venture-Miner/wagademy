@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class InterestStepComponent {
   @Input() form!: FormGroup;
-  @Input() mode!: 'CREATE' | 'EDIT' | 'VIEW';
+  @Input() mode!: 'CREATE' | 'EDIT' | 'VIEW' | 'CREATED';
   @Input() interestForm = this.fb.group({
     interest: ['', Validators.required],
   });
