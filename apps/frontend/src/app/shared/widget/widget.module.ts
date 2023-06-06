@@ -6,6 +6,8 @@ import { TextAreaModule } from '../text-area/text-area.module';
 import { ButtonPrimaryModule } from '../button-primary/button-primary.module';
 import { NgxEmojiPickerModule } from 'ngx-emoji-picker';
 import { ReactiveFormsModule } from '@angular/forms';
+import { WarningModalModule } from '../warning-modal/warning-modal.module';
+import { SuccessModalModule } from '../success-modal/success-modal.module';
 
 @NgModule({
   declarations: [WidgetComponent],
@@ -16,6 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ButtonPrimaryModule,
     ReactiveFormsModule,
     NgxEmojiPickerModule.forRoot(),
+    WarningModalModule,
+    SuccessModalModule,
   ],
   exports: [WidgetComponent],
 })

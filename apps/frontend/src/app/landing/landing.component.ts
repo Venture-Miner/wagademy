@@ -210,7 +210,7 @@ export class LandingComponent {
       avatarURL: 'https://i.pravatar.cc/300',
       name: 'Team 1',
       about:
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet',
+        'Highly skilled professional in Data Analytics, bringing extensive experience in statistical analysis and data modeling. With expertise in various analytics tools, his ability to translate complex data into actionable insights makes him a valuable asset for data-driven organizations.',
     },
   ];
 }
