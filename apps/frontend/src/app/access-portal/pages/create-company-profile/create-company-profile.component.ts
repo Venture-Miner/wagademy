@@ -101,7 +101,7 @@ export class CreateCompanyProfileComponent {
 
   redirect() {
     setTimeout(() => {
-      this.router.navigate(['/home-company']);
+      this.router.navigate(['/company-home']);
     }, 3000);
   }
 }
