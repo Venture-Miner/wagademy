@@ -11,11 +11,11 @@ export class CourseDetailsComponent implements OnInit {
   courses = [
     {
       id: 1,
-      title: 'Data Scientist',
+      title: 'Data Analytics & ML',
       description:
-        'Learn data manipulation, visualization, and predictive modeling techniques to extract insights and make data-driven decisions across industries',
+        'Learn data manipulation, visualization, and predictive modeling techniques to extract insights and make data-driven decisions across industries.',
       duration: '30h',
-      info: 'Experienced professor in Data Analytics & ML, providing a clear and practical approach to teaching.',
+      info: 'Experienced professor in Data Analytics & ML, providing a clear and practical approach to teaching. ',
       comments: [
         {
           title: 'Christopher Anderson',
@@ -31,9 +31,9 @@ export class CourseDetailsComponent implements OnInit {
     },
     {
       id: 2,
-      title: 'Cybersecurity Analyst',
+      title: 'Cybersecurity Fundamentals',
       description:
-        'Become a Cybersecurity Analyst and safeguard systems against cyber threats with skills in threat detection, incident response, and security control implementation.',
+        'Gain knowledge of threat detection, risk assessment, and security controls to protect systems and networks against cyber threats.',
       duration: '30h',
       info: 'Certified Cybersecurity expert, bringing extensive industry experience to deliver the Cybersecurity Analyst course effectively.',
       comments: [
@@ -51,11 +51,11 @@ export class CourseDetailsComponent implements OnInit {
     },
     {
       id: 3,
-      title: 'Cloud Solutions Architect',
+      title: 'Cloud Computing',
       description:
-        'Master the art of Cloud Solutions Architecture and gain expertise in designing and deploying scalable, secure, and cost-effective cloud-based solutions to drive business growth and innovation.',
+        'Explore cloud service models and acquire practical skills in managing and deploying applications in cloud environments.',
       duration: '30h',
-      info: 'Experienced Cloud Solutions Architect with a track record of successful cloud implementations, bringing practical expertise to the course.',
+      info: 'Experienced Cloud Computing with a track record of successful cloud implementations, bringing practical expertise to the course.',
       comments: [
         {
           title: 'Daiana Mcneal',
@@ -71,31 +71,11 @@ export class CourseDetailsComponent implements OnInit {
     },
     {
       id: 4,
-      title: 'Software Engineer',
+      title: 'Software Development',
       description:
-        'Develop strong skills in Software Engineering and learn to create innovative and robust software solutions, following best practices and utilizing the latest technologies.',
+        'Build a strong foundation in programming, software design, and agile development to create robust and scalable software solutions with a focus on efficiency and user experience.',
       duration: '30h',
-      info: 'Experienced Software Engineer with a proven track record, bringing practical industry knowledge to the Software Engineer course.',
-      comments: [
-        {
-          title: 'Thomas Smith',
-          comment:
-            "The Software Engineer course was an excellent learning experience. The instructor's deep knowledge and practical approach to software development helped me gain valuable skills and confidence in building high-quality software solutions.",
-        },
-        {
-          title: 'Matthew Davis',
-          comment:
-            "I highly recommend the Software Engineer course. The instructor's expertise and hands-on teaching style allowed me to grasp complex concepts and apply them in real-world projects. The course provided a solid foundation for my career as a software engineer.",
-        },
-      ],
-    },
-    {
-      id: 4,
-      title: 'Software Engineer',
-      description:
-        'Develop strong skills in Software Engineering and learn to create innovative and robust software solutions, following best practices and utilizing the latest technologies.',
-      duration: '30h',
-      info: 'Experienced Software Engineer with a proven track record, bringing practical industry knowledge to the Software Engineer course.',
+      info: ' Experienced Software Development with a proven track record, bringing practical industry knowledge to the Software Engineer course.',
       comments: [
         {
           title: 'Thomas Smith',

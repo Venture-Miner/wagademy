@@ -16,12 +16,12 @@
           (click)="accountType = ACCOUNT_TYPE.physicalPerson"
         >
           <img
-            src="../../assets/img/person-icon-secondary.svg"
+            src="../../assets/img/single-user.svg"
             alt="person icon"
             *ngIf="accountType !== ACCOUNT_TYPE.physicalPerson"
           />
           <img
-            src="../../assets/img/person-icon-primary.svg"
+            src="../../assets/img/single-user-secondary.svg"
             alt="person icon"
             *ngIf="accountType === ACCOUNT_TYPE.physicalPerson"
           />
@@ -42,12 +42,12 @@
           (click)="accountType = ACCOUNT_TYPE.company"
         >
           <img
-            src="../../assets/img/company-icon-secondary.svg"
+            src="../../assets/img/building-office-work-pin-secondary.svg"
             alt="company icon"
             *ngIf="accountType !== ACCOUNT_TYPE.company"
           />
           <img
-            src="../../assets/img/company-icon-primary.svg"
+            src="../../assets/img/building-office-work-pin.svg"
             alt="company icon"
             *ngIf="accountType === ACCOUNT_TYPE.company"
           />
@@ -112,7 +112,12 @@
     class="flex flex-col items-center gap-4 px-6 py-6 font-mono"
     [formGroup]="form"
   >
-    <img src="../../assets/img/lens-logo.svg" alt="lens logo" />
+    <img
+      width="50px"
+      height="56px"
+      src="../../assets/img/logo_wagademy.svg"
+      alt="lens logo"
+    />
     <p>
       Please provide us with the handle you would like to have in your brand new
       Lens profile.
