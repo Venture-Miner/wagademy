@@ -38,7 +38,13 @@
           <div class="flex items-center justify-between gap-x-4 pt-2">
             <img src="./assets/img/user-example-info.svg" alt="user info" />
             <p class="text-neutral-2 font-mono">
-              {{ course.info }}<b>see more...</b>
+              {{ course.info
+              }}<button
+                [queryParams]="{ id: course.id }"
+                [routerLink]="['/home/course-details/info']"
+              >
+                see more...
+              </button>
             </p>
           </div>
         </div>
