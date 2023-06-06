@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './course-details-info.component.html',
   styleUrls: ['./course-details-info.component.css'],
 })
-export class CourseDetailsInfoComponent {
+export class CourseDetailsInfoComponent implements OnInit {
   coursesInfo = [];
   courses = [
     {
@@ -15,7 +15,7 @@ export class CourseDetailsInfoComponent {
       email: 'ethanwilson@gmail.com',
       date: '14/12/1995',
       country: 'United Kingdom',
-      city: 'Londres',
+      city: 'London',
       phone: '+44 1234 567891',
       education: 'University of Technology',
       degree: 'Masters in Data Science and Analytics',
@@ -27,7 +27,7 @@ export class CourseDetailsInfoComponent {
         'This course covers the theoretical and practical fundamentals of data analysis and machine learning. Students acquire advanced skills in Python, statistics, and machine learning algorithms.',
       info: 'Experienced professor in Data Analytics & ML, providing a clear and practical approach to teaching. ',
       recommendations:
-        'ohn is an exceptional Data Analytics & ML instructor. His deep knowledge and ability to explain complex concepts in a clear and engaging manner make him a valuable asset to any learning environment.',
+        'Ethan is an exceptional Data Analytics & ML instructor. His deep knowledge and ability to explain complex concepts in a clear and engaging manner make him a valuable asset to any learning environment.',
       recommendationsName: 'Emma Johnson',
       dateRecommendation: '04/24/2023',
     },
@@ -59,65 +59,43 @@ export class CourseDetailsInfoComponent {
       email: 'jamesrobinson@gmail.com',
       date: '13/07/1997',
       country: 'Australia',
-      city: 'Londres',
+      city: 'Sydney',
       phone: '+61 1234 567 890',
-      education: 'University of Technology',
-      degree: 'Masters in Data Science and Analytics',
+      education: 'CloudTech University',
+      degree: 'Masters in Cloud Computing and Architecture',
       company: 'Data Insights Inc.',
-      job: 'Data Scientist',
+      job: 'Cloud Solutions Architect',
       descriptionJob:
-        'As a Data Scientist, this person is responsible for conducting advanced data analysis, developing predictive models, and identifying insights to drive data-driven decision making.',
+        'As a Cloud Solutions Architect at CloudWorks Inc., this individual is responsible for designing and implementing scalable, secure, and cost-effective cloud-based solutions for clients. They collaborate with cross-functional teams to ensure successful cloud deployments',
       description:
-        'This course covers the theoretical and practical fundamentals of data analysis and machine learning. Students acquire advanced skills in Python, statistics, and machine learning algorithms.',
-      info: 'Experienced professor in Data Analytics & ML, providing a clear and practical approach to teaching. ',
+        'This comprehensive course equips students with the skills and knowledge to become proficient Cloud Solutions Architects. Topics covered include cloud infrastructure, deployment models, security, scalability, and cost optimization.',
+      info: 'Master the art of Cloud Solutions Architecture and gain expertise in designing and deploying scalable, secure, and cost-effective cloud-based solutions to drive business growth and innovation.',
       recommendations:
-        'ohn is an exceptional Data Analytics & ML instructor. His deep knowledge and ability to explain complex concepts in a clear and engaging manner make him a valuable asset to any learning environment.',
-      recommendationsName: 'Emma Johnson',
-      dateRecommendation: '04/24/2023',
+        'James is an exceptional Cloud Solutions Architect with a deep understanding of cloud technologies and architecture. His ability to design innovative solutions and his dedication to client success make him an invaluable asset to any organization',
+      recommendationsName: 'Alexander Wilson',
+      dateRecommendation: '06/24/2023',
     },
     {
       id: 4,
-      title: 'Ethan Wilson',
-      email: 'ethanwilson@gmail.com',
-      date: '14/12/1995',
-      country: 'United Kingdom',
-      city: 'Londres',
-      phone: '+44 1234 567891',
-      education: 'University of Technology',
-      degree: 'Masters in Data Science and Analytics',
-      company: 'Data Insights Inc.',
-      job: 'Data Scientist',
+      title: 'Noah Mitchell',
+      email: 'noahmitchell@gmail.com',
+      date: '25/07/1988',
+      country: 'Ireland',
+      city: 'Dublin',
+      phone: '+353 12 345 6789',
+      education: 'TechGenius University',
+      degree: 'Bachelors in Software Engineering',
+      company: 'InnovateTech Solutions',
+      job: 'Software Engineer',
       descriptionJob:
-        'As a Data Scientist, this person is responsible for conducting advanced data analysis, developing predictive models, and identifying insights to drive data-driven decision making.',
+        'As a Software Engineer at InnovateTech Solutions, this individual is responsible for developing high-quality software applications, collaborating with cross-functional teams, and implementing best coding practices to deliver innovative solutions.',
       description:
-        'This course covers the theoretical and practical fundamentals of data analysis and machine learning. Students acquire advanced skills in Python, statistics, and machine learning algorithms.',
-      info: 'Experienced professor in Data Analytics & ML, providing a clear and practical approach to teaching. ',
+        'This rigorous course provides students with a strong foundation in software development principles, programming languages, algorithms, and software engineering best practices.',
+      info: 'Develop strong skills in Software Engineering and learn to create innovative and robust software solutions, following best practices and utilizing the latest technologies.',
       recommendations:
-        'ohn is an exceptional Data Analytics & ML instructor. His deep knowledge and ability to explain complex concepts in a clear and engaging manner make him a valuable asset to any learning environment.',
-      recommendationsName: 'Emma Johnson',
-      dateRecommendation: '04/24/2023',
-    },
-    {
-      id: 5,
-      title: 'Ethan Wilson',
-      email: 'ethanwilson@gmail.com',
-      date: '14/12/1995',
-      country: 'United Kingdom',
-      city: 'Londres',
-      phone: '+44 1234 567891',
-      education: 'University of Technology',
-      degree: 'Masters in Data Science and Analytics',
-      company: 'Data Insights Inc.',
-      job: 'Data Scientist',
-      descriptionJob:
-        'As a Data Scientist, this person is responsible for conducting advanced data analysis, developing predictive models, and identifying insights to drive data-driven decision making.',
-      description:
-        'This course covers the theoretical and practical fundamentals of data analysis and machine learning. Students acquire advanced skills in Python, statistics, and machine learning algorithms.',
-      info: 'Experienced professor in Data Analytics & ML, providing a clear and practical approach to teaching. ',
-      recommendations:
-        'ohn is an exceptional Data Analytics & ML instructor. His deep knowledge and ability to explain complex concepts in a clear and engaging manner make him a valuable asset to any learning environment.',
-      recommendationsName: 'Emma Johnson',
-      dateRecommendation: '04/24/2023',
+        'I had the pleasure of working with Noah on a complex software project. His technical expertise, attention to detail, and ability to deliver high-quality code were exceptional. He is a skilled and dedicated Software Engineer.',
+      recommendationsName: 'Ava Williams',
+      dateRecommendation: '09/24/2023',
     },
   ];
   course: any;
