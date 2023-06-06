@@ -12,6 +12,7 @@ import { CompanyProfileStepComponent } from './company-profile-step/company-prof
 import { CreateCompanyProfileRoutingModule } from './create-company-profile-routing.module';
 import { CreateCompanyProfileComponent } from './create-company-profile.component';
 import { InterestStepComponent } from './interest-step/interest-step.component';
+import { SuccessModalModule } from '../../../shared/success-modal/success-modal.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { InterestStepComponent } from './interest-step/interest-step.component';
     ButtonPrimaryModule,
     TextAreaModule,
     ButtonSecondaryModule,
+    SuccessModalModule,
   ],
 })
 export class CreateCompanyProfileModule {}
