@@ -4,8 +4,8 @@ import { ButtonPrimaryModule } from '../../../../shared/button-primary/button-pr
 import { By } from '@angular/platform-browser';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { InputModule } from '../../../../shared/input/input.module';
-import { FormFieldModule } from 'apps/frontend/src/app/shared/form-field/form-field.module';
-import { TextAreaModule } from 'apps/frontend/src/app/shared/text-area/text-area.module';
+import { FormFieldModule } from '../../../../shared/form-field/form-field.module';
+import { TextAreaModule } from '../../../../shared/text-area/text-area.module';
 
 describe('ProfessionalExperienceEditStepComponent', () => {
   let component: ProfessionalExperienceEditStepComponent;

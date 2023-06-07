@@ -5,7 +5,7 @@ import { TextAreaModule } from '../../../../shared/text-area/text-area.module';
 import { InputModule } from '../../../../shared/input/input.module';
 import { By } from '@angular/platform-browser';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ButtonPrimaryModule } from 'apps/frontend/src/app/shared/button-primary/button-primary.module';
+import { ButtonPrimaryModule } from '../../../../shared/button-primary/button-primary.module';
 
 describe('ProfileEditStepComponent', () => {
   let component: ProfileEditStepComponent;
