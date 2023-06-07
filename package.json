@@ -39,6 +39,7 @@
     "ipfs-http-client": "56.0.3",
     "jspdf": "^2.5.1",
     "jwt-decode": "^3.1.2",
+    "multer": "^1.4.5-lts.1",
     "ngx-emoji-picker": "^0.1.6",
     "omit-deep": "^0.3.0",
     "pdfjs-dist": "^3.6.172",
