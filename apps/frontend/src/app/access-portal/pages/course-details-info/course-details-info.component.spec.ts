@@ -31,6 +31,7 @@ describe('CourseDetailsInfoComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(CourseDetailsInfoComponent);
     component = fixture.componentInstance;
+    component.course = {};
     fixture.detectChanges();
   });
 

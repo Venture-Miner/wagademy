@@ -22,6 +22,7 @@ describe('CourseDetailsComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(CourseDetailsComponent);
     component = fixture.componentInstance;
+    component.course = {};
     fixture.detectChanges();
   });
 

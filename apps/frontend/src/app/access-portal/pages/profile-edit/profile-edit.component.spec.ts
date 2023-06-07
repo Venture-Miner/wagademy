@@ -7,6 +7,8 @@ import { ProfileStepComponent } from '../create-profile';
 import { FormFieldModule } from '../../../shared/form-field/form-field.module';
 import { InputModule } from '../../../shared/input/input.module';
 import { TextAreaModule } from '../../../shared/text-area/text-area.module';
+import { ButtonPrimaryModule } from '../../../shared/button-primary/button-primary.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 jest.mock('ethers');
 
@@ -23,6 +25,8 @@ describe('ProfileEditComponent', () => {
         FormFieldModule,
         InputModule,
         TextAreaModule,
+        ButtonPrimaryModule,
+        ReactiveFormsModule,
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(ProfileEditComponent);
