@@ -11,6 +11,7 @@ import {
 } from './components';
 import { NavbarAuthenticatedModule } from '../../../shared/navbar-authenticated/navbar-authenticated.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 jest.mock('ethers');
 
@@ -37,9 +38,17 @@ describe('ProfileComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component profile', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should redirect to "home"', () => {
+    const routerLink = fixture.debugElement
+      .query(By.css('#redirect-home'))
+      .nativeElement.getAttribute('ng-reflect-router-link');
+    expect(routerLink).toBe('/home');
   });
 });

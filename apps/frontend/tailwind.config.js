@@ -17,11 +17,11 @@ module.exports = {
       },
     },
     colors: {
-      primary: '#ABFE2C',
-      secondary: '#00501E',
+      primary: '#51B7AF',
+      secondary: '#222634',
       neutral: {
-        1: '#101802',
-        2: '#636461',
+        1: '#222634',
+        2: '#575767',
         3: '#F6F7F9',
         4: '#FFFFFF',
         5: '#DADDEC',
@@ -31,6 +31,7 @@ module.exports = {
     },
   },
   plugins: [
+    require('@tailwindcss/line-clamp'),
     plugin(function ({ addVariant }) {
       addVariant('invalid', '.ng-invalid.ng-touched > &');
     }),

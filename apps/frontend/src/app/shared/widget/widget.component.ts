@@ -14,6 +14,8 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./widget.component.css'],
 })
 export class WidgetComponent implements OnInit {
+  congratulationsMessage = '';
+  failMessage = '';
   showDropdown = false;
   showPostModal = false;
   toggled = false;
@@ -66,20 +68,42 @@ export class WidgetComponent implements OnInit {
         name: `@${this.handle} Post`,
         attributes: [],
         tags: [this.tokenService.getAccountType()],
-        appId: 'Academy',
+        appId: 'Wagademy',
       })
       .subscribe({
         next: async ({ cid }) => {
           const tx = await this.postService
             .createPost(this.lensId, cid, false)
             .catch(() => {
-              this.isLoading = false;
+              this.errorPosting();
             });
           tx.wait().then(() => {
-            this.isLoading = false;
+            this.postSuccessful();
             this.form.reset();
           });
         },
       });
+  }
+
+  errorPosting() {
+    this.isLoading = false;
+    this.showPostModal = false;
+    this.failMessage = 'Error creating post';
+    setTimeout(() => {
+      this.failMessage = '';
+    }, 10000);
+  }
+
+  postSuccessful() {
+    this.isLoading = false;
+    this.showPostModal = false;
+    this.congratulationsMessage = 'Your post has been published';
+    setTimeout(() => {
+      this.congratulationsMessage = '';
+    }, 3000);
+  }
+
+  ok() {
+    this.failMessage = '';
   }
 }

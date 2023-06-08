@@ -110,14 +110,14 @@ export class CreateProfileComponent implements OnInit {
       .createPost({
         version: '2.0.0',
         mainContentFocus: 'TEXT_ONLY',
-        description: 'Academy Curriculum',
+        description: 'Wagademy Curriculum',
         metadata_id: uuidv4(),
         locale: 'en-US',
         content: JSON.stringify(this.form.value),
         name: `@${this.handle} Curriculum`,
         attributes: [],
         tags: [this.tokenService.getAccountType()],
-        appId: 'Academy',
+        appId: 'Wagademy',
       })
       .subscribe({
         next: async ({ cid }) => {

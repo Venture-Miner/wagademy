@@ -17,6 +17,8 @@ export class SquadsComponent implements OnInit {
   });
   showCreateSquadModal = false;
   congratulationsMessage = '';
+  warningMessage = '';
+  warningTitle = '';
   failMessage = '';
   mode: 'JOIN' | 'MANAGE' = 'MANAGE';
   squadIndexToQuit: string | false = false;
@@ -102,12 +104,31 @@ export class SquadsComponent implements OnInit {
     };
     this.squadService.createSquad(body).subscribe({
       next: () => {
+        this.showCreateSquadModal = false;
         this.congratulationsMessage = 'Squad successfully created';
+        this.listSquads();
         setTimeout(() => {
           this.congratulationsMessage = '';
         }, 2000);
       },
+      error: (err) => {
+        if (err.error.meta.target === 'Squad_name_key') {
+          this.showCreateSquadModal = false;
+          this.warningTitle = 'Squad Name';
+          this.warningMessage = 'This squad name already exists';
+          return;
+        }
+        this.showCreateSquadModal = false;
+        this.warningTitle = '';
+        this.warningMessage = 'Error';
+      },
     });
+  }
+
+  ok() {
+    this.showCreateSquadModal = true;
+    this.warningTitle = '';
+    this.warningMessage = '';
   }
 
   back() {

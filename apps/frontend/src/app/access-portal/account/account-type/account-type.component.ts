@@ -24,7 +24,8 @@ export class AccountTypeComponent {
   accountType: ACCOUNT_TYPE | undefined;
   ACCOUNT_TYPE = ACCOUNT_TYPE;
   address = '';
-  doesNotHaveAccount = false;
+  warningMessage = '';
+  warningTitle = '';
   register = false;
   handleTaken = false;
   isLoading = false;
@@ -99,8 +100,15 @@ export class AccountTypeComponent {
     if (items.length) {
       await this.hasDefaultProfile(items[0].id);
     } else {
-      this.doesNotHaveAccount = true;
+      this.showConnectWalletModal = false;
+      this.warningTitle = 'ACCOUNT ERROR!';
+      this.warningMessage = `YOU DON'T HAVE AN ACCOUNT YET, PLEASE CREATE ONE.`;
     }
+  }
+
+  ok() {
+    this.warningTitle = '';
+    this.warningMessage = '';
   }
 
   async handleRegister() {
@@ -147,15 +155,16 @@ export class AccountTypeComponent {
     const items = posts.data.publications.items as [
       { appId: string; metadata: { description: string; content: string } }
     ];
-    const academyPosts = items.filter(
+    const wagademyPosts = items.filter(
       (items) =>
-        items.appId === 'academy' &&
-        items.metadata.description === 'Academy Curriculum'
+        items.appId === 'wagademy' &&
+        (items.metadata.description === 'Wagademy Curriculum' ||
+          items.metadata.description === 'Wagademy Company Profile')
     );
-    await this.verifyAttribute(profileId, academyPosts);
+    await this.verifyAttribute(profileId, wagademyPosts);
   }
 
-  async verifyAttribute(profileId: string, academyPosts: unknown[]) {
+  async verifyAttribute(profileId: string, wagademyPosts: unknown[]) {
     const {
       data: { profile },
     }: { data: { profile: ProfileMetadata } } =
@@ -167,14 +176,14 @@ export class AccountTypeComponent {
       ({ key }) => key === 'ACCOUNT_TYPE'
     );
     if (!attributes.length)
-      await this.setAccountTypeAttribute(profile, profileId, academyPosts);
+      await this.setAccountTypeAttribute(profile, profileId, wagademyPosts);
     else {
       this.tokenService.setAccountType(attributes[0].value);
       if (attributes[0].value === ACCOUNT_TYPE.physicalPerson) {
-        if (!academyPosts[0]) await this.router.navigate(['/create-profile']);
+        if (!wagademyPosts[0]) await this.router.navigate(['/create-profile']);
         else await this.router.navigate(['/home']);
       } else {
-        if (!academyPosts[0])
+        if (!wagademyPosts[0])
           await this.router.navigate(['/create-company-profile']);
         else await this.router.navigate(['/company-home']);
       }
@@ -184,7 +193,7 @@ export class AccountTypeComponent {
   async setAccountTypeAttribute(
     profile: ProfileMetadata,
     profileId: string,
-    academyPosts: unknown[]
+    wagademyPosts: unknown[]
   ) {
     const attributes: { key: string; value: string }[] = [];
     profile.attributes.forEach(({ key, value }) => {
@@ -208,7 +217,7 @@ export class AccountTypeComponent {
     };
     this.ipfsService.createPost(profileMetadata).subscribe({
       next: ({ cid }) => {
-        this.updateProfileAttribute(`ipfs://${cid}`, profileId, academyPosts)
+        this.updateProfileAttribute(`ipfs://${cid}`, profileId, wagademyPosts)
           .then()
           .catch((err) => console.error(err));
       },
@@ -218,7 +227,7 @@ export class AccountTypeComponent {
   async updateProfileAttribute(
     metadata: string,
     profileId: string,
-    academyPosts: unknown[]
+    wagademyPosts: unknown[]
   ) {
     const { data } = await this.lensService.client.mutate({
       mutation: this.lensService.updateProfile,
@@ -241,10 +250,10 @@ export class AccountTypeComponent {
       },
     });
     if (this.accountType === ACCOUNT_TYPE.physicalPerson) {
-      if (!academyPosts[0]) await this.router.navigate(['/create-profile']);
+      if (!wagademyPosts[0]) await this.router.navigate(['/create-profile']);
       else await this.router.navigate(['/home']);
     } else {
-      if (!academyPosts[0])
+      if (!wagademyPosts[0])
         await this.router.navigate(['/create-company-profile']);
       else await this.router.navigate(['/company-home']);
     }

@@ -1,5 +1,6 @@
 <form [formGroup]="form" class="my-10 flex flex-col gap-10">
   <button
+    id="add-education"
     class="bg-primary self-end rounded py-1 pl-2 pr-3 font-mono font-bold"
     (click)="addEducation()"
   >
@@ -41,6 +42,7 @@
           ></wagademy-text-area>
         </wagademy-form-field>
         <div
+          id="remove-education"
           class="-mt-4 flex cursor-pointer items-center gap-2 self-end"
           (click)="removeEducation(i)"
         >
@@ -51,6 +53,7 @@
     </ng-container>
   </ng-container>
   <wagademy-button-primary
+    id="save-button"
     class="mt-12 w-full self-end sm:w-52"
     (click)="saveEdit.emit()"
     >SAVE</wagademy-button-primary

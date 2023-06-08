@@ -11,14 +11,14 @@ jest.mock('ethers');
 const ipfsBody = {
   version: '2.0.0',
   mainContentFocus: 'TEXT_ONLY',
-  description: 'Academy Curriculum',
+  description: 'Wagademy Curriculum',
   metadata_id: uuidv4(),
   locale: 'en-US',
   content: JSON.stringify({ curriculum: 'curriculum' }),
   name: `@any_handle Curriculum`,
   attributes: [],
   tags: [],
-  appId: 'Academy',
+  appId: 'Wagademy',
 };
 
 describe('IpfsService', () => {

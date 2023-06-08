@@ -46,62 +46,23 @@
       </p>
       <div class="bg-neutral-3">
         <div class="px-4 py-5">
-          <div class="cursor-pointer pb-4">
+          <div class="cursor-pointer pb-4" *ngFor="let course of courses">
             <wagademy-course-card
               id="redirect-course-details"
               [routerLink]="['/home/course-details']"
+              [queryParams]="{ id: course.id }"
               [image]="'../../../assets/img/books-icon.svg'"
+              [description]="course.description"
             >
               <div class="title">
                 <p class="text-secondary pb-3 font-sans text-xl font-semibold">
-                  Course Name
-                </p>
-              </div>
-            </wagademy-course-card>
-          </div>
-          <div class="cursor-pointer pb-4">
-            <wagademy-course-card
-              id="redirect-course-details"
-              [routerLink]="['/home/course-details']"
-              [image]="'../../../assets/img/books-icon.svg'"
-            >
-              <div class="title">
-                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
-                  Course Name
-                </p>
-              </div>
-            </wagademy-course-card>
-          </div>
-          <div class="cursor-pointer pb-4">
-            <wagademy-course-card
-              id="redirect-course-details"
-              [routerLink]="['/home/course-details']"
-              [image]="'../../../assets/img/books-icon.svg'"
-            >
-              <div class="title">
-                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
-                  Course Name
-                </p>
-              </div>
-            </wagademy-course-card>
-          </div>
-          <div class="cursor-pointer">
-            <wagademy-course-card
-              id="redirect-course-details"
-              [routerLink]="['/home/course-details']"
-              [image]="'../../../assets/img/books-icon.svg'"
-            >
-              <div class="title">
-                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
-                  Course Name
+                  {{ course.title }}
                 </p>
               </div>
             </wagademy-course-card>
           </div>
           <div class="flex justify-end">
-            <button
-              class="text-secondary cursor-pointer pt-5 text-xl font-semibold"
-            >
+            <button class="text-secondary cursor-pointer text-xl font-semibold">
               Show More
             </button>
           </div>
@@ -110,62 +71,23 @@
       <p class="text-neutral-1 pt-8 font-sans text-3xl font-semibold">Jobs</p>
       <div class="bg-neutral-3">
         <div class="px-4 py-5">
-          <div class="cursor-pointer pb-4">
+          <div class="cursor-pointer pb-4" *ngFor="let job of jobs">
             <wagademy-course-card
               id="redirect-jobs-details"
               [routerLink]="['/home/jobs-details']"
               [image]="'../../../assets/img/briefcase-icon.svg'"
+              [queryParams]="{ id: job.id }"
+              [description]="job.description"
             >
               <div class="title">
                 <p class="text-secondary pb-3 font-sans text-xl font-semibold">
-                  Job Title
-                </p>
-              </div>
-            </wagademy-course-card>
-          </div>
-          <div class="cursor-pointer pb-4">
-            <wagademy-course-card
-              id="redirect-jobs-details"
-              [routerLink]="['/home/jobs-details']"
-              [image]="'../../../assets/img/briefcase-icon.svg'"
-            >
-              <div class="title">
-                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
-                  Job Title
-                </p>
-              </div>
-            </wagademy-course-card>
-          </div>
-          <div class="cursor-pointer pb-4">
-            <wagademy-course-card
-              id="redirect-jobs-details"
-              [routerLink]="['/home/jobs-details']"
-              [image]="'../../../assets/img/briefcase-icon.svg'"
-            >
-              <div class="title">
-                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
-                  Job Title
-                </p>
-              </div>
-            </wagademy-course-card>
-          </div>
-          <div class="cursor-pointer">
-            <wagademy-course-card
-              id="redirect-jobs-details"
-              [routerLink]="['/home/jobs-details']"
-              [image]="'../../../assets/img/briefcase-icon.svg'"
-            >
-              <div class="title">
-                <p class="text-secondary pb-3 font-sans text-xl font-semibold">
-                  Job Title
+                  {{ job.title }}
                 </p>
               </div>
             </wagademy-course-card>
           </div>
           <div class="flex justify-end">
-            <button
-              class="text-secondary cursor-pointer pt-5 text-xl font-semibold"
-            >
+            <button class="text-secondary cursor-pointer text-xl font-semibold">
               Show More
             </button>
           </div>

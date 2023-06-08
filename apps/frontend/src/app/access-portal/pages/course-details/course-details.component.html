@@ -18,15 +18,13 @@
         />
       </div>
       <div>
-        <p class="text-neutral-1 text-2xl font-bold">Course name</p>
+        <p class="text-neutral-1 text-2xl font-bold">{{ course.title }}</p>
         <p class="text-neutral-2 pb-8 font-mono">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-          sint. Velit officia consequat duis enim velit mollit. Exercitation
-          veniam consequat sunt nostrud amet.
+          {{ course.description }}
         </p>
         <p class="text-neutral-1 text-2xl font-bold">Duration</p>
         <p class="text-neutral-2 pb-8 font-mono">
-          <i class="bi bi-clock text-secondary pr-2"></i>30h
+          <i class="bi bi-clock text-secondary pr-2"></i>{{ course.duration }}
         </p>
         <div>
           <div class="flex justify-between">
@@ -40,8 +38,13 @@
           <div class="flex items-center justify-between gap-x-4 pt-2">
             <img src="./assets/img/user-example-info.svg" alt="user info" />
             <p class="text-neutral-2 font-mono">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint <b>see more...</b>
+              {{ course.info
+              }}<button
+                [queryParams]="{ id: course.id }"
+                [routerLink]="['/home/course-details/info']"
+              >
+                see more...
+              </button>
             </p>
           </div>
         </div>
@@ -56,41 +59,25 @@
     </div>
     <p class="text-secondary pb-6 text-sm font-bold">COMMENTS</p>
     <div class="flex flex-col gap-4">
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2" *ngFor="let comment of course.comments">
         <div class="flex items-center gap-2">
           <img
             src="https://i.pravatar.cc/300"
             alt="avatar example"
             class="h-6 w-6 rounded-full object-cover"
           />
-          <span class="text-neutral-1 mr-2 font-mono">User name</span>
+          <span class="text-neutral-1 mr-2 font-mono">{{ comment.info }}</span>
           <div class="bg-neutral-2 h-1 w-1 rounded-full"></div>
           <span class="text-neutral-2 font-mono text-sm">10 hours ago</span>
         </div>
         <span class="text-neutral-2 font-mono text-sm">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-          sint. Velit officia consequat duis enim velit mollit. Exercitation
-          veniam consequat sunt nostrud amet
-        </span>
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-2">
-          <img
-            src="https://i.pravatar.cc/300"
-            alt="avatar example"
-            class="h-6 w-6 rounded-full object-cover"
-          />
-          <span class="text-neutral-1 mr-2 font-mono">User name</span>
-          <div class="bg-neutral-2 h-1 w-1 rounded-full"></div>
-          <span class="text-neutral-2 font-mono text-sm">10 hours ago</span>
-        </div>
-        <span class="text-neutral-2 font-mono text-sm">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-          sint. Velit officia consequat duis enim velit mollit. Exercitation
-          veniam consequat sunt nostrud amet
+          {{ comment.comment }}
         </span>
       </div>
     </div>
   </div>
 </div>
-<wagademy-add-email-modal *ngIf="showAddEmailModal"></wagademy-add-email-modal>
+<wagademy-add-email-modal
+  *ngIf="showAddEmailModal"
+  (cancel)="showAddEmailModal = false"
+></wagademy-add-email-modal>

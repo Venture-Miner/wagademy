@@ -8,7 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class CompanyProfileStepComponent {
   @Input() form!: FormGroup;
-  @Input() mode!: 'CREATE' | 'EDIT' | 'VIEW';
+  @Input() mode!: 'CREATE' | 'EDIT' | 'VIEW' | 'CREATED';
   @Output() nextStep = new EventEmitter<void>();
   @Output() saveEdit = new EventEmitter<void>();
   @Output() edit = new EventEmitter<void>();

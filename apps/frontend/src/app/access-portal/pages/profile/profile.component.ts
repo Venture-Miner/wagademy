@@ -30,20 +30,23 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const ethereumAddress = this.tokenService.getWalletAddress();
-    const {
-      data: {
-        defaultProfile: { id },
-      },
-    } = await this.lensService.client.query({
-      query: this.lensService.defaultProfileId,
-      variables: {
-        request: { ethereumAddress },
-      },
-    });
-    this.profileId = id;
-    this.getProfileCurriculum();
-
+    try {
+      const ethereumAddress = this.tokenService.getWalletAddress();
+      const {
+        data: {
+          defaultProfile: { id },
+        },
+      } = await this.lensService.client.query({
+        query: this.lensService.defaultProfileId,
+        variables: {
+          request: { ethereumAddress },
+        },
+      });
+      this.profileId = id;
+      this.getProfileCurriculum();
+    } catch (err) {
+      console.log(err);
+    }
     if (
       this.academicEducation.length &&
       !Object.values(this.academicEducation[0]).every((el) => !el) &&
@@ -73,13 +76,13 @@ export class ProfileComponent implements OnInit {
     const items = posts.data.publications.items as [
       { appId: string; metadata: { description: string; content: string } }
     ];
-    const academyPosts = items.filter(
+    const wagademyPosts = items.filter(
       (items) =>
-        items.appId === 'academy' &&
-        items.metadata.description === 'Academy Curriculum'
+        items.appId === 'wagademy' &&
+        items.metadata.description === 'Wagademy Curriculum'
     );
-    if (!academyPosts[0]) return;
-    this.curriculum = JSON.parse(academyPosts[0].metadata.content);
+    if (!wagademyPosts[0]) return;
+    this.curriculum = JSON.parse(wagademyPosts[0].metadata.content);
     this.setProfileComponentsData();
   }
 

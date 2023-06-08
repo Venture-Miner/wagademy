@@ -73,3 +73,14 @@
     </div>
   </form>
 </wagademy-base-modal>
+<wagademy-success-modal
+  *ngIf="congratulationsMessage"
+  [message]="congratulationsMessage"
+></wagademy-success-modal>
+<wagademy-warning-modal
+  *ngIf="failMessage"
+  text="Your post was not published, an error occurred"
+  [error]="true"
+  (yes)="ok()"
+  [title]="failMessage"
+></wagademy-warning-modal>
