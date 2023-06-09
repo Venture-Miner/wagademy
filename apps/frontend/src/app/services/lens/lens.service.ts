@@ -32,6 +32,7 @@ import {
   publications,
   checkProfileExistence,
   createUnfollowTypedData,
+  broadcast,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
@@ -73,6 +74,8 @@ export class LensService {
       cache: new InMemoryCache(),
     });
   }
+
+  broadcast = gql(broadcast);
 
   challenge = gql(challenge);
 

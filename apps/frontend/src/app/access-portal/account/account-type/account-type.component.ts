@@ -12,7 +12,6 @@ import {
   ACCOUNT_TYPE,
   AttributeData,
 } from '../../../interfaces';
-import { BroadcastDocument } from '../../../interfaces/generated';
 import { environment } from '.././../../../environments/environment';
 
 @Component({
@@ -288,7 +287,7 @@ export class AccountTypeComponent {
       value
     );
     await this.lensService.client.mutate({
-      mutation: BroadcastDocument,
+      mutation: this.lensService.broadcast,
       variables: {
         request: {
           id: data.createSetProfileMetadataTypedData.id,
