@@ -12,7 +12,7 @@ import {
   ACCOUNT_TYPE,
   AttributeData,
 } from '../../../interfaces';
-import { BroadcastDocument } from '../../../interfaces/generated';
+import { environment } from '.././../../../environments/environment';
 
 @Component({
   selector: 'wagademy-account-type',
@@ -52,9 +52,49 @@ export class AccountTypeComponent {
     const account = await window.ethereum.send('eth_requestAccounts');
     if (account.result.length) {
       this.address = account.result[0];
-      await this.login();
-      this.hasProfile();
+      const isCorrectNetwork = await this.changeNetwork();
+      if (isCorrectNetwork) {
+        await this.login();
+        this.hasProfile();
+      }
     }
+  }
+
+  async changeNetwork() {
+    if (window.ethereum.chainId !== environment.CHAIN_ID_HEXA) {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: environment.CHAIN_ID_HEXA }],
+        });
+        return true;
+      } catch (error: any) {
+        if (error.code === 4902) {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: environment.CHAIN_ID_HEXA,
+                  rpcUrl: environment.NETWORK_RPC_URL,
+                },
+              ],
+            });
+            return true;
+          } catch (addError) {
+            this.warningTitle = 'UNKNOWN ERROR';
+            this.warningMessage = 'AN ERROR HAS OCCURRED';
+            this.showConnectWalletModal = false;
+            return false;
+          }
+        }
+        this.warningTitle = 'UNKNOWN ERROR';
+        this.warningMessage = 'AN ERROR HAS OCCURRED';
+        this.showConnectWalletModal = false;
+        return false;
+      }
+    }
+    return true;
   }
 
   async login() {
@@ -115,8 +155,11 @@ export class AccountTypeComponent {
     const account = await window.ethereum.send('eth_requestAccounts');
     if (account.result.length) {
       this.address = account.result[0];
-      await this.login();
-      await this.createProfileRequest();
+      const isCorrectNetwork = await this.changeNetwork();
+      if (isCorrectNetwork) {
+        await this.login();
+        await this.createProfileRequest();
+      }
     }
   }
 
@@ -241,7 +284,7 @@ export class AccountTypeComponent {
       value
     );
     await this.lensService.client.mutate({
-      mutation: BroadcastDocument,
+      mutation: this.lensService.broadcast,
       variables: {
         request: {
           id: data.createSetProfileMetadataTypedData.id,

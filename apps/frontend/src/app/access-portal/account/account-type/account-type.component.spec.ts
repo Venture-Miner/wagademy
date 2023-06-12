@@ -15,6 +15,9 @@ describe('AccountTypeComponent', () => {
       declarations: [AccountTypeComponent],
       imports: [ButtonPrimaryModule, NavbarModule, HttpClientModule],
     }).compileComponents();
+    window.ethereum = {
+      on: jest.fn(),
+    };
     fixture = TestBed.createComponent(AccountTypeComponent);
     component = fixture.componentInstance;
   });
