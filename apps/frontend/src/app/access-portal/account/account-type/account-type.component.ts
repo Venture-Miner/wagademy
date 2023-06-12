@@ -45,9 +45,6 @@ export class AccountTypeComponent {
     private ipfsService: IpfsService,
     private ethersService: EthersService
   ) {
-    window.ethereum.on('chainChanged', () => {
-      window.location.reload();
-    });
     this.token$ = this.tokenService.getToken();
   }
 
