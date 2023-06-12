@@ -1,8 +1,8 @@
 export const environment = {
   production: false,
   urlBase: {
-    prod: '',
-    stage: '',
+    prod: 'https://api.wagademy.com',
+    stage: 'https://api.wagademy.com',
     local: 'http://localhost:3333',
   },
   cookieDomain: {
