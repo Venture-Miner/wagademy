@@ -39,7 +39,7 @@ export class PostService {
       types,
       value
     );
-    const { v, r, s } = this.ethersService.splitSignature(signedResult);
+    const { v, r, s } = this.ethersService.splitSignature(signedResult!);
     return this.lensService.lensHub['postWithSig']({
       profileId: value.profileId,
       contentURI: value.contentURI,
