@@ -7,7 +7,6 @@ import { CardComponent } from './card/card.component';
 import { FooterComponent } from './footer/footer.component';
 import { LandingRoutingModule } from './landing-routing.module';
 import { LandingComponent } from './landing.component';
-import { NavbarLandingComponent } from './navbar-landing/navbar-landing.component';
 import { ResumesTogglerComponent } from './resumes-toggler/resumes-toggler.component';
 import { AboutComponent } from './details-modal/about/about.component';
 import { EducationComponent } from './details-modal/education/education.component';
@@ -20,11 +19,11 @@ import { DetailsModalComponent } from './details-modal/details-modal.component';
 import { RecommendationsComponent } from './details-modal/recommendations/recommendations.component';
 import { AvatarsComponent } from './details-modal/avatars/avatars.component';
 import { ProfessionalExperienceComponent } from './details-modal/professional-experience/professional-experience.component';
+import { NavbarLandingModule } from './navbar-landing/navbar-landing.module';
 
 @NgModule({
   declarations: [
     LandingComponent,
-    NavbarLandingComponent,
     CardComponent,
     ResumesTogglerComponent,
     DetailsModalComponent,
@@ -46,6 +45,7 @@ import { ProfessionalExperienceComponent } from './details-modal/professional-ex
     ButtonSecondaryModule,
     ButtonPrimaryModule,
     BaseModalModule,
+    NavbarLandingModule,
   ],
 })
 export class LandingModule {}

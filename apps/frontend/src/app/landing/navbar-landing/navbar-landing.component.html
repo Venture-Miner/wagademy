@@ -6,10 +6,20 @@
     <div class="flex gap-x-8">
       <button
         id="about"
-        class="text-secondary border-b-2 text-lg font-bold"
+        class="text-secondary text-lg font-bold"
         [routerLink]="['/about']"
+        routerLinkActive="border-b-2"
       >
         About
+      </button>
+      <button
+        id="about"
+        class="text-secondary text-lg font-bold"
+        [routerLink]="['/']"
+        routerLinkActive="border-b-2"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Home
       </button>
       <wagademy-button-secondary
         id="connect-wallet"
