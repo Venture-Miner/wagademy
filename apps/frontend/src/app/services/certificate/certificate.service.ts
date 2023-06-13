@@ -47,7 +47,7 @@ export class CertificateService {
       img.onload = () => {
         doc.addImage(img, 0, 0, 696, 491);
         doc.setFontSize(70);
-        doc.setTextColor(0, 80, 30);
+        doc.setTextColor(34, 38, 52);
         doc.setFont('SpaceGrotesk', 'bold');
         doc.text(participant, doc.internal.pageSize.width / 2, 235, {
           align: 'center',
@@ -185,7 +185,7 @@ export class CertificateService {
       types,
       value
     );
-    const { v, r, s } = this.ethersService.splitSignature(signature);
+    const { v, r, s } = this.ethersService.splitSignature(signature!);
     return this.lensService.lensHub['collectWithSig'](
       {
         collector: this.tokenService.getWalletAddress(),
