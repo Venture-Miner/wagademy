@@ -26,9 +26,10 @@ export class AccountTypeComponent {
   address = '';
   warningMessage = '';
   warningTitle = '';
-  register = false;
+  modalRegister = false;
   handleTaken = false;
   isLoading = false;
+  metamask = true;
   token$;
   form = this.fb.group({
     handle: [
@@ -48,6 +49,25 @@ export class AccountTypeComponent {
     this.token$ = this.tokenService.getToken();
   }
 
+  register() {
+    if (!window.ethereum) {
+      this.metamask = false;
+      this.warningTitle = 'ERROR!';
+      this.warningMessage = `METAMASK IS NEEDED TO USE OUR PLATFORM`;
+    } else {
+      this.modalRegister = true;
+    }
+  }
+
+  connectWallet() {
+    if (!window.ethereum) {
+      this.metamask = false;
+      this.warningTitle = 'ERROR!';
+      this.warningMessage = `METAMASK IS NEEDED TO USE OUR PLATFORM`;
+    } else {
+      this.showConnectWalletModal = true;
+    }
+  }
   async connectWithMetamask() {
     const account = await window.ethereum.send('eth_requestAccounts');
     if (account.result.length) {
@@ -149,6 +169,7 @@ export class AccountTypeComponent {
   ok() {
     this.warningTitle = '';
     this.warningMessage = '';
+    this.metamask = true;
   }
 
   async handleRegister() {

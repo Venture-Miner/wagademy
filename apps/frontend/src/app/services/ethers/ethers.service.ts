@@ -7,15 +7,21 @@ import { ethers, utils } from 'ethers';
   providedIn: 'root',
 })
 export class EthersService {
-  ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+  ethersProvider;
+
+  constructor() {
+    if (window.ethereum) {
+      this.ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+    }
+  }
 
   async signedTypeData(
     domain: TypedDataDomain,
     types: Record<string, any>,
     value: Record<string, any>
   ) {
-    const signer = this.ethersProvider.getSigner();
-    return signer._signTypedData(
+    const signer = this.ethersProvider?.getSigner();
+    return signer?._signTypedData(
       omit(domain, '__typename'),
       omit(types, '__typename') as any,
       omit(value, '__typename')

@@ -49,12 +49,12 @@ export class LensService {
   lensHub = new ethers.Contract(
     environment.LENS_HUB_CONTRACT,
     LENS_HUB_ABI,
-    this.ethersService.ethersProvider.getSigner()
+    this.ethersService.ethersProvider?.getSigner()
   );
   ensPeriphery = new ethers.Contract(
     environment.LENS_PERIPHERY_CONTRACT,
     LENS_PERIPHERY_ABI,
-    this.ethersService.ethersProvider.getSigner()
+    this.ethersService.ethersProvider?.getSigner()
   );
 
   constructor(private ethersService: EthersService) {

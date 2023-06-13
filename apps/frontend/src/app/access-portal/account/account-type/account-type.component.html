@@ -65,7 +65,7 @@
       </div>
       <wagademy-button-primary
         class="mt-12 w-52 pb-24 md:pb-0"
-        (click)="register = true"
+        (click)="register()"
         [disabled]="accountType !== undefined ? false : true"
         >REGISTER</wagademy-button-primary
       >
@@ -74,9 +74,7 @@
       <h2 class="text-neutral-1 mb-10 pt-14 text-center text-3xl font-bold">
         Already have a registration? Access your account here
       </h2>
-      <wagademy-button-primary
-        class="mt-12 w-52"
-        (click)="showConnectWalletModal = true"
+      <wagademy-button-primary class="mt-12 w-52" (click)="connectWallet()"
         >CONNECT WALLET</wagademy-button-primary
       >
     </div>
@@ -105,8 +103,8 @@
 ></wagademy-warning-modal>
 <wagademy-base-modal
   title="CREATE LENS PROFILE"
-  *ngIf="register"
-  (modalClosed)="register = false"
+  *ngIf="modalRegister"
+  (modalClosed)="modalRegister = false"
 >
   <form
     class="flex flex-col items-center gap-4 px-6 py-6 font-mono"
@@ -180,3 +178,10 @@
     </div>
   </form>
 </wagademy-base-modal>
+<wagademy-warning-modal
+  *ngIf="!metamask"
+  (yes)="ok()"
+  [text]="warningMessage"
+  [error]="true"
+  [title]="warningTitle"
+></wagademy-warning-modal>

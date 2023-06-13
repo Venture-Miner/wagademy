@@ -184,11 +184,11 @@ export class MyContactsComponent implements OnInit {
         types,
         value
       );
-      const { v, r, s } = this.ethersService.splitSignature(signature);
+      const { v, r, s } = this.ethersService.splitSignature(signature!);
       const followNftContract = new ethers.Contract(
         domain.verifyingContract,
         LENS_FOLLOW_NFT_ABI,
-        this.ethersService.ethersProvider.getSigner()
+        this.ethersService.ethersProvider?.getSigner()
       );
       const sig = {
         v,
@@ -225,7 +225,7 @@ export class MyContactsComponent implements OnInit {
         types,
         value
       );
-      const { v, r, s } = this.ethersService.splitSignature(signature);
+      const { v, r, s } = this.ethersService.splitSignature(signature!);
       const tx = await this.lensService.lensHub['followWithSig']({
         follower: this.tokenService.getWalletAddress(),
         profileIds: value.profileIds,

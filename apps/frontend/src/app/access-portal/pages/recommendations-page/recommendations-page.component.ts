@@ -81,7 +81,7 @@ export class RecommendationsPageComponent implements OnInit {
       types,
       value
     );
-    const { v, r, s } = this.ethersService.splitSignature(signature);
+    const { v, r, s } = this.ethersService.splitSignature(signature!);
     const tx = await this.lensService.lensHub['followWithSig']({
       follower: this.tokenService.getWalletAddress(),
       profileIds: value.profileIds,
