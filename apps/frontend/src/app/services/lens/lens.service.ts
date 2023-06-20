@@ -33,6 +33,16 @@ import {
   checkProfileExistence,
   createUnfollowTypedData,
   broadcast,
+  collectModule,
+  getFeed,
+  postFieldsFeed,
+  metadataFields,
+  profileFields,
+  statsFields,
+  simpleCondition,
+  moduleFee,
+  commentFields,
+  mirrorFields,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
@@ -141,4 +151,77 @@ export class LensService {
   publications = gql(publications);
 
   checkProfileExistence = gql(checkProfileExistence);
+
+  collectModuleFields = {
+    collectModule: gql`
+      ${collectModule}
+    `,
+  };
+
+  metadataField = {
+    metadata: gql`
+      ${metadataFields}
+    `,
+  };
+
+  profileFieldsFeed = {
+    profile: gql`
+      ${profileFields}
+    `,
+  };
+
+  collectModule = {
+    collect: gql`
+      ${collectModule}
+    `,
+  };
+
+  statsFields = {
+    stats: gql`
+      ${statsFields}
+    `,
+  };
+
+  simpleCondition = {
+    simple: gql`
+      ${simpleCondition}
+    `,
+  };
+
+  moduleFeeAmount = {
+    moduleFee: gql`
+      ${moduleFee}
+    `,
+  };
+
+  mirrorFields = {
+    mirror: gql`
+      ${mirrorFields}
+    `,
+  };
+
+  postFieldsFeed = {
+    posts: gql`
+      ${postFieldsFeed}
+      ${this.metadataField.metadata}
+      ${this.profileFieldsFeed.profile}
+      ${this.collectModule.collect}
+      ${this.statsFields.stats}
+      ${this.simpleCondition.simple}
+      ${this.moduleFeeAmount.moduleFee}
+    `,
+  };
+
+  commentFields = {
+    comment: gql`
+      ${commentFields}
+    `,
+  };
+
+  getFeed = gql`
+    ${getFeed}
+    ${this.postFieldsFeed.posts}
+    ${this.commentFields.comment}
+    ${this.mirrorFields.mirror}
+  `;
 }
