@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LensService, TokenService } from '../services';
 
 @Component({
   selector: 'wagademy-landing',
@@ -9,6 +10,7 @@ export class LandingComponent {
   selectedBlock: 'STUDENTS' | 'SQUADS' = 'STUDENTS';
   detailsModalType: 'SQUAD' | 'RESUME' | 'TEACHER' | null = null;
   detailsModalData: any = null;
+  publications: any[] = [];
   students = [
     {
       avatarURL: './../../../assets/img/bianca-caetano.jpg',
@@ -213,4 +215,31 @@ export class LandingComponent {
         'Highly skilled professional in Data Analytics, bringing extensive experience in statistical analysis and data modeling. With expertise in various analytics tools, his ability to translate complex data into actionable insights makes him a valuable asset for data-driven organizations.',
     },
   ];
+  publication: any[] = [];
+  display = 3;
+
+  constructor(private lensService: LensService) {}
+
+  ngOnInit() {
+    this.getPublications();
+  }
+
+  async getPublications() {
+    try {
+      const publications = await this.lensService.client.query({
+        query: this.lensService.getPosts,
+        variables: {
+          request: {
+            publicationTypes: ['POST'],
+            sources: ['Wagademy'],
+            limit: this.display,
+          },
+        },
+      });
+      this.publications = publications.data.publications.items;
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  }
 }

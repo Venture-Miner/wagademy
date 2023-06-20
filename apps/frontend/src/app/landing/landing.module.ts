@@ -20,6 +20,7 @@ import { RecommendationsComponent } from './details-modal/recommendations/recomm
 import { AvatarsComponent } from './details-modal/avatars/avatars.component';
 import { ProfessionalExperienceComponent } from './details-modal/professional-experience/professional-experience.component';
 import { NavbarLandingModule } from './navbar-landing/navbar-landing.module';
+import { PostCardComponent } from './post-card';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { NavbarLandingModule } from './navbar-landing/navbar-landing.module';
     AvatarsComponent,
     FooterComponent,
     RecommendationsComponent,
+    PostCardComponent,
   ],
   imports: [
     CommonModule,
