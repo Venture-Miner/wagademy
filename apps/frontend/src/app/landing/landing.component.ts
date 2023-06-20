@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LensService, TokenService } from '../services';
 
 @Component({
@@ -6,7 +6,7 @@ import { LensService, TokenService } from '../services';
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css'],
 })
-export class LandingComponent {
+export class LandingComponent implements OnInit {
   selectedBlock: 'STUDENTS' | 'SQUADS' = 'STUDENTS';
   detailsModalType: 'SQUAD' | 'RESUME' | 'TEACHER' | null = null;
   detailsModalData: any = null;
@@ -227,16 +227,18 @@ export class LandingComponent {
   async getPublications() {
     try {
       const publications = await this.lensService.client.query({
-        query: this.lensService.getPosts,
+        query: this.lensService.getFeed,
         variables: {
           request: {
             publicationTypes: ['POST'],
             sources: ['Wagademy'],
             limit: this.display,
+            sortCriteria: 'LATEST',
+            noRandomize: true,
           },
         },
       });
-      this.publications = publications.data.publications.items;
+      this.publications = publications.data.explorePublications.items;
     } catch (err) {
       console.log(err);
       return;
