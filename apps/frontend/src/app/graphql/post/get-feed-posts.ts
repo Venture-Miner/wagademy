@@ -240,6 +240,7 @@ export const metadataFields = `fragment MetadataFields on MetadataOutput {
   content
   image
   tags
+  description
   attributes {
     traitType
     value
