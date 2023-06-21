@@ -1,28 +1,16 @@
 <div class="border-neutral-6 flex flex-col rounded-sm border-4 p-2 sm:p-7">
-  <div class="flex justify-between">
-    <div class="flex items-center">
+  <div class="flex items-center">
+    <button [routerLink]="['/']">
       <img
         [src]="sanitizeUrl(publication.profile.picture?.original?.url)"
         alt="avatar example"
         class="h-12 w-12 rounded-full object-cover"
       />
-      <span class="text-neutral-1 ml-4 break-all font-mono text-base font-bold">
-        {{ publication.profile.name || publication.profile.handle }}</span
-      >
-    </div>
-    <button>
-      <i
-        class="bi bi-three-dots-vertical text-3xl sm:text-6xl"
-        aria-hidden="true"
-      ></i>
     </button>
+    <span class="text-neutral-1 ml-4 break-all font-mono text-base font-bold">
+      {{ publication.profile.name || publication.profile.handle }}</span
+    >
   </div>
-  <p
-    class="text-neutral-2 break-all pt-5 pb-3 font-mono text-sm"
-    *ngIf="publication.metadata.content"
-  >
-    {{ publication.metadata.content }}
-  </p>
   <div class="pt-5">
     <img
       *ngIf="
@@ -33,18 +21,5 @@
       alt="post media"
       class="object-scale-down md:max-h-[441px]"
     />
-    <video
-      controls
-      *ngIf="
-        publication.metadata.media.length &&
-        publication.metadata.media[0].original.mimeType.includes('video')
-      "
-    >
-      <source
-        [src]="sanitizeUrl(publication.metadata.media[0].original.url)"
-        type="video/mp4"
-      />
-      Your browser does not support the video.
-    </video>
   </div>
 </div>
