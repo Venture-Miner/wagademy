@@ -143,6 +143,13 @@ const routes: Routes = [
             (m) => m.JobsDetailsModule
           ),
       },
+      {
+        path: 'profile-public',
+        loadChildren: () =>
+          import('./profile-public/profile-public.module').then(
+            (m) => m.ProfilePublicModule
+          ),
+      },
     ],
   },
 ];

@@ -1,0 +1,40 @@
+<div class="flex justify-between">
+  <div>
+    <div class="flex items-center">
+      <img
+        [src]="sanitizeUrl(publication.profile.picture?.original?.url)"
+        alt="avatar example"
+        class="h-12 w-12 rounded-full object-cover"
+      />
+      <div>
+        <span
+          class="text-neutral-1 ml-4 break-all font-mono text-base font-bold"
+        >
+          {{ publication.profile.name || publication.profile.handle }}</span
+        >
+        <div class="flex pl-4">
+          <p class="text-neutral-1">@user_name</p>
+          <p class="text-neutral-6 pl-2">• Jun 22</p>
+        </div>
+      </div>
+    </div>
+    <div class="pt-5">
+      <img
+        *ngIf="
+          publication.metadata.media.length &&
+          publication.metadata.media[0].original.mimeType.includes('image')
+        "
+        [src]="sanitizeUrl(publication.metadata.media[0].original.url)"
+        alt="post media"
+        class="object-scale-down md:max-h-[441px]"
+      />
+    </div>
+  </div>
+  <button class="relative">
+    <i
+      class="bi bi-three-dots-vertical text-secondary absolute top-0 text-lg"
+      aria-hidden="true"
+    ></i>
+  </button>
+</div>
+<hr class="text-neutral-3" />

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { LensService } from '../services';
 
 @Component({
-  selector: 'wagademy-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css'],
+  selector: 'wagademy-profile-public',
+  templateUrl: './profile-public.component.html',
+  styleUrls: ['./profile-public.component.css'],
 })
-export class LandingComponent implements OnInit {
+export class ProfilePublicComponent implements OnInit {
   publications: any[] = [];
   display = 3;
 
