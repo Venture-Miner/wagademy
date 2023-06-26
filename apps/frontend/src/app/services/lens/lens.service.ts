@@ -43,6 +43,7 @@ import {
   moduleFee,
   commentFields,
   mirrorFields,
+  getProfileFeed,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
@@ -220,6 +221,13 @@ export class LensService {
 
   getFeed = gql`
     ${getFeed}
+    ${this.postFieldsFeed.posts}
+    ${this.commentFields.comment}
+    ${this.mirrorFields.mirror}
+  `;
+
+  getProfileFeed = gql`
+    ${getProfileFeed}
     ${this.postFieldsFeed.posts}
     ${this.commentFields.comment}
     ${this.mirrorFields.mirror}
