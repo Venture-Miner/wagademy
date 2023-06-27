@@ -1,6 +1,9 @@
 <div class="border-neutral-6 flex flex-col rounded-sm border-4 p-2 sm:p-7">
   <div class="flex items-center">
-    <button [routerLink]="['/profile-public']">
+    <button
+      [routerLink]="['/profile-public']"
+      [queryParams]="{ id: publication.profile.id }"
+    >
       <img
         [src]="sanitizeUrl(publication.profile.picture?.original?.url)"
         alt="avatar example"
