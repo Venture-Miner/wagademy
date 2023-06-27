@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LensService } from '../services';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'wagademy-profile-public',
@@ -9,33 +10,67 @@ import { LensService } from '../services';
 export class ProfilePublicComponent implements OnInit {
   publications: any[] = [];
   display = 3;
+  id = '';
+  isLoading = false;
+  routerNavbar = this.router.url === '/home/profile-public';
+  profileId: string | null = null;
+  reactionRequest: { profileId: string } | null = null;
 
-  constructor(private lensService: LensService) {}
+  constructor(
+    private lensService: LensService,
+    private activatedRoute: ActivatedRoute,
+    public router: Router
+  ) {}
 
   ngOnInit() {
-    this.getPublications();
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      const id = params.get('id');
+      if (id) this.id = id;
+    });
+    this.getProfilePublications();
   }
 
-  async getPublications() {
+  async getProfilePublications() {
     try {
       const publications = await this.lensService.client.query({
-        query: this.lensService.getFeed,
+        query: this.lensService.getProfileFeed,
         variables: {
           request: {
             publicationTypes: ['POST'],
             sources: ['Wagademy'],
             limit: this.display,
-            sortCriteria: 'LATEST',
-            noRandomize: true,
+            profileId: this.id,
           },
+          profileId: this.profileId,
+          reactionRequest: this.reactionRequest,
         },
       });
-      const items = publications.data.explorePublications.items as [
-        { metadata: { description: string; content: string } }
+      const items = publications.data.publications.items as [
+        {
+          profile: {
+            id: string;
+            name: string;
+            handle: string;
+            stats: { totalFollowers: number; totalFollowing: number };
+            picture: {
+              original: {
+                url: string;
+              };
+            };
+            coverPicture: {
+              original: {
+                url: string;
+              };
+            };
+          };
+          metadata: { description: string; content: string };
+          createdAt: string;
+        }
       ];
       this.publications = items.filter(
         (value) => value.metadata.description === 'Wagademy Certificate'
       );
+      console.log(this.publications[0].profile);
     } catch (err) {
       console.log(err);
       return;
