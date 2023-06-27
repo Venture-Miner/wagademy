@@ -18,6 +18,7 @@ export const publications = `query Publications($request: PublicationsQueryReque
           }
         }
         profile {
+          id
           name
           handle
           picture {
