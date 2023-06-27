@@ -13,8 +13,10 @@
           {{ publication.profile.name || publication.profile.handle }}</span
         >
         <div class="flex pl-4">
-          <p class="text-neutral-1">@user_name</p>
-          <p class="text-neutral-6 pl-2">• Jun 22</p>
+          <p class="text-neutral-1">@{{ publication.profile.handle }}</p>
+          <p class="text-neutral-6 pl-2">
+            • {{ publication.createdAt | date : 'MMMM d' }}
+          </p>
         </div>
       </div>
     </div>
