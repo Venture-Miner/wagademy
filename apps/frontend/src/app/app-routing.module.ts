@@ -150,6 +150,14 @@ const routes: Routes = [
             (m) => m.ProfilePublicModule
           ),
       },
+      {
+        path: 'home/profile-public',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./profile-public/profile-public.module').then(
+            (m) => m.ProfilePublicModule
+          ),
+      },
     ],
   },
 ];
