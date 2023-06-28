@@ -12,7 +12,6 @@ import {
   createFollowTypedData,
   authenticate,
   challenge,
-  profile,
   userProfiles,
   defaultProfileId,
   createPostTypedData,
@@ -98,7 +97,7 @@ export class LensService {
 
   profileFields = {
     profile: gql`
-      ${profile}
+      ${profileFields}
     `,
   };
 
@@ -165,12 +164,6 @@ export class LensService {
     `,
   };
 
-  profileFieldsFeed = {
-    profile: gql`
-      ${profileFields}
-    `,
-  };
-
   collectModule = {
     collect: gql`
       ${collectModule}
@@ -205,7 +198,7 @@ export class LensService {
     posts: gql`
       ${postFieldsFeed}
       ${this.metadataField.metadata}
-      ${this.profileFieldsFeed.profile}
+      ${this.profileFields.profile}
       ${this.collectModule.collect}
       ${this.statsFields.stats}
       ${this.simpleCondition.simple}
