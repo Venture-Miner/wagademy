@@ -83,6 +83,11 @@
       <div *ngIf="routerNavbar">
         <button
           class="border-primary text-primary hover:bg-primary hover:text-neutral-4 w-20 rounded border py-2 font-mono md:w-32"
+          (click)="
+            publications[0].profile.isFollowedByMe
+              ? unfollow(publications[0].profile.id)
+              : follow(publications[0].profile.id)
+          "
         >
           {{ publications[0].profile.isFollowedByMe ? 'UNFOLLOW' : 'FOLLOW +' }}
         </button>
@@ -115,3 +120,7 @@
     </div>
   </div>
 </div>
+<wagademy-success-modal
+  *ngIf="followModal"
+  [message]="'Successfully followed'"
+></wagademy-success-modal>

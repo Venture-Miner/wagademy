@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LensService } from '../services';
+import { EthersService, LensService, TokenService } from '../services';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FollowRequest } from '../interfaces/types';
+import LENS_FOLLOW_NFT_ABI from '../../assets/abis/lens-follow-nft-contract-abi.json';
+import { ethers } from 'ethers';
 
 @Component({
   selector: 'wagademy-profile-public',
@@ -12,14 +15,17 @@ export class ProfilePublicComponent implements OnInit {
   display = 3;
   id = '';
   isLoading = false;
-  routerNavbar = this.router.url === '/home/profile-public';
+  routerNavbar = this.router.url.includes('/home/profile-public');
   profileId: string | null = null;
   reactionRequest: { profileId: string } | null = null;
+  followModal = false;
 
   constructor(
     private lensService: LensService,
     private activatedRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private ethersService: EthersService,
+    private tokenService: TokenService
   ) {}
 
   ngOnInit() {
@@ -28,6 +34,7 @@ export class ProfilePublicComponent implements OnInit {
       if (id) this.id = id;
     });
     this.getProfilePublications();
+    console.log(this.router.url);
   }
 
   async getProfilePublications() {
@@ -76,4 +83,91 @@ export class ProfilePublicComponent implements OnInit {
       return;
     }
   }
+
+  async follow(profileId: string) {
+    const result = await this.createFollowTypedData({
+      follow: [{ profile: profileId }],
+    });
+    const { domain, types, value } = result.typedData;
+    const signature = await this.ethersService.signedTypeData(
+      domain,
+      types,
+      value
+    );
+    const { v, r, s } = this.ethersService.splitSignature(signature!);
+    const tx = await this.lensService.lensHub['followWithSig']({
+      follower: this.tokenService.getWalletAddress(),
+      profileIds: value.profileIds,
+      datas: value.datas,
+      sig: {
+        v,
+        r,
+        s,
+        deadline: value.deadline,
+      },
+    });
+    tx.wait().then(() => {
+      this.accept();
+    });
+  }
+
+  accept() {
+    this.followModal = true;
+    this.resetModal();
+  }
+
+  resetModal() {
+    setTimeout(() => {
+      this.followModal = false;
+    }, 2000);
+  }
+
+  async createFollowTypedData(request: FollowRequest) {
+    const result = await this.lensService.client.mutate({
+      mutation: this.lensService.follow,
+      variables: { request },
+    });
+    return result.data!.createFollowTypedData;
+  }
+
+  async unfollow(profileId: string) {
+    this.isLoading = true;
+    try {
+      const result = await this.createUnfollowTypedData({
+        profile: profileId,
+      });
+      const { domain, types, value } = result.typedData;
+      const signature = await this.ethersService.signedTypeData(
+        domain,
+        types,
+        value
+      );
+      const { v, r, s } = this.ethersService.splitSignature(signature!);
+      const followNftContract = new ethers.Contract(
+        domain.verifyingContract,
+        LENS_FOLLOW_NFT_ABI,
+        this.ethersService.ethersProvider?.getSigner()
+      );
+      const sig = {
+        v,
+        r,
+        s,
+        deadline: value.deadline,
+      };
+      const tx = await followNftContract['burnWithSig'](value.tokenId, sig);
+      tx.wait().then(() => {
+        this.isLoading = false;
+      });
+    } catch (_) {
+      this.isLoading = false;
+    }
+  }
+
+  createUnfollowTypedData = async (request: any) => {
+    const result = await this.lensService.client.mutate({
+      mutation: this.lensService.unfollow,
+      variables: { request },
+    });
+    return result.data!.createUnfollowTypedData;
+  };
 }
