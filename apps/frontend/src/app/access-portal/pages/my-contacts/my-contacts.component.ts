@@ -83,7 +83,7 @@ export class MyContactsComponent implements OnInit {
     }
     const profile = await this.lensService.client.query({
       query: this.lensService.getProfile,
-      variables: { request: { handle } },
+      variables: { request: { handle: handle + '.test' } },
     });
     this.profile = profile.data.profile;
     this.getProfileImage(this.profile?.picture?.original?.url);
