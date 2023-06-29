@@ -9,30 +9,33 @@
         alt="wagademy logo"
       />
     </button>
-    <div class="flex gap-x-8">
-      <button
-        id="home"
-        class="text-secondary text-lg font-bold"
-        [routerLink]="['/']"
-        routerLinkActive="border-b-2"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        Home
-      </button>
-      <button
-        id="about"
-        class="text-secondary text-lg font-bold"
-        [routerLink]="['/about']"
-        routerLinkActive="border-b-2"
-      >
-        About
-      </button>
-      <wagademy-button-secondary
-        id="connect-wallet"
-        class="w-52"
-        [routerLink]="['/account-type']"
-        >ACCESS WALLET</wagademy-button-secondary
-      >
+    <div class="gap-x-8 md:flex">
+      <div class="flex gap-x-8">
+        <button
+          id="home"
+          class="text-secondary text-lg font-bold"
+          [routerLink]="['/']"
+          routerLinkActive="border-b-2"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Home
+        </button>
+        <button
+          id="about"
+          class="text-secondary text-lg font-bold"
+          [routerLink]="['/about']"
+          routerLinkActive="border-b-2"
+        >
+          About
+        </button>
+      </div>
+      <div class="w-52 pt-6 md:pt-0">
+        <wagademy-button-secondary
+          id="connect-wallet"
+          [routerLink]="['/account-type']"
+          >ACCESS WALLET</wagademy-button-secondary
+        >
+      </div>
     </div>
   </div>
 </div>
