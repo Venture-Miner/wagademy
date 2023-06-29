@@ -1,8 +1,6 @@
-import { ActivatedRoute } from '@angular/router';
 import { NavbarLandingModule } from '../landing/navbar-landing/navbar-landing.module';
 import { NavbarAuthenticatedModule } from '../shared/navbar-authenticated/navbar-authenticated.module';
 import { SuccessModalModule } from '../shared/success-modal/success-modal.module';
-import { ProfilePublicRoutingModule } from './profile-public-routing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfilePublicComponent } from './profile-public.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,17 +19,8 @@ describe('ProfilePublicComponent', () => {
         NavbarAuthenticatedModule,
         RouterTestingModule,
         NavbarLandingModule,
-        ProfilePublicRoutingModule,
         NavbarAuthenticatedModule,
         SuccessModalModule,
-      ],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            queryParams: { id: '0x7f47' },
-          },
-        },
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(ProfilePublicComponent);
