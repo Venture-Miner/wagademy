@@ -34,7 +34,6 @@ export class ProfilePublicComponent implements OnInit {
       if (id) this.id = id;
     });
     this.getProfilePublications();
-    console.log(this.router.url);
   }
 
   async getProfilePublications() {
@@ -77,7 +76,6 @@ export class ProfilePublicComponent implements OnInit {
       this.publications = items.filter(
         (value) => value.metadata.description === 'Wagademy Certificate'
       );
-      console.log(this.publications[0].profile);
     } catch (err) {
       console.log(err);
       return;
