@@ -5,7 +5,6 @@ import { SuccessModalModule } from '../shared/success-modal/success-modal.module
 import { ProfilePublicRoutingModule } from './profile-public-routing.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfilePublicComponent } from './profile-public.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
@@ -21,7 +20,6 @@ describe('ProfilePublicComponent', () => {
       imports: [
         NavbarAuthenticatedModule,
         RouterTestingModule,
-        HttpClientTestingModule,
         NavbarLandingModule,
         ProfilePublicRoutingModule,
         NavbarAuthenticatedModule,
@@ -31,7 +29,7 @@ describe('ProfilePublicComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            snapshot: { params: { id: 'id=0x7f47' } },
+            queryParams: { id: '0x7f47' },
           },
         },
       ],
