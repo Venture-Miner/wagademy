@@ -2,8 +2,23 @@
   <div
     class="flex flex-col items-center gap-4 py-3 sm:container sm:mx-auto sm:flex-row sm:justify-between sm:px-5"
   >
-    <img class="w-40" src="../../assets/img/logo-wa.svg" alt="lens logo" />
+    <button [routerLink]="['/']">
+      <img
+        class="w-40"
+        src="../../assets/img/logo-wa.svg"
+        alt="wagademy logo"
+      />
+    </button>
     <div class="flex gap-x-8">
+      <button
+        id="home"
+        class="text-secondary text-lg font-bold"
+        [routerLink]="['/']"
+        routerLinkActive="border-b-2"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Home
+      </button>
       <button
         id="about"
         class="text-secondary text-lg font-bold"
@@ -11,15 +26,6 @@
         routerLinkActive="border-b-2"
       >
         About
-      </button>
-      <button
-        id="about"
-        class="text-secondary text-lg font-bold"
-        [routerLink]="['/']"
-        routerLinkActive="border-b-2"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        Home
       </button>
       <wagademy-button-secondary
         id="connect-wallet"
