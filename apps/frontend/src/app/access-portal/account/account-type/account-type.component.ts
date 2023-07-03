@@ -31,11 +31,9 @@ export class AccountTypeComponent {
   isLoading = false;
   metamask = true;
   token$;
+  handlePattern = /^[a-z0-9-_]{5,31}$/;
   form = this.fb.group({
-    handle: [
-      '',
-      [Validators.required, Validators.minLength(5), Validators.maxLength(31)],
-    ],
+    handle: ['', [Validators.required, Validators.pattern(this.handlePattern)]],
   });
 
   constructor(

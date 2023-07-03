@@ -141,6 +141,15 @@
     </p>
     <p
       *ngIf="
+        form.invalid && form.touched && form.controls['handle'].errors?.['pattern']
+      "
+      class="text-danger flex justify-center text-center text-sm"
+    >
+      Handle only supports lower case characters, numbers, - and _. Handle must
+      be minimum of 5 length and maximum of 31 length.
+    </p>
+    <p
+      *ngIf="
         form.invalid &&
         form.touched &&
         form.controls['handle'].value!.length > 31
