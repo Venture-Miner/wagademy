@@ -24,13 +24,13 @@
   <div>
     <div class="container absolute">
       <img
-        *ngIf="publications[0].profile.coverPicture?.original?.url"
+        *ngIf="publications[0]?.profile.coverPicture?.original?.url"
         class="h-[200px] w-full sm:w-[640px] md:h-[320px] md:w-[800px] lg:w-[1512px]"
-        [src]="publications[0].profile.coverPicture?.original?.url"
+        [src]="publications[0]?.profile.coverPicture?.original?.url"
         alt="banner image"
       />
       <img
-        *ngIf="!publications[0].profile.coverPicture?.original?.url"
+        *ngIf="!publications[0]?.profile.coverPicture?.original?.url"
         class="h-[200px] w-full sm:w-[640px] md:h-[320px] md:w-[800px] lg:w-[1512px]"
         src="../../assets/img/img-banner-profile.png"
         alt="banner image"
@@ -40,13 +40,13 @@
       class="relative h-[150px] w-[150px] px-6 pt-14 pb-8 md:h-[400px] md:w-[400px] md:pt-48"
     >
       <img
-        *ngIf="publications[0].profile.picture?.original?.url"
+        *ngIf="publications[0]?.profile.picture?.original?.url"
         class="border-neutral-5 w-56 rounded-full border"
-        [src]="publications[0].profile.picture?.original?.url"
+        [src]="publications[0]?.profile.picture?.original?.url"
         alt="profile image"
       />
       <img
-        *ngIf="!publications[0].profile.picture?.original?.url"
+        *ngIf="!publications[0]?.profile.picture?.original?.url"
         class="border-neutral-5 w-56 rounded-full border"
         src="../../assets/img/img-profile-wagademy.svg"
         alt="profile image"
@@ -56,28 +56,28 @@
   <div class="grid grid-cols-1 pt-24 md:grid-cols-3 md:pt-10">
     <div>
       <p
-        *ngIf="publications[0].profile.name"
+        *ngIf="publications[0]?.profile.name"
         class="text-secondary font-sans text-2xl font-bold"
       >
-        {{ publications[0].profile.name }}
+        {{ publications[0]?.profile.name }}
       </p>
       <p
-        *ngIf="!publications[0].profile.name"
+        *ngIf="!publications[0]?.profile.name"
         class="text-secondary font-sans text-2xl font-bold"
       >
         No name
       </p>
-      <p class="text-primary pb-4">@{{ publications[0].profile.handle }}</p>
+      <p class="text-primary pb-4">@{{ publications[0]?.profile.handle }}</p>
       <div class="flex gap-x-10 pb-4">
         <div>
           <p class="text-secondary font-mono text-lg">
-            {{ publications[0].profile.stats.totalFollowing }}
+            {{ publications[0]?.profile.stats.totalFollowing }}
           </p>
           <p class="text-neutral-2">Following</p>
         </div>
         <div>
           <p class="text-secondary font-mono text-lg">
-            {{ publications[0].profile.stats.totalFollowers }}
+            {{ publications[0]?.profile.stats.totalFollowers }}
           </p>
           <p class="text-neutral-2">Followers</p>
         </div>
@@ -86,17 +86,19 @@
         <button
           class="border-primary text-primary hover:bg-primary hover:text-neutral-4 w-20 rounded border py-2 font-mono md:w-32"
           (click)="
-            publications[0].profile.isFollowedByMe
-              ? unfollow(publications[0].profile.id)
-              : follow(publications[0].profile.id)
+            publications[0]?.profile.isFollowedByMe
+              ? unfollow(publications[0]?.profile.id)
+              : follow(publications[0]?.profile.id)
           "
         >
-          {{ publications[0].profile.isFollowedByMe ? 'UNFOLLOW' : 'FOLLOW +' }}
+          {{
+            publications[0]?.profile.isFollowedByMe ? 'UNFOLLOW' : 'FOLLOW +'
+          }}
         </button>
       </div>
       <div *ngIf="!routerNavbar">
         <button
-        id="account-type"
+          id="account-type"
           class="border-primary text-primary hover:bg-primary hover:text-neutral-4 w-20 rounded border py-2 font-mono md:w-32"
           [routerLink]="['/account-type']"
         >

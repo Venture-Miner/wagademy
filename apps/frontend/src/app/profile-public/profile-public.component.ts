@@ -77,7 +77,6 @@ export class ProfilePublicComponent implements OnInit {
         (value) => value.metadata.description === 'Wagademy Certificate'
       );
     } catch (err) {
-      console.log(err);
       return;
     }
   }
