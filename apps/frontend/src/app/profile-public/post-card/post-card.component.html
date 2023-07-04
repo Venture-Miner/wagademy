@@ -4,16 +4,18 @@
       <img
         [src]="sanitizeUrl(publication.profile.picture?.original?.url)"
         alt="avatar example"
-        class="h-12 w-12 rounded-full object-cover"
+        class="h-8 w-8 rounded-full object-cover md:h-12 md:w-12"
       />
-      <div>
+      <div class="text-xs md:text-base">
         <span
-          class="text-neutral-1 ml-4 break-all font-mono text-base font-bold"
+          class="text-neutral-1 ml-4 break-words break-all font-mono font-bold"
         >
           {{ publication.profile.name || publication.profile.handle }}</span
         >
-        <div class="flex pl-4">
-          <p class="text-neutral-1">@{{ publication.profile.handle }}</p>
+        <div class="pl-4 md:flex">
+          <p class="text-neutral-1 break-words">
+            @{{ publication.profile.handle }}
+          </p>
           <p class="text-neutral-6 pl-2">
             • {{ publication.createdAt | date : 'MMMM d' }}
           </p>
