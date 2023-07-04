@@ -5,7 +5,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfilePublicComponent } from './profile-public.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 jest.mock('ethers');
 jest.mock('@apollo/client/core');
@@ -13,7 +12,6 @@ jest.mock('@apollo/client/core');
 describe('ProfilePublicComponent', () => {
   let component: ProfilePublicComponent;
   let fixture: ComponentFixture<ProfilePublicComponent>;
-  let element: DebugElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -27,7 +25,6 @@ describe('ProfilePublicComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(ProfilePublicComponent);
     component = fixture.componentInstance;
-    element = fixture.debugElement;
     fixture.detectChanges();
   });
 
