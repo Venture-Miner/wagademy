@@ -22,22 +22,22 @@
     <span class="font-mono font-bold">Back</span>
   </div>
   <div class="container">
-    <div class="absolute">
+    <div class="container absolute mx-auto w-full">
       <img
         *ngIf="publications[0]?.profile.coverPicture?.original?.url"
-        class="h-[50px] w-full object-contain pr-3 min-[366px]:h-[100px] sm:w-[640px] md:h-[200px] md:w-[800px] md:pr-10 lg:h-[320px] lg:w-[1512px] lg:object-fill lg:pr-12"
+        class="h-[50px] w-full object-fill pr-3 min-[366px]:h-[100px] sm:w-[640px] md:h-[200px] md:w-[800px] md:pr-10 lg:h-[320px] lg:w-[1512px] lg:object-fill lg:pr-12"
         [src]="publications[0]?.profile.coverPicture?.original?.url"
         alt="banner image"
       />
       <img
         *ngIf="!publications[0]?.profile.coverPicture?.original?.url"
-        class="h-[50px] w-full object-contain pr-3 min-[366px]:h-[100px] sm:w-[640px] md:h-[200px] md:w-[800px] md:pr-10 lg:h-[320px] lg:w-[1512px] lg:object-fill lg:pr-12"
-        src="../../assets/img/img-banner-profile.png"
+        class="container h-[50px] w-full object-fill pr-3 min-[366px]:h-[100px] sm:w-[640px] md:h-[200px] md:w-[800px] md:pr-10 lg:h-[320px] lg:w-[1512px] lg:object-fill lg:pr-12"
+        src="../../assets/img/teste3.png"
         alt="banner image"
       />
     </div>
     <div
-      class="relative h-[50px] w-[150px] px-6 pt-4 pb-8 min-[366px]:pt-16 md:h-[250px] md:w-[400px] md:pt-20 lg:h-[400px] lg:pt-48"
+      class="relative h-[50px] w-[150px] px-6 pt-4 pb-8 min-[366px]:pt-16 md:h-[250px] md:w-[400px] md:pt-20 min-[769px]:pt-32 lg:h-[400px] lg:pt-48"
     >
       <img
         *ngIf="publications[0]?.profile.picture?.original?.url"
