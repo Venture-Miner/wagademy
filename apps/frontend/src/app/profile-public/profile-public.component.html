@@ -25,35 +25,35 @@
     <div class="absolute">
       <img
         *ngIf="publications[0]?.profile.coverPicture?.original?.url"
-        class="h-[200px] w-full object-fill pr-3 sm:w-[640px] md:h-[320px] md:w-[800px] md:pr-10 lg:w-[1512px] lg:pr-12"
+        class="h-[50px] w-full object-contain pr-3 min-[366px]:h-[100px] sm:w-[640px] md:h-[200px] md:w-[800px] md:pr-10 lg:h-[320px] lg:w-[1512px] lg:object-fill lg:pr-12"
         [src]="publications[0]?.profile.coverPicture?.original?.url"
         alt="banner image"
       />
       <img
         *ngIf="!publications[0]?.profile.coverPicture?.original?.url"
-        class="h-[200px] w-full object-fill pr-3 sm:w-[640px] md:h-[320px] md:w-[800px] md:pr-10 lg:w-[1512px] lg:pr-12"
+        class="h-[50px] w-full object-contain pr-3 min-[366px]:h-[100px] sm:w-[640px] md:h-[200px] md:w-[800px] md:pr-10 lg:h-[320px] lg:w-[1512px] lg:object-fill lg:pr-12"
         src="../../assets/img/img-banner-profile.png"
         alt="banner image"
       />
     </div>
     <div
-      class="relative h-[150px] w-[150px] px-6 pt-14 pb-8 md:h-[400px] md:w-[400px] md:pt-48"
+      class="relative h-[50px] w-[150px] px-6 pt-4 pb-8 min-[366px]:pt-16 md:h-[250px] md:w-[400px] md:pt-20 lg:h-[400px] lg:pt-48"
     >
       <img
         *ngIf="publications[0]?.profile.picture?.original?.url"
-        class="border-neutral-5 w-56 rounded-full border"
+        class="border-neutral-5 w-12 rounded-full border md:w-32 lg:w-56"
         [src]="publications[0]?.profile.picture?.original?.url"
         alt="profile image"
       />
       <img
         *ngIf="!publications[0]?.profile.picture?.original?.url"
-        class="border-neutral-5 w-56 rounded-full border"
+        class="border-neutral-5 w-12 rounded-full border md:w-32 lg:w-56"
         src="../../assets/img/img-profile-wagademy.svg"
         alt="profile image"
       />
     </div>
   </div>
-  <div class="grid grid-cols-1 pt-24 md:grid-cols-3 md:pt-10">
+  <div class="grid grid-cols-1 pt-8 md:grid-cols-3 md:pt-10">
     <div>
       <p
         *ngIf="publications[0]?.profile.name"
