@@ -12,7 +12,6 @@ import {
   createFollowTypedData,
   authenticate,
   challenge,
-  profile,
   userProfiles,
   defaultProfileId,
   createPostTypedData,
@@ -43,6 +42,7 @@ import {
   moduleFee,
   commentFields,
   mirrorFields,
+  getProfileFeed,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
@@ -97,7 +97,7 @@ export class LensService {
 
   profileFields = {
     profile: gql`
-      ${profile}
+      ${profileFields}
     `,
   };
 
@@ -164,12 +164,6 @@ export class LensService {
     `,
   };
 
-  profileFieldsFeed = {
-    profile: gql`
-      ${profileFields}
-    `,
-  };
-
   collectModule = {
     collect: gql`
       ${collectModule}
@@ -204,7 +198,7 @@ export class LensService {
     posts: gql`
       ${postFieldsFeed}
       ${this.metadataField.metadata}
-      ${this.profileFieldsFeed.profile}
+      ${this.profileFields.profile}
       ${this.collectModule.collect}
       ${this.statsFields.stats}
       ${this.simpleCondition.simple}
@@ -220,6 +214,13 @@ export class LensService {
 
   getFeed = gql`
     ${getFeed}
+    ${this.postFieldsFeed.posts}
+    ${this.commentFields.comment}
+    ${this.mirrorFields.mirror}
+  `;
+
+  getProfileFeed = gql`
+    ${getProfileFeed}
     ${this.postFieldsFeed.posts}
     ${this.commentFields.comment}
     ${this.mirrorFields.mirror}

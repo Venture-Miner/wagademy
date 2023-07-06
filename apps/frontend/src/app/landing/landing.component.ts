@@ -7,11 +7,7 @@ import { LensService } from '../services';
   styleUrls: ['./landing.component.css'],
 })
 export class LandingComponent implements OnInit {
-  selectedBlock: 'STUDENTS' | 'SQUADS' = 'STUDENTS';
-  detailsModalType: 'SQUAD' | 'RESUME' | 'TEACHER' | null = null;
-  detailsModalData: any = null;
   publications: any[] = [];
-  publication: any[] = [];
   display = 3;
 
   constructor(private lensService: LensService) {}

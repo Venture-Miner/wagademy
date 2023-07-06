@@ -143,6 +143,21 @@ const routes: Routes = [
             (m) => m.JobsDetailsModule
           ),
       },
+      {
+        path: 'profile-public',
+        loadChildren: () =>
+          import('./profile-public/profile-public.module').then(
+            (m) => m.ProfilePublicModule
+          ),
+      },
+      {
+        path: 'home/profile-public',
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./profile-public/profile-public.module').then(
+            (m) => m.ProfilePublicModule
+          ),
+      },
     ],
   },
 ];
