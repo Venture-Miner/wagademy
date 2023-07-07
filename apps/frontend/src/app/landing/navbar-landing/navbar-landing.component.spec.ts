@@ -34,4 +34,11 @@ describe('NavbarLandingComponent', () => {
       .nativeElement.getAttribute('ng-reflect-router-link');
     expect(routerLink).toBe('/about');
   });
+
+  it('should redirect to "home"', () => {
+    const routerLink = fixture.debugElement
+      .query(By.css('#home'))
+      .nativeElement.getAttribute('ng-reflect-router-link');
+    expect(routerLink).toBe('/');
+  });
 });

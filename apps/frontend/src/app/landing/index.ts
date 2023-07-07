@@ -6,3 +6,4 @@ export * from './resumes-toggler';
 export * from './details-modal';
 export * from './footer';
 export * from './landing.module';
+export * from './post-card';

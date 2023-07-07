@@ -12,7 +12,6 @@ import {
   createFollowTypedData,
   authenticate,
   challenge,
-  profile,
   userProfiles,
   defaultProfileId,
   createPostTypedData,
@@ -33,6 +32,17 @@ import {
   checkProfileExistence,
   createUnfollowTypedData,
   broadcast,
+  collectModule,
+  getFeed,
+  postFieldsFeed,
+  metadataFields,
+  profileFields,
+  statsFields,
+  simpleCondition,
+  moduleFee,
+  commentFields,
+  mirrorFields,
+  getProfileFeed,
 } from '../../graphql';
 import { ethers } from 'ethers';
 import { environment } from '../../../environments/environment';
@@ -87,7 +97,7 @@ export class LensService {
 
   profileFields = {
     profile: gql`
-      ${profile}
+      ${profileFields}
     `,
   };
 
@@ -141,4 +151,78 @@ export class LensService {
   publications = gql(publications);
 
   checkProfileExistence = gql(checkProfileExistence);
+
+  collectModuleFields = {
+    collectModule: gql`
+      ${collectModule}
+    `,
+  };
+
+  metadataField = {
+    metadata: gql`
+      ${metadataFields}
+    `,
+  };
+
+  collectModule = {
+    collect: gql`
+      ${collectModule}
+    `,
+  };
+
+  statsFields = {
+    stats: gql`
+      ${statsFields}
+    `,
+  };
+
+  simpleCondition = {
+    simple: gql`
+      ${simpleCondition}
+    `,
+  };
+
+  moduleFeeAmount = {
+    moduleFee: gql`
+      ${moduleFee}
+    `,
+  };
+
+  mirrorFields = {
+    mirror: gql`
+      ${mirrorFields}
+    `,
+  };
+
+  postFieldsFeed = {
+    posts: gql`
+      ${postFieldsFeed}
+      ${this.metadataField.metadata}
+      ${this.profileFields.profile}
+      ${this.collectModule.collect}
+      ${this.statsFields.stats}
+      ${this.simpleCondition.simple}
+      ${this.moduleFeeAmount.moduleFee}
+    `,
+  };
+
+  commentFields = {
+    comment: gql`
+      ${commentFields}
+    `,
+  };
+
+  getFeed = gql`
+    ${getFeed}
+    ${this.postFieldsFeed.posts}
+    ${this.commentFields.comment}
+    ${this.mirrorFields.mirror}
+  `;
+
+  getProfileFeed = gql`
+    ${getProfileFeed}
+    ${this.postFieldsFeed.posts}
+    ${this.commentFields.comment}
+    ${this.mirrorFields.mirror}
+  `;
 }
