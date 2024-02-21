@@ -21,7 +21,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "angular-monorepo",
+            "prefix": "wagademy",
             "style": "kebab-case"
           }
         ]

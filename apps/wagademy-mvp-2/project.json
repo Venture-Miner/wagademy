@@ -2,7 +2,7 @@
   "name": "wagademy-mvp-2",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "angular-monorepo",
+  "prefix": "wagademy",
   "sourceRoot": "apps/wagademy-mvp-2/src",
   "tags": [],
   "targets": {
