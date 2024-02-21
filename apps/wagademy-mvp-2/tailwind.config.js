@@ -36,4 +36,5 @@ module.exports = {
       },
     },
   },
+  safelist: ['bg-neutral', 'bg-white'],
 };
