@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [RouterModule],
+  imports: [NxWelcomeComponent, RouterModule],
   selector: 'wagademy-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
