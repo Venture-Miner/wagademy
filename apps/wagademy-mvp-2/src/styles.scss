@@ -10,7 +10,3 @@
 .btn {
   @apply rounded-lg font-serif text-xl px-4 py-2;
 }
-
-img {
-  aspect-ratio: attr(width) / attr(height);
-}
