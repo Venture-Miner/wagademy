@@ -7,6 +7,11 @@ import { StudentComponent } from './student/student.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'student',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: LandingComponent,
     children: [
       {
