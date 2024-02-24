@@ -1,0 +1,76 @@
+{
+  "name": "wagademy-mvp-2",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "wagademy",
+  "sourceRoot": "apps/wagademy-mvp-2/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/wagademy-mvp-2",
+        "index": "apps/wagademy-mvp-2/src/index.html",
+        "browser": "apps/wagademy-mvp-2/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/wagademy-mvp-2/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/wagademy-mvp-2/src/favicon.ico",
+          "apps/wagademy-mvp-2/src/assets"
+        ],
+        "styles": ["apps/wagademy-mvp-2/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "wagademy-mvp-2:build:production"
+        },
+        "development": {
+          "buildTarget": "wagademy-mvp-2:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "wagademy-mvp-2:build"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "wagademy-mvp-2:build",
+        "staticFilePath": "dist/apps/wagademy-mvp-2/browser"
+      }
+    }
+  }
+}

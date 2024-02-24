@@ -1,0 +1,28 @@
+<svg width="256" height="248" viewBox="0 0 256 248" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_802_21502)">
+<path d="M203 347V49C203 47.8954 202.105 47 201 47H55C53.8954 47 53 47.8954 53 49V347" stroke="url(#paint0_linear_802_21502)"/>
+<rect x="43" y="106" width="20" height="20" rx="10" fill="#51B7AF"/>
+<rect x="41.5" y="104.5" width="23" height="23" rx="11.5" stroke="#51B7AF" stroke-opacity="0.15" stroke-width="3"/>
+<path d="M55.5 113.5H57.5" stroke="#F9F9F9" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="48.5" y="111.5" width="2.5" height="9" rx="0.75" stroke="#F9F9F9" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="51" y="111.5" width="2.5" height="9" rx="0.75" stroke="#F9F9F9" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M53.5 113.5H48.5" stroke="#F9F9F9" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M55.5 112.5V118.917C55.5 119.241 55.6053 119.557 55.8 119.817L56.2 120.35C56.2708 120.444 56.382 120.5 56.5 120.5C56.618 120.5 56.7292 120.444 56.8 120.35L57.2 119.817C57.3947 119.557 57.5 119.241 57.5 118.917V112.5C57.5 111.948 57.0523 111.5 56.5 111.5V111.5C55.9477 111.5 55.5 111.948 55.5 112.5Z" stroke="#F9F9F9" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="193" y="194" width="20" height="20" rx="10" fill="#51B7AF"/>
+<rect x="191.5" y="192.5" width="23" height="23" rx="11.5" stroke="#51B7AF" stroke-opacity="0.15" stroke-width="3"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M205.501 208.502H200.499C199.394 208.502 198.498 207.606 198.498 206.501V202.499C198.498 201.947 198.946 201.499 199.499 201.499H206.501C207.054 201.499 207.502 201.947 207.502 202.499V206.501C207.502 207.606 206.606 208.502 205.501 208.502Z" stroke="#F9F9F9" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M200.999 201.499V200.499C200.999 199.946 201.447 199.498 202 199.498H204C204.553 199.498 205.001 199.946 205.001 200.499V201.499" stroke="#F9F9F9" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="202" y="203.5" width="2.00083" height="1.50063" rx="0.25" stroke="#F9F9F9" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M204 204.25H205.751C206.718 204.25 207.502 203.466 207.502 202.499V202.499" stroke="#F9F9F9" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M202 204.25H200.249C199.282 204.25 198.498 203.466 198.498 202.499V202.499" stroke="#F9F9F9" stroke-width="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_802_21502" x1="128" y1="62.8108" x2="128" y2="347" gradientUnits="userSpaceOnUse">
+<stop stop-color="#51B7AF" stop-opacity="0"/>
+<stop offset="1" stop-color="#51B7AF"/>
+</linearGradient>
+<clipPath id="clip0_802_21502">
+<rect width="256" height="248" fill="white"/>
+</clipPath>
+</defs>
+</svg>
