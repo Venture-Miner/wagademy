@@ -14,13 +14,13 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome wagademy-mvp-2'
+      'Welcome frontend'
     );
   });
 
-  it(`should have as title 'wagademy-mvp-2'`, () => {
+  it(`should have as title 'frontend'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('wagademy-mvp-2');
+    expect(app.title).toEqual('frontend');
   });
 });
