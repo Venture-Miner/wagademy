@@ -7,10 +7,10 @@ export default defineConfig({
     ...nxE2EPreset(__filename, {
       cypressDir: 'src',
       webServerCommands: {
-        default: 'nx run wagademy-mvp-2:serve:development',
-        production: 'nx run wagademy-mvp-2:serve:production',
+        default: 'nx run frontend:serve:development',
+        production: 'nx run frontend:serve:production',
       },
-      ciWebServerCommand: 'nx run wagademy-mvp-2:serve-static',
+      ciWebServerCommand: 'nx run frontend:serve-static',
     }),
     baseUrl: 'http://localhost:4200',
   },
