@@ -1,0 +1,7 @@
+# *
+user-agent: *
+allow: /
+disallow: /
+
+# Sitemaps
+Sitemap: https://www.wagademy.com/

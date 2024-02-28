@@ -18,7 +18,9 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/wagademy-mvp-2/src/favicon.ico",
-          "apps/wagademy-mvp-2/src/assets"
+          "apps/wagademy-mvp-2/src/assets",
+          "apps/wagademy-mvp-2/src/robots.txt",
+          "apps/wagademy-mvp-2/src/sitemap.xml"
         ],
         "styles": ["apps/wagademy-mvp-2/src/styles.scss"],
         "scripts": []
