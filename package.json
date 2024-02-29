@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "backend": "prisma generate && nx run backend:serve",
-    "frontend": "nx run frontend:serve"
+    "frontend": "nx run frontend:serve",
+    "ci:lighthouse": "lhci autorun",
+    "build:frontend": "nx run frontend:build"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +32,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "jwks-rsa": "^3.1.0",
+    "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
@@ -46,6 +49,7 @@
     "@angular/cli": "~17.1.0",
     "@angular/compiler-cli": "~17.1.0",
     "@angular/language-service": "~17.1.0",
+    "@lhci/cli": "0.13.x",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/cypress": "18.0.4",
