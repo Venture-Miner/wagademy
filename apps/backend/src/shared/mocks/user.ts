@@ -1,13 +1,7 @@
-import { CognitoUserAttributes, FindOneUserResponse } from '@wagademy/types';
+import { User } from '@wagademy/types';
 import { faker } from '@faker-js/faker';
 
-export const payload: CognitoUserAttributes = {
-  email: faker.internet.email(),
-  sub: faker.string.uuid(),
-  nickname: faker.internet.userName(),
-};
-
-export const dbUser: FindOneUserResponse = {
+export const user: User = {
   id: faker.database.mongodbObjectId(),
   name: faker.internet.userName(),
   email: faker.internet.email(),
