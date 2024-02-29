@@ -37,7 +37,12 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3"
+    "zone.js": "0.14.2",
+    "@wagmi/core": "1.4.13",
+    "@web3modal/ethereum": "^2.7.1",
+    "@web3modal/html": "^2.7.1",
+    "@web3modal/wagmi": "3.5.7",
+    "viem": "1.21.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~17.1.0",
