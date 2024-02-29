@@ -22,6 +22,7 @@ module.exports = {
           danger: '#F25C5C',
           warning: '#F2C85C',
           white: '#FFFFFF',
+          hover: '#D4D8F299',
         },
       },
     ],
