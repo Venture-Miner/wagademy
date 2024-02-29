@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { LandingComponent } from './landing.component';
-import { CompanyComponent } from './company/company.component';
-import { StudentComponent } from './student/student.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'student',
+    redirectTo: 'Student',
     pathMatch: 'full',
   },
   {
@@ -15,12 +13,14 @@ const routes: Routes = [
     component: LandingComponent,
     children: [
       {
-        path: 'company',
-        component: CompanyComponent,
+        path: 'student',
+        loadChildren: () =>
+          import('./student/student.module').then((m) => m.StudentModule),
       },
       {
-        path: 'student',
-        component: StudentComponent,
+        path: 'company',
+        loadChildren: () =>
+          import('./company/company.module').then((m) => m.CompanyModule),
       },
     ],
   },
