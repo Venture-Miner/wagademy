@@ -1,0 +1,57 @@
+<div class="container mx-auto px-5 pb-4">
+  <div class="inline-flex gap-2 items-center py-4 cursor-pointer">
+    <i class="bi bi-arrow-left text-base-100 text-xl"></i>
+    <p class="font-bold text-sm text-base-100 font-mono">Back</p>
+  </div>
+
+  <div
+    class="w-full bg-base-100 sm:rounded-tr-lg sm:rounded-tl-lg px-5 text-neutral"
+  >
+    <p class="py-4 text-sm md:text-base mr-2 font-bold font-mono">
+      {{ selectedChat }}
+    </p>
+  </div>
+  <div class="h-[80vh] flex flex-col relative">
+    <div class="overflow-y-scroll mb-16 p-6 grid gap-12" #chatScroll>
+      <p
+        class="p-4 bg-secondary text-base-100 rounded-2xl rounded-bl-none sm:w-1/2 w-3/4 bg-dark-02"
+      >
+        Hi, I’m here to help you!
+      </p>
+      <p
+        class="p-4 bg-secondary text-base-100 rounded-2xl rounded-bl-none sm:w-1/2 w-3/4 bg-dark-02"
+      >
+        What do you want know about {{ selectedChat }}?
+      </p>
+      <div class="flex justify-end">
+        <p
+          class="p-4 rounded-2xl rounded-br-none bg-neutral sm:w-1/2 w-3/4 text-base-100 float-right"
+        >
+          {{ message }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="relative">
+    <form
+      class="absolute bottom-0 border-base-300 border rounded-lg bg-neutral h-32 w-full flex px-5 pb-3 sm:pb-0"
+    >
+      <input
+        class="focus:none outline-none md:w-11/12 sm:w-10/12 min-[385px]:w-9/12 w-7/12 placeholder-base-200 bg-neutral text-base-100"
+        [placeholder]="'Type your message'"
+      />
+      <div class="relative">
+        <button class="btn btn-primary absolute bottom-0" type="submit">
+          Send
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<wagademy-modal
+  title="You do not currently have access to the GPT model"
+  actionButtonLabel="explore"
+  message="You need to be invited by the company that created the GPT model or purchase credits to access it. Explore our options to get started!"
+  (actionButtonClick)="exploreOption()"
+>
+</wagademy-modal>
