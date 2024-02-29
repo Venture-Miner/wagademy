@@ -1,0 +1,32 @@
+<dialog id="modal" class="modal modal-middle">
+  <div class="modal-box bg-[#FFFFFF]">
+    <h3 class="text-base-100 font-mono font-bold">
+      {{ title }}
+    </h3>
+    <p class="pt-4 text-sm font-mono text-base-200">{{ message }}</p>
+
+    <form
+      class="flex flex-col md:flex-row mx-auto gap-4 justify-end pt-2"
+      method="dialog"
+    >
+      <button
+        class="btn btn-outline btn-primary md:w-24 w-full"
+        [disabled]="isLoading"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-primary md:w-24 w-full"
+        type="button"
+        (click)="this.actionButtonClick.emit()"
+        [disabled]="isLoading"
+      >
+        @if (isLoading) {
+        <span class="loading loading-dots"></span>
+        } @else {
+        {{ actionButtonLabel }}
+        }
+      </button>
+    </form>
+  </div>
+</dialog>
