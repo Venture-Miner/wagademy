@@ -8,8 +8,61 @@ datasource db {
 }
 
 model User {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  email     String @unique
-  name      String
-  idRefAuth String @unique
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  email          String   @unique
+  name           String
+  idRefAuth      String   @unique
+  subscriptionId String?
+  credit         Credit[]
+  hasChangedPlan Boolean  @default(false)
+}
+
+model Credit {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  total             Int
+  totalUsed         Int                 @default(0)
+  expireOn          DateTime?
+  creditType        CreditTypeEnum
+  user              User                @relation(fields: [userId], references: [id])
+  userId            String              @db.ObjectId
+  creditTransaction CreditTransaction[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+}
+
+model Plan {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  name                String
+  currency            String
+  price               Float
+  metadata            String[]
+  credits             Int
+  quantityOfMailboxes Int
+  priceId             String?
+}
+
+model CreditTransaction {
+  id        String                      @id @default(auto()) @map("_id") @db.ObjectId
+  credit    Credit?                     @relation(fields: [creditId], references: [id])
+  creditId  String?                     @db.ObjectId
+  status    CreditTransactionStatusEnum @default(ONGOING)
+  createdAt DateTime                    @default(now())
+  updatedAt DateTime                    @updatedAt
+}
+
+enum StatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
+enum CreditTypeEnum {
+  PLAN_CREDIT
+  ON_DEMAND_CREDIT
+}
+
+enum CreditTransactionStatusEnum {
+  ONGOING
+  FAILED
+  REFUNDED
+  COMPLETED
 }
