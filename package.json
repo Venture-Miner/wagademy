@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "backend": "prisma generate && nx run backend:serve",
-    "frontend": "nx run wagademy-mvp-2:serve"
+    "frontend": "nx run frontend:serve"
   },
   "private": true,
   "dependencies": {
