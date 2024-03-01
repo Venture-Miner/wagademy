@@ -14,7 +14,7 @@ const routes: Routes = [
     component: PagesComponent,
     children: [
       {
-        path: 'GPTChat',
+        path: 'gptchat',
         component: GptChatComponent,
       },
     ],
