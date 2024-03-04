@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'clutchgpt',
+  displayName: 'wagademy',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/apps/clutchgpt',
+  coverageDirectory: '../../coverage/apps/wagademy',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
