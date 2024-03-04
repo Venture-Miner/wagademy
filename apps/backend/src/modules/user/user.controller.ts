@@ -26,6 +26,7 @@ import {
   RetrieveSelfResponseEntity,
   UpdateUserResponseEntity,
 } from './entities';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @ApiTags('User')
 @Controller('user')
@@ -46,9 +47,10 @@ export class UserController {
   })
   create(
     @CognitoUser()
-    { sub: idRefAuth, email, nickname: name }: CognitoUserAttributes
+    { sub: idRefAuth, email }: CognitoUserAttributes,
+    { name, accountType }: CreateUserDto
   ) {
-    return this.userService.create({ idRefAuth, name, email });
+    return this.userService.create({ idRefAuth, name, email, accountType });
   }
 
   @Get('self')

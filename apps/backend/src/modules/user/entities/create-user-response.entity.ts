@@ -1,4 +1,4 @@
-import { CreateUserResponse } from '@wagademy/types';
+import { AccountTypeEnum, CreateUserResponse } from '@wagademy/types';
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -14,4 +14,10 @@ export class CreateUserResponseEntity implements CreateUserResponse {
 
   @ApiProperty({ example: faker.string.uuid() })
   idRefAuth: string;
+
+  @ApiProperty({ example: null })
+  walletAddress: string | null;
+
+  @ApiProperty({ example: AccountTypeEnum.COMPANY })
+  accountType: AccountTypeEnum;
 }
