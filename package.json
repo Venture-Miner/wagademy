@@ -27,6 +27,7 @@
     "@nestjs/swagger": "^7.3.0",
     "@nx/angular": "18.0.4",
     "@prisma/client": "^5.10.1",
+    "aws-amplify": "^6.0.18",
     "axios": "^1.6.0",
     "bootstrap-icons": "^1.11.3",
     "class-transformer": "^0.5.1",
