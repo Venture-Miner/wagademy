@@ -4,13 +4,11 @@ import {
   Post,
   Body,
   Patch,
-  Param,
-  Delete,
   HttpStatus,
   UseGuards,
+  UploadedFiles,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UpdateUserDto } from './dto/update-user.dto';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
@@ -20,13 +18,13 @@ import {
 } from '@nestjs/swagger';
 import { CognitoUserAttributes, User } from '@wagademy/types';
 import { CognitoUserGuard } from '../../infra';
-import { CognitoUser, DBUser } from '../../shared/decorators';
+import { ApiFiles, CognitoUser, DBUser } from '../../shared/decorators';
 import {
   CreateUserResponseEntity,
   RetrieveSelfResponseEntity,
   UpdateUserResponseEntity,
 } from './entities';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateProfileDto, CreateUserDto, UpdateUserDto } from './dto';
 
 @ApiTags('User')
 @Controller('user')
@@ -51,6 +49,36 @@ export class UserController {
     { name, accountType }: CreateUserDto
   ) {
     return this.userService.create({ idRefAuth, name, email, accountType });
+  }
+
+  @Post('create-profile')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Create a new profile',
+    description: 'Creates a new user profile with provided details.',
+  })
+  @ApiCreatedResponse({
+    // type: ProfileEntity,
+    status: HttpStatus.CREATED,
+    description: 'User profile successfully created.',
+  })
+  @ApiFiles(['profilePhoto'])
+  async createUserProfile(
+    @DBUser()
+    { id: userId }: User,
+    @UploadedFiles()
+    {
+      profilePhoto,
+    }: {
+      profilePhoto: Express.Multer.File[];
+    },
+    @Body() createProfileDto: CreateProfileDto
+  ) {
+    return this.userService.createUserProfile(
+      { ...createProfileDto, profilePhoto },
+      userId
+    );
   }
 
   @Get('self')

@@ -6,6 +6,7 @@ import {
   FindOneUserResponse,
   UpdateUser,
   CreateUser,
+  CreateProfile,
 } from '@wagademy/types';
 
 @Injectable()
@@ -14,8 +15,12 @@ export class UserService {
 
   async create(createUser: CreateUser): Promise<CreateUserResponse> {
     return this.prismaService.user.create({
-      data: createUser,
+      data: { ...createUser },
     });
+  }
+
+  async createUserProfile(createProfile: CreateProfile, userId: string) {
+    //
   }
 
   async update(

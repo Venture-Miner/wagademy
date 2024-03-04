@@ -44,6 +44,7 @@ model Education {
   course        String
   degree        String
   description   String?
+  stillStudying Boolean
   startDate     DateTime
   endDate       DateTime?
   userProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
@@ -51,12 +52,15 @@ model Education {
 }
 
 model ProfessionalExperience {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  company       String
-  jobTitle      String
-  description   String?
-  userProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
-  userProfileId String?      @db.ObjectId
+  id                   String       @id @default(auto()) @map("_id") @db.ObjectId
+  company              String
+  jobTitle             String
+  currentlyWorkingHere Boolean
+  startDate            DateTime
+  endDate              DateTime?
+  description          String?
+  userProfile          UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId        String?      @db.ObjectId
 }
 
 model ImageFile {
