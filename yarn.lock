@@ -10103,6 +10103,13 @@ netmask@^2.0.2:
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
+ngx-image-cropper@^7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/ngx-image-cropper/-/ngx-image-cropper-7.2.1.tgz#bf1864fc1512516c9a27a80db88ee66c47031b34"
+  integrity sha512-SRsY9ar+sGbdzQ1D37PQicSkqaMX7n2ADvz8FdHUjGMGYbLjKe0o6fKhy5QKfV7dS6aD1VqhNr0fr486B1r2NA==
+  dependencies:
+    tslib "^2.3.0"
+
 nice-napi@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/nice-napi/-/nice-napi-1.0.2.tgz#dc0ab5a1eac20ce548802fc5686eaa6bc654927b"
