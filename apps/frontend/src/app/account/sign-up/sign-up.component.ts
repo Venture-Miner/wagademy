@@ -12,6 +12,9 @@ import { ToastService } from '../../services/toast/toast.service';
 import { passwordComplexityValidator } from '../../shared/utils/password-complexity-validator';
 import { ToastComponent } from '../../shared/components/toast/toast.component';
 import { confirmSignUp, resendSignUpCode, signUp } from 'aws-amplify/auth';
+import { FormFieldComponent } from '../../shared/components/form-field/form-field.component';
+import { InputComponent } from '../../shared/components/input/input.component';
+import { passwordMatchValidator } from '../../shared/types/password-match-validator';
 
 type UserType = 'Company' | 'Personal';
 
@@ -25,6 +28,8 @@ type UserType = 'Company' | 'Personal';
     AsyncPipe,
     DatePipe,
     NgClass,
+    InputComponent,
+    FormFieldComponent,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -33,11 +38,15 @@ export class SignUpComponent {
   otpExpiryTime = 2 * 60 * 1000;
   otpRetryTime$: Observable<number> = of(0);
   codeLength = 6;
-  form = this.fb.group({
-    name: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, passwordComplexityValidator]],
-  });
+  form = this.fb.group(
+    {
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, passwordComplexityValidator]],
+      confirmPassword: [''],
+    },
+    { validators: passwordMatchValidator('password', 'confirmPassword') }
+  );
   code = new FormControl(null, [Validators.minLength(this.codeLength)]);
   isResendingCode = false;
   isSigningUp = false;
