@@ -31,8 +31,11 @@ export type ProfessionalExperience = {
   id: string;
   company: string;
   jobTitle: string;
-  description?: string;
-  userProfileId?: string;
+  description: string | null;
+  userProfileId: string | null;
+  currentlyWorkingHere: boolean;
+  startDate: Date;
+  endDate: Date | null;
 };
 
 export type CreateProfile = {

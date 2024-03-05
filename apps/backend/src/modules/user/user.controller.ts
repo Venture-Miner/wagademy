@@ -20,6 +20,7 @@ import { CognitoUserAttributes, User } from '@wagademy/types';
 import { CognitoUserGuard } from '../../infra';
 import { ApiFiles, CognitoUser, DBUser } from '../../shared/decorators';
 import {
+  CreateProfileEntity,
   CreateUserResponseEntity,
   RetrieveSelfResponseEntity,
   UpdateUserResponseEntity,
@@ -59,7 +60,7 @@ export class UserController {
     description: 'Creates a new user profile with provided details.',
   })
   @ApiCreatedResponse({
-    // type: ProfileEntity,
+    type: CreateProfileEntity,
     status: HttpStatus.CREATED,
     description: 'User profile successfully created.',
   })
