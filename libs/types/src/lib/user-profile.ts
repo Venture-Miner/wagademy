@@ -72,6 +72,25 @@ export type CreateProfessionalExperience = {
   endDate?: Date;
 };
 
+export type UpdateEducation = {
+  institution?: string;
+  course?: string;
+  degree?: string;
+  description?: string;
+  stillStudying?: boolean;
+  startDate?: Date;
+  endDate?: Date;
+};
+
+export type UpdateProfessionalExperience = {
+  company?: string;
+  jobTitle?: string;
+  description?: string;
+  currentlyWorkingHere?: boolean;
+  startDate?: Date;
+  endDate?: Date;
+};
+
 export type UpdateProfile = {
   name?: string;
   email?: string;
@@ -81,8 +100,8 @@ export type UpdateProfile = {
   state?: string;
   about?: string;
   userId?: string;
-  education?: Education[];
-  professionalExperience?: ProfessionalExperience[];
+  education?: UpdateEducation[];
+  professionalExperience?: UpdateProfessionalExperience[];
   areasOfExpertise?: string[];
   skillsAndCompetencies?: string[];
   profilePhoto?: File | Express.Multer.File[];

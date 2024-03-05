@@ -7,6 +7,7 @@ import {
   HttpStatus,
   UseGuards,
   UploadedFiles,
+  Param,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import {
@@ -22,10 +23,18 @@ import { ApiFiles, CognitoUser, DBUser } from '../../shared/decorators';
 import {
   CreateProfileEntity,
   CreateUserResponseEntity,
+  FindProfileEntity,
   RetrieveSelfResponseEntity,
+  UpdateProfileEntity,
   UpdateUserResponseEntity,
 } from './entities';
-import { CreateProfileDto, CreateUserDto, UpdateUserDto } from './dto';
+import {
+  CreateProfileDto,
+  CreateUserDto,
+  UpdateProfileDto,
+  UpdateUserDto,
+} from './dto';
+import { MongoIdDto } from '../../shared/dtos';
 
 @ApiTags('User')
 @Controller('user')
@@ -82,6 +91,22 @@ export class UserController {
     );
   }
 
+  @Get('user-profile/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Find a user profile',
+    description: 'Find a profile with ID.',
+  })
+  @ApiResponse({
+    type: FindProfileEntity,
+    status: HttpStatus.OK,
+    description: 'Profile retrieved successfully.',
+  })
+  async findUserProfile(@Param() { id }: MongoIdDto) {
+    return this.userService.findUserProfile(id);
+  }
+
   @Get('self')
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
@@ -89,7 +114,7 @@ export class UserController {
     summary: 'Retrieve the authenticated user',
     description: 'Fetches details of the currently authenticated user.',
   })
-  @ApiCreatedResponse({
+  @ApiResponse({
     type: RetrieveSelfResponseEntity,
     status: HttpStatus.OK,
     description: 'User details successfully retrieved.',
@@ -116,5 +141,35 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto
   ) {
     return this.userService.update(updateUserDto, userId);
+  }
+
+  @Patch('profile')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Update a profile',
+    description: 'Updates a profile with provided details.',
+  })
+  @ApiResponse({
+    type: UpdateProfileEntity,
+    status: HttpStatus.OK,
+    description: 'Profile successfully updated.',
+  })
+  @ApiFiles(['profilePhoto'])
+  async updateUserProfile(
+    @DBUser()
+    { id: userId }: User,
+    @UploadedFiles()
+    {
+      profilePhoto,
+    }: {
+      profilePhoto?: Express.Multer.File[];
+    },
+    @Body() updateProfileDto: UpdateProfileDto
+  ) {
+    return this.userService.updateUserProfile(userId, {
+      ...updateProfileDto,
+      profilePhoto,
+    });
   }
 }
