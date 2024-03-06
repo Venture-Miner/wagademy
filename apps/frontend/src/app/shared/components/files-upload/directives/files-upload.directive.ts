@@ -13,6 +13,7 @@ import { DialogService } from '../services/dialog/dialog.service';
 })
 export class FilesUploadDirective {
   @Output() changed = new EventEmitter<File | null>();
+  @Input() shouldPreventDialogOpening = false;
 
   constructor(private readonly dialogService: DialogService) {}
 
@@ -23,7 +24,7 @@ export class FilesUploadDirective {
   }
 
   @HostListener('click', ['$event']) onClick() {
-    this.openDialog();
+    if (!this.shouldPreventDialogOpening) this.openDialog();
   }
 
   private openDialog() {

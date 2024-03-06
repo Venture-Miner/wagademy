@@ -53,10 +53,6 @@ export class FilesUploadComponent {
     this.fileInput.nativeElement.value = '';
   }
 
-  onClose() {
-    this.dialogService.closeFileDialogWithResult(null);
-  }
-
   onSave() {
     this.dialogService.closeFileDialogWithResult(this.file);
   }

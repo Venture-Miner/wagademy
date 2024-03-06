@@ -32,7 +32,7 @@
     } @if(!imageToCrop ) { @if(file) {
     <img
       [src]="objectURL"
-      alt="profile picture preview"
+      alt="image preview"
       class="rounded-md mt-6 mx-auto"
     />
     <div class="flex justify-end mt-2">
@@ -42,9 +42,7 @@
     <div class="modal-action">
       <form method="dialog">
         <div class="flex gap-4">
-          <button class="btn btn-primary btn-outline" (click)="onClose()">
-            Close
-          </button>
+          <button class="btn btn-primary btn-outline">Close</button>
           <button class="btn btn-primary" (click)="onSave()">Save</button>
         </div>
       </form>
