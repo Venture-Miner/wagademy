@@ -1,6 +1,37 @@
 <div class="bg-white min-h-screen flex items-center justify-center px-6">
   <form class="container" [formGroup]="form">
-    <div class="flex gap-4 flex-col sm:flex-row justify-center mb-6">
+    <div class="flex justify-center">
+      <div class="avatar relative">
+        <div
+          class="absolute w-6 h-6 top-16 left-16 bg-white rounded-full shadow-xl cursor-pointer"
+          appFilesUpload
+          [shouldPreventDialogOpening]="!!avatar"
+          (changed)="onAvatarChange($event)"
+          (click)="!!avatar && onAvatarRemove()"
+        >
+          <div class="flex justify-center items-center h-full">
+            <i
+              class="bi text-xs"
+              [ngClass]="{
+                'bi-pencil text-primary': !avatar,
+                'bi-x text-error': avatar
+              }"
+            ></i>
+          </div>
+        </div>
+        <div class="w-24 rounded-xl">
+          <img
+            [src]="
+              avatarURL
+                ? avatarURL
+                : '../../../assets/img/images/default-profile.webp'
+            "
+            alt="avatar image"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-4 flex-col sm:flex-row justify-center my-8">
       <button
         class="btn btn-sm"
         [ngClass]="{ 'btn-success': userType === 'Personal' }"
@@ -79,3 +110,4 @@
     </div>
   </form>
 </div>
+<wagademy-files-upload></wagademy-files-upload>

@@ -14,7 +14,10 @@ import { ToastComponent } from '../../shared/components/toast/toast.component';
 import { confirmSignUp, resendSignUpCode, signUp } from 'aws-amplify/auth';
 import { FormFieldComponent } from '../../shared/components/form-field/form-field.component';
 import { InputComponent } from '../../shared/components/input/input.component';
-import { passwordMatchValidator } from '../../shared/types/password-match-validator';
+import { passwordMatchValidator } from '../../shared/utils/password-match-validator';
+import { FilesUploadComponent } from '../../shared/components/files-upload/files-upload.component';
+import { FilesUploadDirective } from '../../shared/components/files-upload/directives/files-upload.directive';
+import { DropZoneDirective } from '../../shared/components/files-upload/directives/drop-zone.directive';
 
 type UserType = 'Company' | 'Personal';
 
@@ -30,7 +33,11 @@ type UserType = 'Company' | 'Personal';
     NgClass,
     InputComponent,
     FormFieldComponent,
+    FilesUploadComponent,
+    FilesUploadDirective,
+    DropZoneDirective,
   ],
+  providers: [FilesUploadDirective],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
 })
@@ -53,12 +60,25 @@ export class SignUpComponent {
   isConfirmingSignUp = false;
   step: 1 | 2 = 1;
   userType: UserType = 'Personal';
+  avatar: File | null = null;
+  avatarURL = '';
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly toastService: ToastService
   ) {}
+
+  onAvatarChange(file: File | null) {
+    this.avatar = file;
+    if (file) this.avatarURL = URL.createObjectURL(file);
+    else this.avatarURL = '';
+  }
+
+  onAvatarRemove() {
+    this.avatar = null;
+    this.avatarURL = '';
+  }
 
   signUp() {
     if (
@@ -75,7 +95,6 @@ export class SignUpComponent {
         userAttributes: {
           nickname: this.form.value.name,
           email: this.form.value.email,
-          'custom:user_type': this.userType,
         },
       },
     })
