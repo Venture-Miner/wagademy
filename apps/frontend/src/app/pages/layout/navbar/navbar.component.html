@@ -1,28 +1,25 @@
-<nav class="w-full bg-neutral">
+<nav class="bg-neutral">
   <div
-    class="flex flex-wrap items-center justify-between container mx-auto py-4 px-5 md:px-0"
+    class="flex flex-wrap items-center justify-between container mx-auto py-4 px-5"
   >
-    <div class="w-full flex justify-between xl:w-auto xl:static xl:block">
-      <a href="/">
+    <div class="w-full flex justify-between xl:w-auto">
+      <a [routerLink]="'/'">
         <img
           width="211.42px"
           height="40px"
-          class="leading-relaxed inline-block whitespace-nowrap"
           src="./assets/img/images/img-logo-navbar.webp"
           alt="wagademy logo"
-          loading="lazy"
         />
       </a>
       <button
         aria-label="menu"
-        class="cursor-pointer text-xl bg-transparent xl:hidden"
-        id="navbar"
+        class="cursor-pointer text-xl xl:hidden"
         type="button"
         (click)="toggleNavbar()"
       >
         <i
           class="bi bi-three-dots-vertical text-base-100"
-          title="list"
+          title="menu"
           aria-hidden="true"
         ></i>
       </button>
@@ -30,75 +27,48 @@
     <div>
       <ul
         [ngClass]="{ hidden: !showMenu }"
-        class="xl:flex xl:flex-grow items-center justify-end gap-4 pt-4 xl:pt-0"
+        class="xl:flex items-center justify-end gap-4"
       >
         <li
           class="hover:text-primary text-base-200 hover:font-bold text-sm font-mono"
         >
-          <a
-            routerLinkActive="font-bold text-primary"
-            id="home"
-            [routerLink]="['/home']"
-          >
-            Home
-          </a>
+          <a routerLinkActive="active-link" [routerLink]="['/home']"> Home </a>
         </li>
         <li
           class="hover:text-primary text-base-200 hover:font-bold text-sm font-mono"
         >
-          <a
-            routerLinkActive="font-bold text-primary"
-            id="my-courses"
-            [routerLink]="['/my-courses']"
-          >
+          <a routerLinkActive="active-link" [routerLink]="['/my-courses']">
             My courses
           </a>
         </li>
         <li
           class="hover:text-primary text-base-200 hover:font-bold text-sm font-mono"
         >
-          <a
-            routerLinkActive="font-bold text-primary"
-            id="my-certificates"
-            [routerLink]="['/my-certificates']"
-          >
+          <a routerLinkActive="active-link" [routerLink]="['/my-certificates']">
             My certificates
           </a>
         </li>
         <li
           class="hover:text-primary text-base-200 hover:font-bold text-sm font-mono"
         >
-          <a
-            routerLinkActive="font-bold text-primary"
-            id="GPTs"
-            [routerLink]="['/gptchat']"
-          >
+          <a routerLinkActive="active-link" [routerLink]="['gptchat']">
             GPTs
           </a>
         </li>
-        <li class="xl:pl-4 cursor-pointer">
+        <li class="xl:px-4 cursor-pointer">
           <i
-            class="bi bi-bell hover:text-primary text-base-200 hover:font-bold"
+            class="bi bi-bell-fill hover:text-primary text-base-200 hover:font-bold"
           ></i>
         </li>
-        <li class="xl:pl-4">
-          @if(existingProfileImage){
-          <div>
-            <img
-              [src]="existingProfileImage"
-              class="w-10 h-10 rounded-full border border-primary"
-              alt="user"
-            />
-          </div>
-          } @if (existingProfileImage === null || existingProfileImage ===
-          undefined) {
-          <div>
-            <img
-              src="./assets/img/images/img-deaful-profile.svg"
-              alt="profile"
-            />
-          </div>
-          }
+        <li>
+          <img
+            [src]="
+              existingProfileImage ||
+              './assets/img/images/img-default-profile.svg'
+            "
+            class="w-10 h-10 rounded-full border border-primary"
+            alt="profile"
+          />
         </li>
       </ul>
     </div>
