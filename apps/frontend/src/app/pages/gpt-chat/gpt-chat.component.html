@@ -33,19 +33,15 @@
     </div>
   </div>
   <div class="relative">
-    <form
-      class="absolute bottom-0 border-base-300 border rounded-lg bg-neutral h-32 w-full flex px-5 pb-3 sm:pb-0"
+    <input
+      class="w-full pl-3 h-32 border-base-300 border rounded-lg bg-neutral"
+      placeholder="Type your message"
+    />
+    <div
+      class="flex absolute inset-y-0 right-0 items-center pr-4 pt-14 bottom-0"
     >
-      <input
-        class="focus:none outline-none md:w-11/12 sm:w-10/12 min-[385px]:w-9/12 w-7/12 placeholder-base-200 bg-neutral text-base-100"
-        [placeholder]="'Type your message'"
-      />
-      <div class="relative">
-        <button class="btn btn-primary absolute bottom-0" type="submit">
-          Send
-        </button>
-      </div>
-    </form>
+      <button class="btn btn-primary" type="submit">Send</button>
+    </div>
   </div>
 </div>
 <wagademy-modal
