@@ -12,6 +12,7 @@ import { ModalComponent } from '../../shared/modal/modal.component';
 export class GptChatComponent {
   selectedChat = 'Lens GPT';
   message = 'Lorem ipsum';
+
   exploreOption() {
     /* TODO document why this method 'exploreOption' is empty */
   }
