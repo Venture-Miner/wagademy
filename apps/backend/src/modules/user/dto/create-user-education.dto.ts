@@ -5,12 +5,21 @@ import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsDate,
+  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsString,
 } from 'class-validator';
 
 export class CreateUserEducationDto implements CreateEducation {
+  @ApiProperty({
+    description: 'the education id',
+    example: faker.database.mongodbObjectId(),
+  })
+  @IsOptional()
+  @IsMongoId()
+  id?: string;
+
   @ApiProperty({
     description: 'the institution the user studied/study',
     example: faker.lorem.word(),

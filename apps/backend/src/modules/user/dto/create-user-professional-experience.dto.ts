@@ -5,6 +5,7 @@ import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsDate,
+  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -13,6 +14,14 @@ import {
 export class CreateUserProfessionalExperienceDto
   implements CreateProfessionalExperience
 {
+  @ApiProperty({
+    description: 'the professional experience id',
+    example: faker.database.mongodbObjectId(),
+  })
+  @IsOptional()
+  @IsMongoId()
+  id?: string;
+
   @ApiProperty({
     description: 'the company the user worked/work',
     example: faker.lorem.word(),

@@ -12,7 +12,7 @@ export type UserProfile = {
   professionalExperience: ProfessionalExperience[];
   areasOfExpertise: string[];
   skillsAndCompetencies: string[];
-  profilePhoto: { url: string };
+  profilePhoto: { url: string } | null;
 };
 
 export type Education = {
@@ -46,11 +46,26 @@ export type CreateProfile = {
   country: string;
   state: string;
   about: string;
-  profilePhoto: File | Express.Multer.File[];
+  profilePhoto?: File | Express.Multer.File[];
   education: CreateEducation[];
   professionalExperience: CreateProfessionalExperience[];
   areasOfExpertise: string[];
   skillsAndCompetencies: string[];
+};
+
+export type CreateProfileResponse = {
+  name: string;
+  email: string;
+  dateOfBirth: Date;
+  contactNumber: string;
+  country: string;
+  state: string;
+  about: string;
+  education: Education[];
+  professionalExperience: ProfessionalExperience[];
+  areasOfExpertise: string[];
+  skillsAndCompetencies: string[];
+  profilePhoto: { url: string } | null;
 };
 
 export type CreateEducation = {
@@ -73,6 +88,7 @@ export type CreateProfessionalExperience = {
 };
 
 export type UpdateEducation = {
+  id?: string;
   institution?: string;
   course?: string;
   degree?: string;
@@ -83,6 +99,7 @@ export type UpdateEducation = {
 };
 
 export type UpdateProfessionalExperience = {
+  id?: string;
   company?: string;
   jobTitle?: string;
   description?: string;
@@ -105,4 +122,19 @@ export type UpdateProfile = {
   areasOfExpertise?: string[];
   skillsAndCompetencies?: string[];
   profilePhoto?: File | Express.Multer.File[];
+};
+
+export type UpdateProfileResponse = {
+  name: string;
+  email: string;
+  dateOfBirth: Date;
+  contactNumber: string;
+  country: string;
+  state: string;
+  about: string;
+  education: Education[];
+  professionalExperience: ProfessionalExperience[];
+  areasOfExpertise: string[];
+  skillsAndCompetencies: string[];
+  profilePhoto: { url: string } | null;
 };

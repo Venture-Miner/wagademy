@@ -32,8 +32,8 @@ model UserProfile {
   skillsAndCompetencies  String[]
   user                   User                     @relation(fields: [userId], references: [id])
   userId                 String                   @unique @db.ObjectId
-  profilePhoto           ImageFile                @relation(name: "profilePhoto", fields: [profilePhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  profilePhotoId         String                   @db.ObjectId
+  profilePhoto           ImageFile?               @relation(name: "profilePhoto", fields: [profilePhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  profilePhotoId         String?                  @db.ObjectId
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
 }

@@ -5,12 +5,14 @@ import {
   CreateProfessionalExperience,
   CreateProfile,
 } from '@wagademy/types';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsDate,
   IsEmail,
   IsNotEmpty,
+  IsObject,
+  IsOptional,
   IsPhoneNumber,
   IsString,
   ValidateNested,
@@ -70,21 +72,52 @@ export class CreateProfileDto implements CreateProfile {
     description: 'user education',
     type: [CreateUserEducationDto],
   })
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      value = value.replace(/}\s*{/g, '},{');
+      value = `[${value}]`;
+      value = JSON.parse(value);
+      return value;
+    }
+    if (!Array.isArray(value)) value = [value];
+    return value;
+  })
+  @IsArray()
+  @IsObject({ each: true })
+  @ValidateNested({ each: true })
   @Type(() => CreateUserEducationDto)
-  @ValidateNested()
-  education: CreateEducation[];
+  education: CreateUserEducationDto[];
 
   @ApiProperty({
     description: 'users professional experience',
     type: [CreateUserProfessionalExperienceDto],
   })
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      value = value.replace(/}\s*{/g, '},{');
+      value = `[${value}]`;
+      value = JSON.parse(value);
+      return value;
+    }
+    if (!Array.isArray(value)) value = [value];
+    return value;
+  })
+  @IsArray()
+  @IsObject({ each: true })
+  @ValidateNested({ each: true })
   @Type(() => CreateUserProfessionalExperienceDto)
-  @ValidateNested()
   professionalExperience: CreateProfessionalExperience[];
 
   @ApiProperty({
     description: 'user areas of expertise',
     example: [faker.lorem.word()],
+  })
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      value = value.split(',');
+    }
+    if (!Array.isArray(value)) value = [value];
+    return value;
   })
   @IsNotEmpty()
   @IsArray()
@@ -94,6 +127,13 @@ export class CreateProfileDto implements CreateProfile {
   @ApiProperty({
     description: 'user skills and competencies',
     example: [faker.lorem.word()],
+  })
+  @Transform(({ value }) => {
+    if (typeof value === 'string') {
+      value = value.split(',');
+    }
+    if (!Array.isArray(value)) value = [value];
+    return value;
   })
   @IsNotEmpty()
   @IsArray()
@@ -105,5 +145,6 @@ export class CreateProfileDto implements CreateProfile {
     format: 'binary',
     description: 'profile photo as FormData.',
   })
-  profilePhoto: Express.Multer.File[];
+  @IsOptional()
+  profilePhoto?: Express.Multer.File[];
 }
