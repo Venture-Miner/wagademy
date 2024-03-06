@@ -5,7 +5,7 @@ import {
   CreateProfessionalExperience,
   CreateProfile,
 } from '@wagademy/types';
-import { Transform, Type } from 'class-transformer';
+import { Transform, Type, plainToInstance } from 'class-transformer';
 import {
   IsArray,
   IsDate,
@@ -72,20 +72,22 @@ export class CreateProfileDto implements CreateProfile {
     description: 'user education',
     type: [CreateUserEducationDto],
   })
-  @Transform(({ value }) => {
-    if (typeof value === 'string') {
-      value = value.replace(/}\s*{/g, '},{');
-      value = `[${value}]`;
-      value = JSON.parse(value);
-      return value;
-    }
-    if (!Array.isArray(value)) value = [value];
-    return value;
-  })
+  @Transform(
+    ({ value }) => {
+      if (typeof value === 'string') {
+        value = value.replace(/}\s*{/g, '},{');
+        value = `[${value}]`;
+        value = JSON.parse(value);
+        return plainToInstance(CreateUserEducationDto, value);
+      }
+      if (!Array.isArray(value)) value = [value];
+      return plainToInstance(CreateUserEducationDto, value);
+    },
+    { toClassOnly: true }
+  )
   @IsArray()
   @IsObject({ each: true })
   @ValidateNested({ each: true })
-  @Type(() => CreateUserEducationDto)
   education: CreateUserEducationDto[];
 
   @ApiProperty({
@@ -97,10 +99,10 @@ export class CreateProfileDto implements CreateProfile {
       value = value.replace(/}\s*{/g, '},{');
       value = `[${value}]`;
       value = JSON.parse(value);
-      return value;
+      return plainToInstance(CreateUserProfessionalExperienceDto, value);
     }
     if (!Array.isArray(value)) value = [value];
-    return value;
+    return plainToInstance(CreateUserProfessionalExperienceDto, value);
   })
   @IsArray()
   @IsObject({ each: true })

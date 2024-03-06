@@ -85,7 +85,6 @@ export class UserController {
     },
     @Body() createProfileDto: CreateProfileDto
   ) {
-    console.log(createProfileDto.professionalExperience);
     return this.userService.createUserProfile(
       { ...createProfileDto, profilePhoto },
       userId
