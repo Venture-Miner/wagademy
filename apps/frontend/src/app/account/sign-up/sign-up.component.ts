@@ -18,6 +18,7 @@ import { passwordMatchValidator } from '../../shared/utils/password-match-valida
 import { FilesUploadComponent } from '../../shared/components/files-upload/files-upload.component';
 import { FilesUploadDirective } from '../../shared/components/files-upload/directives/files-upload.directive';
 import { DropZoneDirective } from '../../shared/components/files-upload/directives/drop-zone.directive';
+import { Hub } from 'aws-amplify/utils';
 
 type UserType = 'Company' | 'Personal';
 
@@ -99,6 +100,10 @@ export class SignUpComponent {
       },
     })
       .then(() => {
+        Hub.dispatch('custom', {
+          event: 'signedUp',
+          data: { avatar: this.avatar, userType: this.userType },
+        });
         this.router.navigate(['/account/sign-in']);
         this.toastService.showToast({
           message: 'Account created successfully',

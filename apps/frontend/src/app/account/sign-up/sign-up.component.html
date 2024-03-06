@@ -99,13 +99,18 @@
     <div class="gap-8 flex flex-col items-center mt-8">
       <button
         class="btn btn-primary text-base-100 text-xl w-full lg:w-48"
-        (click)="userType = 'Personal'"
+        (click)="signUp()"
+        [disabled]="form.invalid || isSigningUp"
       >
         Sign Up
       </button>
       <span class="text-base-100"
         >Already have an account?
-        <a class="text-primary cursor-pointer underline">Sign in</a></span
+        <a
+          class="text-primary cursor-pointer underline"
+          [routerLink]="['/account/sign-in']"
+          >Sign in</a
+        ></span
       >
     </div>
   </form>
