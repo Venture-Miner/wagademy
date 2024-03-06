@@ -35,9 +35,14 @@ module.exports = {
           '0%, 100%': { transform: 'translateY(-20%)' },
           '50%': { transform: 'translateY(20%)' },
         },
+        slideDown: {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(30px)' },
+        },
       },
       animation: {
         wiggle: 'wiggle 2s ease-in-out infinite',
+        slideDown: 'slideDown 1s ease-in-out forwards',
       },
       fontFamily: {
         sans: ['Space-Grotesk', 'sans-serif'],
