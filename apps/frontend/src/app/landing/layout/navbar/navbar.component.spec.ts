@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LandingModule } from '../../landing.module';
+import { LandingModule } from '../../student/student.module';
 
 import { NavbarComponent } from './navbar.component';
 

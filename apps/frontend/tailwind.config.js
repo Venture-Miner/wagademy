@@ -22,13 +22,14 @@ module.exports = {
           success: '#92E09B',
           danger: '#F25C5C',
           warning: '#F2C85C',
-          white: '#FFFFFF',
         },
       },
     ],
   },
   theme: {
-    colors: {},
+    colors: {
+      white: '#FFFFFF',
+    },
     extend: {
       fontFamily: {
         sans: ['Space-Grotesk', 'sans-serif'],
@@ -37,5 +38,4 @@ module.exports = {
       },
     },
   },
-  safelist: ['bg-neutral', 'bg-white'],
 };
