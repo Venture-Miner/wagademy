@@ -1,55 +1,51 @@
 <section>
   <div
-    class="container mx-auto flex flex-col justify-between px-5 py-4 md:flex-row"
+    class="container mx-auto py-4 px-5 md:px-0 flex flex-col justify-between md:flex-row"
   >
-    <div class="w-full md:w-1/2 md:pb-28">
+    <div class="w-full md:w-1/2 md:pb-28 px-5">
       <div class="pt-16">
         <img
-          class="mx-auto block md:hidden"
+          class="mx-auto md:hidden block"
           src="./assets/img/images/img-logo-mobile.svg"
-          width="57px"
-          height="56px"
           alt="logo mobile"
         />
-        <h1 class="text-base-100 font-sans text-2xl font-medium md:text-5xl">
+        <h1 class="text-base-100 font-sans md:text-5xl text-2xl font-medium">
           Welcome to Wagademy
         </h1>
         <p
-          class="lg:text-base-200 text-base-100 pb-8 pt-6 font-sans text-base font-medium md:text-2xl"
+          class="text-base-200 font-sans md:text-2xl text-base font-medium pb-8 pt-6"
         >
           Where educational innovation is the priority. Explore unique learning
           experiences facilitated by cutting-edge technology, fostering
           connections between companies and students.
         </p>
       </div>
-      <div class="flex gap-8 pt-16">
+      <div class="pt-16 flex gap-8">
         <div
           [routerLink]="['/student']"
-          class="bg-neutral hover:bg-shadow text-base-100 h-28 w-28 cursor-pointer rounded-lg px-2 hover:font-bold hover:shadow-lg"
+          class="w-28 h-28 bg-neutral cursor-pointer hover:bg-shadow hover:shadow-lg text-base-200 hover:text-base-100 rounded-lg px-2"
         >
-          <p class="pt-11 text-center font-mono text-sm">I’m student</p>
+          <p class="text-sm font-mono text-center pt-7 sm:pt-11">I’m student</p>
         </div>
-        <div class="bg-primary h-28 w-28 rounded-lg px-2">
-          <p class="text-base-100 pt-9 text-center font-mono text-sm">
+        <div class="w-28 h-28 bg-primary rounded-lg px-2">
+          <p
+            class="text-sm font-mono text-base-100 text-center pt-3 sm:pt-9 mb-2"
+          >
             I’m company
           </p>
-          <div class="flex justify-center">
+          <div class="flex flex-col items-center relative">
             <img
               src="./assets/icons/icon-scroll-pointer.svg"
               alt="scroll pointer"
-              width="32px"
-              height="40px"
             />
+            <i
+              class="bi bi-chevron-compact-down absolute text-[#FFFFFF] -bottom-1 animate-wiggle text-sm"
+            ></i>
           </div>
         </div>
       </div>
-      <div class="mx-auto block md:hidden">
-        <img
-          width="256px"
-          height="248px"
-          src="./assets/img/images/img-bg-mobile.svg"
-          alt="bg mobile"
-        />
+      <div class="mx-auto md:hidden block">
+        <img src="./assets/img/images/img-bg-mobile.svg" alt="bg mobile" />
       </div>
     </div>
     <div class="hidden md:block">
@@ -65,16 +61,14 @@
 </section>
 <section class="bg-base-100">
   <div class="py-8">
-    <p class="text-primary text-center font-sans text-sm">
+    <p class="text-center text-primary font-sans text-sm">
       CONNECTING THE FUTURE
     </p>
-    <p
-      class="text-neutral px-5 pt-2 text-center font-sans text-4xl font-medium"
-    >
+    <p class="text-center text-4xl text-neutral font-sans font-medium pt-2">
       Unlock Opportunities and Growth
     </p>
     <p
-      class="text-neutral mx-auto w-full px-5 pt-4 text-center font-mono md:w-1/2"
+      class="mx-auto px-5 text-center pt-4 font-mono text-neutral md:w-1/2 w-full"
     >
       Our innovative platform connects companies and students, offering diverse
       courses and digital certificates. Companies can advertise training
@@ -86,31 +80,31 @@
 </section>
 <section>
   <div
-    class="container mx-auto flex flex-col justify-between px-5 py-4 md:flex-row"
+    class="container mx-auto py-4 px-5 md:px-0 flex flex-col justify-between md:flex-row"
   >
-    <div class="w-full pt-14 md:w-1/2 xl:pt-[140px]">
-      <h2 class="text-base-100 pb-4 font-sans text-4xl font-medium">
+    <div class="md:w-1/2 w-full xl:pt-[140px] pt-14">
+      <h2 class="font-sans text-base-100 font-medium text-4xl pb-4">
         Simplify the Hiring Process
       </h2>
-      <p class="text-base-100 pb-10 font-mono">
+      <p class="font-mono text-base-100 pb-10">
         Post your job vacancies on the platform and reach a diverse pool of
         talent
       </p>
       <div class="flex gap-2 pb-4">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Easily manage the flow of candidates
         </p>
       </div>
       <div class="flex gap-2 pb-4">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Assess interest and find the ideal candidate for your team
         </p>
       </div>
       <div class="flex gap-2">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Reduce the risk of fraudulent CVs or qualifications
         </p>
       </div>
@@ -119,78 +113,74 @@
       <img
         src="./assets/img/company/img-company-block1.webp"
         alt="simplify the hiring process"
-        width="640px"
-        height="472px"
       />
     </div>
   </div>
 </section>
 <section>
   <div
-    class="container mx-auto flex flex-col-reverse justify-between px-5 py-4 md:flex-row"
+    class="container mx-auto py-4 px-5 md:px-0 flex flex-col-reverse justify-between md:flex-row"
   >
     <div>
       <img
         src="./assets/img/company/img-company-block2.webp"
         alt="simplify interviews"
-        width="640px"
-        height="472px"
       />
     </div>
-    <div class="w-full pt-14 md:w-1/2 xl:pt-[140px]">
-      <h2 class="text-base-100 pb-4 font-sans text-4xl font-medium">
+    <div class="md:w-1/2 w-full xl:pt-[140px] pt-14">
+      <h2 class="font-sans text-base-100 font-medium text-4xl pb-4">
         Simplify interviews
       </h2>
-      <p class="text-base-100 pb-10 font-mono">
+      <p class="font-mono text-base-100 pb-10">
         Speed up the recruitment process with interviews conducted by artificial
         intelligence
       </p>
       <div class="flex gap-2 pb-4">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Save time and resources with initial screening of candidates
         </p>
       </div>
       <div class="flex gap-2 pb-4">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Identify talent based on objective and behavioral criteria
         </p>
       </div>
       <div class="flex gap-2">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">Efficient, data-driven hiring</p>
+        <p class="text-base-200 font-mono">Efficient, data-driven hiring</p>
       </div>
     </div>
   </div>
 </section>
 <section>
   <div
-    class="container mx-auto flex flex-col justify-between px-5 py-4 md:flex-row"
+    class="container mx-auto py-4 px-5 md:px-0 flex flex-col justify-between md:flex-row"
   >
-    <div class="w-full pt-14 md:w-1/2 xl:pt-[140px]">
-      <h2 class="text-base-100 pb-4 font-sans text-4xl font-medium">
+    <div class="md:w-1/2 w-full xl:pt-[140px] pt-14">
+      <h2 class="font-sans text-base-100 font-medium text-4xl pb-4">
         Train AI Chatbots to Showcase Your Technology
       </h2>
-      <p class="text-base-100 pb-10 font-mono">
+      <p class="font-mono text-base-100 pb-10">
         Empower your company with the ability to train language models capable
         of answering questions about your technologies
       </p>
       <div class="flex gap-2 pb-4">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Invite users to interact with these AI-powered chatbots
         </p>
       </div>
       <div class="flex gap-2 pb-4">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Provide instant access to information and assistance
         </p>
       </div>
       <div class="flex gap-2">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Improve customer engagement and support
         </p>
       </div>
@@ -199,45 +189,41 @@
       <img
         src="./assets/img/company/img-company-block3.webp"
         alt="train AI chatbots to showcase your technology"
-        width="640px"
-        height="472px"
       />
     </div>
   </div>
 </section>
 <section>
   <div
-    class="container mx-auto flex flex-col-reverse justify-between px-5 py-4 md:flex-row"
+    class="container mx-auto py-4 px-5 md:px-0 flex flex-col-reverse justify-between md:flex-row"
   >
     <div>
       <img
         src="./assets/img/company/img-company-block4.webp"
         alt="showcase your courses and expand your reach"
-        width="640px"
-        height="472px"
       />
     </div>
-    <div class="w-full pt-14 md:w-1/2 xl:pt-[140px]">
-      <h2 class="text-base-100 pb-4 font-sans text-4xl font-medium">
+    <div class="md:w-1/2 w-full xl:pt-[140px] pt-14">
+      <h2 class="font-sans text-base-100 font-medium text-4xl pb-4">
         Showcase Your Courses and Expand Your Reach
       </h2>
-      <p class="text-base-100 pb-10 font-mono">
+      <p class="font-mono text-base-100 pb-10">
         With our platform, your company can present courses effectively,
         reaching a wide audience of eager students
       </p>
       <div class="flex gap-2 pb-4">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Gain valuable insights by measuring interest in your courses
         </p>
       </div>
       <div class="flex gap-2 pb-4">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">Easily manage issued certificates</p>
+        <p class="text-base-200 font-mono">Easily manage issued certificates</p>
       </div>
       <div class="flex gap-2">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Turn certificates into unique NFTs
         </p>
       </div>
@@ -246,25 +232,25 @@
 </section>
 <section>
   <div
-    class="container mx-auto flex flex-col justify-between px-5 py-4 md:flex-row"
+    class="container mx-auto py-4 px-5 md:px-0 flex flex-col justify-between md:flex-row"
   >
-    <div class="w-full pt-14 md:w-1/2 xl:pt-[140px]">
-      <h2 class="text-base-100 pb-4 font-sans text-4xl font-medium">
+    <div class="md:w-1/2 w-full xl:pt-[140px] pt-14">
+      <h2 class="font-sans text-base-100 font-medium text-4xl pb-4">
         NFT Certificates: Authenticity and Innovation
       </h2>
-      <p class="text-base-100 pb-10 font-mono">
+      <p class="font-mono text-base-100 pb-10">
         Modernize your certification process by issuing certificates as NFTs on
         our platform
       </p>
       <div class="flex gap-2 pb-4">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Guarantee the authenticity and security of your certificates
         </p>
       </div>
       <div class="flex gap-2">
         <i class="bi bi-check-circle text-primary"></i>
-        <p class="text-base-100 font-mono">
+        <p class="text-base-200 font-mono">
           Offer your students an innovative experience
         </p>
       </div>
@@ -273,8 +259,6 @@
       <img
         src="./assets/img/company/img-company-block5.webp"
         alt="NFT certificates"
-        width="640px"
-        height="472px"
       />
     </div>
   </div>

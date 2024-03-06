@@ -30,6 +30,15 @@ module.exports = {
       white: '#FFFFFF',
     },
     extend: {
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'translateY(-20%)' },
+          '50%': { transform: 'translateY(20%)' },
+        },
+      },
+      animation: {
+        wiggle: 'wiggle 2s ease-in-out infinite',
+      },
       fontFamily: {
         sans: ['Space-Grotesk', 'sans-serif'],
         mono: ['Noto-Sans', 'sans-serif'],
