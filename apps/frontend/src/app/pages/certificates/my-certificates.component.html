@@ -78,35 +78,50 @@
       />
       <div class="flex-col w-full">
         <h2 class="font-bold text-neutral-950 mb-2">{{ course.name }}</h2>
-        <p class="line-clamp-2 mb-4 text-base-200">{{ course.description }}</p>
-        <p
+        <p class="line-clamp-2 mb-4 text-base-200 mr-4">
+          {{ course.description }}
+        </p>
+        <div
           [ngClass]="{
             'text-primary': course.status !== 'claimed',
             'text-gray-500': course.status === 'claimed'
           }"
           class="text-xl text-center mt-auto font-serif sm:hidden p-2"
         >
-          {{ course.status | titlecase }}
-        </p>
+          <button
+            *ngIf="course.status === 'claimed'"
+            class="p-2 text-xl font-serif sm:hidden text-primary text-center"
+          >
+            View In Wallet
+          </button>
+          <button
+            *ngIf="course.status !== 'claimed'"
+            class="text-xl btn sm:hidden btn-primary bg-primary font-normal w-full"
+          >
+            Claim
+          </button>
+        </div>
       </div>
       <div
         [ngClass]="
           displayStyle === 'list'
-            ? 'ml-auto my-auto md:px-28 w-[90px]'
-            : 'mt-auto'
+            ? 'my-auto sm:w-full flex justify-center max-w-60'
+            : 'mt-auto w-full flex justify-center'
         "
       >
-        <p
-          [ngClass]="{
-            'text-end': displayStyle === 'list',
-            'text-center': displayStyle !== 'list',
-            'text-primary': course.status !== 'claimed',
-            'text-gray-500': course.status === 'claimed'
-          }"
-          class="p-2 text-xl font-serif hidden sm:block"
+        <button
+          *ngIf="course.status === 'claimed'"
+          class="p-2 text-xl font-serif hidden sm:block text-primary text-center"
         >
-          {{ course.status | titlecase }}
-        </p>
+          View In Wallet
+        </button>
+
+        <button
+          *ngIf="course.status !== 'claimed'"
+          class="text-xl btn hidden sm:block btn-primary bg-primary font-normal w-full"
+        >
+          Claim
+        </button>
       </div>
     </div>
   </div>

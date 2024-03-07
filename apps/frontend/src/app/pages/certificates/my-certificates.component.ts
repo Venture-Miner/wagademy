@@ -45,7 +45,7 @@ export class MyCertificatesComponent {
       name: 'Angular',
       description: 'Amet minim mollit non deserunt Amet',
       img: 'https://via.placeholder.com/80',
-      status: 'claim',
+      status: 'unclaimed',
       progress: 100,
     },
     {
@@ -59,7 +59,7 @@ export class MyCertificatesComponent {
       name: 'Vue',
       description: 'Amet minim mollit non deserunt',
       img: 'https://via.placeholder.com/80',
-      status: 'claim',
+      status: 'unclaimed',
       progress: 100,
     },
     {
