@@ -138,3 +138,18 @@ export type UpdateProfileResponse = {
   skillsAndCompetencies: string[];
   profilePhoto: { url: string } | null;
 };
+
+export type FindOneProfileResponse = {
+  name: string;
+  email: string;
+  dateOfBirth: Date;
+  contactNumber: string;
+  country: string;
+  state: string;
+  about: string;
+  education: Education[];
+  professionalExperience: ProfessionalExperience[];
+  areasOfExpertise: string[];
+  skillsAndCompetencies: string[];
+  profilePhoto: { url: string } | null;
+};

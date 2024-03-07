@@ -12,6 +12,9 @@ import {
   UpdateProfileResponse,
   CreateEducation,
   CreateProfessionalExperience,
+  UpdateEducation,
+  UpdateProfessionalExperience,
+  FindOneProfileResponse,
 } from '@wagademy/types';
 import { FileService } from '../../infra';
 import { Prisma } from '@prisma/client';
@@ -99,6 +102,10 @@ export class UserService {
       } = updateProfile;
       const updateUserProfileData: Prisma.UserProfileUpdateInput = {
         ...profileData,
+        education: await this.handleEducation(education),
+        professionalExperience: await this.handleProfessionalExperience(
+          professionalExperience
+        ),
       };
       if (profilePhoto) {
         const userProfile = await this.prismaService.userProfile.findUnique({
@@ -114,24 +121,6 @@ export class UserService {
         pictureKeyAndUrl.push({ key, url });
         updateUserProfileData.profilePhoto = {
           upsert: { create: { key, url }, update: { key, url } },
-        };
-      }
-      if (education) {
-        updateUserProfileData.education = {
-          upsert: education.map(({ id, ...edu }) => ({
-            where: { id },
-            update: edu,
-            create: edu as CreateEducation,
-          })),
-        };
-      }
-      if (professionalExperience) {
-        updateUserProfileData.professionalExperience = {
-          upsert: professionalExperience.map(({ id, ...professionalExp }) => ({
-            where: { id },
-            update: professionalExp,
-            create: professionalExp as CreateProfessionalExperience,
-          })),
         };
       }
       const createResponse = await this.prismaService.userProfile.update({
@@ -152,8 +141,59 @@ export class UserService {
     }
   }
 
-  async findUserProfile(id: string) {
-    //
+  private async handleEducation(education: UpdateEducation[] | undefined) {
+    if (!education) return {};
+    const createData: CreateEducation[] = [];
+    const updateData: { where: { id: string }; data: UpdateEducation }[] = [];
+
+    education.forEach(({ id, ...edu }) => {
+      if (id) {
+        updateData.push({ where: { id }, data: edu });
+      } else {
+        createData.push(edu as CreateEducation);
+      }
+    });
+
+    return {
+      createMany: { data: createData },
+      updateMany: updateData,
+    };
+  }
+
+  private async handleProfessionalExperience(
+    professionalExperience: UpdateProfessionalExperience[] | undefined
+  ) {
+    if (!professionalExperience) return {};
+
+    const createData: CreateProfessionalExperience[] = [];
+    const updateData: {
+      where: { id: string };
+      data: UpdateProfessionalExperience;
+    }[] = [];
+
+    professionalExperience.forEach(({ id, ...professionalExp }) => {
+      if (id) {
+        updateData.push({ where: { id }, data: professionalExp });
+      } else {
+        createData.push(professionalExp as CreateProfessionalExperience);
+      }
+    });
+
+    return {
+      createMany: { data: createData },
+      updateMany: updateData,
+    };
+  }
+
+  async findUserProfile(id: string): Promise<FindOneProfileResponse | null> {
+    return this.prismaService.userProfile.findUnique({
+      where: { id },
+      include: {
+        profilePhoto: { select: { url: true } },
+        education: true,
+        professionalExperience: true,
+      },
+    });
   }
 
   async findOne(id: string): Promise<FindOneUserResponse | null> {
