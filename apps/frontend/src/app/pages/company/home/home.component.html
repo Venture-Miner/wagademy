@@ -1,0 +1,57 @@
+<div class="container mx-auto min-h-screen px-3 sm:px-0">
+  <div class="lg:flex justify-between pb-8 pt-6">
+    <h2 class="font-sans font-medium text-4xl text-base-100">Home</h2>
+    <div class="lg:w-[528px] w-full">
+      <wagademy-input
+        [leftIcon]="'bi bi-search'"
+        [type]="'text'"
+        [placeholder]="'Search'"
+      ></wagademy-input>
+    </div>
+  </div>
+  <div
+    *ngIf="!applications.length && !courses.length"
+    class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
+  >
+    <p>There are no content available</p>
+  </div>
+  <div *ngIf="!isLoading">
+    <div *ngIf="applications.length">
+      <div class="flex justify-between pb-2">
+        <h3 class="text-2xl text-base-100 font-sans font-medium">
+          Applications
+        </h3>
+        <button class="text-primary font-serif text-xl">See More</button>
+      </div>
+      <div
+        class="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 pt-6 xl:pt-0"
+      >
+        <wagademy-cards
+          *ngFor="let applications of applications"
+          [img]="applications.images"
+          [name]="applications.name"
+          [description]="applications.description"
+          [applications]="applications.applications"
+          [button]="'View More'"
+        ></wagademy-cards>
+      </div>
+    </div>
+    <div *ngIf="courses.length">
+      <div class="flex justify-between pt-6 pb-2">
+        <h3 class="text-2xl text-base-100 font-sans font-medium">Courses</h3>
+        <button class="text-primary font-serif text-xl">See More</button>
+      </div>
+      <div
+        class="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 pt-6 xl:pt-0"
+      >
+        <wagademy-cards
+          *ngFor="let courses of courses"
+          [img]="courses.images"
+          [name]="courses.name"
+          [description]="courses.description"
+          [button]="'Invite GPT+'"
+        ></wagademy-cards>
+      </div>
+    </div>
+  </div>
+</div>
