@@ -1,0 +1,81 @@
+<div class="bg-white min-h-screen flex items-center justify-center px-6">
+  <form class="container" [formGroup]="form">
+    <div class="flex gap-4 flex-col sm:flex-row justify-center mb-6">
+      <button
+        class="btn btn-sm"
+        [ngClass]="{ 'btn-success': userType === 'Personal' }"
+        (click)="userType = 'Personal'"
+      >
+        <i class="bi bi-person text-lg"></i>
+        Physical Person
+      </button>
+      <button
+        class="btn btn-sm"
+        [ngClass]="{ 'btn-success': userType === 'Company' }"
+        (click)="userType = 'Company'"
+      >
+        <i class="bi bi-buildings text-lg"></i>
+        Company
+      </button>
+    </div>
+    <wagademy-form-field [control]="form.controls.name" label="Name">
+      <wagademy-input
+        placeholder="Name"
+        type="text"
+        leftIcon="bi bi-person-check"
+        formControlName="name"
+      >
+      </wagademy-input>
+    </wagademy-form-field>
+    <wagademy-form-field [control]="form.controls.email" label="Email">
+      <wagademy-input
+        placeholder="email@email.com"
+        type="email"
+        leftIcon="bi bi-envelope"
+        formControlName="email"
+      >
+      </wagademy-input>
+    </wagademy-form-field>
+    <div class="flex flex-col sm:flex-row sm:gap-6">
+      <wagademy-form-field
+        [control]="form.controls.password"
+        label="Password"
+        class="w-full"
+      >
+        <wagademy-input
+          placeholder="***********"
+          type="password"
+          leftIcon="bi bi-lock"
+          rightButtonType="password"
+          formControlName="password"
+        ></wagademy-input>
+      </wagademy-form-field>
+      <wagademy-form-field
+        [control]="form.controls.confirmPassword"
+        label="Confirm password"
+        class="w-full"
+      >
+        <wagademy-input
+          placeholder="***********"
+          type="password"
+          leftIcon="bi bi-lock"
+          rightButtonType="password"
+          formControlName="confirmPassword"
+        >
+        </wagademy-input>
+      </wagademy-form-field>
+    </div>
+    <div class="gap-8 flex flex-col items-center mt-8">
+      <button
+        class="btn btn-primary text-base-100 text-xl w-full lg:w-48"
+        (click)="userType = 'Personal'"
+      >
+        Sign Up
+      </button>
+      <span class="text-base-100"
+        >Already have an account?
+        <a class="text-primary cursor-pointer underline">Sign in</a></span
+      >
+    </div>
+  </form>
+</div>
