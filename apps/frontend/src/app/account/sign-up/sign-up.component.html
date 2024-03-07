@@ -102,7 +102,9 @@
         (click)="signUp()"
         [disabled]="form.invalid || isSigningUp"
       >
-        Sign Up
+        @if (isSigningUp) {
+        <span class="loading loading-dots"></span>
+        } @else { Sign Up }
       </button>
       <span class="text-base-100"
         >Already have an account?
