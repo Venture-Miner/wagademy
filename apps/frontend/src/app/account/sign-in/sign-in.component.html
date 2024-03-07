@@ -1,0 +1,42 @@
+<form class="container mx-auto px-6 mt-8" [formGroup]="form">
+  <h3 class="font-medium text-2xl text-base-100 mb-2 font-sans">Sign In</h3>
+  <div class="mb-14">
+    <span class="text-base-100"
+      >Don't have an account yet?
+      <a
+        class="text-primary cursor-pointer underline"
+        [routerLink]="['/account/sign-up']"
+        >Sign up</a
+      ></span
+    >
+  </div>
+  <wagademy-form-field [control]="form.controls.email" label="Email">
+    <wagademy-input
+      placeholder="email@email.com"
+      type="email"
+      leftIcon="bi bi-envelope"
+      formControlName="email"
+    >
+    </wagademy-input>
+  </wagademy-form-field>
+  <wagademy-form-field [control]="form.controls.password" label="Password">
+    <wagademy-input
+      placeholder="***********"
+      type="password"
+      leftIcon="bi bi-lock"
+      rightButtonType="password"
+      formControlName="password"
+    ></wagademy-input>
+  </wagademy-form-field>
+  <div class="flex justify-center mt-14">
+    <button
+      class="btn btn-primary text-base-100 text-xl w-full lg:w-48"
+      (click)="signIn()"
+      [disabled]="form.invalid || isLoading"
+    >
+      @if (isLoading) {
+      <span class="loading loading-dots"></span>
+      } @else { Sign In }
+    </button>
+  </div>
+</form>
