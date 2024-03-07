@@ -8,8 +8,70 @@ datasource db {
 }
 
 model User {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  email     String @unique
-  name      String
-  idRefAuth String @unique
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  email          String           @unique
+  idRefAuth      String           @unique
+  walletAddress  String?
+  accountType    AccountTypeEnum
+  job            Job[]
+  jobApplication JobApplication[]
+}
+
+model Job {
+  id                   String           @id @default(auto()) @map("_id") @db.ObjectId
+  title                String
+  description          String
+  jobType              JobTypeEnum
+  allocation           AllocationEnum
+  aiInterviewQuestions String[]
+  views                Int              @default(0)
+  company              User             @relation(fields: [companyId], references: [id])
+  companyId            String           @db.ObjectId
+  jobApplications      JobApplication[]
+  jobStatus            JobStatusEnum
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+}
+
+model JobApplication {
+  id                String                   @id @default(auto()) @map("_id") @db.ObjectId
+  job               Job                      @relation(fields: [jobId], references: [id])
+  jobId             String                   @db.ObjectId
+  user              User                     @relation(fields: [userId], references: [id])
+  userId            String                   @db.ObjectId
+  applicationStatus JobApplicationStatusEnum
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+}
+
+enum AccountTypeEnum {
+  COMPANY
+  PHYSICAL_PERSON
+}
+
+enum AllocationEnum {
+  REMOTE
+  HYBRID
+  ON_SITE
+}
+
+enum JobTypeEnum {
+  FULL_TIME
+  CONTRACT
+  PART_TIME
+  TEMPORARY
+  INTERNSHIP
+  OTHER
+}
+
+enum JobStatusEnum {
+  PUBLISHED
+  UNPUBLISHED
+}
+
+enum JobApplicationStatusEnum {
+  SUBSCRIBED
+  INVITED
+  INTERVIEWED
 }
