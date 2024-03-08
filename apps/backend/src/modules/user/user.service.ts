@@ -123,7 +123,7 @@ export class UserService {
           upsert: { create: { key, url }, update: { key, url } },
         };
       }
-      const createResponse = await this.prismaService.userProfile.update({
+      return this.prismaService.userProfile.update({
         where: { userId },
         data: updateUserProfileData,
         include: {
@@ -132,7 +132,6 @@ export class UserService {
           professionalExperience: true,
         },
       });
-      return createResponse;
     } catch (error) {
       if (pictureKeyAndUrl.length) {
         await this.fileService.removeFile(pictureKeyAndUrl[0].key);
