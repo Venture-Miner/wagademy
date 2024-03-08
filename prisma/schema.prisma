@@ -8,8 +8,71 @@ datasource db {
 }
 
 model User {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  email     String @unique
-  name      String
-  idRefAuth String @unique
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  email         String          @unique
+  idRefAuth     String          @unique
+  walletAddress String?
+  accountType   AccountTypeEnum
+  userProfile   UserProfile?
+}
+
+model UserProfile {
+  id                     String                   @id @default(auto()) @map("_id") @db.ObjectId
+  name                   String
+  email                  String                   @unique
+  dateOfBirth            DateTime
+  contactNumber          String
+  country                String
+  state                  String
+  about                  String
+  education              Education[]
+  professionalExperience ProfessionalExperience[]
+  areasOfExpertise       String[]
+  skillsAndCompetencies  String[]
+  user                   User                     @relation(fields: [userId], references: [id])
+  userId                 String                   @unique @db.ObjectId
+  profilePhoto           ImageFile?               @relation(name: "profilePhoto", fields: [profilePhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  profilePhotoId         String?                  @db.ObjectId
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+}
+
+model Education {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  institution   String
+  course        String
+  degree        String
+  description   String?
+  stillStudying Boolean
+  startDate     DateTime
+  endDate       DateTime?
+  userProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId String?      @db.ObjectId
+}
+
+model ProfessionalExperience {
+  id                   String       @id @default(auto()) @map("_id") @db.ObjectId
+  company              String
+  jobTitle             String
+  currentlyWorkingHere Boolean
+  startDate            DateTime
+  endDate              DateTime?
+  description          String?
+  userProfile          UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId        String?      @db.ObjectId
+}
+
+model ImageFile {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  url       String
+  key       String        @unique
+  profiles  UserProfile[] @relation(name: "profilePhoto")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+enum AccountTypeEnum {
+  COMPANY
+  PHYSICAL_PERSON
 }
