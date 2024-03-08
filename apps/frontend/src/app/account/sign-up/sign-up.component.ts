@@ -61,25 +61,12 @@ export class SignUpComponent {
   isConfirmingSignUp = false;
   step: 1 | 2 = 1;
   userType: UserType = 'Personal';
-  avatar: File | null = null;
-  avatarURL = '';
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly toastService: ToastService
   ) {}
-
-  onAvatarChange(file: File | null) {
-    this.avatar = file;
-    if (file) this.avatarURL = URL.createObjectURL(file);
-    else this.avatarURL = '';
-  }
-
-  onAvatarRemove() {
-    this.avatar = null;
-    this.avatarURL = '';
-  }
 
   signUp() {
     if (
@@ -103,7 +90,6 @@ export class SignUpComponent {
         Hub.dispatch('custom', {
           event: 'signedUp',
           data: {
-            avatar: this.avatar,
             userType: this.userType,
             name: this.form.value.name,
           },
