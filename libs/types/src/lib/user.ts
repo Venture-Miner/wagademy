@@ -15,6 +15,15 @@ export type User = {
   accountType: AccountTypeEnum;
 };
 
+export type CreateUserResponse = {
+  id: string;
+  walletAddress: string | null;
+  name: string;
+  email: string;
+  idRefAuth: string;
+  accountType: AccountTypeEnum;
+};
+
 export type FindOneUserResponse = {
   id: string;
   walletAddress: string | null;
@@ -22,4 +31,34 @@ export type FindOneUserResponse = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+};
+
+export type UpdateUserResponse = {
+  id: string;
+  walletAddress: string | null;
+  name: string;
+  email: string;
+  idRefAuth: string;
+  accountType: AccountTypeEnum;
+};
+
+export type RetrieveSelfResponse = {
+  id: string;
+  walletAddress: string | null;
+  name: string;
+  email: string;
+  idRefAuth: string;
+  accountType: AccountTypeEnum;
+};
+
+export type CreateUser = {
+  email: string;
+  name: string;
+  idRefAuth: string;
+  accountType: AccountTypeEnum;
+};
+
+export type UpdateUser = {
+  name?: string;
+  walletAddress?: string;
 };

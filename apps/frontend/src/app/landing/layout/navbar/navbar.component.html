@@ -2,19 +2,18 @@
   <div
     class="container mx-auto flex flex-wrap items-center justify-between px-5 py-4"
   >
-    <div class="flex w-full justify-between xl:static xl:block xl:w-auto">
-      <a href="/">
-        <img
-          width="212px"
-          height="40px"
-          src="./assets/img/images/img-logo-navbar.webp"
-          alt="wagademy logo"
-        />
-      </a>
+    <div class="flex w-full justify-between xl:w-auto">
+      <img
+        [routerLink]="['/']"
+        class="cursor-pointer"
+        width="212px"
+        height="40px"
+        src="./assets/img/images/img-logo-navbar.webp"
+        alt="wagademy logo"
+      />
       <button
         aria-label="menu"
-        class="cursor-pointer bg-transparent text-xl xl:hidden"
-        id="navbar"
+        class="cursor-pointer text-xl xl:hidden"
         type="button"
         (click)="toggleNavbar()"
       >
@@ -26,12 +25,12 @@
       </button>
     </div>
     <div
-      class="items-center justify-end xl:flex xl:flex-grow"
+      class="items-center justify-end xl:flex"
       [ngClass]="{ hidden: !showMenu }"
     >
       <ul class="pr-4 pt-4 xl:pt-0">
         <li class="text-base-100 font-mono text-sm font-bold">
-          <a id="home" [routerLink]="['/home']"> Home </a>
+          <a [routerLink]="['/home']">Home</a>
         </li>
       </ul>
       <div class="pt-4 xl:pt-0">
