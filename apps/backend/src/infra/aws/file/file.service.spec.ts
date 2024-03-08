@@ -43,7 +43,7 @@ describe('FileService', () => {
   });
 
   describe('removeFile()', () => {
-    it('should successfully remove a file from S3 and return a response', async () => {
+    it('should successfully remove a file from S3 and return a truthy response', async () => {
       const removedFileResponse = await service.removeFile(
         uploadFileResponse.key
       );

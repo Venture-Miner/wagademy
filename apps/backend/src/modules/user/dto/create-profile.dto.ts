@@ -140,7 +140,7 @@ export class CreateProfileDto implements CreateProfile {
   @ApiProperty({
     type: 'string',
     format: 'binary',
-    description: 'profile photo as FormData.',
+    description: 'profile photo as FormData',
   })
   @IsOptional()
   profilePhoto?: Express.Multer.File[];

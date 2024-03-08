@@ -31,7 +31,7 @@ export class CreateUserProfessionalExperienceDto
   company: string;
 
   @ApiProperty({
-    description: 'the job title the user worked/work',
+    description: 'the job title the user held or currently holds',
     example: faker.lorem.word(),
   })
   @IsNotEmpty()
@@ -47,7 +47,7 @@ export class CreateUserProfessionalExperienceDto
   description?: string;
 
   @ApiProperty({
-    description: 'information about the job if the user stills working',
+    description: 'indicates whether the user is currently employed in the job',
     example: faker.datatype.boolean(),
   })
   @IsBoolean()
@@ -55,7 +55,7 @@ export class CreateUserProfessionalExperienceDto
 
   @ApiProperty({
     example: faker.date.past(),
-    description: 'The course start date.',
+    description: 'the course start date',
     required: false,
   })
   @Type(() => Date)
@@ -64,7 +64,7 @@ export class CreateUserProfessionalExperienceDto
 
   @ApiProperty({
     example: faker.date.future(),
-    description: 'The course end date.',
+    description: 'the course end date',
     required: false,
   })
   @IsOptional()

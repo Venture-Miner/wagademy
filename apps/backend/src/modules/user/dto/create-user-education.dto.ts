@@ -53,7 +53,7 @@ export class CreateUserEducationDto implements CreateEducation {
   description?: string;
 
   @ApiProperty({
-    description: 'information about the course if the user stills studying',
+    description: 'indicates whether the user is still studying the course',
     example: faker.datatype.boolean(),
   })
   @IsBoolean()
@@ -61,7 +61,7 @@ export class CreateUserEducationDto implements CreateEducation {
 
   @ApiProperty({
     example: faker.date.past(),
-    description: 'The course start date.',
+    description: 'the course start date',
     required: false,
   })
   @Type(() => Date)
@@ -70,7 +70,7 @@ export class CreateUserEducationDto implements CreateEducation {
 
   @ApiProperty({
     example: faker.date.future(),
-    description: 'The course end date.',
+    description: 'the course end date',
     required: false,
   })
   @IsOptional()
