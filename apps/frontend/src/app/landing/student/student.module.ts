@@ -5,6 +5,5 @@ import { StudentComponent } from './student.component';
 @NgModule({
   declarations: [StudentComponent],
   imports: [StudentRoutingModule],
-  providers: [],
 })
 export class StudentModule {}
