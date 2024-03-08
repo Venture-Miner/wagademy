@@ -97,3 +97,9 @@ export type UserJobApplication = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type CreateJobApplication = {
+  jobId: string;
+  userId: string;
+  applicationStatus: JobApplicationStatusEnum;
+};
