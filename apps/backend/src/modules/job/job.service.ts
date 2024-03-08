@@ -5,7 +5,10 @@ import {
 } from '@nestjs/common';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
-import { CreateJobApplication } from '@wagademy/types';
+import {
+  CreateJobApplication,
+  JobApplicationStatusEnum,
+} from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
 
 @Injectable()
@@ -16,32 +19,18 @@ export class JobService {
     return 'This action adds a new job';
   }
 
-  async createJobApplication(
-    createJobApplication: CreateJobApplication,
-    userId: string
-  ) {
-    if (createJobApplication.applicationStatus === 'INVITED') {
-      const job = await this.prismaService.job.findUnique({
-        where: { id: createJobApplication.jobId },
-        include: { company: { select: { id: true } } },
-      });
-      if (!job) {
-        throw new NotFoundException('Job with the provided ID does not exist');
-      }
-      if (job?.company.id !== userId)
-        throw new UnauthorizedException(
-          'Only the company that posted the job can send invites'
-        );
-    } else if (userId !== createJobApplication.userId) {
-      throw new UnauthorizedException(
-        'Only the user who is applying can submit the application'
-      );
+  async createJobApplication({ jobId }: CreateJobApplication, userId: string) {
+    const job = await this.prismaService.job.findUnique({
+      where: { id: jobId },
+    });
+    if (!job) {
+      throw new NotFoundException('Job with the provided ID does not exist');
     }
     return this.prismaService.jobApplication.create({
       data: {
-        applicationStatus: createJobApplication.applicationStatus,
-        job: { connect: { id: createJobApplication.jobId } },
-        user: { connect: { id: createJobApplication.userId } },
+        applicationStatus: JobApplicationStatusEnum.SUBSCRIBED,
+        job: { connect: { id: jobId } },
+        user: { connect: { id: userId } },
       },
     });
   }

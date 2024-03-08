@@ -100,6 +100,4 @@ export type UserJobApplication = {
 
 export type CreateJobApplication = {
   jobId: string;
-  userId: string;
-  applicationStatus: JobApplicationStatusEnum;
 };
