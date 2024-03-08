@@ -102,7 +102,11 @@ export class SignUpComponent {
       .then(() => {
         Hub.dispatch('custom', {
           event: 'signedUp',
-          data: { avatar: this.avatar, userType: this.userType },
+          data: {
+            avatar: this.avatar,
+            userType: this.userType,
+            name: this.form.value.name,
+          },
         });
         this.router.navigate(['/account/sign-in']);
         this.toastService.showToast({
