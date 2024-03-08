@@ -1,10 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  CreateEducation,
-  CreateProfessionalExperience,
-  CreateProfile,
-} from '@wagademy/types';
+import { CreateProfile } from '@wagademy/types';
 import { Transform, Type, plainToInstance } from 'class-transformer';
 import {
   IsArray,
@@ -107,8 +103,7 @@ export class CreateProfileDto implements CreateProfile {
   @IsArray()
   @IsObject({ each: true })
   @ValidateNested({ each: true })
-  @Type(() => CreateUserProfessionalExperienceDto)
-  professionalExperience: CreateProfessionalExperience[];
+  professionalExperience: CreateUserProfessionalExperienceDto[];
 
   @ApiProperty({
     description: 'user areas of expertise',
