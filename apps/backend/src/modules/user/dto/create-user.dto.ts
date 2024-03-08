@@ -1,19 +1,19 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsString } from 'class-validator';
-import { AccountTypeEnum } from '@wagademy/types';
+import { AccountTypeEnum, CreateUser } from '@wagademy/types';
 
-export class CreateUserDto {
+export class CreateUserDto implements Omit<CreateUser, 'email' | 'idRefAuth'> {
   @ApiProperty({
     example: faker.internet.userName(),
-    description: 'The name of the user.',
+    description: 'the name of the user',
   })
   @IsString()
   name: string;
 
   @ApiProperty({
     example: AccountTypeEnum.COMPANY,
-    description: 'The account type.',
+    description: 'the account type',
     enum: AccountTypeEnum,
   })
   @IsEnum(AccountTypeEnum)
