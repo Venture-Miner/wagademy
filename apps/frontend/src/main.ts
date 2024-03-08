@@ -11,6 +11,7 @@ bootstrapApplication(AppComponent, appConfig).catch((err) =>
 declare global {
   interface Window {
     filesUpload: HTMLFormElement;
+    modal: HTMLFormElement;
   }
 }
 
