@@ -1,0 +1,14 @@
+@if(imageFile) {
+<image-cropper
+  [imageFile]="imageFile"
+  [maintainAspectRatio]="true"
+  [aspectRatio]="1 / 1"
+  format="webp"
+  (imageCropped)="imageCropped($event)"
+></image-cropper>
+}
+<div class="flex justify-end">
+  <button class="btn btn-primary btn-outline mt-6 w-full" (click)="onCrop()">
+    Crop
+  </button>
+</div>

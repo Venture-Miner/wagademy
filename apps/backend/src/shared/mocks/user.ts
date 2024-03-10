@@ -1,4 +1,4 @@
-import { User } from '@wagademy/types';
+import { AccountTypeEnum, User } from '@wagademy/types';
 import { faker } from '@faker-js/faker';
 
 export const user: User = {
@@ -6,4 +6,6 @@ export const user: User = {
   name: faker.internet.userName(),
   email: faker.internet.email(),
   idRefAuth: faker.string.uuid(),
+  accountType: AccountTypeEnum.PHYSICAL_PERSON,
+  walletAddress: null,
 };
