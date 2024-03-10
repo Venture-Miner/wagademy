@@ -1,0 +1,70 @@
+<nav class="bg-neutral">
+  <div
+    class="flex flex-wrap items-center justify-between container mx-auto py-4 px-5"
+  >
+    <div class="w-full flex justify-between xl:w-auto">
+      <a [routerLink]="'/'">
+        <img
+          width="211.42px"
+          height="40px"
+          src="./assets/img/images/img-logo-navbar.webp"
+          alt="wagademy logo"
+        />
+      </a>
+      <button
+        aria-label="menu"
+        class="cursor-pointer text-xl xl:hidden"
+        type="button"
+        (click)="toggleNavbar()"
+      >
+        <i
+          class="bi bi-three-dots-vertical text-base-100"
+          title="menu"
+          aria-hidden="true"
+        ></i>
+      </button>
+    </div>
+    <div>
+      <ul
+        [ngClass]="{ hidden: !showMenu }"
+        class="xl:flex grid items-center justify-end xl:gap-4 gap-2"
+      >
+        <li
+          class="hover:text-primary text-base-200 text-sm font-mono pt-2 xl:pt-0"
+        >
+          <a routerLinkActive="active-link" [routerLink]="['/home']"> Home </a>
+        </li>
+        <li class="hover:text-primary text-base-200 text-sm font-mono">
+          <a routerLinkActive="active-link" [routerLink]="['/my-courses']">
+            My courses
+          </a>
+        </li>
+        <li class="hover:text-primary text-base-200 text-sm font-mono">
+          <a routerLinkActive="active-link" [routerLink]="['/my-certificates']">
+            My certificates
+          </a>
+        </li>
+        <li class="hover:text-primary text-base-200 text-sm font-mono">
+          <a routerLinkActive="active-link" [routerLink]="['gptchat']">
+            GPTs
+          </a>
+        </li>
+        <li class="xl:px-4 cursor-pointer pl-3">
+          <i
+            class="bi bi-bell-fill hover:text-primary text-base-200 hover:font-bold"
+          ></i>
+        </li>
+        <li>
+          <img
+            [src]="
+              existingProfileImage ||
+              './assets/img/images/img-default-profile.svg'
+            "
+            class="w-10 h-10 rounded-full border border-primary"
+            alt="profile"
+          />
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
