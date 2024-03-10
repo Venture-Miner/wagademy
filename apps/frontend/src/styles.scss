@@ -18,3 +18,11 @@
 .input {
   @apply bg-neutral text-base-100;
 }
+
+.modal-box {
+  @apply bg-neutral;
+}
+
+.active-link {
+  @apply font-bold text-primary;
+}

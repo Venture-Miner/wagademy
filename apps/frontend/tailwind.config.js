@@ -18,6 +18,7 @@ module.exports = {
           neutral: '#F9F9F9',
           'base-100': '#222634',
           'base-200': '#818896',
+          'base-300': '#D1D5DB',
           success: '#92E09B',
           danger: '#F25C5C',
           warning: '#F2C85C',
@@ -30,6 +31,20 @@ module.exports = {
       white: '#FFFFFF',
     },
     extend: {
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'translateY(-20%)' },
+          '50%': { transform: 'translateY(20%)' },
+        },
+        slideDown: {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(30px)' },
+        },
+      },
+      animation: {
+        wiggle: 'wiggle 2s ease-in-out infinite',
+        slideDown: 'slideDown 1s ease-in-out forwards',
+      },
       fontFamily: {
         sans: ['Space-Grotesk', 'sans-serif'],
         mono: ['Noto-Sans', 'sans-serif'],
