@@ -1,19 +1,22 @@
 <div class="container mx-auto min-h-screen px-3 sm:px-0">
-  <div class="pb-8 pt-6 flex justify-around">
+  <div class="pb-8 pt-6 flex justify-between flex-wrap gap-4">
     <h2 class="font-sans font-medium text-4xl text-base-100">Jobs</h2>
     <div>
-      <wagademy-input [placeholder]="'Search'"></wagademy-input>
+      <wagademy-input
+        [placeholder]="'Search'"
+        [leftIcon]="'bi bi-search'"
+      ></wagademy-input>
     </div>
     <div class="flex flex-wrap gap-2">
       <button
-      *ngFor="let filterJobs of filterJobs; let i = index"
-      class="border border-base-200 hover:border-none font-mono hover:text-base-100 text-base-200 rounded-full p-2 hover:bg-primary"
-    >
-      {{ filterJobs.name }}
-    </button>
-  </div>
+        *ngFor="let filters of filters; let i = index"
+        class="border border-base-200 hover:border-none font-mono hover:text-base-100 text-base-200 rounded-full p-2 hover:bg-primary"
+      >
+        {{ filters.name }}
+      </button>
     </div>
   </div>
+
   <div *ngIf="!isLoading">
     <div *ngIf="jobs.length">
       <div
@@ -24,6 +27,7 @@
           [img]="jobs.images"
           [name]="jobs.name"
           [description]="jobs.description"
+          [details]="'more'"
         ></wagademy-cards>
       </div>
     </div>
