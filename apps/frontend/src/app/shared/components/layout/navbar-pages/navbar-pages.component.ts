@@ -3,13 +3,13 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'wagademy-navbar',
   standalone: true,
-  imports: [NgClass, RouterModule],
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  selector: 'wagademy-navbar-pages',
+  templateUrl: './navbar-pages.component.html',
+  styleUrls: ['./navbar-pages.component.scss'],
+  imports: [RouterModule, NgClass],
 })
-export class NavbarComponent {
+export class NavbarPagesComponent {
   showMenu = false;
   existingProfileImage = './assets/img/images/img-user-profile.svg';
 
