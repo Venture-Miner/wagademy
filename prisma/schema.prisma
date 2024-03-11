@@ -17,6 +17,21 @@ model User {
   userProfile    UserProfile?
   job            Job[]
   jobApplication JobApplication[]
+  companyProfile CompanyProfile?
+}
+
+model CompanyProfile {
+  id                         String     @id @default(auto()) @map("_id") @db.ObjectId
+  name                       String
+  about                      String
+  companyPhoto               ImageFile? @relation(name: "companyPhoto", fields: [companyPhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  companyPhotoId             String?    @db.ObjectId
+  areaOfExpertise            String
+  whatIsTheCompanyLookingFor String[]
+  user                       User       @relation(fields: [userId], references: [id])
+  userId                     String     @unique @db.ObjectId
+  createdAt                  DateTime   @default(now())
+  updatedAt                  DateTime   @updatedAt
 }
 
 model UserProfile {
@@ -66,12 +81,13 @@ model ProfessionalExperience {
 }
 
 model ImageFile {
-  id        String        @id @default(auto()) @map("_id") @db.ObjectId
-  url       String
-  key       String        @unique
-  profiles  UserProfile[] @relation(name: "profilePhoto")
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  url            String
+  key            String           @unique
+  userProfile    UserProfile[]    @relation(name: "profilePhoto")
+  companyProfile CompanyProfile[] @relation(name: "companyPhoto")
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 }
 
 model Job {
