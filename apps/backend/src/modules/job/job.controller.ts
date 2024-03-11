@@ -22,7 +22,10 @@ import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CognitoUserGuard } from '../../infra';
 import { User } from '@wagademy/types';
 import { DBUser } from '../../shared/decorators';
-import { JobUserViewFindManyEntity } from './entities';
+import {
+  JobUserViewFindManyEntity,
+  JobUserViewFindOneEntity,
+} from './entities';
 
 @Controller('job')
 export class JobController {
@@ -86,9 +89,24 @@ export class JobController {
     );
   }
 
-  @Get(':id')
-  findOne(@Param() { id }: MongoIdDto) {
-    return this.jobService.findOne(id);
+  @Get('jobs-user-view/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Get a job.',
+    description: 'Get a job by it own ID.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    // type: JobUserViewFindOneEntity,
+    description: 'Jobs has been successfully retrieved.',
+  })
+  findOneJobUserView(
+    @Param() { id }: MongoIdDto,
+    @DBUser()
+    { id: userId }: User
+  ) {
+    return this.jobService.findOneJobUserView(id, userId);
   }
 
   @Patch(':id')

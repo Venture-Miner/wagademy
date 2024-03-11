@@ -11,10 +11,12 @@ import {
   FilterJobs,
   FindManyJobsUserView,
   JobApplicationStatusEnum,
+  JobUserView,
   Pagination,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
 import { Prisma } from '@prisma/client';
+import { JobUserViewSelect } from '../../shared/select/job-user-view';
 
 @Injectable()
 export class JobService {
@@ -73,54 +75,21 @@ export class JobService {
         orderBy,
         skip,
         take,
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          jobType: true,
-          allocation: true,
-          company: {
-            select: {
-              companyProfile: {
-                select: {
-                  id: true,
-                  name: true,
-                  about: true,
-                  companyPhoto: { select: { url: true } },
-                },
-              },
-            },
-          },
-          jobApplications: {
-            where: { userId },
-            select: {
-              id: true,
-              job: {
-                select: {
-                  company: { select: { name: true } },
-                  title: true,
-                },
-              },
-              applicationStatus: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
-          jobStatus: true,
-          createdAt: true,
-          updatedAt: true,
-        },
+        select: JobUserViewSelect(userId),
       }),
     ]);
     return { count, jobs };
   }
 
-  findAll() {
-    return `This action returns all job`;
+  findOneJobUserView(id: string, userId: string): Promise<JobUserView | null> {
+    return this.prismaService.job.findUnique({
+      where: { id },
+      select: JobUserViewSelect(userId),
+    });
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} job`;
+  findAll() {
+    return `This action returns all job`;
   }
 
   update(id: string, updateJobDto: UpdateJobDto) {
