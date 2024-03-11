@@ -7,14 +7,22 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
+  HttpStatus,
 } from '@nestjs/common';
 import { JobService } from './job.service';
-import { CreateJobApplicationDto, CreateJobDto, UpdateJobDto } from './dto';
-import { MongoIdDto } from '../../shared/dtos';
-import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import {
+  CreateJobApplicationDto,
+  CreateJobDto,
+  FilterJobsDto,
+  UpdateJobDto,
+} from './dto';
+import { MongoIdDto, PaginationDto } from '../../shared/dtos';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CognitoUserGuard } from '../../infra';
 import { User } from '@wagademy/types';
 import { DBUser } from '../../shared/decorators';
+import { JobUserViewFindManyEntity } from './entities';
 
 @Controller('job')
 export class JobController {
@@ -33,6 +41,10 @@ export class JobController {
     description:
       'Creates a job application with the given cognito user and data.',
   })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The job application has been successfully created.',
+  })
   createJobApplication(
     @DBUser()
     { id: userId }: User,
@@ -47,6 +59,31 @@ export class JobController {
   @Get()
   findAll() {
     return this.jobService.findAll();
+  }
+
+  @Get('jobs-user-view')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Get a list of available jobs.',
+    description: 'Get a list of job available with some filter options.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    // type: JobUserViewFindManyEntity,
+    description: 'The list of jobs have been successfully retrieved.',
+  })
+  findManyJobsUserView(
+    @Query() filterJobsDto: FilterJobsDto,
+    @Query() paginationDto: PaginationDto,
+    @DBUser()
+    { id: userId }: User
+  ) {
+    return this.jobService.findManyJobsUserView(
+      filterJobsDto,
+      paginationDto,
+      userId
+    );
   }
 
   @Get(':id')

@@ -60,7 +60,7 @@ export type JobUserView = {
       name: string;
       about: string;
       companyPhoto: { url: string } | null;
-    };
+    } | null;
   };
   jobApplications: UserJobApplication[];
   jobStatus: JobStatusEnum;
@@ -101,3 +101,24 @@ export type UserJobApplication = {
 export type CreateJobApplication = {
   jobId: string;
 };
+
+export type CreateJobApplicationResponse = {
+  id: string;
+  job: {
+    company: { name: string };
+    title: string;
+  };
+  applicationStatus: JobApplicationStatusEnum;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type FilterJobs = {
+  search?: string;
+  featured?: boolean;
+  mostRecent?: boolean;
+};
+
+export type FindManyJobsUserView = { count: number; jobs: JobUserView[] };
+
+export type FindManyJobsCompanyView = { count: number; jobs: JobCompanyView[] };
