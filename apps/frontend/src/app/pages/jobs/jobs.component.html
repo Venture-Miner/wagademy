@@ -1,0 +1,31 @@
+<div class="container mx-auto min-h-screen px-3 sm:px-0">
+  <div class="pb-8 pt-6 flex justify-around">
+    <h2 class="font-sans font-medium text-4xl text-base-100">Jobs</h2>
+    <div>
+      <wagademy-input [placeholder]="'Search'"></wagademy-input>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button
+      *ngFor="let filterJobs of filterJobs; let i = index"
+      class="border border-base-200 hover:border-none font-mono hover:text-base-100 text-base-200 rounded-full p-2 hover:bg-primary"
+    >
+      {{ filterJobs.name }}
+    </button>
+  </div>
+    </div>
+  </div>
+  <div *ngIf="!isLoading">
+    <div *ngIf="jobs.length">
+      <div
+        class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
+      >
+        <wagademy-cards
+          *ngFor="let jobs of jobs"
+          [img]="jobs.images"
+          [name]="jobs.name"
+          [description]="jobs.description"
+        ></wagademy-cards>
+      </div>
+    </div>
+  </div>
+</div>
