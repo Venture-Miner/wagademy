@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MyCertificatesComponent } from './certificates/my-certificates.component';
 import { PagesComponent } from './pages.component';
+import { HomeComponent } from './person/home/home.component';
+import { MyCertificatesComponent } from './certificates/my-certificates.component';
 import { GptChatComponent } from './gpt-chat/gpt-chat.component';
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'gptchat',
         component: GptChatComponent,
+      },
+      {
+        path: 'home',
+        component: HomeComponent,
       },
     ],
   },
