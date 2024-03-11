@@ -8,6 +8,7 @@ import {
   UseGuards,
   UploadedFiles,
   Param,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import {
@@ -21,6 +22,7 @@ import { CognitoUserAttributes, User } from '@wagademy/types';
 import { CognitoUserGuard } from '../../infra';
 import { ApiFiles, CognitoUser, DBUser } from '../../shared/decorators';
 import {
+  CreateCompanyProfileEntity,
   CreateProfileEntity,
   CreateUserResponseEntity,
   FindProfileEntity,
@@ -29,6 +31,7 @@ import {
   UpdateUserResponseEntity,
 } from './entities';
 import {
+  CreateCompanyProfileDto,
   CreateProfileDto,
   CreateUserDto,
   UpdateProfileDto,
@@ -76,7 +79,7 @@ export class UserController {
   @ApiFiles(['profilePhoto'])
   async createUserProfile(
     @DBUser()
-    { id: userId }: User,
+    { id: userId, accountType }: User,
     @UploadedFiles()
     {
       profilePhoto,
@@ -85,8 +88,46 @@ export class UserController {
     },
     @Body() createProfileDto: CreateProfileDto
   ) {
+    if (accountType !== 'PHYSICAL_PERSON')
+      throw new UnauthorizedException(
+        'Only accounts where the type is physical person can create a user profile'
+      );
     return this.userService.createUserProfile(
       { ...createProfileDto, profilePhoto },
+      userId
+    );
+  }
+
+  @Post('create-company-profile')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Create a new company profile',
+    description: 'Creates a new company profile with provided details.',
+  })
+  @ApiCreatedResponse({
+    type: CreateCompanyProfileEntity,
+    status: HttpStatus.CREATED,
+    description: 'Company profile successfully created.',
+  })
+  @ApiFiles(['companyPhoto'])
+  async createCompanyProfile(
+    @DBUser()
+    { id: userId, accountType }: User,
+    @UploadedFiles()
+    {
+      companyPhoto,
+    }: {
+      companyPhoto: Express.Multer.File[];
+    },
+    @Body() createCompanyProfileDto: CreateCompanyProfileDto
+  ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only accounts where the type is company can create a company profile'
+      );
+    return this.userService.createCompanyProfile(
+      { ...createCompanyProfileDto, companyPhoto },
       userId
     );
   }

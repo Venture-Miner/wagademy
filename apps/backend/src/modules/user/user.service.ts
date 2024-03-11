@@ -15,6 +15,8 @@ import {
   UpdateEducation,
   UpdateProfessionalExperience,
   FindOneProfileResponse,
+  CreateCompanyProfile,
+  CreateCompanyProfileResponse,
 } from '@wagademy/types';
 import { FileService } from '../../infra';
 import { Prisma } from '@prisma/client';
@@ -30,6 +32,41 @@ export class UserService {
     return this.prismaService.user.create({
       data: { ...createUser },
     });
+  }
+
+  async createCompanyProfile(
+    createCompanyProfile: CreateCompanyProfile,
+    userId: string
+  ): Promise<CreateCompanyProfileResponse> {
+    let pictureKey = '';
+    try {
+      const { companyPhoto, ...profileData } = createCompanyProfile;
+      const createCompanyProfileData: Prisma.CompanyProfileCreateInput = {
+        ...profileData,
+        user: { connect: { id: userId } },
+      };
+
+      if (companyPhoto) {
+        const { key, url } = await this.fileService.uploadFile(
+          companyPhoto[0],
+          'public-read'
+        );
+        pictureKey = key;
+        createCompanyProfileData.companyPhoto = {
+          create: { url, key: pictureKey },
+        };
+      }
+
+      return this.prismaService.companyProfile.create({
+        data: createCompanyProfileData,
+        include: {
+          companyPhoto: { select: { url: true } },
+        },
+      });
+    } catch (error) {
+      if (pictureKey.length) await this.fileService.removeFile(pictureKey);
+      throw new BadRequestException(error, 'Error creating company profile:');
+    }
   }
 
   async createUserProfile(
