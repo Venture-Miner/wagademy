@@ -1,13 +1,6 @@
 <div class="container mx-auto min-h-screen px-3 sm:px-0">
-  <div class="lg:flex justify-between pb-8 pt-6">
+  <div class="pb-8 pt-6">
     <h2 class="font-sans font-medium text-4xl text-base-100">Home</h2>
-    <div class="lg:w-[528px] w-full">
-      <wagademy-input
-        [leftIcon]="'bi bi-search'"
-        [type]="'text'"
-        [placeholder]="'Search'"
-      ></wagademy-input>
-    </div>
   </div>
   <div
     *ngIf="!jobs.length && !chatbots.length && !courses.length"
@@ -22,7 +15,7 @@
         <button class="text-primary font-serif text-xl">See More</button>
       </div>
       <div
-        class="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 pt-6 xl:pt-0"
+        class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
       >
         <wagademy-cards
           *ngFor="let courses of courses"
@@ -39,7 +32,7 @@
         <button class="text-primary font-serif text-xl">See More</button>
       </div>
       <div
-        class="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 pt-6 xl:pt-0"
+        class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
       >
         <wagademy-cards
           *ngFor="let jobs of jobs"
@@ -56,7 +49,7 @@
         <button class="text-primary font-serif text-xl">See More</button>
       </div>
       <div
-        class="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 pt-6 xl:pt-0"
+        class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
       >
         <wagademy-cards
           *ngFor="let chatbots of chatbots"
