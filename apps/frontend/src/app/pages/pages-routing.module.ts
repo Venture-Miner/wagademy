@@ -5,6 +5,7 @@ import { HomeComponent } from './person/home/home.component';
 import { MyCertificatesComponent } from './certificates/my-certificates.component';
 import { GptChatComponent } from './gpt-chat/gpt-chat.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { JobsDetailsComponent } from './jobs-details/jobs-details.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'jobs',
         component: JobsComponent,
+      },
+      {
+        path: 'jobs-details',
+        component: JobsDetailsComponent,
       },
     ],
   },
