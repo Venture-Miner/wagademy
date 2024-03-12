@@ -91,19 +91,19 @@ model ImageFile {
 }
 
 model Job {
-  id                   String           @id @default(auto()) @map("_id") @db.ObjectId
-  title                String
-  description          String
-  jobType              JobTypeEnum
-  allocation           AllocationEnum
-  aiInterviewQuestions String[]
-  views                Int              @default(0)
-  company              User             @relation(fields: [companyId], references: [id])
-  companyId            String           @db.ObjectId
-  jobApplications      JobApplication[]
-  jobStatus            JobStatusEnum
-  createdAt            DateTime         @default(now())
-  updatedAt            DateTime         @updatedAt
+  id                       String                       @id @default(auto()) @map("_id") @db.ObjectId
+  title                    String
+  description              String
+  employmentClassification EmploymentClassificationEnum
+  allocation               AllocationEnum
+  aiInterviewQuestions     String[]
+  views                    Int                          @default(0)
+  company                  User                         @relation(fields: [companyId], references: [id])
+  companyId                String                       @db.ObjectId
+  jobApplications          JobApplication[]
+  jobStatus                JobStatusEnum                @default(PUBLISHED)
+  createdAt                DateTime                     @default(now())
+  updatedAt                DateTime                     @updatedAt
 }
 
 model JobApplication {
@@ -128,7 +128,7 @@ enum AllocationEnum {
   ON_SITE
 }
 
-enum JobTypeEnum {
+enum EmploymentClassificationEnum {
   FULL_TIME
   CONTRACT
   PART_TIME

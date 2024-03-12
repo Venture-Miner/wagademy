@@ -1,4 +1,4 @@
-export const JobTypeEnum = {
+export const EmploymentClassificationEnum = {
   FULL_TIME: 'FULL_TIME',
   CONTRACT: 'CONTRACT',
   PART_TIME: 'PART_TIME',
@@ -7,7 +7,8 @@ export const JobTypeEnum = {
   OTHER: 'OTHER',
 } as const;
 
-export type JobTypeEnum = (typeof JobTypeEnum)[keyof typeof JobTypeEnum];
+export type EmploymentClassificationEnum =
+  (typeof EmploymentClassificationEnum)[keyof typeof EmploymentClassificationEnum];
 
 export const AllocationEnum = {
   REMOTE: 'REMOTE',
@@ -38,21 +39,76 @@ export type JobCompanyView = {
   id: string;
   title: string;
   description: string;
-  jobType: JobTypeEnum;
+  employmentClassification: EmploymentClassificationEnum;
   allocation: AllocationEnum;
   aiInterviewQuestions: string[];
   views: number;
-  jobApplication: { count: number };
+  _count: { jobApplications: number };
   jobStatus: JobStatusEnum;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type CreateJobResponse = {
+  id: string;
+  title: string;
+  description: string;
+  employmentClassification: EmploymentClassificationEnum;
+  allocation: AllocationEnum;
+  aiInterviewQuestions: string[];
+  views: number;
+  _count: { jobApplications: number };
+  jobStatus: JobStatusEnum;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type UpdateJobResponse = {
+  id: string;
+  title: string;
+  description: string;
+  employmentClassification: EmploymentClassificationEnum;
+  allocation: AllocationEnum;
+  aiInterviewQuestions: string[];
+  views: number;
+  _count: { jobApplications: number };
+  jobStatus: JobStatusEnum;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type CreateJob = {
+  title: string;
+  description: string;
+  employmentClassification: EmploymentClassificationEnum;
+  allocation: AllocationEnum;
 };
 
 export type JobUserView = {
   id: string;
   title: string;
   description: string;
-  jobType: JobTypeEnum;
+  employmentClassification: EmploymentClassificationEnum;
+  allocation: AllocationEnum;
+  company: {
+    companyProfile: {
+      id: string;
+      name: string;
+      about: string;
+      companyPhoto: { url: string } | null;
+    } | null;
+  };
+  jobApplications: UserJobApplication[];
+  jobStatus: JobStatusEnum;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type FindOneJobUserViewResponse = {
+  id: string;
+  title: string;
+  description: string;
+  employmentClassification: EmploymentClassificationEnum;
   allocation: AllocationEnum;
   company: {
     companyProfile: {
@@ -117,6 +173,13 @@ export type FilterJobs = {
   search?: string;
   featured?: boolean;
   mostRecent?: boolean;
+};
+
+export type FilterCompanyJobs = {
+  search?: string;
+  numberOfApplications?: boolean;
+  mostRecent?: boolean;
+  jobViews?: boolean;
 };
 
 export type FindManyJobsUserView = { count: number; jobs: JobUserView[] };

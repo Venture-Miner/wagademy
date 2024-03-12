@@ -47,7 +47,7 @@ export class CreateCompanyProfileDto implements CreateCompanyProfile {
   @ApiProperty({
     type: 'string',
     format: 'binary',
-    description: 'company prophile photo as FormData',
+    description: 'company profile photo as FormData',
     required: false,
   })
   @IsOptional()

@@ -2,14 +2,12 @@ import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   AllocationEnum,
-  JobStatusEnum,
   EmploymentClassificationEnum,
-  JobUserView,
-  UserJobApplication,
+  JobCompanyView,
+  JobStatusEnum,
 } from '@wagademy/types';
-import { JobApplicationUserViewEntity } from './job-application-user-view.entity';
 
-export class JobUserViewEntity implements JobUserView {
+export class JobCompanyViewEntity implements JobCompanyView {
   @ApiProperty({ example: faker.database.mongodbObjectId() })
   id: string;
 
@@ -25,18 +23,14 @@ export class JobUserViewEntity implements JobUserView {
   @ApiProperty({ example: AllocationEnum.REMOTE })
   allocation: AllocationEnum;
 
-  @ApiProperty({ example: { company: { companyProfile: null } } })
-  company: {
-    companyProfile: {
-      id: string;
-      name: string;
-      about: string;
-      companyPhoto: { url: string } | null;
-    } | null;
-  };
+  @ApiProperty({ example: [faker.lorem.word()] })
+  aiInterviewQuestions: string[];
 
-  @ApiProperty({ type: [JobApplicationUserViewEntity] })
-  jobApplications: UserJobApplication[];
+  @ApiProperty({ example: faker.number.int() })
+  views: number;
+
+  @ApiProperty({ example: { jobApplications: faker.number.int() } })
+  _count: { jobApplications: number };
 
   @ApiProperty({ example: JobStatusEnum.PUBLISHED })
   jobStatus: JobStatusEnum;

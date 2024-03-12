@@ -1,9 +1,9 @@
-export const JobUserViewSelect = (userId: string) => {
+export const JobUserViewSelect = (userId?: string) => {
   return {
     id: true,
     title: true,
     description: true,
-    jobType: true,
+    employmentClassification: true,
     allocation: true,
     company: {
       select: {

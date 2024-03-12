@@ -93,7 +93,7 @@ export class UserController {
   ) {
     if (accountType !== 'PHYSICAL_PERSON')
       throw new UnauthorizedException(
-        'Only accounts where the type is physical person can create a user profile'
+        'Only accounts where the type is physical person can create a user profile.'
       );
     return this.userService.createUserProfile(
       { ...createProfileDto, profilePhoto },
@@ -127,7 +127,7 @@ export class UserController {
   ) {
     if (accountType !== 'COMPANY')
       throw new UnauthorizedException(
-        'Only accounts where the type is company can create a company profile'
+        'Only accounts where the type is company can create a company profile.'
       );
     return this.userService.createCompanyProfile(
       { ...createCompanyProfileDto, companyPhoto },
