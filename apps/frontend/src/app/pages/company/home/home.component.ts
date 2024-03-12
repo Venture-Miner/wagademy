@@ -10,7 +10,7 @@ import { CardsComponent } from '../../../shared/components/cards/cards.component
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
+export class HomeCompanyComponent {
   applications = [
     {
       images: './assets/img/images/img-example-application.webp',
