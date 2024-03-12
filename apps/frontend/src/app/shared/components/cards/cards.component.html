@@ -1,5 +1,6 @@
 <div
   class="group sm:w-[304px] w-[230px] h-[336px] bg-neutral mx-auto hover:shadow-lg flex justify-center relative rounded-lg"
+  [ngClass]="{ 'bg-base-100 bg-opacity-40': showMenu }"
 >
   <div class="font-mono sm:w-[304px] w-[230px]">
     <img
@@ -14,74 +15,110 @@
       class="h-40 w-full object-cover rounded-t-lg"
       alt="fallback image"
     />
-    <div *ngIf="jobs = true" class="absolute top-0 right-0 p-2">
+    <div *ngIf="menu === 'jobs'" class="absolute top-0 right-0 p-2">
       <div
-        (click)="(showMenu)"
-        class="bg-neutral shadow-md rounded-full py-2 px-2"
+        (click)="showMenu = true"
+        class="bg-neutral shadow-md cursor-pointer rounded-full py-1 px-2"
       >
         <i class="bi bi-three-dots-vertical text-base-100"></i>
       </div>
-      <div
-        *ngIf="showMenu"
-        class="bg-neutral rounded-lg shadow w-[164px] h-[248px] px-5 py-2"
-      >
-        <div (click)="unpublishJob.emit()" class="flex gap-1">
-          <i class="bi bi-arrow-down-left text-primary"></i>
-          <p class="font-serif text-base-100">Unpublish</p>
-        </div>
-        <div (click)="updateJob.emit()" class="flex gap-1">
-          <i class="bi bi-check-lg text-primary"></i>
-          <p class="font-serif text-base-100">Update</p>
-        </div>
-        <div (click)="removeJob.emit()" class="flex gap-1">
-          <i class="bi bi-trash3 text-primary"></i>
-          <p class="font-serif text-base-100">Remove</p>
-        </div>
-        <div (click)="interviewGPTJob.emit()" class="flex gap-1">
-          <i class="bi bi-arrow-down-left text-primary"></i>
-          <p class="font-serif text-base-100">Interview GPT</p>
-        </div>
-        <div (click)="copyLinkJob.emit()" class="flex gap-1">
-          <img src="./assets/icons/icon-robot.svg" alt="robot" />
-          <p class="font-serif text-base-100">Copy link</p>
-        </div>
-        <div (click)="showMenu = false" class="flex gap-1">
-          <i class="bi bi-x-lg text-primary"></i>
-          <p class="font-serif text-base-100">Close</p>
+      <div class="absolute top-0 right-0 p-2">
+        <div
+          *ngIf="showMenu === true"
+          class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
+        >
+          <div
+            (click)="unpublishJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <i class="bi bi-arrow-down-left text-primary"></i>
+            <p class="font-serif text-base-100">Unpublish</p>
+          </div>
+          <div
+            (click)="updateJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <i class="bi bi-check-lg text-primary"></i>
+            <p class="font-serif text-base-100">Update</p>
+          </div>
+          <div
+            (click)="removeJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <i class="bi bi-trash3 text-error"></i>
+            <p class="font-serif text-base-100">Remove</p>
+          </div>
+          <div
+            (click)="interviewGPTJob.emit()"
+            class="flex gap-1 cursor-pointer pb-2"
+          >
+            <i class="bi bi-arrow-down-left text-primary"></i>
+            <p class="font-serif text-base-100">Interview GPT</p>
+          </div>
+          <div
+            (click)="copyLinkJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <img src="./assets/icons/icon-robot.svg" alt="robot" />
+            <p class="font-serif text-base-100">Copy link</p>
+          </div>
+          <div (click)="showMenu = false" class="flex gap-1 cursor-pointer">
+            <i class="bi bi-x-lg text-base-200"></i>
+            <p class="font-serif text-base-100">Close</p>
+          </div>
         </div>
       </div>
     </div>
-    <div *ngIf="!courses" class="absolute top-0 right-0 p-2">
+    <div *ngIf="menu === 'courses'" class="absolute top-0 right-0 p-2">
       <div
         (click)="showMenuCourse = true"
-        class="bg-neutral shadow-md rounded-full py-2 px-2"
+        class="bg-neutral shadow-md cursor-pointer rounded-full py-1 px-2"
       >
         <i class="bi bi-three-dots-vertical text-base-100"></i>
       </div>
-      <div
-        *ngIf="showMenuCourse"
-        class="bg-neutral rounded-lg shadow w-[164px] h-[216px] px-5 py-2"
-      >
-        <div (click)="updateCourse.emit()" class="flex gap-1">
-          <i class="bi bi-check-lg text-primary"></i>
-          <p class="font-serif text-base-100">Update</p>
-        </div>
-        <div (click)="removeCourse.emit()" class="flex gap-1">
-          <i class="bi bi-trash3 text-primary"></i>
-          <p class="font-serif text-base-100">Remove</p>
-        </div>
-        <div (click)="certificatesCourse.emit()" class="flex gap-1">
-          <i class="bi bi-award text-primary"></i>
-          <p class="font-serif text-base-100">Certificates</p>
-        </div>
-        <div (click)="showMenuCourse = false" class="flex gap-1">
-          <i class="bi bi-x-lg text-primary"></i>
-          <p class="font-serif text-base-100">Close</p>
+      <div class="absolute top-0 right-0 p-2">
+        <div
+          *ngIf="showMenuCourse === true"
+          class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
+        >
+          <div
+            (click)="updateCourse.emit()"
+            class="flex gap-1 pb-6 cursor-pointer"
+          >
+            <i class="bi bi-check-lg text-primary"></i>
+            <p class="font-serif text-base-100">Update</p>
+          </div>
+          <div
+            (click)="removeCourse.emit()"
+            class="flex gap-1 pb-6 cursor-pointer"
+          >
+            <i class="bi bi-trash3 text-error"></i>
+            <p class="font-serif text-base-100">Remove</p>
+          </div>
+          <div
+            (click)="certificatesCourse.emit()"
+            class="flex gap-1 cursor-pointer pb-6"
+          >
+            <i class="bi bi-award text-primary"></i>
+            <p class="font-serif text-base-100">Certificates</p>
+          </div>
+          <div
+            (click)="showMenuCourse = false"
+            class="flex gap-1 cursor-pointer"
+          >
+            <i class="bi bi-x-lg text-base-200"></i>
+            <p class="font-serif text-base-100">Close</p>
+          </div>
         </div>
       </div>
     </div>
     <div
-      class="px-4 absolute bottom-4 bg-neutral group-hover:-translate-y-8 duration-300 w-full"
+      class="px-4 bottom-4 bg-neutral duration-300 w-full"
+      [ngClass]="[
+        showMenuCourse === true || showMenu === true
+          ? ''
+          : 'group-hover:-translate-y-8 absolute'
+      ]"
     >
       <p
         *ngIf="applications"
@@ -107,7 +144,14 @@
       </div>
     </div>
     <div class="absolute bottom-0 w-full p-4">
-      <div class="opacity-0 w-full duration-300 group-hover:opacity-100">
+      <div
+        class="opacity-0 w-full duration-300"
+        [ngClass]="[
+          showMenuCourse === true || showMenu === true
+            ? ''
+            : 'group-hover:opacity-100'
+        ]"
+      >
         <button class="btn btn-primary w-full" (click)="onViewMoreClick()">
           {{ button }}
         </button>

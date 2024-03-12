@@ -16,8 +16,7 @@ export class CardsComponent {
   @Input() selectId: string | undefined;
   @Input() button: string | undefined;
   @Input() applications: number | undefined;
-  @Input() courses = false;
-  @Input() jobs = false;
+  @Input() menu: 'courses' | 'jobs' | '' = '';
   showMenu = false;
   showMenuCourse = false;
   @Output() unpublishJob: EventEmitter<void> = new EventEmitter<void>();

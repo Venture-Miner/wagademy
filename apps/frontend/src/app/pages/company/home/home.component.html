@@ -8,7 +8,7 @@
   >
     <p>There are no content available</p>
   </div>
-  <div *ngIf="!isLoading">
+  <div class="pb-6" *ngIf="!isLoading">
     <div *ngIf="applications.length">
       <div class="flex justify-between pb-2">
         <h3 class="text-2xl text-base-100 font-sans font-medium">
@@ -17,7 +17,7 @@
         <button class="text-primary font-serif text-xl">See More</button>
       </div>
       <div
-        class="max-[513px]:justify-center justify-between flex gap-8 pt-6 xl:pt-0"
+        class="max-[513px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
       >
         <wagademy-cards
           *ngFor="let applications of applications"
@@ -26,6 +26,7 @@
           [description]="applications.description"
           [applications]="applications.applications"
           [button]="'View More'"
+          [menu]="'jobs'"
         ></wagademy-cards>
       </div>
     </div>
@@ -35,7 +36,7 @@
         <button class="text-primary font-serif text-xl">See More</button>
       </div>
       <div
-        class="max-[513px]:justify-center justify-between flex gap-8 pt-6 xl:pt-0"
+        class="max-[513px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
       >
         <wagademy-cards
           *ngFor="let courses of courses"
@@ -43,6 +44,7 @@
           [name]="courses.name"
           [description]="courses.description"
           [button]="'Invite GPT+'"
+          [menu]="'courses'"
         ></wagademy-cards>
       </div>
     </div>
