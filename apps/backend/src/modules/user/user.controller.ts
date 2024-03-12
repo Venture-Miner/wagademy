@@ -27,6 +27,7 @@ import {
   CreateUserResponseEntity,
   FindProfileEntity,
   RetrieveSelfResponseEntity,
+  UpdateCompanyProfileEntity,
   UpdateProfileEntity,
   UpdateUserResponseEntity,
 } from './entities';
@@ -34,10 +35,12 @@ import {
   CreateCompanyProfileDto,
   CreateProfileDto,
   CreateUserDto,
+  UpdateCompanyProfileDto,
   UpdateProfileDto,
   UpdateUserDto,
 } from './dto';
 import { MongoIdDto } from '../../shared/dtos';
+import { FindOneCompanyProfileEntity } from './entities/find-one-company-profile-response.entity';
 
 @ApiTags('User')
 @Controller('user')
@@ -148,6 +151,22 @@ export class UserController {
     return this.userService.findUserProfile(id);
   }
 
+  @Get('company-profile/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Find a company profile',
+    description: 'Find a company profile with ID.',
+  })
+  @ApiResponse({
+    type: FindOneCompanyProfileEntity,
+    status: HttpStatus.OK,
+    description: 'Company profile retrieved successfully.',
+  })
+  async findCompanyProfile(@Param() { id }: MongoIdDto) {
+    return this.userService.findCompanyProfile(id);
+  }
+
   @Get('self')
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
@@ -211,6 +230,36 @@ export class UserController {
     return this.userService.updateUserProfile(userId, {
       ...updateProfileDto,
       profilePhoto,
+    });
+  }
+
+  @Patch('company-profile')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Update a company profile',
+    description: 'Updates a company profile with provided details.',
+  })
+  @ApiResponse({
+    type: UpdateCompanyProfileEntity,
+    status: HttpStatus.OK,
+    description: 'Company profile successfully updated.',
+  })
+  @ApiFiles(['companyPhoto'])
+  async updateCompanyProfile(
+    @DBUser()
+    { id: userId }: User,
+    @UploadedFiles()
+    {
+      companyPhoto,
+    }: {
+      companyPhoto?: Express.Multer.File[];
+    },
+    @Body() updateCompanyProfileDto: UpdateCompanyProfileDto
+  ) {
+    return this.userService.updateCompanyProfile(userId, {
+      ...updateCompanyProfileDto,
+      companyPhoto,
     });
   }
 }

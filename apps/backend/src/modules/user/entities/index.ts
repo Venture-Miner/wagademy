@@ -5,3 +5,4 @@ export * from './create-profile-response.entity';
 export * from './create-company-profile-response.entity';
 export * from './find-profile-response.entity';
 export * from './update-profile-response.entity';
+export * from './update-company-profile-response.entity';
