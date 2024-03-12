@@ -16,20 +16,28 @@
       </button>
     </div>
   </div>
-
   <div *ngIf="!isLoading">
     <div *ngIf="jobs.length">
       <div
         class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
       >
         <wagademy-cards
-          *ngFor="let jobs of jobs"
-          [img]="jobs.images"
-          [name]="jobs.name"
-          [description]="jobs.description"
+          *ngFor="let job of jobs"
+          [img]="job.images"
+          [name]="job.name"
+          [description]="job.description"
           [details]="'more'"
+          (click)="jobDetails(job)"
         ></wagademy-cards>
       </div>
+    </div>
+    <div class="flex justify-center lg:justify-end pt-6 pb-3">
+      <wagademy-pagination
+        [page]="page"
+        [take]="take"
+        [count]="count"
+        (pageChange)="page = $event; getJobs()"
+      ></wagademy-pagination>
     </div>
   </div>
 </div>
