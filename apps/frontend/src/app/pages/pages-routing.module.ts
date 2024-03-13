@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { HomeComponent } from './person/home/home.component';
 import { MyCertificatesComponent } from './certificates/my-certificates.component';
-import { GptChatComponent } from './gpt-chat/gpt-chat.component';
+import { GptChatComponent } from './person/gpt-chat/gpt-chat.component';
+import { GptListComponent } from './person/gpt-list/gpt-list.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
+      },
+      {
+        path: 'chatbot',
+        component: GptListComponent,
       },
     ],
   },
