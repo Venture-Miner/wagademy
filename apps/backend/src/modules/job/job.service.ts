@@ -23,6 +23,8 @@ import {
   UpdateJobResponse,
   UpdateJobApplicationCompanyView,
   ConfigureAIQuestions,
+  FindManyJobApplicationsUserView,
+  FilterUserJobApplications,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
 import { Prisma } from '@prisma/client';
@@ -188,6 +190,35 @@ export class JobService {
             },
           },
           job: { select: { id: true, title: true } },
+        },
+      }),
+    ]);
+    return { count, jobApplications };
+  }
+
+  async findManyJobApplicationsUserView(
+    { invited }: FilterUserJobApplications,
+    { skip, take }: Pagination,
+    userId: string
+  ): Promise<FindManyJobApplicationsUserView> {
+    const AND: Prisma.JobApplicationWhereInput[] = [];
+    AND.push({ userId });
+    if (invited)
+      AND.push({ applicationStatus: JobApplicationStatusEnum.INVITED });
+    const where = { AND };
+    const [count, jobApplications] = await Promise.all([
+      this.prismaService.jobApplication.count({ where }),
+      this.prismaService.jobApplication.findMany({
+        where,
+        skip,
+        take,
+        include: {
+          job: {
+            select: {
+              title: true,
+              company: { select: { name: true } },
+            },
+          },
         },
       }),
     ]);

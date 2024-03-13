@@ -19,6 +19,7 @@ import {
   FilterCompanyJobApplicationsDto,
   FilterCompanyJobsDto,
   FilterJobsDto,
+  FilterUserJobApplicationsDto,
   UpdateJobDto,
 } from './dto';
 import { MongoIdDto, PaginationDto } from '../../shared/dtos';
@@ -155,6 +156,34 @@ export class JobController {
       throw new UnauthorizedException('You are not able to access this.');
     return this.jobService.findManyJobApplicationsCompanyView(
       filterCompanyJobApplicationsDto,
+      paginationDto,
+      userId
+    );
+  }
+
+  @Get('user-job-applications')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Retrieve a list of job applications submitted by the user.',
+    description:
+      'Retrieve a list of job applications submitted by the user with some filter options and company ID.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description:
+      'The list of job applications have been successfully retrieved.',
+  })
+  findManyJobApplicationsUserView(
+    @Query() filterUserJobApplicationsDto: FilterUserJobApplicationsDto,
+    @Query() paginationDto: PaginationDto,
+    @DBUser()
+    { id: userId, accountType }: User
+  ) {
+    if (accountType !== 'PHYSICAL_PERSON')
+      throw new UnauthorizedException('You are not able to access this.');
+    return this.jobService.findManyJobApplicationsUserView(
+      filterUserJobApplicationsDto,
       paginationDto,
       userId
     );

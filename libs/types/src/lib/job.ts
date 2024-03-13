@@ -233,6 +233,10 @@ export type FilterCompanyJobApplications = {
   interviewed?: boolean;
 };
 
+export type FilterUserJobApplications = {
+  invited?: boolean;
+};
+
 export type FindManyJobsUserView = { count: number; jobs: JobUserView[] };
 
 export type FindManyJobsCompanyView = { count: number; jobs: JobCompanyView[] };
@@ -240,4 +244,9 @@ export type FindManyJobsCompanyView = { count: number; jobs: JobCompanyView[] };
 export type FindManyJobApplicationsCompanyView = {
   count: number;
   jobApplications: JobApplicationCompanyView[];
+};
+
+export type FindManyJobApplicationsUserView = {
+  count: number;
+  jobApplications: UserJobApplication[];
 };

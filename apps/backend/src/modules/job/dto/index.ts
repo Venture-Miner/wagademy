@@ -5,3 +5,4 @@ export * from './configure-ai-questions.dto';
 export * from './filter-jobs.dto';
 export * from './filter-company-jobs.dto';
 export * from './filter-job-applications.dto';
+export * from './filter-user-job-applications.dto';
