@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   JobApplicationCompanyView,
   JobApplicationStatusEnum,
-} from '../../../../../libs/types/src';
+} from '@wagademy/types';
 
 export class JobApplicationCompanyViewEntity
   implements JobApplicationCompanyView

@@ -21,6 +21,7 @@ import {
   Pagination,
   UpdateJob,
   UpdateJobResponse,
+  UpdateJobApplicationCompanyView,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
 import { Prisma } from '@prisma/client';
@@ -238,6 +239,50 @@ export class JobService {
       where: { id },
       data: updateJobDto,
       include: { _count: { select: { jobApplications: true } } },
+    });
+  }
+
+  async inviteToInterview(
+    id: string,
+    userId: string
+  ): Promise<UpdateJobApplicationCompanyView> {
+    const jobApplication = await this.prismaService.jobApplication.findUnique({
+      where: { id },
+      include: { job: { select: { companyId: true } } },
+    });
+    if (!jobApplication) {
+      throw new NotFoundException(
+        'Job application with the provided ID does not exist'
+      );
+    }
+    if (jobApplication.job.companyId !== userId)
+      throw new UnauthorizedException(
+        'You are not able to invite the user since you do not own this job position'
+      );
+    return this.prismaService.jobApplication.update({
+      where: { id },
+      data: { applicationStatus: JobApplicationStatusEnum.INVITED },
+      include: {
+        user: {
+          include: {
+            userProfile: {
+              select: {
+                id: true,
+                name: true,
+                profilePhoto: { select: { url: true } },
+                about: true,
+              },
+            },
+          },
+        },
+        job: {
+          select: {
+            id: true,
+
+            title: true,
+          },
+        },
+      },
     });
   }
 

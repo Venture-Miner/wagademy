@@ -164,6 +164,25 @@ export type JobApplicationCompanyView = {
   updatedAt: Date;
 };
 
+export type UpdateJobApplicationCompanyView = {
+  id: string;
+  user: {
+    userProfile: {
+      id: string;
+      name: string;
+      profilePhoto: { url: string } | null;
+      about: string;
+    } | null;
+  };
+  job: {
+    id: string;
+    title: string;
+  };
+  applicationStatus: JobApplicationStatusEnum;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export type UserJobApplication = {
   id: string;
   job: {

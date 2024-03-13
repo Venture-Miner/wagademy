@@ -35,6 +35,7 @@ import {
   CreateJobApplicationResponseEntity,
   CreateJobResponseEntity,
   FindManyJobApplicationsCompanyViewEntity,
+  InviteToInterviewEntity,
   JobCompanyViewFindManyEntity,
   JobCompanyViewFindOneEntity,
   JobUserViewFindManyEntity,
@@ -262,6 +263,30 @@ export class JobController {
   })
   updateViews(@Param() { id }: MongoIdDto) {
     return this.jobService.updateViews(id);
+  }
+
+  @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Invite an user to interview',
+    description: 'Invites an user to be interviewed with job application ID.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Invite successfully done.',
+    type: InviteToInterviewEntity,
+  })
+  inviteToInterview(
+    @Param() { id }: MongoIdDto,
+    @DBUser()
+    { id: userId, accountType }: User
+  ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only accounts where the type is company can update invite to an interview.'
+      );
+    return this.jobService.inviteToInterview(id, userId);
   }
 
   @Delete(':id')

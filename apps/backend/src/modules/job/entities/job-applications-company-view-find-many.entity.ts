@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   FindManyJobApplicationsCompanyView,
   JobApplicationCompanyView,
-} from '../../../../../../libs/types/src';
+} from '@wagademy/types';
 import { JobApplicationCompanyViewEntity } from '../../../shared/entities';
 
 export class FindManyJobApplicationsCompanyViewEntity
