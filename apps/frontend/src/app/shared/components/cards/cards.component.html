@@ -1,7 +1,10 @@
 <div
   class="group sm:w-[304px] w-[230px] h-[336px] bg-neutral mx-auto hover:shadow-lg flex justify-center relative rounded-lg"
-  [ngClass]="{ 'bg-base-100 bg-opacity-40': showMenu }"
 >
+  <div
+    class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"
+    *ngIf="showMenu === true || showMenuCourse === true"
+  ></div>
   <div class="font-mono sm:w-[304px] w-[230px]">
     <img
       *ngIf="img"
