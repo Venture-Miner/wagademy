@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { JobService } from './job.service';
 import {
+  ConfigureAIQuestionsDto,
   CreateJobApplicationDto,
   CreateJobDto,
   FilterCompanyJobApplicationsDto,
@@ -265,7 +266,7 @@ export class JobController {
     return this.jobService.updateViews(id);
   }
 
-  @Patch(':id')
+  @Patch('invite-to-interview/:id')
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
@@ -287,6 +288,36 @@ export class JobController {
         'Only accounts where the type is company can update invite to an interview.'
       );
     return this.jobService.inviteToInterview(id, userId);
+  }
+
+  @Patch('configure-ai-questions/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Configure AI questions for one job',
+    description:
+      'Configure AI questions for one job with job ID and provided questions.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Ai questions successfully configured.',
+    type: InviteToInterviewEntity,
+  })
+  configureAIQuestions(
+    @Param() { id }: MongoIdDto,
+    @Body() configureAIQuestionsDto: ConfigureAIQuestionsDto,
+    @DBUser()
+    { id: userId, accountType }: User
+  ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only accounts where the type is company can update invite to an interview.'
+      );
+    return this.jobService.configureAIQuestions(
+      id,
+      userId,
+      configureAIQuestionsDto
+    );
   }
 
   @Delete(':id')

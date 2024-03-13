@@ -105,6 +105,10 @@ export type UpdateJob = {
   allocation?: AllocationEnum;
 };
 
+export type ConfigureAIQuestions = {
+  aiInterviewQuestions: string[];
+};
+
 export type JobUserView = {
   id: string;
   title: string;

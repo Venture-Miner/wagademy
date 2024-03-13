@@ -22,6 +22,7 @@ import {
   UpdateJob,
   UpdateJobResponse,
   UpdateJobApplicationCompanyView,
+  ConfigureAIQuestions,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
 import { Prisma } from '@prisma/client';
@@ -231,7 +232,8 @@ export class JobService {
     });
     if (!job) {
       throw new NotFoundException('Job with the provided ID does not exist');
-    } else if (userId !== job.companyId)
+    }
+    if (userId !== job.companyId)
       throw new UnauthorizedException(
         'You are not able to update this job since you do not own it'
       );
@@ -283,6 +285,26 @@ export class JobService {
           },
         },
       },
+    });
+  }
+
+  async configureAIQuestions(
+    id: string,
+    userId: string,
+    { aiInterviewQuestions }: ConfigureAIQuestions
+  ): Promise<UpdateJobResponse> {
+    const job = await this.prismaService.job.findUnique({ where: { id } });
+    if (!job) {
+      throw new NotFoundException('Job with the provided ID does not exist');
+    }
+    if (userId !== job.companyId)
+      throw new UnauthorizedException(
+        'You are not able to update this job since you do not own it'
+      );
+    return this.prismaService.job.update({
+      where: { id },
+      data: { aiInterviewQuestions },
+      include: { _count: { select: { jobApplications: true } } },
     });
   }
 
