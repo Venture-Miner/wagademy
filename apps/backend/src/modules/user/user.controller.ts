@@ -139,7 +139,7 @@ export class UserController {
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary: 'Find a user profile',
+    summary: 'Find an user profile',
     description: 'Find a profile with ID.',
   })
   @ApiResponse({
@@ -187,8 +187,8 @@ export class UserController {
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary: 'Update a user',
-    description: 'Updates a user with the provided data.',
+    summary: 'Update an user',
+    description: 'Updates an user with the provided data.',
   })
   @ApiResponse({
     type: UpdateUserResponseEntity,
