@@ -37,6 +37,7 @@ import {
   CreateJobApplicationResponseEntity,
   CreateJobResponseEntity,
   FindManyJobApplicationsCompanyViewEntity,
+  FindManyJobApplicationsUserViewEntity,
   InviteToInterviewEntity,
   JobCompanyViewFindManyEntity,
   JobCompanyViewFindOneEntity,
@@ -173,6 +174,7 @@ export class JobController {
     status: HttpStatus.OK,
     description:
       'The list of job applications have been successfully retrieved.',
+    type: FindManyJobApplicationsUserViewEntity,
   })
   findManyJobApplicationsUserView(
     @Query() filterUserJobApplicationsDto: FilterUserJobApplicationsDto,
