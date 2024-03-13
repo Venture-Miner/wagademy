@@ -70,4 +70,8 @@ export class GptListComponent {
   getChatBots() {
     /* TODO document why this method 'getChatBots' is empty */
   }
+
+  exploreOption() {
+    /* TODO document why this method 'exploreOption' is empty */
+  }
 }
