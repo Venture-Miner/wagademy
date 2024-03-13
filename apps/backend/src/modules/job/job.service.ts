@@ -3,21 +3,23 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateJobDto } from './dto/create-job.dto';
-import { UpdateJobDto } from './dto/update-job.dto';
 import {
   CreateJob,
   CreateJobApplication,
   CreateJobApplicationResponse,
   CreateJobResponse,
   FilterCompanyJobs,
+  FilterCompanyJobApplications,
   FilterJobs,
+  FindManyJobApplicationsCompanyView,
   FindManyJobsCompanyView,
   FindManyJobsUserView,
+  FindOneJobCompanyViewResponse,
   FindOneJobUserViewResponse,
   JobApplicationStatusEnum,
   JobUserView,
   Pagination,
+  UpdateJob,
   UpdateJobResponse,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
@@ -84,7 +86,7 @@ export class JobService {
   async findManyJobsUserView(
     { featured, mostRecent, search }: FilterJobs,
     { skip, take }: Pagination,
-    userId?: string
+    userId: string
   ): Promise<FindManyJobsUserView> {
     const AND: Prisma.JobWhereInput[] = [];
     const orderBy: Prisma.JobOrderByWithRelationInput[] = [];
@@ -108,20 +110,10 @@ export class JobService {
     return { count, jobs };
   }
 
-  findOneJobUserView(
-    id: string,
-    userId: string
-  ): Promise<FindOneJobUserViewResponse | null> {
-    return this.prismaService.job.findUnique({
-      where: { id },
-      select: JobUserViewSelect(userId),
-    });
-  }
-
   async findManyJobsCompanyView(
     { jobViews, mostRecent, numberOfApplications, search }: FilterCompanyJobs,
     { skip, take }: Pagination,
-    userId?: string
+    userId: string
   ): Promise<FindManyJobsCompanyView> {
     const AND: Prisma.JobWhereInput[] = [];
     AND.push({ companyId: userId });
@@ -148,6 +140,78 @@ export class JobService {
     return { count, jobs };
   }
 
+  async findManyJobApplicationsCompanyView(
+    { interviewed, invited, mostRecent, search }: FilterCompanyJobApplications,
+    { skip, take }: Pagination,
+    userId: string
+  ): Promise<FindManyJobApplicationsCompanyView> {
+    const AND: Prisma.JobApplicationWhereInput[] = [];
+    AND.push({ job: { companyId: userId } });
+    const orderBy: Prisma.JobOrderByWithRelationInput[] = [];
+    if (search)
+      AND.push({
+        OR: [
+          { job: { title: { contains: search, mode: 'insensitive' } } },
+          {
+            user: {
+              userProfile: { name: { contains: search, mode: 'insensitive' } },
+            },
+          },
+        ],
+      });
+    if (interviewed)
+      AND.push({ applicationStatus: JobApplicationStatusEnum.INTERVIEWED });
+    if (invited)
+      AND.push({ applicationStatus: JobApplicationStatusEnum.INVITED });
+    if (mostRecent) orderBy.push({ createdAt: 'desc' });
+    const where = { AND };
+    const [count, jobApplications] = await Promise.all([
+      this.prismaService.jobApplication.count({ where }),
+      this.prismaService.jobApplication.findMany({
+        where,
+        orderBy,
+        skip,
+        take,
+        include: {
+          user: {
+            include: {
+              userProfile: {
+                select: {
+                  id: true,
+                  name: true,
+                  profilePhoto: { select: { url: true } },
+                  about: true,
+                },
+              },
+            },
+          },
+          job: { select: { id: true, title: true } },
+        },
+      }),
+    ]);
+    return { count, jobApplications };
+  }
+
+  findOneJobUserView(
+    id: string,
+    userId: string
+  ): Promise<FindOneJobUserViewResponse | null> {
+    return this.prismaService.job.findUnique({
+      where: { id },
+      select: JobUserViewSelect(userId),
+    });
+  }
+
+  findOneJobCompanyView(
+    id: string,
+    userId: string
+  ): Promise<FindOneJobCompanyViewResponse | null> {
+    return this.prismaService.job.findFirst({
+      where: { id, companyId: userId },
+      include: { _count: { select: { jobApplications: true } } },
+    });
+  }
+
   updateViews(id: string): Promise<JobUserView> {
     return this.prismaService.job.update({
       where: { id },
@@ -158,7 +222,7 @@ export class JobService {
 
   async update(
     id: string,
-    updateJobDto: UpdateJobDto,
+    updateJobDto: UpdateJob,
     userId: string
   ): Promise<UpdateJobResponse> {
     const job = await this.prismaService.job.findUnique({

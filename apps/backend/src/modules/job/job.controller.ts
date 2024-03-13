@@ -15,6 +15,7 @@ import { JobService } from './job.service';
 import {
   CreateJobApplicationDto,
   CreateJobDto,
+  FilterCompanyJobApplicationsDto,
   FilterCompanyJobsDto,
   FilterJobsDto,
   UpdateJobDto,
@@ -33,7 +34,9 @@ import { DBUser } from '../../shared/decorators';
 import {
   CreateJobApplicationResponseEntity,
   CreateJobResponseEntity,
+  FindManyJobApplicationsCompanyViewEntity,
   JobCompanyViewFindManyEntity,
+  JobCompanyViewFindOneEntity,
   JobUserViewFindManyEntity,
   JobUserViewFindOneEntity,
   JobUserViewUpdateEntity,
@@ -125,6 +128,36 @@ export class JobController {
     );
   }
 
+  @Get('job-applications')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary:
+      'Retrieve a list of job applications submitted for positions at the company.',
+    description:
+      'Retrieve a list of job applications submitted for positions at the company with some filter options and company ID.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description:
+      'The list of job applications have been successfully retrieved.',
+    type: FindManyJobApplicationsCompanyViewEntity,
+  })
+  findManyJobApplicationsCompanyView(
+    @Query() filterCompanyJobApplicationsDto: FilterCompanyJobApplicationsDto,
+    @Query() paginationDto: PaginationDto,
+    @DBUser()
+    { id: userId, accountType }: User
+  ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException('You are not able to access this.');
+    return this.jobService.findManyJobApplicationsCompanyView(
+      filterCompanyJobApplicationsDto,
+      paginationDto,
+      userId
+    );
+  }
+
   @Get('jobs-user-view')
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
@@ -150,7 +183,29 @@ export class JobController {
     );
   }
 
-  @Get('jobs-user-view/:id')
+  @Get('job-company-view/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Get a job.',
+    description: 'Get a job by it own ID.',
+  })
+  @ApiResponse({
+    type: JobCompanyViewFindOneEntity,
+    status: HttpStatus.OK,
+    description: 'Jobs has been successfully retrieved.',
+  })
+  findOneJobCompanyView(
+    @Param() { id }: MongoIdDto,
+    @DBUser()
+    { id: userId, accountType }: User
+  ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException('You are not able to access this.');
+    return this.jobService.findOneJobCompanyView(id, userId);
+  }
+
+  @Get('job-user-view/:id')
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({

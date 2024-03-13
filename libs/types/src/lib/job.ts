@@ -77,11 +77,32 @@ export type UpdateJobResponse = {
   updatedAt: Date;
 };
 
+export type FindOneJobCompanyViewResponse = {
+  id: string;
+  title: string;
+  description: string;
+  employmentClassification: EmploymentClassificationEnum;
+  allocation: AllocationEnum;
+  aiInterviewQuestions: string[];
+  views: number;
+  _count: { jobApplications: number };
+  jobStatus: JobStatusEnum;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export type CreateJob = {
   title: string;
   description: string;
   employmentClassification: EmploymentClassificationEnum;
   allocation: AllocationEnum;
+};
+
+export type UpdateJob = {
+  title?: string;
+  description?: string;
+  employmentClassification?: EmploymentClassificationEnum;
+  allocation?: AllocationEnum;
 };
 
 export type JobUserView = {
@@ -132,7 +153,7 @@ export type JobApplicationCompanyView = {
       name: string;
       profilePhoto: { url: string } | null;
       about: string;
-    };
+    } | null;
   };
   job: {
     id: string;
@@ -182,6 +203,18 @@ export type FilterCompanyJobs = {
   jobViews?: boolean;
 };
 
+export type FilterCompanyJobApplications = {
+  search?: string;
+  invited?: boolean;
+  mostRecent?: boolean;
+  interviewed?: boolean;
+};
+
 export type FindManyJobsUserView = { count: number; jobs: JobUserView[] };
 
 export type FindManyJobsCompanyView = { count: number; jobs: JobCompanyView[] };
+
+export type FindManyJobApplicationsCompanyView = {
+  count: number;
+  jobApplications: JobApplicationCompanyView[];
+};
