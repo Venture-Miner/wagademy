@@ -147,8 +147,12 @@ export class UserController {
     status: HttpStatus.OK,
     description: 'Profile retrieved successfully.',
   })
-  async findUserProfile(@Param() { id }: MongoIdDto) {
-    return this.userService.findUserProfile(id);
+  async findUserProfile(
+    @Param() { id }: MongoIdDto,
+    @DBUser()
+    { id: userId, accountType }: User
+  ) {
+    return this.userService.findUserProfile(id, userId, accountType);
   }
 
   @Get('company-profile/:id')
