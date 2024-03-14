@@ -120,7 +120,6 @@ model JobApplication {
 
 model JobInterviewChat {
   id               String         @id @default(auto()) @map("_id") @db.ObjectId
-  email            String
   history          Json
   jobApplication   JobApplication @relation(fields: [jobApplicationId], references: [id])
   jobApplicationId String         @db.ObjectId
