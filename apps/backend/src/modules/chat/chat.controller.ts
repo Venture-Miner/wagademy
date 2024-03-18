@@ -20,6 +20,10 @@ import { DBUser } from '../../shared/decorators';
 import { CognitoUserGuard } from '../../infra';
 import { CreateChatCompletionDto, CreateInterviewChatDto } from './dto';
 import { MongoIdDto } from '../../shared/dtos';
+import {
+  ChatCompletionMessageEntity,
+  StartJobInterviewEntity,
+} from './entities';
 
 @ApiTags('Chat')
 @Controller('chat')
@@ -37,6 +41,7 @@ export class ChatController {
   @ApiCreatedResponse({
     status: HttpStatus.CREATED,
     description: 'Interview successfully started.',
+    type: StartJobInterviewEntity,
   })
   startJobInterview(
     @Body() createInterviewChatDto: CreateInterviewChatDto,
@@ -60,6 +65,7 @@ export class ChatController {
   @ApiCreatedResponse({
     status: HttpStatus.CREATED,
     description: 'Chat completions successfully created.',
+    type: ChatCompletionMessageEntity,
   })
   createChatCompletion(
     @Param() { id }: MongoIdDto,
