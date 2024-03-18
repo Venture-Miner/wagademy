@@ -61,7 +61,7 @@ export class ChatService {
       { role: 'system', content: initialPromptString },
       {
         role: 'assistant',
-        content: "Hello, i'm the bot interviewer, let'start your interview!",
+        content: "Hello, i'm the interviewer bot, let's start your interview!",
       }
     );
     return this.prismaService.jobInterviewChat.create({
