@@ -8,7 +8,14 @@ import { ApplicationsCardsComponent } from '../../../shared/components/applicati
 @Component({
   selector: 'wagademy-job-applications-all',
   standalone: true,
-  imports: [RouterModule, ModalComponent, PaginationComponent, NgClass, ApplicationsCardsComponent, NgIf],
+  imports: [
+    RouterModule,
+    ModalComponent,
+    PaginationComponent,
+    NgClass,
+    ApplicationsCardsComponent,
+    NgIf,
+  ],
   templateUrl: './job-applications-all.component.html',
   styleUrl: './job-applications-all.component.scss',
 })
@@ -22,46 +29,45 @@ export class JobApplicationsAllComponent {
       id: '',
       name: 'Job title',
       company: 'Company',
-      interviewInvites: true
+      interviewInvites: true,
     },
     {
       id: '',
       name: 'Job title',
       company: 'Company',
-      interviewInvites: true
+      interviewInvites: true,
     },
     {
       id: '',
       name: 'Job title',
-      company: 'Company'
+      company: 'Company',
     },
     {
       id: '',
       name: 'Job title',
-      company: 'Company'
+      company: 'Company',
     },
     {
       id: '',
       name: 'Job title',
-      company: 'Company'
+      company: 'Company',
     },
     {
       id: '',
       name: 'Job title',
-      company: 'Company'
+      company: 'Company',
     },
-  ]
+  ];
 
-  getApplications(){
+  getApplications() {
     //TODO
   }
 
   getInterviewInvitesCount(): number {
-    return this.applications.filter(app => app.interviewInvites).length;
+    return this.applications.filter((app) => app.interviewInvites).length;
   }
 
   openModal() {
     window.modal['showModal']();
   }
-
 }
