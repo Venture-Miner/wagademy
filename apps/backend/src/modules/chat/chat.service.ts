@@ -9,6 +9,7 @@ import {
   ChatCompletionMessage,
   CreateInterviewChat,
   CreateInterviewChatResponse,
+  JobApplicationStatusEnum,
   OpenAIChatModel,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
@@ -76,7 +77,7 @@ export class ChatService {
   ): Promise<ChatCompletionMessage> {
     const chat = await this.prismaService.jobInterviewChat.findUnique({
       where: { id },
-      include: { jobApplication: { select: { userId: true } } },
+      include: { jobApplication: { select: { userId: true, id: true } } },
     });
     if (!chat)
       throw new NotFoundException('Chat with the provided ID does not exist');
@@ -113,6 +114,11 @@ export class ChatService {
         history: messages as unknown as Prisma.InputJsonValue,
       },
     });
+    if (response.choices[0].message.content?.includes('#finished'))
+      await this.prismaService.jobApplication.update({
+        where: { id: chat.jobApplication.id },
+        data: { applicationStatus: JobApplicationStatusEnum.INTERVIEWED },
+      });
     return response.choices[0].message;
   }
 }

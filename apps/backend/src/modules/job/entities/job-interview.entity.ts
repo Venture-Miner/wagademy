@@ -38,9 +38,7 @@ export class JobInterviewResultEntity implements GetJobInterviewResultResponse {
   id: string;
 
   @ApiProperty({
-    example: `[{"role": "assistant","content": "${faker.lorem.paragraphs(
-      5
-    )}"}]`,
+    example: [{ role: 'assistant', content: faker.lorem.paragraphs(5) }],
   })
   history: any;
 
