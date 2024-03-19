@@ -10,10 +10,10 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 })
 export class JobsDetailsComponent implements OnInit {
   images = '';
-  name = '';
+  title = '';
   description = '';
-  time = '';
-  locale = '';
+  jobType = '';
+  allocation = '';
   responsibilities = '';
   company = '';
   infos = '';
@@ -24,14 +24,14 @@ export class JobsDetailsComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       const images = params.get('images');
       if (images) this.images = images;
-      const name = params.get('name');
-      if (name) this.name = name;
+      const title = params.get('title');
+      if (title) this.title = title;
       const description = params.get('description');
       if (description) this.description = description;
-      const time = params.get('time');
-      if (time) this.time = time;
-      const locale = params.get('locale');
-      if (locale) this.locale = locale;
+      const jobType = params.get('jobType');
+      if (jobType) this.jobType = jobType;
+      const allocation = params.get('allocation');
+      if (allocation) this.allocation = allocation;
       const responsibilities = params.get('responsibilities');
       if (responsibilities) this.responsibilities = responsibilities;
       const company = params.get('company');
