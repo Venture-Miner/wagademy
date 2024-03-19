@@ -3,8 +3,9 @@ import { Router, RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { CardsComponent } from '../../../shared/components/cards/cards.component';
+import { FormsModule } from '@angular/forms';
 
 interface Filter {
   name: string;
@@ -27,6 +28,8 @@ interface ChatBots {
     NgFor,
     NgIf,
     CardsComponent,
+    FormsModule,
+    NgClass,
   ],
   templateUrl: './gpt-list.component.html',
   styleUrl: './gpt-list.component.scss',
@@ -64,6 +67,8 @@ export class GptListComponent {
   page = 1;
   take = 1;
   count = 5;
+  searchChat = '';
+  selectedFilter = 'All';
 
   constructor(public router: Router) {}
 
@@ -73,5 +78,15 @@ export class GptListComponent {
 
   exploreOption() {
     /* TODO document why this method 'exploreOption' is empty */
+  }
+
+  get filteredChatBots() {
+    if (this.searchChat) {
+      return this.chats.filter((course: ChatBots) =>
+        course.name.toLowerCase().includes(this.searchChat.toLowerCase())
+      );
+    } else {
+      return this.chats;
+    }
   }
 }

@@ -1,7 +1,9 @@
 <div
   class="sm:w-[304px] w-[230px] bg-neutral hover:shadow-lg mx-auto flex relative rounded-lg"
   [ngClass]="[
-    details === 'more' ? 'h-[280px]' : 'group  justify-center h-[336px]'
+    details === 'more'
+      ? 'h-[280px] cursor-pointer'
+      : 'group  justify-center h-[336px] '
   ]"
 >
   <div
