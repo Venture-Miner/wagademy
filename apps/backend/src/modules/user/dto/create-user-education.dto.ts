@@ -15,6 +15,7 @@ export class CreateUserEducationDto implements CreateEducation {
   @ApiProperty({
     description: 'the education id',
     example: faker.database.mongodbObjectId(),
+    required: false,
   })
   @IsOptional()
   @IsMongoId()
@@ -47,6 +48,7 @@ export class CreateUserEducationDto implements CreateEducation {
   @ApiProperty({
     description: 'description about the course',
     example: faker.lorem.text(),
+    required: false,
   })
   @IsOptional()
   @IsString()

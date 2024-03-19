@@ -17,6 +17,7 @@ export class CreateUserProfessionalExperienceDto
   @ApiProperty({
     description: 'the professional experience id',
     example: faker.database.mongodbObjectId(),
+    required: false,
   })
   @IsOptional()
   @IsMongoId()
@@ -41,6 +42,7 @@ export class CreateUserProfessionalExperienceDto
   @ApiProperty({
     description: 'description about the job',
     example: faker.lorem.text(),
+    required: false,
   })
   @IsOptional()
   @IsString()

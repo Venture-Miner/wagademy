@@ -141,6 +141,7 @@ export class CreateProfileDto implements CreateProfile {
     type: 'string',
     format: 'binary',
     description: 'profile photo as FormData',
+    required: false,
   })
   @IsOptional()
   profilePhoto?: Express.Multer.File[];
