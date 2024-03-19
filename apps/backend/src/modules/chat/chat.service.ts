@@ -70,14 +70,18 @@ export class ChatService {
     });
   }
 
-  async createChatCompletion(
+  async interviewCreateChatCompletion(
     id: string,
     userId: string,
     message: string
   ): Promise<ChatCompletionMessage> {
     const chat = await this.prismaService.jobInterviewChat.findUnique({
       where: { id },
-      include: { jobApplication: { select: { userId: true, id: true } } },
+      include: {
+        jobApplication: {
+          select: { userId: true, id: true, applicationStatus: true },
+        },
+      },
     });
     if (!chat)
       throw new NotFoundException('Chat with the provided ID does not exist');
@@ -85,6 +89,10 @@ export class ChatService {
       throw new UnauthorizedException(
         'You can not modify this chat, it does not belong to you'
       );
+    if (
+      chat.jobApplication.applicationStatus !== JobApplicationStatusEnum.INVITED
+    )
+      throw new UnauthorizedException('You can not use the chat');
 
     const model = new ConfigService().get<string>('GPT_MODEL') as string;
     const encoder = encoding_for_model(model as any);

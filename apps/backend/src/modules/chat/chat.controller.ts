@@ -67,7 +67,7 @@ export class ChatController {
     description: 'Chat completions successfully created.',
     type: ChatCompletionMessageEntity,
   })
-  createChatCompletion(
+  interviewCreateChatCompletion(
     @Param() { id }: MongoIdDto,
     @Body() { message }: CreateChatCompletionDto,
     @DBUser()
@@ -77,6 +77,6 @@ export class ChatController {
       throw new UnauthorizedException(
         'Only accounts where the type is physical person can create a job.'
       );
-    return this.chatService.createChatCompletion(id, userId, message);
+    return this.chatService.interviewCreateChatCompletion(id, userId, message);
   }
 }
