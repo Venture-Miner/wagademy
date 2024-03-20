@@ -20,13 +20,15 @@
         class="max-[513px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
       >
         <wagademy-cards
-          *ngFor="let applications of applications"
+          *ngFor="let applications of applications; let i = index"
           [img]="applications.images"
           [name]="applications.name"
           [description]="applications.description"
           [applications]="applications.applications"
           [button]="'View More'"
           [menu]="'jobs'"
+          [isOpen]="selectedCardIndex === i"
+          (click)="onCardClick(i)"
         ></wagademy-cards>
       </div>
     </div>
@@ -39,12 +41,14 @@
         class="max-[513px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
       >
         <wagademy-cards
-          *ngFor="let courses of courses"
+          *ngFor="let courses of courses; let i = index"
           [img]="courses.images"
           [name]="courses.name"
           [description]="courses.description"
           [button]="'Invite GPT+'"
           [menu]="'courses'"
+          [isOpenCourses]="selectedCardCourseIndex === i"
+          (click)="onCardCourseClick(i)"
         ></wagademy-cards>
       </div>
     </div>

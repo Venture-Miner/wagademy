@@ -68,4 +68,22 @@ export class HomeCompanyComponent {
     },
   ];
   isLoading = false;
+  selectedCardIndex: number | null = null;
+  selectedCardCourseIndex: number | null = null;
+
+  onCardCourseClick(index: number) {
+    if (this.selectedCardCourseIndex === index) {
+      this.selectedCardCourseIndex = null;
+    } else {
+      this.selectedCardCourseIndex = index;
+    }
+  }
+
+  onCardClick(index: number) {
+    if (this.selectedCardIndex === index) {
+      this.selectedCardIndex = null;
+    } else {
+      this.selectedCardIndex = index;
+    }
+  }
 }

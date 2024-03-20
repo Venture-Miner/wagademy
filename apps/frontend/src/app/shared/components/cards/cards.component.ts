@@ -17,8 +17,6 @@ export class CardsComponent {
   @Input() button: string | undefined;
   @Input() applications: number | undefined;
   @Input() menu: 'courses' | 'jobs' | '' = '';
-  showMenu = false;
-  showMenuCourse = false;
   @Output() unpublishJob: EventEmitter<void> = new EventEmitter<void>();
   @Output() updateJob: EventEmitter<void> = new EventEmitter<void>();
   @Output() removeJob: EventEmitter<void> = new EventEmitter<void>();
@@ -27,6 +25,8 @@ export class CardsComponent {
   @Output() updateCourse: EventEmitter<void> = new EventEmitter<void>();
   @Output() removeCourse: EventEmitter<void> = new EventEmitter<void>();
   @Output() certificatesCourse: EventEmitter<void> = new EventEmitter<void>();
+  @Input() isOpen = false;
+  @Input() isOpenCourses = false;
 
   constructor(private router: Router) {}
 

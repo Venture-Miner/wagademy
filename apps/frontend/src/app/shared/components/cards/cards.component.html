@@ -3,7 +3,11 @@
 >
   <div
     class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"
-    *ngIf="showMenu === true || showMenuCourse === true"
+    *ngIf="isOpen"
+  ></div>
+  <div
+    class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"
+    *ngIf="isOpenCourses"
   ></div>
   <div class="font-mono sm:w-[304px] w-[230px]">
     <img
@@ -20,14 +24,14 @@
     />
     <div *ngIf="menu === 'jobs'" class="absolute top-0 right-0 p-2">
       <div
-        (click)="showMenu = true"
+        (click)="isOpen = true"
         class="bg-neutral shadow-md cursor-pointer rounded-full py-1 px-2"
       >
         <i class="bi bi-three-dots-vertical text-base-100"></i>
       </div>
       <div class="absolute top-0 right-0 p-2">
         <div
-          *ngIf="showMenu === true"
+          *ngIf="isOpen"
           class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
         >
           <div
@@ -65,7 +69,7 @@
             <img src="./assets/icons/icon-robot.svg" alt="robot" />
             <p class="font-serif text-base-100">Copy link</p>
           </div>
-          <div (click)="showMenu = false" class="flex gap-1 cursor-pointer">
+          <div (click)="isOpen = false" class="flex gap-1 cursor-pointer">
             <i class="bi bi-x-lg text-base-200"></i>
             <p class="font-serif text-base-100">Close</p>
           </div>
@@ -74,14 +78,14 @@
     </div>
     <div *ngIf="menu === 'courses'" class="absolute top-0 right-0 p-2">
       <div
-        (click)="showMenuCourse = true"
+        (click)="isOpenCourses = true"
         class="bg-neutral shadow-md cursor-pointer rounded-full py-1 px-2"
       >
         <i class="bi bi-three-dots-vertical text-base-100"></i>
       </div>
       <div class="absolute top-0 right-0 p-2">
         <div
-          *ngIf="showMenuCourse === true"
+          *ngIf="isOpenCourses"
           class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
         >
           <div
@@ -106,7 +110,7 @@
             <p class="font-serif text-base-100">Certificates</p>
           </div>
           <div
-            (click)="showMenuCourse = false"
+            (click)="isOpenCourses = false"
             class="flex gap-1 cursor-pointer"
           >
             <i class="bi bi-x-lg text-base-200"></i>
@@ -118,7 +122,7 @@
     <div
       class="px-4 bottom-4 bg-neutral w-full"
       [ngClass]="[
-        showMenuCourse === true || showMenu === true
+        isOpenCourses === true || isOpen === true
           ? ''
           : 'group-hover:-translate-y-8 absolute duration-300'
       ]"
@@ -150,7 +154,7 @@
       <div
         class="opacity-0 w-full duration-300"
         [ngClass]="[
-          showMenuCourse === true || showMenu === true
+          isOpenCourses === true || isOpen === true
             ? ''
             : 'group-hover:opacity-100'
         ]"
