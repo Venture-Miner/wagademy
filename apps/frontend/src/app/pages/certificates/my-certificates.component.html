@@ -14,6 +14,7 @@
           'bg-primary': displayStyle === 'grid',
           'rounded-full px-2 py-1': true
         }"
+        aria-label="grid"
       >
         <i
           [ngClass]="{
@@ -28,6 +29,7 @@
           'bg-primary': displayStyle === 'list',
           'rounded-full px-2 py-1': true
         }"
+        aria-label="list"
       >
         <i
           [ngClass]="{
@@ -72,9 +74,11 @@
         [ngClass]="{
             'mr-4': displayStyle === 'list',
           }"
-        [src]="course.img"
+        [ngSrc]="course.img"
         alt="Course image"
-        class="object-cover w-20 h-20 rounded mb-4"
+        width="80"
+        height="80"
+        class="object-cover rounded mb-4"
       />
       <div class="flex-col w-full">
         <h2 class="font-bold text-neutral-950 mb-2">{{ course.name }}</h2>
