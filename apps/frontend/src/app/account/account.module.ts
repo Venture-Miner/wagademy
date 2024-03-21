@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account.component';
-import { AccountNavbarModule } from './layout/account-navbar/account-navbar.module';
+import { NavbarAccountComponent } from '../shared/components/layout/navbar-account/navbar-account.component';
 
 @NgModule({
   declarations: [AccountComponent],
-  imports: [AccountRoutingModule, AccountNavbarModule],
+  imports: [AccountRoutingModule, NavbarAccountComponent],
 })
 export class AccountModule {}
