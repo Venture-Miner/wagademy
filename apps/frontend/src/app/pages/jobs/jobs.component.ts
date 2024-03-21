@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { CardsComponent } from '../../shared/components/cards/cards.component';
-import { InputComponent } from '../../shared/components/input/input.component';
 import { Router } from '@angular/router';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 import { FormsModule } from '@angular/forms';
@@ -11,14 +10,14 @@ interface Filter {
 }
 
 interface Job {
-  images: string;
+  image: string;
   title: string;
   description: string;
   jobType: string;
   allocation: string;
   responsibilities: string;
   company: string;
-  infos: string;
+  info: string;
 }
 
 @Component({
@@ -38,7 +37,7 @@ interface Job {
 export class JobsComponent {
   jobs: Job[] = [
     {
-      images: './assets/img/images/img-card-content.png',
+      image: './assets/img/images/img-card-content.png',
       title: 'Product Designer',
       description:
         'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
@@ -47,11 +46,10 @@ export class JobsComponent {
       responsibilities:
         'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
       company: 'Dole Inc.',
-      infos:
-        'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
+      info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
     },
     {
-      images: './assets/img/images/img-card-content.png',
+      image: './assets/img/images/img-card-content.png',
       title: 'Product Designer',
       description:
         'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
@@ -60,11 +58,10 @@ export class JobsComponent {
       responsibilities:
         'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
       company: 'Dole Inc.',
-      infos:
-        'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
+      info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
     },
     {
-      images: './assets/img/images/img-card-content.png',
+      image: './assets/img/images/img-card-content.png',
       title: 'Product Designer',
       description:
         'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
@@ -73,11 +70,10 @@ export class JobsComponent {
       responsibilities:
         'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
       company: 'Dole Inc.',
-      infos:
-        'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
+      info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
     },
     {
-      images: './assets/img/images/img-card-content.png',
+      image: './assets/img/images/img-card-content.png',
       title: 'Product Designer',
       description:
         'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
@@ -86,8 +82,7 @@ export class JobsComponent {
       responsibilities:
         'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
       company: 'Dole Inc.',
-      infos:
-        'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
+      info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
     },
   ];
   isLoading = false;
