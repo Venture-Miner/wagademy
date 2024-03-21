@@ -19,7 +19,7 @@
       <div
         class="max-[513px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
       >
-        <wagademy-cards
+        <wagademy-card
           *ngFor="let applications of applications; let i = index"
           [img]="applications.images"
           [name]="applications.name"
@@ -29,7 +29,7 @@
           [menu]="'jobs'"
           [isOpen]="selectedCardIndex === i"
           (click)="onCardClick(i)"
-        ></wagademy-cards>
+        ></wagademy-card>
       </div>
     </div>
     <div *ngIf="courses.length">
@@ -40,7 +40,7 @@
       <div
         class="max-[513px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
       >
-        <wagademy-cards
+        <wagademy-card
           *ngFor="let courses of courses; let i = index"
           [img]="courses.images"
           [name]="courses.name"
@@ -49,7 +49,7 @@
           [menu]="'courses'"
           [isOpenCourses]="selectedCardCourseIndex === i"
           (click)="onCardCourseClick(i)"
-        ></wagademy-cards>
+        ></wagademy-card>
       </div>
     </div>
   </div>

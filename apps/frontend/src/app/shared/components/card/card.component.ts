@@ -3,13 +3,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'wagademy-cards',
+  selector: 'wagademy-card',
   standalone: true,
   imports: [NgIf, NgClass],
-  templateUrl: './cards.component.html',
-  styleUrls: ['./cards.component.scss'],
+  templateUrl: './card.component.html',
+  styleUrls: ['./card.component.scss'],
 })
-export class CardsComponent {
+export class CardComponent {
   @Input() name: string | undefined;
   @Input() img: string | undefined;
   @Input() description: string | undefined;

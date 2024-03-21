@@ -3,11 +3,7 @@
 >
   <div
     class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"
-    *ngIf="isOpen"
-  ></div>
-  <div
-    class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"
-    *ngIf="isOpenCourses"
+    *ngIf="isOpen || isOpenCourses"
   ></div>
   <div class="font-mono sm:w-[304px] w-[230px]">
     <img
