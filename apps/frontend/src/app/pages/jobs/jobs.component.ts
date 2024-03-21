@@ -25,7 +25,6 @@ interface Job {
   selector: 'wagademy-jobs',
   standalone: true,
   imports: [
-    InputComponent,
     NgIf,
     NgFor,
     CardsComponent,
@@ -103,7 +102,7 @@ export class JobsComponent {
   searchJob = '';
   selectedFilter = 'All';
 
-  constructor(public router: Router) {}
+  constructor(private router: Router) {}
 
   jobDetails(job: Job) {
     this.router.navigate(['/pages/jobs-details'], {

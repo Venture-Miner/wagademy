@@ -9,21 +9,21 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
   styleUrl: './jobs-details.component.scss',
 })
 export class JobsDetailsComponent implements OnInit {
-  images = '';
+  image = '';
   title = '';
   description = '';
   jobType = '';
   allocation = '';
   responsibilities = '';
   company = '';
-  infos = '';
+  info = '';
 
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.activatedRoute.queryParamMap.subscribe((params) => {
-      const images = params.get('images');
-      if (images) this.images = images;
+      const image = params.get('image');
+      if (image) this.image = image;
       const title = params.get('title');
       if (title) this.title = title;
       const description = params.get('description');
@@ -36,8 +36,8 @@ export class JobsDetailsComponent implements OnInit {
       if (responsibilities) this.responsibilities = responsibilities;
       const company = params.get('company');
       if (company) this.company = company;
-      const infos = params.get('infos');
-      if (infos) this.infos = infos;
+      const info = params.get('info');
+      if (info) this.info = info;
     });
   }
 }
