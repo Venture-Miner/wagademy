@@ -1,4 +1,4 @@
-<div class="container mx-auto min-h-screen px-3 sm:px-0">
+<div class="container mx-auto min-h-screen px-3">
   <div class="pb-8 pt-6 flex justify-between flex-wrap gap-4">
     <h2 class="font-sans font-medium text-4xl text-base-100">Chatbots</h2>
     <div>
@@ -34,7 +34,7 @@
   </p>
   <div *ngIf="!isLoading">
     <div *ngIf="chats.length">
-      <div class="flex flex-wrap max-[513px]:justify-center gap-8">
+      <div class="flex flex-wrap max-[767px]:justify-center gap-8">
         <wagademy-cards
           *ngFor="let chat of filteredChatBots"
           [img]="chat.images"
