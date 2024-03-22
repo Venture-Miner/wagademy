@@ -1,4 +1,4 @@
-<div class="container mx-auto min-h-screen px-3 sm:px-0">
+<div class="container mx-auto min-h-screen px-3">
   <div class="pb-8 pt-6 flex justify-between flex-wrap gap-4">
     <h2 class="font-sans font-medium text-4xl text-base-100">Jobs</h2>
     <label class="input flex items-center gap-2 bg-transparent text-base-200">
@@ -28,7 +28,7 @@
   <div *ngIf="!isLoading">
     <div *ngIf="jobs.length">
       <div
-        class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
+        class="flex flex-wrap max-[767px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
       >
         <wagademy-cards
           *ngFor="let job of filteredJobs"
