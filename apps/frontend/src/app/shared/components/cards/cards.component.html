@@ -1,24 +1,47 @@
 <div
-  class="group sm:w-[304px] w-[230px] h-[336px] bg-neutral mx-auto hover:shadow-lg flex justify-center relative rounded-lg"
+  class="sm:w-[304px] w-[230px] bg-neutral hover:shadow-lg mx-auto flex relative rounded-lg"
+  [ngClass]="[
+    details === 'more'
+      ? 'h-[280px] cursor-pointer'
+      : 'group  justify-center h-[336px] '
+  ]"
 >
-  <div class="font-mono sm:w-[304px] w-[230px]">
+  <div
+    class="font-mono"
+    [ngClass]="[details === 'more' ? 'w-[80px]' : 'sm:w-[304px] w-[230px]']"
+  >
     <img
       *ngIf="img"
       [src]="img"
-      class="h-40 w-full object-cover rounded-t-lg"
+      class="object-cover"
+      [ngClass]="[
+        details === 'more'
+          ? ' h-[80px] w-[80px] pl-4 pt-4 rounded'
+          : 'h-40 w-full rounded-t-lg'
+      ]"
       alt="image"
     />
     <img
       *ngIf="!img"
       [src]="'./assets/img/images/img-card-fallback.webp'"
-      class="h-40 w-full object-cover rounded-t-lg"
+      class="object-cover"
+      [ngClass]="[
+        details === 'more'
+          ? ' h-[80px] w-[80px] pl-4 pt-4 rounded'
+          : 'h-40 w-full rounded-t-lg'
+      ]"
       alt="fallback image"
     />
     <div
       class="px-4 absolute bottom-4 bg-neutral group-hover:-translate-y-8 duration-300 w-full"
     >
       <h3
-        class="text-base-100 font-sans font-medium text-2xl pb-1 pt-4 text-ellipsis overflow-hidden whitespace-nowrap"
+        class="text-base-100 pb-1 pt-4 text-ellipsis overflow-hidden whitespace-nowrap"
+        [ngClass]="[
+          details === 'more'
+            ? ' text-base font-mono font-bold'
+            : 'font-sans font-medium text-2xl'
+        ]"
       >
         {{ name }}
       </h3>
@@ -28,7 +51,7 @@
         </p>
       </div>
     </div>
-    <div class="absolute bottom-0 w-full p-4">
+    <div *ngIf="details === 'main'" class="absolute bottom-0 w-full p-4">
       <div class="opacity-0 w-full duration-300 group-hover:opacity-100">
         <button class="btn btn-primary w-full" (click)="onViewMoreClick()">
           {{ button }}
