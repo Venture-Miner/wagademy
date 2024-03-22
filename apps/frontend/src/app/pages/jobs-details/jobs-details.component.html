@@ -1,0 +1,50 @@
+<div class="container mx-auto min-h-screen px-3">
+  <div class="md:flex gap-8">
+    <div>
+      <div
+        class="flex gap-2 items-center py-4 cursor-pointer"
+        [routerLink]="['/pages/jobs']"
+      >
+        <i class="bi bi-arrow-left text-base-100 text-xl"></i>
+        <p class="font-bold text-sm text-base-100 font-mono">Back</p>
+      </div>
+      <div class="pt-6 flex gap-6 pb-8">
+        <div class="flex gap-2">
+          <i class="bi bi-clock text-primary"></i>
+          <p class="font-mono text-base-200">{{ jobType }}</p>
+        </div>
+        <div class="flex gap-2">
+          <i class="bi bi-laptop text-primary"></i>
+          <p class="font-mono text-base-200">{{ allocation }}</p>
+        </div>
+      </div>
+      <div class="pb-8">
+        <h3 class="font-sans font-medium text-2xl text-base-100 pb-2">
+          {{ title }}
+        </h3>
+        <p class="font-mono text-base-200">{{ description }}</p>
+      </div>
+      <div class="pb-10">
+        <p class="font-mono font-bold text-base-100 pb-2">Description</p>
+        <p class="font-mono text-base-200">{{ description }}</p>
+      </div>
+      <div class="max-[768px]:flex justify-center">
+        <button class="btn btn-primary w-[200px]">Apply</button>
+      </div>
+    </div>
+    <div class="pt-20">
+      <div
+        class="bg-neutral md:w-[416px] md:h-[336px] w-full h-full rounded-lg p-8"
+      >
+        <div class="flex gap-2 items-center pb-6">
+          <img [src]="image" class="w-24 h-24 rounded-2xl" alt="logo company" />
+          <h3 class="font-sans font-medium text-2xl text-base-100">
+            {{ company }}
+          </h3>
+        </div>
+        <p class="font-mono font-bold text-base-100 pb-2">Info</p>
+        <p class="font-mono text-base-200">{{ info }}</p>
+      </div>
+    </div>
+  </div>
+</div>
