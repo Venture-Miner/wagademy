@@ -1,0 +1,21 @@
+<div class="join">
+  <button
+    class="join-item btn bg-neutral-100 border-none hover:bg-neutral-200"
+    (click)="page = page - 1; pageChange.emit(page)"
+    [disabled]="page === 1 || disabled"
+  >
+    «
+  </button>
+  <button
+    class="join-item btn text-primary bg-neutral-100 border-none font-normal hover:bg-neutral-200"
+  >
+    {{ page }}
+  </button>
+  <button
+    class="join-item btn bg-neutral-100 border-none hover:bg-neutral-200"
+    (click)="page = page + 1; pageChange.emit(page)"
+    [disabled]="page * take >= count || disabled"
+  >
+    »
+  </button>
+</div>

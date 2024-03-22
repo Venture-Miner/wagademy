@@ -7,13 +7,15 @@
         <img
           class="mx-auto block md:hidden"
           src="./assets/img/images/img-logo-mobile.svg"
+          width="57px"
+          height="56px"
           alt="logo mobile"
         />
         <h1 class="text-base-100 font-sans text-2xl font-medium md:text-5xl">
           Welcome to Wagademy
         </h1>
         <p
-          class="text-base-200 pb-8 pt-6 font-sans text-base font-medium md:text-2xl"
+          class="lg:text-base-200 text-base-100 pb-8 pt-6 font-sans text-base font-medium md:text-2xl"
         >
           Where educational innovation is the priority. Explore unique learning
           experiences facilitated by cutting-edge technology, fostering
@@ -23,24 +25,36 @@
       <div class="flex gap-8 pt-16">
         <div
           [routerLink]="['/student']"
-          class="bg-neutral hover:bg-shadow text-base-100 h-28 w-28 cursor-pointer rounded-lg px-2 hover:font-bold hover:shadow-lg"
+          class="bg-neutral hover:bg-shadow text-base-100 h-28 w-28 cursor-pointer rounded-lg px-2 hover:shadow-lg"
         >
-          <p class="pt-11 text-center font-mono text-sm">I’m student</p>
+          <p
+            class="pt-4 text-center text-base-200 font-mono text-sm animate-slideDown"
+          >
+            I’m student
+          </p>
         </div>
         <div class="bg-primary h-28 w-28 rounded-lg px-2">
           <p class="text-base-100 pt-9 text-center font-mono text-sm">
             I’m company
           </p>
-          <div class="flex justify-center">
+          <div class="flex flex-col items-center relative">
             <img
               src="./assets/icons/icon-scroll-pointer.svg"
               alt="scroll pointer"
             />
+            <i
+              class="bi bi-chevron-compact-down absolute text-[#FFFFFF] -bottom-1 animate-wiggle text-sm"
+            ></i>
           </div>
         </div>
       </div>
-      <div class="mx-auto block md:hidden">
-        <img src="./assets/img/images/img-bg-mobile.svg" alt="bg mobile" />
+      <div class="mx-auto md:hidden">
+        <img
+          width="256px"
+          height="248px"
+          src="./assets/img/images/img-bg-mobile.svg"
+          alt="bg mobile"
+        />
       </div>
     </div>
     <div class="hidden md:block">
@@ -49,7 +63,6 @@
         height="700px"
         src="./assets/img/images/img-initial-section.webp"
         alt="section one"
-        loading="lazy"
       />
     </div>
   </div>
