@@ -67,7 +67,7 @@ export class JobService {
       where: { id: jobId },
     });
     if (!job) {
-      throw new NotFoundException('Job with the provided ID does not exist');
+      throw new NotFoundException('Job with the provided ID does not exist.');
     }
     return this.prismaService.jobApplication.create({
       data: {
@@ -262,11 +262,11 @@ export class JobService {
       where: { id },
     });
     if (!job) {
-      throw new NotFoundException('Job with the provided ID does not exist');
+      throw new NotFoundException('Job with the provided ID does not exist.');
     }
     if (userId !== job.companyId)
       throw new UnauthorizedException(
-        'You are not able to update this job since you do not own it'
+        'You are not able to update this job since you do not own it.'
       );
     return this.prismaService.job.update({
       where: { id },
@@ -285,12 +285,12 @@ export class JobService {
     });
     if (!jobApplication) {
       throw new NotFoundException(
-        'Job application with the provided ID does not exist'
+        'Job application with the provided ID does not exist.'
       );
     }
     if (jobApplication.job.companyId !== userId)
       throw new UnauthorizedException(
-        'You are not able to invite the user since you do not own this job position'
+        'You are not able to invite the user since you do not own this job position.'
       );
     return this.prismaService.jobApplication.update({
       where: { id },
@@ -311,7 +311,6 @@ export class JobService {
         job: {
           select: {
             id: true,
-
             title: true,
           },
         },
@@ -326,11 +325,11 @@ export class JobService {
   ): Promise<UpdateJobResponse> {
     const job = await this.prismaService.job.findUnique({ where: { id } });
     if (!job) {
-      throw new NotFoundException('Job with the provided ID does not exist');
+      throw new NotFoundException('Job with the provided ID does not exist.');
     }
     if (userId !== job.companyId)
       throw new UnauthorizedException(
-        'You are not able to update this job since you do not own it'
+        'You are not able to update this job since you do not own it.'
       );
     return this.prismaService.job.update({
       where: { id },
