@@ -27,6 +27,7 @@ export class CardComponent {
   @Output() certificatesCourse: EventEmitter<void> = new EventEmitter<void>();
   @Input() isOpen = false;
   @Input() isOpenCourses = false;
+  @Input() details: 'more' | 'main' = 'main';
 
   constructor(private router: Router) {}
 
