@@ -45,7 +45,7 @@
         class="max-[657px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
       >
         <wagademy-card-job
-          *ngFor="let job of jobs; let i = index"
+          *ngFor="let job of filteredJobs; let i = index"
           [name]="job.name"
           [description]="job.description"
           [applications]="job.applications"
@@ -54,6 +54,7 @@
           (click)="onCardClick(i)"
           (updateJob)="updateJobModal()"
           (unpublishJob)="unpublishJob()"
+          (removeJob)="removeJob()"
         ></wagademy-card-job>
       </div>
     </div>
@@ -74,7 +75,7 @@
         <h2 class="font-sans font-medium sm:text-4xl text-2xl text-base-100">
           Create Job
         </h2>
-        <button class="absolute right-2 top-2 text-base-100 sm:pt-6 pt-4 pr-4">
+        <button class="absolute right-2 top-2 text-base-100 sm:pt-6 pt-5 pr-4">
           ✕
         </button>
       </div>
@@ -142,14 +143,19 @@
         <h2 class="font-sans font-medium sm:text-4xl text-2xl text-base-100">
           Update Job
         </h2>
-        <button class="absolute right-2 top-2 text-base-100 sm:pt-6 pt-4 pr-4">
+        <button class="absolute right-2 top-2 text-base-100 sm:pt-6 pt-5 pr-4">
           ✕
         </button>
       </div>
       <div class="pb-6">
-        <div class="flex gap-2items-center">
-          <input type="checkbox" class="toggle toggle-sm" />
-          <p>Published</p>
+        <div class="flex gap-2 items-center">
+          <input
+            type="checkbox"
+            class="toggle toggle-primary"
+            (click)="toggleStatus()"
+            [checked]="status === 'Published'"
+          />
+          <p class="text-base-100 font-mono text-sm font-bold">{{ status }}</p>
         </div>
       </div>
       <div class="pb-6">
@@ -213,6 +219,7 @@
   </div>
 </dialog>
 <wagademy-modal
+  *ngIf="incompleteProfile"
   title="Incomplete profile "
   actionButtonLabel="Complete now"
   message="You need to complete your profile to create and publish this position. Would you like to complete it now?"
@@ -224,5 +231,6 @@
   actionButtonLabel="Remove"
   message="This action cannot be reversed."
   (actionButtonClick)="removeJob()"
+  [typeModal]="'cancel'"
 >
 </wagademy-modal>

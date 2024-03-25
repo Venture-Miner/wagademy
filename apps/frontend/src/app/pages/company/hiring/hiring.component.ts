@@ -105,11 +105,17 @@ export class HiringComponent {
     'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet.';
   contract: SelectItem<string>[] = [];
   allocation: SelectItem<string>[] = [];
+  status: 'Published' | 'Unpublished' = 'Published';
+  incompleteProfile = false;
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService
   ) {}
+
+  toggleStatus(): void {
+    this.status = this.status === 'Published' ? 'Unpublished' : 'Published';
+  }
 
   onCardClick(index: number) {
     if (this.selectedCardIndex === index) {
@@ -138,7 +144,7 @@ export class HiringComponent {
   }
 
   removeJob() {
-    //
+    window.modal['showModal']();
   }
 
   updateJob() {
@@ -149,7 +155,7 @@ export class HiringComponent {
   }
 
   updateJobModal() {
-    //
+    window.update_job['showModal']();
   }
 
   unpublishJob() {
