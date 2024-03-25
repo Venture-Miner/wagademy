@@ -1,18 +1,18 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CardsComponent } from './cards.component';
+import { ApplicationsCardsComponent } from './applications-cards.component';
 
-describe('CardsComponent', () => {
-  let component: CardsComponent;
-  let fixture: ComponentFixture<CardsComponent>;
+describe('ApplicationsCardsComponent', () => {
+  let component: ApplicationsCardsComponent;
+  let fixture: ComponentFixture<ApplicationsCardsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [CardsComponent],
+      declarations: [ApplicationsCardsComponent],
     }).compileComponents();
-    fixture = TestBed.createComponent(CardsComponent);
+    fixture = TestBed.createComponent(ApplicationsCardsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -4,7 +4,7 @@ import { ModalComponent } from '../../../shared/modal/modal.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { CardsComponent } from '../../../shared/components/cards/cards.component';
+import { CardComponent } from '../../../shared/components/card/card.component';
 import { FormsModule } from '@angular/forms';
 
 interface Filter {
@@ -27,7 +27,7 @@ interface ChatBots {
     InputComponent,
     NgFor,
     NgIf,
-    CardsComponent,
+    CardComponent,
     FormsModule,
     NgClass,
   ],
