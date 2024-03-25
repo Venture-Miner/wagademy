@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
+import { HomeCompanyComponent } from './company/home/home.component';
 import { HomeComponent } from './person/home/home.component';
 import { MyCertificatesComponent } from './certificates/my-certificates.component';
 import { JobApplicationsAllComponent } from './person/job-applications-all/job-applications-all.component';
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'gptchat',
         component: GptChatComponent,
+      },
+      {
+        path: 'home-company',
+        component: HomeCompanyComponent,
       },
       {
         path: 'home',

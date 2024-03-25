@@ -6,7 +6,7 @@
     *ngIf="!jobs.length && !chatbots.length && !courses.length"
     class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
   >
-    <p>There are no content available</p>
+    <p>There is no content available</p>
   </div>
   <div *ngIf="!isLoading">
     <div *ngIf="courses.length">
@@ -15,15 +15,15 @@
         <button class="text-primary font-serif text-xl">See More</button>
       </div>
       <div
-        class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
+        class="flex flex-wrap max-[657px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
       >
-        <wagademy-cards
+        <wagademy-card
           *ngFor="let courses of courses"
           [img]="courses.images"
           [name]="courses.name"
           [description]="courses.description"
           [button]="'View More'"
-        ></wagademy-cards>
+        ></wagademy-card>
       </div>
     </div>
     <div *ngIf="jobs.length">
@@ -32,15 +32,15 @@
         <button class="text-primary font-serif text-xl">See More</button>
       </div>
       <div
-        class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
+        class="flex flex-wrap max-[657px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
       >
-        <wagademy-cards
+        <wagademy-card
           *ngFor="let jobs of jobs"
           [img]="jobs.images"
           [name]="jobs.name"
           [description]="jobs.description"
           [button]="'View More'"
-        ></wagademy-cards>
+        ></wagademy-card>
       </div>
     </div>
     <div *ngIf="chatbots.length">
@@ -51,13 +51,13 @@
       <div
         class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
       >
-        <wagademy-cards
+        <wagademy-card
           *ngFor="let chatbots of chatbots"
           [img]="chatbots.images"
           [name]="chatbots.name"
           [description]="chatbots.description"
           [button]="'Chat With Chatboot'"
-        ></wagademy-cards>
+        ></wagademy-card>
       </div>
     </div>
   </div>

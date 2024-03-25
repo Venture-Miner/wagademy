@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { CardsComponent } from '../../shared/components/cards/cards.component';
+import { CardComponent } from '../../shared/components/card/card.component';
 import { Router } from '@angular/router';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 import { FormsModule } from '@angular/forms';
@@ -26,7 +26,7 @@ interface Job {
   imports: [
     NgIf,
     NgFor,
-    CardsComponent,
+    CardComponent,
     PaginationComponent,
     FormsModule,
     NgClass,
