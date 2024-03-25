@@ -5,7 +5,7 @@
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
 .btn {
-  @apply rounded-lg font-serif;
+  @apply rounded-lg font-serif disabled:bg-base-300 disabled:text-neutral;
 }
 
 .alert-info {
