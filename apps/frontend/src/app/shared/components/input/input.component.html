@@ -7,7 +7,7 @@
     <i class="{{ leftIcon }}"></i>
   </div>
   <input
-    [ngClass]="hasError() ? 'input-error' : 'bg-neutral'"
+    [ngClass]="hasError() ? 'input-error' : 'focus:border-primary'"
     class="input w-full px-9"
     #input
     [type]="type === 'password' && showPassword ? 'text' : type"
