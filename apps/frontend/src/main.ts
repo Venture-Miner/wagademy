@@ -9,5 +9,6 @@ bootstrapApplication(AppComponent, appConfig).catch((err) =>
 declare global {
   interface Window {
     modal: HTMLFormElement;
+    update_job: HTMLFormElement;
   }
 }
