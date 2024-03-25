@@ -46,8 +46,8 @@ module.exports = {
         slideDown: 'slideDown 1s ease-in-out forwards',
       },
       fontFamily: {
-        sans: ['Space-Grotesk', 'sans-serif'],
-        mono: ['Noto-Sans', 'sans-serif'],
+        sans: ['Space Grotesk', 'sans-serif'],
+        mono: ['Noto Sans', 'sans-serif'],
         serif: ['Roboto', 'sans-serif'],
       },
     },
