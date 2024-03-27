@@ -7,7 +7,7 @@
     <i class="{{ leftIcon }}"></i>
   </div>
   <input
-    [ngClass]="hasError() ? 'input-error' : 'input-primary'"
+    [ngClass]="hasError() ? 'input-error' : 'focus:border-primary'"
     class="input w-full px-9"
     #input
     [type]="type === 'password' && showPassword ? 'text' : type"
@@ -15,6 +15,8 @@
     (input)="onInputChange()"
     [placeholder]="placeholder"
     [readonly]="readonly"
+    [disabled]="disabledInput"
+    [value]="value"
   />
   <button
     *ngIf="rightButtonType"
