@@ -9,13 +9,15 @@
       method="dialog"
     >
       <button
-        class="btn btn-outline btn-primary sm:w-24 w-full"
+        class="btn btn-outline sm:w-24 w-full"
+        [ngClass]="[typeModal === 'success' ? 'btn-primary' : 'btn-error']"
         [disabled]="isLoading"
       >
         Cancel
       </button>
       <button
-        class="btn btn-primary sm:w-24 w-full"
+        class="btn sm:w-24 w-full"
+        [ngClass]="[typeModal === 'success' ? 'btn-primary' : 'btn-error']"
         type="button"
         (click)="this.actionButtonClick.emit()"
         [disabled]="isLoading"

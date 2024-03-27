@@ -13,6 +13,7 @@ export class ModalComponent {
   @Input() title = '';
   @Input() message = '';
   @Input() isLoading = false;
+  @Input() typeModal: 'success' | 'cancel' = 'success';
 
   @Output() actionButtonClick = new EventEmitter<void>();
 }

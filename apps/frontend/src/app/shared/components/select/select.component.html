@@ -1,0 +1,6 @@
+<select class="select bg-neutral w-full text-base-100">
+  <option disabled selected value="">{{ placeholder }}</option>
+  <option *ngFor="let item of items" [value]="item.value">
+    {{ item.label }}
+  </option>
+</select>

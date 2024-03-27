@@ -4,6 +4,7 @@ import { PagesComponent } from './pages.component';
 import { HomeCompanyComponent } from './company/home/home.component';
 import { HomeComponent } from './person/home/home.component';
 import { MyCertificatesComponent } from './certificates/my-certificates.component';
+import { HiringComponent } from './company/hiring/hiring.component';
 import { JobApplicationsAllComponent } from './person/job-applications-all/job-applications-all.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { JobsDetailsComponent } from './jobs-details/jobs-details.component';
@@ -35,6 +36,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
+      },
+      {
+        path: 'hiring',
+        component: HiringComponent,
       },
       {
         path: 'job-applications-all',
