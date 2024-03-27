@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ToastComponent } from './shared/components/toast/toast.component';
+import { AuthService } from './shared/auth/auth.service';
 
 @Component({
   standalone: true,
@@ -11,4 +12,10 @@ import { ToastComponent } from './shared/components/toast/toast.component';
 })
 export class AppComponent {
   title = 'frontend';
+
+  constructor(private readonly authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.initiateListener();
+  }
 }

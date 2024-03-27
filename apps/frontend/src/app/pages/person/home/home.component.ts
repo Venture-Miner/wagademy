@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { NgFor, NgIf } from '@angular/common';
-import { CardsComponent } from '../../../shared/components/cards/cards.component';
+import { CardComponent } from '../../../shared/components/card/card.component';
 
 @Component({
   selector: 'wagademy-home',
   standalone: true,
-  imports: [InputComponent, NgIf, NgFor, CardsComponent],
+  imports: [InputComponent, NgIf, NgFor, CardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

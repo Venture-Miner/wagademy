@@ -1,0 +1,63 @@
+<div class="container mx-auto min-h-screen px-3">
+  <div class="pb-8 pt-6 flex justify-between flex-wrap gap-4">
+    <h2 class="font-sans font-medium text-4xl text-base-100">Chatbots</h2>
+    <div>
+      <label class="input flex items-center gap-2 bg-transparent text-base-200">
+        <i class="bi bi-search"></i>
+        <input
+          type="text"
+          [(ngModel)]="searchChat"
+          class="grow text-base-200"
+          placeholder="Search"
+        />
+      </label>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button
+        *ngFor="let filter of filters; let i = index"
+        class="border border-base-200 hover:border-none font-mono rounded-full p-2 hover:bg-primary"
+        [ngClass]="[
+          filter.name === selectedFilter
+            ? 'bg-primary text-base-100 border-none'
+            : 'text-base-200 hover:text-base-100'
+        ]"
+        (click)="selectedFilter = filter.name"
+      >
+        {{ filter.name }}
+      </button>
+    </div>
+  </div>
+  <p class="md:w-1/3 w-full font-mono text-base-200 pb-4">
+    You can use a model trained by companies that invite you to test it, or
+    spend <span class="text-primary font-bold">credits</span> to use any trained
+    model.
+  </p>
+  <div *ngIf="!isLoading">
+    <div *ngIf="chats.length">
+      <div class="flex flex-wrap max-[767px]:justify-center gap-8">
+        <wagademy-card
+          *ngFor="let chat of filteredChatBots"
+          [img]="chat.images"
+          [name]="chat.name"
+          [description]="chat.description"
+          [details]="'more'"
+        ></wagademy-card>
+      </div>
+    </div>
+    <div class="flex justify-center lg:justify-end pt-6 pb-3">
+      <wagademy-pagination
+        [page]="page"
+        [take]="take"
+        [count]="count"
+        (pageChange)="page = $event; getChatBots()"
+      ></wagademy-pagination>
+    </div>
+  </div>
+</div>
+<wagademy-modal
+  title="You do not currently have access to the GPT model"
+  actionButtonLabel="Explore"
+  message="You need to be invited by the company that created the GPT model or purchase credits to access it. Explore our options to get started!"
+  (actionButtonClick)="exploreOption()"
+>
+</wagademy-modal>
