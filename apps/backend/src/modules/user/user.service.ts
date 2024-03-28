@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from '@wagademy/prisma';
 import {
   CreateUserResponse,
@@ -15,6 +19,12 @@ import {
   UpdateEducation,
   UpdateProfessionalExperience,
   FindOneProfileResponse,
+  CreateCompanyProfile,
+  CreateCompanyProfileResponse,
+  UpdateCompanyProfile,
+  UpdateCompanyProfileResponse,
+  FindOneCompanyProfileResponse,
+  AccountTypeEnum,
 } from '@wagademy/types';
 import { FileService } from '../../infra';
 import { Prisma } from '@prisma/client';
@@ -30,6 +40,41 @@ export class UserService {
     return this.prismaService.user.create({
       data: { ...createUser },
     });
+  }
+
+  async createCompanyProfile(
+    createCompanyProfile: CreateCompanyProfile,
+    userId: string
+  ): Promise<CreateCompanyProfileResponse> {
+    let pictureKey = '';
+    try {
+      const { companyPhoto, ...profileData } = createCompanyProfile;
+      const createCompanyProfileData: Prisma.CompanyProfileCreateInput = {
+        ...profileData,
+        user: { connect: { id: userId } },
+      };
+
+      if (companyPhoto) {
+        const { key, url } = await this.fileService.uploadFile(
+          companyPhoto[0],
+          'public-read'
+        );
+        pictureKey = key;
+        createCompanyProfileData.companyPhoto = {
+          create: { url, key: pictureKey },
+        };
+      }
+
+      return this.prismaService.companyProfile.create({
+        data: createCompanyProfileData,
+        include: {
+          companyPhoto: { select: { url: true } },
+        },
+      });
+    } catch (error) {
+      if (pictureKey.length) await this.fileService.removeFile(pictureKey);
+      throw new BadRequestException(error, 'Error creating company profile:');
+    }
   }
 
   async createUserProfile(
@@ -140,6 +185,47 @@ export class UserService {
     }
   }
 
+  async updateCompanyProfile(
+    userId: string,
+    updateProfile: UpdateCompanyProfile
+  ): Promise<UpdateCompanyProfileResponse> {
+    const pictureKeyAndUrl: { key: string; url: string }[] = [];
+    try {
+      const { companyPhoto, ...profileData } = updateProfile;
+      const updateUserProfileData: Prisma.CompanyProfileUpdateInput = {
+        ...profileData,
+      };
+      if (companyPhoto) {
+        const userProfile = await this.prismaService.companyProfile.findUnique({
+          where: { userId },
+          select: { companyPhoto: { select: { key: true } } },
+        });
+        if (userProfile?.companyPhoto?.key)
+          await this.fileService.removeFile(userProfile.companyPhoto.key);
+        const { key, url } = await this.fileService.uploadFile(
+          companyPhoto[0],
+          'public-read'
+        );
+        pictureKeyAndUrl.push({ key, url });
+        updateUserProfileData.companyPhoto = {
+          upsert: { create: { key, url }, update: { key, url } },
+        };
+      }
+      return this.prismaService.companyProfile.update({
+        where: { userId },
+        data: updateUserProfileData,
+        include: {
+          companyPhoto: { select: { url: true } },
+        },
+      });
+    } catch (error) {
+      if (pictureKeyAndUrl.length) {
+        await this.fileService.removeFile(pictureKeyAndUrl[0].key);
+      }
+      throw new BadRequestException(error, 'Error updating profile:');
+    }
+  }
+
   private async handleEducation(education: UpdateEducation[] | undefined) {
     if (!education) return {};
     const createData: CreateEducation[] = [];
@@ -184,13 +270,33 @@ export class UserService {
     };
   }
 
-  async findUserProfile(id: string): Promise<FindOneProfileResponse | null> {
-    return this.prismaService.userProfile.findUnique({
+  async findUserProfile(
+    id: string,
+    userId: string,
+    accountType: AccountTypeEnum
+  ): Promise<FindOneProfileResponse | null> {
+    const userProfile = await this.prismaService.userProfile.findUnique({
       where: { id },
       include: {
         profilePhoto: { select: { url: true } },
         education: true,
         professionalExperience: true,
+      },
+    });
+    if (userId !== userProfile?.userId && accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only the owner or companies can access this data.'
+      );
+    return userProfile;
+  }
+
+  async findCompanyProfile(
+    id: string
+  ): Promise<FindOneCompanyProfileResponse | null> {
+    return this.prismaService.companyProfile.findUnique({
+      where: { id },
+      include: {
+        companyPhoto: { select: { url: true } },
       },
     });
   }
