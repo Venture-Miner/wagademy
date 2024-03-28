@@ -1,0 +1,79 @@
+<div class="container mx-auto min-h-screen px-3">
+  <div class="pt-6 md:w-1/2 w-full pb-14">
+    <h2 class="font-sans font-medium text-4xl text-base-100 pb-6">
+      Pre-screening interview training GPT
+    </h2>
+    <h3 class="font-sans font-medium text-2xl text-base-100 pb-4">
+      {{ name }}
+    </h3>
+    <p class="font-mono font-bold text-base-100 pb-2">Description</p>
+    <p class="font-mono text-base-200">{{ description }}</p>
+  </div>
+  <div>
+    <p class="font-sans font-bold text-sm text-base-100 pb-4">SET QUESTIONS</p>
+    <div class="pt-4">
+      <details class="bg-neutral rounded">
+        <summary
+          id="on-toggle-faq-about"
+          class="cursor-pointer flex justify-between items-center py-3 px-4 text-lg"
+        >
+          <p class="font-bold font-mono text-base-100">Question</p>
+          <div class="flex gap-2">
+            <button class="btn btn-primary" (click)="addQuestion()">Add</button>
+          </div>
+        </summary>
+      </details>
+    </div>
+    <div>
+      <ng-container *ngFor="let question of questions; let i = index">
+        <div class="py-2">
+          <details class="bg-neutral rounded">
+            <summary
+              class="cursor-pointer flex justify-between items-center py-3 px-4"
+              (click)="toggleQuestion(i)"
+            >
+              <p class="font-bold font-mono text-xs md:text-base text-base-100">
+                {{ question }}
+              </p>
+              <div
+                [ngClass]="{ hidden: isQuestionOpen[i] }"
+                class="flex items-center gap-2"
+              >
+                <i class="bi bi-plus text-primary" aria-hidden="true"></i>
+                <p class="font-serif text-base-100 text-xs md:text-base">
+                  Set Example Answer
+                </p>
+                <i
+                  class="bi bi-x-lg text-error"
+                  aria-hidden="true"
+                  (click)="removeQuestion($event, i)"
+                ></i>
+              </div>
+              <div
+                [ngClass]="{ hidden: !isQuestionOpen[i] }"
+                class="flex gap-2"
+              >
+                <p class="text-error">-</p>
+                <p class="font-serif text-base-100 text-xs md:text-base">
+                  Delete Example Answer
+                </p>
+                <i
+                  class="bi bi-x-lg text-error"
+                  aria-hidden="true"
+                  (click)="removeQuestion($event, i)"
+                ></i>
+              </div>
+            </summary>
+            <ol
+              class="space-y-4 px-10 py-4 pointer-events-none font-mono text-base-200"
+            >
+              <li>
+                <wagademy-input></wagademy-input>
+              </li>
+            </ol>
+          </details>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
