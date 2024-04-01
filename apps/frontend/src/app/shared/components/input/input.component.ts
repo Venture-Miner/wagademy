@@ -28,6 +28,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() type: HTMLInputTypeAttribute = 'text';
   @Input() readonly = false;
   @Input() isRightButtonDisabled = false;
+  @Input() value = '';
 
   @Output() rightButtonClick = new EventEmitter<void>();
 
