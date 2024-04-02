@@ -1,0 +1,50 @@
+<div class="container mx-auto min-h-screen px-3">
+  <div class="pb-4 pt-6 flex justify-between flex-wrap gap-4">
+    <div
+      class="flex gap-2 items-center py-4 cursor-pointer"
+      [routerLink]="['/']"
+    >
+      <i class="bi bi-arrow-left text-base-100 text-xl"></i>
+      <p class="font-bold text-sm text-base-100 font-mono">Back</p>
+    </div>
+    <label class="input flex items-center gap-2 bg-transparent text-base-200">
+      <i class="bi bi-search"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchJob"
+        class="grow text-base-200"
+        placeholder="Search"
+      />
+    </label>
+    <div class="flex flex-wrap gap-2">
+      <button
+        *ngFor="let filter of filters; let i = index"
+        class="border border-base-200 hover:border-none font-mono rounded-full p-2 hover:bg-primary"
+        [ngClass]="[
+          filter.name === selectedFilter
+            ? 'bg-primary text-base-100 border-none'
+            : 'text-base-200 hover:text-base-100'
+        ]"
+        (click)="selectedFilter = filter.name"
+      >
+        {{ filter.name }}
+      </button>
+    </div>
+  </div>
+  <div class="flex gap-3 font-sans items-center">
+    <h2 class="font-medium text-base-100 text-4xl">Job title</h2>
+    <p class="text-sm text-primary font-bold">
+      | {{ jobs.length }} APPLICATIONS
+    </p>
+  </div>
+  <div
+    class="max-[657px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
+  >
+    <wagademy-applications-job-card
+      *ngFor="let job of jobs; let i = index"
+      [img]="job.image"
+      [name]="job.title"
+      [description]="job.description"
+    ></wagademy-applications-job-card>
+  </div>
+</div>
