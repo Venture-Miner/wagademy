@@ -9,6 +9,9 @@ import { JobsComponent } from './jobs/jobs.component';
 import { JobsDetailsComponent } from './jobs-details/jobs-details.component';
 import { GptListComponent } from './person/gpt-list/gpt-list.component';
 import { GptChatComponent } from './person/gpt-chat/gpt-chat.component';
+import { ApplicationsJobComponent } from './company/applications-job/applications-job.component';
+import { ApplicationsProfileComponent } from './company/applications-profile/applications-profile.component';
+import { ApplicationsResultsComponent } from './company/applications-results/applications-results.component';
 
 const routes: Routes = [
   {
@@ -51,6 +54,18 @@ const routes: Routes = [
       {
         path: 'chatbot',
         component: GptListComponent,
+      },
+      {
+        path: 'applications-job',
+        component: ApplicationsJobComponent,
+      },
+      {
+        path: 'applications-profile',
+        component: ApplicationsProfileComponent,
+      },
+      {
+        path: 'applications-results',
+        component: ApplicationsResultsComponent,
       },
     ],
   },
