@@ -1,0 +1,114 @@
+<div class="container mx-auto min-h-screen px-3">
+  <div class="flex items-start gap-40">
+    <div
+      class="flex gap-2 items-center py-4 cursor-pointer"
+      [routerLink]="['/']"
+    >
+      <i class="bi bi-arrow-left text-base-100 text-xl"></i>
+      <p class="font-bold text-sm text-base-100 font-mono">Back</p>
+    </div>
+    <div>
+      <div class="flex justify-between pb-4">
+        <div class="flex gap-4">
+          <img
+            [src]="image"
+            class="w-24 h-24 border border-neutral rounded-2xl"
+          />
+          <div>
+            <h3 class="font-sans font-medium text-base-100 text-2xl pb-2">
+              {{ name }}
+            </h3>
+            <div class="flex gap-2 pb-2">
+              <i class="bi bi-envelope text-primary"></i>
+              <p class="font-mono text-base-200">{{ email }}</p>
+            </div>
+            <div class="flex gap-2 pb-2">
+              <i class="bi bi-geo text-primary"></i>
+              <p class="font-mono text-base-200">{{ state }}</p>
+            </div>
+          </div>
+          <div>
+            <div class="flex gap-2 pb-2">
+              <i class="bi bi-cake text-primary"></i>
+              <p class="font-mono text-base-200">{{ birthday }}</p>
+            </div>
+            <div class="flex gap-2 pb-2">
+              <i class="bi bi-telephone text-primary"></i>
+              <p class="font-mono text-base-200">{{ phone }}</p>
+            </div>
+            <div class="flex gap-2 pb-2">
+              <i class="bi bi-globe text-primary"></i>
+              <p class="font-mono text-base-200">{{ locale }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pb-12">
+        <p class="text-primary font-mono font-bold pb-2">About</p>
+        <p class="font-mono text-base-200">{{ about }}</p>
+      </div>
+      <div>
+        <h3 class="text-primary font-sans font-medium text-2xl pb-6">
+          Education
+        </h3>
+        <p class="text-base-100 font-mono font-bold pb-1">Course name</p>
+        <p class="text-base-200">
+          {{ course }}
+        </p>
+        <p class="text-base-200 text-sm pb-4">{{ period }}</p>
+        <p class="text-base-100 pb-12">{{ courseDescription }}</p>
+        <div>
+          <h3 class="text-primary font-sans font-medium text-2xl pb-6">
+            Professional experience
+          </h3>
+          <p class="text-base-100 font-mono font-bold pb-1">Job title</p>
+          <p class="text-base-200">
+            {{ company }}
+          </p>
+          <p class="text-base-200 text-sm pb-4">{{ periodWork }}</p>
+          <p class="text-base-100 pb-12">{{ jobDescription }}</p>
+        </div>
+        <div class="pb-12">
+          <h3 class="text-primary font-sans font-medium text-2xl pb-6">
+            Area of expertise
+          </h3>
+          <div class="flex flex-wrap gap-4">
+            <div *ngFor="let word of areaOfExpertise">
+              <div
+                class="bg-neutral rounded-3xl text-base-100 font-sm font-mono py-1 px-2"
+              >
+                {{ word }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pb-10">
+          <h3 class="text-primary font-sans font-medium text-2xl pb-6">
+            Skills and competences
+          </h3>
+          <div class="flex flex-wrap gap-4">
+            <div *ngFor="let word of skillsAndCompetences">
+              <div
+                class="bg-neutral rounded-3xl text-base-100 font-sm font-mono py-1 px-2"
+              >
+                {{ word }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <button class="btn btn-primary w-64">
+            Invite To Interview With AI
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<wagademy-modal
+  title="Invite"
+  actionButtonLabel="yes, send invite"
+  message="Are you sure you want to send the interview invitation to this candidate?"
+  (actionButtonClick)="sendInvite()"
+>
+</wagademy-modal>
