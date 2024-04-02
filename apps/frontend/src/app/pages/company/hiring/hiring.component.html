@@ -20,46 +20,51 @@
     </div>
   </div>
   <div class="flex flex-wrap gap-2 pb-2">
+    @for (filter of filters; track $index) {
     <button
-      *ngFor="let filter of filters; let i = index"
       class="border border-base-200 hover:border-none font-mono rounded-full p-2 hover:bg-secondary"
       [ngClass]="[
-        filter.name === selectedFilter
+        filter.symbol === selectedFilter
           ? 'bg-secondary text-base-100 border-none'
           : 'text-base-200 hover:text-base-100'
       ]"
-      (click)="selectedFilter = filter.name"
+      (click)="selectedFilter = filter.symbol; getJobs()"
     >
       {{ filter.name }}
     </button>
+    }
   </div>
+  @if (!jobs.length) {
   <div
-    *ngIf="!jobs.length"
     class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
   >
     <p>There are no content available</p>
   </div>
-  <div class="pb-6" *ngIf="!isLoading">
-    <div *ngIf="jobs.length">
+  } @if (jobs.length) { @if(!isLoading){
+  <div class="pb-6">
+    <div>
       <div
         class="max-[657px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
       >
+        @for (job of jobs; track $index) {
         <wagademy-card-job
-          *ngFor="let job of filteredJobs; let i = index"
-          [name]="job.name"
+          [name]="job.title"
           [description]="job.description"
-          [applications]="job.applications"
-          [view]="job.view"
-          [isOpen]="selectedCardIndex === i"
-          (click)="onCardClick(i)"
+          [applications]="job._count.jobApplications"
+          [view]="job.views"
+          [isOpen]="selectedCardIndex === $index"
+          (click)="onCardClick($index)"
           (updateJob)="updateJobModal()"
           (unpublishJob)="unpublishJob()"
           (removeJob)="removeJob()"
         ></wagademy-card-job>
+        }
       </div>
     </div>
   </div>
-  <div *ngIf="jobs.length" class="flex justify-center lg:justify-end pt-6 pb-3">
+  }
+
+  <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination
       [page]="page"
       [take]="take"
@@ -67,6 +72,7 @@
       (pageChange)="page = $event; getJobs()"
     ></wagademy-pagination>
   </div>
+  }
 </div>
 <dialog id="create_job" class="modal modal-middle">
   <div class="modal-box w-3/4 container">
@@ -218,14 +224,15 @@
     </form>
   </div>
 </dialog>
+@if (incompleteProfile) {
 <wagademy-modal
-  *ngIf="incompleteProfile"
   title="Incomplete profile "
   actionButtonLabel="Complete now"
   message="You need to complete your profile to create and publish this position. Would you like to complete it now?"
   (actionButtonClick)="completeJob()"
 >
 </wagademy-modal>
+}
 <wagademy-modal
   title="Are you sure you want to remove this job?"
   actionButtonLabel="Remove"

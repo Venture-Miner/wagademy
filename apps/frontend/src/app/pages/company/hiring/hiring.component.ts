@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InputComponent } from '../../../shared/components/input/input.component';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { CardJobComponent } from '../../../shared/components/card-job/card-job.component';
 import {
   FormBuilder,
@@ -16,26 +16,18 @@ import {
 } from '../../../shared/components/select/select.component';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { ToastService } from '../../../services/toast/toast.service';
-import { ToastComponent } from '../../../shared/components/toast/toast.component';
-
-interface Job {
-  applications: number;
-  name: string;
-  description: string;
-  view: number;
-}
+import { FilterCompanyJobs, JobCompanyView, Pagination } from '@wagademy/types';
+import { JobService } from '../../../services/job/job.service';
 
 interface Filter {
   name: string;
+  symbol: 'all' | 'numberOfApplications' | 'mostRecent' | 'jobViews';
 }
 
 @Component({
   selector: 'wagademy-hiring',
   standalone: true,
   imports: [
-    InputComponent,
-    NgIf,
-    NgFor,
     CardJobComponent,
     NgClass,
     FormsModule,
@@ -45,55 +37,26 @@ interface Filter {
     ReactiveFormsModule,
     SelectComponent,
     ModalComponent,
-    ToastComponent,
   ],
   templateUrl: './hiring.component.html',
   styleUrl: './hiring.component.scss',
 })
-export class HiringComponent {
-  jobs: Job[] = [
-    {
-      applications: 0,
-      name: 'Job name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      view: 0,
-    },
-    {
-      applications: 0,
-      name: 'Job name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      view: 0,
-    },
-    {
-      applications: 0,
-      name: 'Job name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      view: 0,
-    },
-    {
-      applications: 0,
-      name: 'Job name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      view: 0,
-    },
-  ];
+export class HiringComponent implements OnInit {
+  jobs: JobCompanyView[] = [];
   isLoading = false;
   searchJob = '';
-  selectedFilter = 'All';
+  selectedFilter: 'all' | 'numberOfApplications' | 'mostRecent' | 'jobViews' =
+    'all';
   selectedCardIndex: number | null = null;
   filters: Filter[] = [
-    { name: 'All' },
-    { name: 'Job views' },
-    { name: 'Most recent' },
-    { name: 'Number of applications' },
+    { name: 'All', symbol: 'all' },
+    { name: 'Job views', symbol: 'jobViews' },
+    { name: 'Most recent', symbol: 'mostRecent' },
+    { name: 'Number of applications', symbol: 'numberOfApplications' },
   ];
   page = 1;
-  take = 1;
-  count = 5;
+  take = 8;
+  count = 0;
   form = this.fb.group({
     title: ['', [Validators.required]],
     description: ['', [Validators.required]],
@@ -110,8 +73,13 @@ export class HiringComponent {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly jobService: JobService
   ) {}
+
+  ngOnInit(): void {
+    this.getJobs();
+  }
 
   toggleStatus(): void {
     this.status = this.status === 'Published' ? 'Unpublished' : 'Published';
@@ -125,18 +93,38 @@ export class HiringComponent {
     }
   }
 
-  get filteredJobs() {
-    if (this.searchJob) {
-      return this.jobs.filter((job: Job) =>
-        job.name.toLowerCase().includes(this.searchJob.toLowerCase())
-      );
-    } else {
-      return this.jobs;
-    }
+  filterJobsDto() {
+    const filter: FilterCompanyJobs = {};
+    if (this.selectedFilter !== 'all') filter[this.selectedFilter] = true;
+    if (this.searchJob) filter.search = this.searchJob;
+    return filter;
   }
 
   getJobs() {
-    //
+    const pagination: Pagination = {
+      take: this.take,
+      skip: (this.page - 1) * this.take,
+    };
+    const filter = this.filterJobsDto();
+    this.isLoading = true;
+    this.jobService.findManyJobsCompanyView(filter, pagination).subscribe({
+      next: ({ jobs, count }) => {
+        this.jobs = jobs;
+        this.count = count;
+        this.isLoading = false;
+      },
+      error: ({ error }) => {
+        this.isLoading = false;
+        const message =
+          error.statusCode !== 500
+            ? error.message
+            : 'Error while retrieving jobs';
+        this.toastService.showToast({
+          message,
+          type: 'error',
+        });
+      },
+    });
   }
 
   completeJob() {
