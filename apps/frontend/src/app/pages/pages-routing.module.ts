@@ -5,11 +5,13 @@ import { HomeCompanyComponent } from './company/home/home.component';
 import { HomeComponent } from './person/home/home.component';
 import { MyCertificatesComponent } from './certificates/my-certificates.component';
 import { ProfileComponent } from './company/profile/profile.component';
+import { HiringComponent } from './company/hiring/hiring.component';
 import { JobApplicationsAllComponent } from './person/job-applications-all/job-applications-all.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { JobsDetailsComponent } from './jobs-details/jobs-details.component';
 import { GptListComponent } from './person/gpt-list/gpt-list.component';
 import { GptChatComponent } from './person/gpt-chat/gpt-chat.component';
+import { InterviewGptComponent } from './company/interview-gpt/interview-gpt.component';
 
 const routes: Routes = [
   {
@@ -42,6 +44,10 @@ const routes: Routes = [
         component: ProfileComponent,
       },
       {
+        path: 'hiring',
+        component: HiringComponent,
+      },
+      {
         path: 'job-applications-all',
         component: JobApplicationsAllComponent,
       },
@@ -56,6 +62,10 @@ const routes: Routes = [
       {
         path: 'chatbot',
         component: GptListComponent,
+      },
+      {
+        path: 'interview-gpt',
+        component: InterviewGptComponent,
       },
     ],
   },

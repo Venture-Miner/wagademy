@@ -5,9 +5,16 @@ import { ConfigModule } from '@nestjs/config';
 import { CognitoUserGuard, CognitoUserStrategy, FileModule } from '../infra';
 import { PrismaModule } from '@wagademy/prisma';
 import { UserModule } from '../modules/user/user.module';
+import { JobModule } from '../modules/job/job.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), FileModule, PrismaModule, UserModule],
+  imports: [
+    ConfigModule.forRoot(),
+    FileModule,
+    JobModule,
+    PrismaModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService, CognitoUserStrategy, CognitoUserGuard],
 })

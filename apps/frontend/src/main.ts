@@ -12,6 +12,7 @@ declare global {
   interface Window {
     filesUpload: HTMLFormElement;
     modal: HTMLFormElement;
+    update_job: HTMLFormElement;
   }
 }
 
