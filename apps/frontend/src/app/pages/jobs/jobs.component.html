@@ -12,8 +12,8 @@
       />
     </label>
     <div class="flex flex-wrap gap-2">
+      @for (filter of filters; track $index) {
       <button
-        *ngFor="let filter of filters; let i = index"
         class="border border-base-200 hover:border-none font-mono rounded-full p-2 hover:bg-primary"
         [ngClass]="[
           filter.symbol === selectedFilter
@@ -24,23 +24,28 @@
       >
         {{ filter.name }}
       </button>
+      }
     </div>
   </div>
-  <div *ngIf="!isLoading">
-    <div *ngIf="jobs.length">
+  @if(!isLoading){
+  <div>
+    @if(jobs.length){
+    <div>
       <div
         class="flex flex-wrap max-[767px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
       >
+        @for (job of jobs; track $index) {
         <wagademy-card
-          *ngFor="let job of jobs"
           [img]="job.company.companyProfile?.companyPhoto?.url"
           [name]="job.title"
           [description]="job.description"
           [details]="'more'"
           (click)="jobDetails(job.id)"
         ></wagademy-card>
+        }
       </div>
     </div>
+    }
     <div class="flex justify-center lg:justify-end pt-6 pb-3">
       <wagademy-pagination
         [page]="page"
@@ -50,4 +55,5 @@
       ></wagademy-pagination>
     </div>
   </div>
+  }
 </div>

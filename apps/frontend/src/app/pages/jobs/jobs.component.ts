@@ -16,14 +16,7 @@ interface Filter {
 @Component({
   selector: 'wagademy-jobs',
   standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    CardComponent,
-    PaginationComponent,
-    FormsModule,
-    NgClass,
-  ],
+  imports: [CardComponent, PaginationComponent, FormsModule, NgClass],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.scss',
 })
