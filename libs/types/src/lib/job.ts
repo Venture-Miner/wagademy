@@ -44,6 +44,11 @@ export type JobCompanyView = {
   aiInterviewQuestions: string[];
   views: number;
   _count: { jobApplications: number };
+  company: {
+    companyProfile: {
+      companyPhoto: { url: string } | null;
+    } | null;
+  };
   jobStatus: JobStatusEnum;
   createdAt: Date;
   updatedAt: Date;
@@ -58,6 +63,11 @@ export type CreateJobResponse = {
   aiInterviewQuestions: string[];
   views: number;
   _count: { jobApplications: number };
+  company: {
+    companyProfile: {
+      companyPhoto: { url: string } | null;
+    } | null;
+  };
   jobStatus: JobStatusEnum;
   createdAt: Date;
   updatedAt: Date;
@@ -72,6 +82,11 @@ export type UpdateJobResponse = {
   aiInterviewQuestions: string[];
   views: number;
   _count: { jobApplications: number };
+  company: {
+    companyProfile: {
+      companyPhoto: { url: string } | null;
+    } | null;
+  };
   jobStatus: JobStatusEnum;
   createdAt: Date;
   updatedAt: Date;
@@ -86,6 +101,11 @@ export type FindOneJobCompanyViewResponse = {
   aiInterviewQuestions: string[];
   views: number;
   _count: { jobApplications: number };
+  company: {
+    companyProfile: {
+      companyPhoto: { url: string } | null;
+    } | null;
+  };
   jobStatus: JobStatusEnum;
   createdAt: Date;
   updatedAt: Date;
