@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import {
   CreateJobApplication,
   CreateJobApplicationResponse,
+  FilterCompanyJobs,
   FilterJobs,
+  FindManyJobsCompanyView,
   FindManyJobsUserView,
   FindOneJobUserViewResponse,
   Pagination,
@@ -38,6 +40,15 @@ export class JobService extends BaseHttpService {
         params: { ...filterJobsDto, ...paginationDto },
       }
     );
+  }
+
+  findManyJobsCompanyView(
+    filterCompanyJobsDto: FilterCompanyJobs,
+    paginationDto: Pagination
+  ): Observable<FindManyJobsCompanyView> {
+    return this.http.get<FindManyJobsCompanyView>(`${this.URL}/job`, {
+      params: { ...filterCompanyJobsDto, ...paginationDto },
+    });
   }
 
   findOneJobUserView(
