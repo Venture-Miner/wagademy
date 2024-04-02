@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ToastComponent } from './shared/components/toast/toast.component';
-import { AuthService } from './shared/auth/auth.service';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   standalone: true,
@@ -10,7 +10,7 @@ import { AuthService } from './shared/auth/auth.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'frontend';
 
   constructor(private readonly authService: AuthService) {}

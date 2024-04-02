@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { FilterJobs } from '@wagademy/types';
+import { Type } from 'class-transformer';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class FilterJobsDto implements FilterJobs {
@@ -19,6 +20,7 @@ export class FilterJobsDto implements FilterJobs {
     required: false,
   })
   @IsOptional()
+  @Type(() => Boolean)
   @IsBoolean()
   featured?: boolean;
 
@@ -28,6 +30,7 @@ export class FilterJobsDto implements FilterJobs {
     required: false,
   })
   @IsOptional()
+  @Type(() => Boolean)
   @IsBoolean()
   mostRecent?: boolean;
 }
