@@ -81,7 +81,7 @@ export class JobsComponent implements OnInit {
       },
       error: () => {
         this.toastService.showToast({
-          message: 'Error while retrieving job',
+          message: 'Error while retrieving jobs',
           type: 'error',
         });
       },
