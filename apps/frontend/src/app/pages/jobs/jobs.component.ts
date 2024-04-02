@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { Router } from '@angular/router';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
@@ -16,14 +16,7 @@ interface Filter {
 @Component({
   selector: 'wagademy-jobs',
   standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    CardComponent,
-    PaginationComponent,
-    FormsModule,
-    NgClass,
-  ],
+  imports: [CardComponent, PaginationComponent, FormsModule, NgClass],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.scss',
 })
