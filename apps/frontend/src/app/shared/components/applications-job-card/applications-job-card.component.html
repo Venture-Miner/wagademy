@@ -1,0 +1,55 @@
+<div
+  class="sm:w-[304px] w-[230px] justify-center h-[280pxpx] bg-neutral hover:shadow-lg mx-auto flex relative rounded-lg"
+>
+  <div class="font-mono sm:w-[304px] w-[230px]">
+    <img
+      *ngIf="img"
+      [src]="img"
+      class="object-cover h-[80px] w-[80px] pl-4 pt-4 rounded"
+      alt="image"
+    />
+    <img
+      *ngIf="!img"
+      [src]="'./assets/img/images/img-card-fallback.webp'"
+      class="object-cover h-[80px] w-[80px] pl-4 pt-4 rounded"
+      alt="fallback image"
+    />
+    <div class="absolute top-0 right-0 p-2">
+      <div *ngIf="status === 'Interviewed' || 'Invited'">
+        @if(status === 'Interviewed'){
+        <p class="bg-secondary rounded-full py-1 px-4">Interviewed</p>
+        } @if(status === 'Invited'){
+        <p class="bg-secondary rounded-full py-1 px-4">Invited</p>
+        }
+      </div>
+    </div>
+    <div class="px-4 bottom-4 bg-neutral w-full">
+      <h3
+        class="text-base-100 font-mono font-bold pb-2 text-ellipsis overflow-hidden whitespace-nowrap"
+      >
+        {{ name }}
+      </h3>
+      <div class="pb-6">
+        <p class="text-base-200 font-mono h-14 overflow-hidden line-clamp-3">
+          {{ description }}
+        </p>
+      </div>
+    </div>
+    <div class="absolute bottom-0 w-full p-4">
+      <div class="opacity-0 w-full duration-300">
+        @if(status === 'Interviewed'){
+        <button class="btn btn-primary w-full" (click)="onViewMoreClick()">
+          See Results
+        </button>
+        } @if(status === 'Invited'){
+        <button
+          class="btn btn-primary btn-outline w-full"
+          (click)="onViewMoreClick()"
+        >
+          See profile
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+</div>
