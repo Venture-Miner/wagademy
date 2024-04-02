@@ -1,0 +1,56 @@
+<div class="container mx-auto min-h-screen px-3">
+  <div class="flex gap-2 items-center py-4 cursor-pointer" [routerLink]="['/']">
+    <i class="bi bi-arrow-left text-base-100 text-xl"></i>
+    <p class="font-bold text-sm text-base-100 font-mono">Back</p>
+  </div>
+  <div class="md:flex justify-between gap-8">
+    <div class="bg-neutral p-6 w-full">
+      <div *ngFor="let question of questions" class="font-mono">
+        <p class="font-bold text-base-100">{{ question.asking }}</p>
+        <p class="text-base-200 pb-6">{{ question.answer }}</p>
+      </div>
+    </div>
+    <div class="pt-6 md:pt-0">
+      <div class="bg-neutral rounded-2xl p-4 lg:w-[416px] w-full">
+        <div class="flex gap-2 pb-6 items-start">
+          <img [src]="image" />
+          <div class="font-mono">
+            <p class="text-base-100 font-bold">{{ name }}</p>
+            <div class="flex gap-2">
+              <i class="bi bi-envelope text-primary"></i>
+              <p>{{ email }}</p>
+            </div>
+            <div class="flex gap-2 pb-6">
+              <i class="bi bi-telephone text-primary"></i>
+              <p>{{ phone }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <button class="text-primary">View profile</button>
+        </div>
+      </div>
+      <div class="pt-10">
+        <div class="bg-neutral rounded-2xl p-4 lg:w-[416px] w-full">
+          <div class="flex gap-2 pb-6">
+            <div class="font-mono">
+              <p class="text-base-100 font-bold pb-2">{{ job }}</p>
+              <p class="pb-6 text-base-200">{{ description }}</p>
+              <div class="flex gap-2">
+                <i class="bi bi-clock text-primary"></i>
+                <p class="pb-2 text-base-200">{{ modality }}</p>
+              </div>
+              <div class="flex gap-2 pb-6">
+                <i class="bi bi-telephone text-primary"></i>
+                <p class="text-base-200">{{ schedule }}</p>
+              </div>
+              <div class="flex justify-end">
+                <button class="text-primary">View job</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
