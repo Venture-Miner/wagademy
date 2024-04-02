@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { InputComponent } from '../../../shared/components/input/input.component';
-import { NgFor, NgIf } from '@angular/common';
-import { CardComponent } from '../../../shared/components/card/card.component';
+import { NgFor } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'wagademy-applications-profile',
   standalone: true,
-  imports: [InputComponent, NgIf, NgFor, CardComponent, RouterModule, NgFor],
+  imports: [RouterModule, NgFor],
   templateUrl: './applications-results.component.html',
   styleUrl: './applications-results.component.scss',
 })

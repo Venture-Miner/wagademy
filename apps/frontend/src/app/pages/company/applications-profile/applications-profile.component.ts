@@ -1,27 +1,18 @@
 import { Component } from '@angular/core';
-import { InputComponent } from '../../../shared/components/input/input.component';
 import { NgFor, NgIf } from '@angular/common';
-import { CardComponent } from '../../../shared/components/card/card.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 
 @Component({
   selector: 'wagademy-applications-profile',
   standalone: true,
-  imports: [
-    InputComponent,
-    NgIf,
-    NgFor,
-    CardComponent,
-    RouterModule,
-    NgFor,
-    ModalComponent,
-  ],
+  imports: [NgIf, NgFor, RouterModule, NgFor, ModalComponent],
   templateUrl: './applications-profile.component.html',
   styleUrl: './applications-profile.component.scss',
 })
 export class ApplicationsProfileComponent {
-  image = './assets/img/images/img-profile-photo.png';
+  profilePhotoFile!: File;
+  image!: string;
   name = 'Marvin Wilson';
   email = 'randall.cooper@email.com';
   phone = '+55 11 912345-6789';
@@ -67,5 +58,17 @@ export class ApplicationsProfileComponent {
 
   sendInvite() {
     //
+  }
+
+  onFileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const files = target.files;
+    if (files) this.handleFile(files[0]);
+  }
+
+  handleFile(file: File) {
+    const fileUrl = URL.createObjectURL(file);
+    this.profilePhotoFile = file;
+    this.image = fileUrl;
   }
 }

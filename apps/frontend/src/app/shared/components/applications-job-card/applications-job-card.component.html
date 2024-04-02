@@ -1,5 +1,5 @@
 <div
-  class="sm:w-[304px] w-[230px] justify-center h-[280pxpx] bg-neutral hover:shadow-lg mx-auto flex relative rounded-lg"
+  class="sm:w-[304px] w-[230px] justify-center h-[280px] bg-neutral hover:shadow-lg mx-auto flex relative rounded-lg"
 >
   <div class="font-mono sm:w-[304px] w-[230px]">
     <img
@@ -15,41 +15,28 @@
       alt="fallback image"
     />
     <div class="absolute top-0 right-0 p-2">
-      <div *ngIf="status === 'Interviewed' || 'Invited'">
-        @if(status === 'Interviewed'){
-        <p class="bg-secondary rounded-full py-1 px-4">Interviewed</p>
-        } @if(status === 'Invited'){
-        <p class="bg-secondary rounded-full py-1 px-4">Invited</p>
-        }
+      <div *ngIf="status">
+        <p class="bg-secondary text-base-100 rounded-full py-1 px-4">
+          {{ status }}
+        </p>
       </div>
     </div>
     <div class="px-4 bottom-4 bg-neutral w-full">
       <h3
-        class="text-base-100 font-mono font-bold pb-2 text-ellipsis overflow-hidden whitespace-nowrap"
+        class="text-base-100 font-mono font-bold pb-2 pt-4 text-ellipsis overflow-hidden whitespace-nowrap"
       >
         {{ name }}
       </h3>
-      <div class="pb-6">
-        <p class="text-base-200 font-mono h-14 overflow-hidden line-clamp-3">
+      <div class="pb-4">
+        <p
+          class="text-base-200 font-mono h-[75px] overflow-hidden line-clamp-3"
+        >
           {{ description }}
         </p>
       </div>
     </div>
     <div class="absolute bottom-0 w-full p-4">
-      <div class="opacity-0 w-full duration-300">
-        @if(status === 'Interviewed'){
-        <button class="btn btn-primary w-full" (click)="onViewMoreClick()">
-          See Results
-        </button>
-        } @if(status === 'Invited'){
-        <button
-          class="btn btn-primary btn-outline w-full"
-          (click)="onViewMoreClick()"
-        >
-          See profile
-        </button>
-        }
-      </div>
+      <ng-content></ng-content>
     </div>
   </div>
 </div>
