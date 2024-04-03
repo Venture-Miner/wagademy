@@ -13,9 +13,11 @@
       </label>
       <button
         class="btn btn-primary btn-outline w-[200px]"
-        onclick="create_job.showModal()"
+        (click)="verifyUser()"
       >
-        Create job
+        @if (isVerifying) {
+        <span class="loading loading-dots"></span>
+        } @else { Create job }
       </button>
     </div>
   </div>
@@ -41,10 +43,10 @@
     <p>There are no content available</p>
   </div>
   } @if (jobs.length) { @if(!isLoading){
-  <div class="pb-6">
+  <div class="pb-6 pt-2">
     <div>
       <div
-        class="max-[657px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
+        class="max-[657px]:justify-center flex-wrap justify-start flex gap-8 pt-6 xl:pt-0"
       >
         @for (job of jobs; track $index) {
         <wagademy-card-job
@@ -54,9 +56,9 @@
           [view]="job.views"
           [isOpen]="selectedCardIndex === $index"
           (click)="onCardClick($index)"
-          (updateJob)="updateJobModal()"
+          (updateJob)="updateJobModal(job)"
           (unpublishJob)="unpublishJob()"
-          (removeJob)="removeJob()"
+          (removeJob)="openRemoveJobModal()"
         ></wagademy-card-job>
         }
       </div>
@@ -86,7 +88,11 @@
         </button>
       </div>
       <div class="pb-6">
-        <wagademy-form-field [control]="form.controls.title" label="Job title">
+        <wagademy-form-field
+          [control]="form.controls.title"
+          label="Job title"
+          [isInputMandatory]="true"
+        >
           <wagademy-input
             placeholder="Job title"
             type="text"
@@ -97,45 +103,70 @@
       </div>
       <div class="pb-6">
         <wagademy-form-field
-          [control]="form.controls.title"
+          [control]="form.controls.description"
           label="Description"
+          [isInputMandatory]="true"
         >
           <textarea
             placeholder="Description"
             class="textarea textarea-bordered bg-neutral textarea-lg w-full"
+            formControlName="description"
           ></textarea>
         </wagademy-form-field>
       </div>
       <div class="pb-6">
         <wagademy-form-field
-          [control]="form.controls.contract"
-          label="Contract"
+          [control]="form.controls.employmentClassification"
+          label="Employment Classification"
+          [isInputMandatory]="true"
         >
-          <wagademy-select> </wagademy-select>
+          <wagademy-select
+            [items]="employmentClassification"
+            formControlName="employmentClassification"
+          >
+          </wagademy-select>
         </wagademy-form-field>
       </div>
       <div class="pb-14">
         <wagademy-form-field
           [control]="form.controls.allocation"
           label="Allocation"
+          [isInputMandatory]="true"
         >
-          <wagademy-select> </wagademy-select>
+          <wagademy-select [items]="allocation" formControlName="allocation">
+          </wagademy-select>
         </wagademy-form-field>
       </div>
       <div class="sm:flex justify-center gap-4">
         <button
           class="btn btn-outline btn-primary sm:w-[210px] w-full"
-          [disabled]="isLoading"
+          [disabled]="
+            isLoading ||
+            form.invalid ||
+            creatingStatus.isCreating ||
+            creatingStatus.isPublishing
+          "
+          (click)="form.controls.jobStatus.setValue('UNPUBLISHED'); createJob()"
         >
-          Create
+          @if (creatingStatus.isCreating) {
+          <span class="loading loading-dots"></span>
+          } @else { Create }
         </button>
         <div class="pt-4 sm:pt-0">
           <button
             class="btn btn-primary sm:w-[210px] w-full"
             type="button"
-            [disabled]="isLoading"
+            [disabled]="
+              isLoading ||
+              form.invalid ||
+              creatingStatus.isCreating ||
+              creatingStatus.isPublishing
+            "
+            (click)="form.controls.jobStatus.setValue('PUBLISHED'); createJob()"
           >
-            Create And Publish
+            @if (creatingStatus.isPublishing) {
+            <span class="loading loading-dots"></span>
+            } @else { Create And Publish}
           </button>
         </div>
       </div>
@@ -159,7 +190,7 @@
             type="checkbox"
             class="toggle toggle-primary"
             (click)="toggleStatus()"
-            [checked]="status === 'Published'"
+            [checked]="status === 'PUBLISHED'"
           />
           <p class="text-base-100 font-mono text-sm font-bold">{{ status }}</p>
         </div>
@@ -170,29 +201,33 @@
             placeholder="Job title"
             type="text"
             formControlName="title"
-            [value]="title"
           >
           </wagademy-input>
         </wagademy-form-field>
       </div>
       <div class="pb-6">
         <wagademy-form-field
-          [control]="form.controls.title"
+          [control]="form.controls.description"
           label="Description"
         >
           <textarea
             placeholder="Description"
             class="textarea textarea-bordered bg-neutral h-[168px] text-base-100 w-full"
-            [value]="description"
+            [value]="form.controls.description.value"
+            formControlName="description"
           ></textarea>
         </wagademy-form-field>
       </div>
       <div class="pb-6">
         <wagademy-form-field
-          [control]="form.controls.contract"
-          label="Contract"
+          [control]="form.controls.employmentClassification"
+          label="Employment Classification"
         >
-          <wagademy-select [items]="contract"> </wagademy-select>
+          <wagademy-select
+            [items]="employmentClassification"
+            formControlName="employmentClassification"
+          >
+          </wagademy-select>
         </wagademy-form-field>
       </div>
       <div class="pb-14">
@@ -200,13 +235,14 @@
           [control]="form.controls.allocation"
           label="Allocation"
         >
-          <wagademy-select [items]="allocation"> </wagademy-select>
+          <wagademy-select [items]="allocation" formControlName="allocation">
+          </wagademy-select>
         </wagademy-form-field>
       </div>
       <div class="sm:flex justify-center gap-4">
         <button
           class="btn btn-outline btn-primary sm:w-[210px] w-full"
-          [disabled]="isLoading"
+          [disabled]="isLoading || isUpdating"
         >
           Cancel
         </button>
@@ -214,10 +250,12 @@
           <button
             class="btn btn-primary sm:w-[210px] w-full"
             type="button"
-            [disabled]="isLoading"
+            [disabled]="isLoading || form.invalid || !form.dirty || isUpdating"
             (click)="updateJob()"
           >
-            Update
+            @if (isUpdating) {
+            <span class="loading loading-dots"></span>
+            } @else { Update }
           </button>
         </div>
       </div>
@@ -229,15 +267,17 @@
   title="Incomplete profile "
   actionButtonLabel="Complete now"
   message="You need to complete your profile to create and publish this position. Would you like to complete it now?"
-  (actionButtonClick)="completeJob()"
+  (actionButtonClick)="completeProfile()"
+  [isLoading]="isRedirecting"
 >
 </wagademy-modal>
-}
+}@else {
 <wagademy-modal
   title="Are you sure you want to remove this job?"
   actionButtonLabel="Remove"
   message="This action cannot be reversed."
-  (actionButtonClick)="removeJob()"
+  (actionButtonClick)="deleteJob()"
   [typeModal]="'cancel'"
 >
 </wagademy-modal>
+}

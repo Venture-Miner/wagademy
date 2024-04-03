@@ -124,6 +124,7 @@ export type UpdateJob = {
   description?: string;
   employmentClassification?: EmploymentClassificationEnum;
   allocation?: AllocationEnum;
+  jobStatus?: JobStatusEnum;
 };
 
 export type ConfigureAIQuestions = {

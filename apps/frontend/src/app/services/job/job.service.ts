@@ -12,6 +12,8 @@ import {
   FindManyJobsUserView,
   FindOneJobUserViewResponse,
   Pagination,
+  UpdateJob,
+  UpdateJobResponse,
 } from '@wagademy/types';
 import { Injectable } from '@angular/core';
 
@@ -62,6 +64,13 @@ export class JobService extends BaseHttpService {
   ): Observable<FindOneJobUserViewResponse | null> {
     return this.http.get<FindOneJobUserViewResponse | null>(
       `${this.URL}/job/job-user-view/${id}`
+    );
+  }
+
+  update(id: string, updateJobDto: UpdateJob): Observable<UpdateJobResponse> {
+    return this.http.patch<UpdateJobResponse>(
+      `${this.URL}/job/${id}`,
+      updateJobDto
     );
   }
 }

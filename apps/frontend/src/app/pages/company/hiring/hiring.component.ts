@@ -16,8 +16,20 @@ import {
 } from '../../../shared/components/select/select.component';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { ToastService } from '../../../services/toast/toast.service';
-import { FilterCompanyJobs, JobCompanyView, Pagination } from '@wagademy/types';
+import {
+  AllocationEnum,
+  CreateJob,
+  EmploymentClassificationEnum,
+  FilterCompanyJobs,
+  JobCompanyView,
+  JobStatusEnum,
+  Pagination,
+  UpdateJob,
+} from '@wagademy/types';
 import { JobService } from '../../../services/job/job.service';
+import { formatSelectItem } from '../../../shared/utils/functions/format-select-item';
+import { UserService } from '../../../services/user/user.service';
+import { Router } from '@angular/router';
 
 interface Filter {
   name: string;
@@ -44,6 +56,13 @@ interface Filter {
 export class HiringComponent implements OnInit {
   jobs: JobCompanyView[] = [];
   isLoading = false;
+  creatingStatus = {
+    isCreating: false,
+    isPublishing: false,
+  };
+  isUpdating = false;
+  isRedirecting = false;
+  isVerifying = false;
   searchJob = '';
   selectedFilter: 'all' | 'numberOfApplications' | 'mostRecent' | 'jobViews' =
     'all';
@@ -60,21 +79,26 @@ export class HiringComponent implements OnInit {
   form = this.fb.group({
     title: ['', [Validators.required]],
     description: ['', [Validators.required]],
-    contract: ['', [Validators.required]],
-    allocation: [', [Validators.required]'],
+    employmentClassification: ['', [Validators.required]],
+    allocation: ['', [Validators.required]],
+    jobStatus: [''],
   });
-  title = 'Job title example';
-  description =
-    'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet.';
-  contract: SelectItem<string>[] = [];
-  allocation: SelectItem<string>[] = [];
-  status: 'Published' | 'Unpublished' = 'Published';
+  employmentClassification: SelectItem<string>[] =
+    formatSelectItem<EmploymentClassificationEnum>(
+      EmploymentClassificationEnum
+    );
+  allocation: SelectItem<string>[] =
+    formatSelectItem<AllocationEnum>(AllocationEnum);
+  status: JobStatusEnum = JobStatusEnum.PUBLISHED;
   incompleteProfile = false;
+  id = '';
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService,
-    private readonly jobService: JobService
+    private readonly jobService: JobService,
+    private readonly userService: UserService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +106,7 @@ export class HiringComponent implements OnInit {
   }
 
   toggleStatus(): void {
-    this.status = this.status === 'Published' ? 'Unpublished' : 'Published';
+    this.status = this.status === 'PUBLISHED' ? 'UNPUBLISHED' : 'PUBLISHED';
   }
 
   onCardClick(index: number) {
@@ -127,30 +151,140 @@ export class HiringComponent implements OnInit {
     });
   }
 
-  completeJob() {
-    //
+  completeProfile() {
+    //Change route after page is done
+    this.router.navigate(['/pages/company-profile-edit']);
   }
 
-  removeJob() {
-    window.modal['showModal']();
-  }
+  verifyUser() {
+    this.isVerifying = true;
+    this.userService.self().subscribe({
+      next: (user) => {
+        this.isVerifying = false;
 
-  updateJob() {
-    this.toastService.showToast({
-      message: 'Success! Job successfully updated.',
-      type: 'success',
+        if (!user.companyProfile) {
+          this.incompleteProfile = true;
+          setTimeout(() => {
+            // Trick to delay the operation until after the current call stack has cleared. This will give Angular time to update the DOM.
+            window.modal['showModal']();
+          }, 0);
+        } else window.create_job['showModal']();
+      },
+      error: () => {
+        this.isVerifying = false;
+        this.toastService.showToast({
+          message: 'Error while verifying user.',
+          type: 'error',
+        });
+      },
     });
   }
 
-  updateJobModal() {
+  createJob() {
+    const reference =
+      this.form.value.jobStatus === 'PUBLISHED' ? 'isPublishing' : 'isCreating';
+    this.creatingStatus[reference] = true;
+    const createJob: CreateJob = {
+      ...(this.form.value as CreateJob),
+    };
+    this.jobService.create(createJob).subscribe({
+      next: () => {
+        this.toastService.showToast({
+          message: 'Success! Job successfully created.',
+          type: 'success',
+        });
+        this.creatingStatus[reference] = false;
+        this.getJobs();
+        this.form.reset();
+        window.create_job['close']();
+      },
+      error: ({ error }) => {
+        if (
+          error.message ===
+          'You can not create a job before completing your profile.'
+        ) {
+          this.incompleteProfile = true;
+          setTimeout(() => {
+            // Trick to delay the operation until after the current call stack has cleared. This will give Angular time to update the DOM.
+            window.modal['showModal']();
+          }, 0);
+        }
+        this.toastService.showToast({
+          message: 'Error while creating Job!',
+          type: 'error',
+        });
+        this.creatingStatus[reference] = false;
+      },
+    });
+  }
+
+  deleteJob() {
+    //
+  }
+
+  openRemoveJobModal() {
+    this.incompleteProfile = false;
+    setTimeout(() => {
+      // Trick to delay the operation until after the current call stack has cleared. This will give Angular time to update the DOM.
+      window.modal['showModal']();
+    }, 0);
+  }
+
+  updateJob() {
+    const updateJob: UpdateJob = {
+      ...(this.form.value as Omit<CreateJob, 'jobStatus'>),
+    };
+    this.isUpdating = true;
+    this.jobService.update(this.id, updateJob).subscribe({
+      next: () => {
+        this.toastService.showToast({
+          message: 'Success! Job successfully updated.',
+          type: 'success',
+        });
+        this.isUpdating = false;
+      },
+      error: () => {
+        this.toastService.showToast({
+          message: 'Error while updating Job.',
+          type: 'error',
+        });
+        this.isUpdating = false;
+      },
+    });
+  }
+
+  updateJobModal(job: JobCompanyView) {
+    this.id = job.id;
+    this.form.setValue({
+      allocation: job.allocation,
+      description: job.description,
+      employmentClassification: job.employmentClassification,
+      title: job.title,
+      jobStatus: job.jobStatus,
+    });
     window.update_job['showModal']();
   }
 
   unpublishJob() {
-    this.toastService.showToast({
-      message: 'Success! Job successfully unpublished.',
-      type: 'success',
-    });
+    this.isUpdating = true;
+    this.jobService
+      .update(this.id, { jobStatus: JobStatusEnum.UNPUBLISHED })
+      .subscribe({
+        next: () => {
+          this.toastService.showToast({
+            message: 'Success! Job successfully unpublished.',
+            type: 'success',
+          });
+          this.isUpdating = false;
+        },
+        error: () => {
+          this.toastService.showToast({
+            message: 'Error while unpublishing Job.',
+            type: 'error',
+          });
+          this.isUpdating = false;
+        },
+      });
   }
 
   publishJob() {
