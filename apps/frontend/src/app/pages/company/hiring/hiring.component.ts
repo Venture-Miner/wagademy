@@ -265,26 +265,32 @@ export class HiringComponent implements OnInit {
     window.update_job['showModal']();
   }
 
-  unpublishJob() {
+  updateJobStatus(id: string, index: number) {
     this.isUpdating = true;
-    this.jobService
-      .update(this.id, { jobStatus: JobStatusEnum.UNPUBLISHED })
-      .subscribe({
-        next: () => {
-          this.toastService.showToast({
-            message: 'Success! Job successfully unpublished.',
-            type: 'success',
-          });
-          this.isUpdating = false;
-        },
-        error: () => {
-          this.toastService.showToast({
-            message: 'Error while unpublishing Job.',
-            type: 'error',
-          });
-          this.isUpdating = false;
-        },
-      });
+    this.toggleStatus();
+    this.jobService.update(id, { jobStatus: this.status }).subscribe({
+      next: () => {
+        this.toastService.showToast({
+          message:
+            this.status === 'PUBLISHED'
+              ? 'Success! Job successfully published'
+              : 'Success! Job successfully unpublished.',
+          type: 'success',
+        });
+        this.jobs[index].jobStatus = this.status;
+        this.isUpdating = false;
+      },
+      error: () => {
+        this.toastService.showToast({
+          message:
+            this.status === 'PUBLISHED'
+              ? 'Error! while publishing Job'
+              : 'Error while unpublishing Job.',
+          type: 'error',
+        });
+        this.isUpdating = false;
+      },
+    });
   }
 
   publishJob() {

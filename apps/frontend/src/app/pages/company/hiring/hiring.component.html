@@ -55,9 +55,10 @@
           [applications]="job._count.jobApplications"
           [view]="job.views"
           [isOpen]="selectedCardIndex === $index"
+          [jobStatus]="job.jobStatus"
           (click)="onCardClick($index)"
           (updateJob)="updateJobModal(job)"
-          (unpublishJob)="unpublishJob()"
+          (updateJobStatus)="updateJobStatus(job.id, $index)"
           (removeJob)="openRemoveJobModal()"
         ></wagademy-card-job>
         }
