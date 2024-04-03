@@ -35,6 +35,13 @@ export class JobsDetailsComponent implements OnInit {
       if (id) this.id = id;
     });
     this.findOneJob();
+    this.updateJobViews();
+  }
+
+  updateJobViews() {
+    this.jobService.updateViews(this.id).subscribe({
+      next: () => {},
+    });
   }
 
   findOneJob() {

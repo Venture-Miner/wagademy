@@ -7,6 +7,7 @@ import {
   FilterJobs,
   FindManyJobsUserView,
   FindOneJobUserViewResponse,
+  JobUserView,
   Pagination,
 } from '@wagademy/types';
 import { Injectable } from '@angular/core';
@@ -46,5 +47,9 @@ export class JobService extends BaseHttpService {
     return this.http.get<FindOneJobUserViewResponse | null>(
       `${this.URL}/job/job-user-view/${id}`
     );
+  }
+
+  updateViews(id: string): Observable<JobUserView> {
+    return this.http.patch<JobUserView>(`${this.URL}/job/job-view/${id}`, {});
   }
 }
