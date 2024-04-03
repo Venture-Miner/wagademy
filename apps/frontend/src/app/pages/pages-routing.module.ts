@@ -11,6 +11,7 @@ import { JobsDetailsComponent } from './jobs-details/jobs-details.component';
 import { GptListComponent } from './person/gpt-list/gpt-list.component';
 import { GptChatComponent } from './person/gpt-chat/gpt-chat.component';
 import { InterviewGptComponent } from './company/interview-gpt/interview-gpt.component';
+import { FineTuningComponent } from './company/fine-tuning/fine-tuning.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
       {
         path: 'interview-gpt',
         component: InterviewGptComponent,
+      },
+      {
+        path: 'fine-tuning',
+        component: FineTuningComponent,
       },
     ],
   },
