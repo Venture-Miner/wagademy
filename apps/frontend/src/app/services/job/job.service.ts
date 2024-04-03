@@ -24,10 +24,7 @@ export class JobService extends BaseHttpService {
   }
 
   create(createJobDto: CreateJob): Observable<CreateJobResponse> {
-    return this.http.post<CreateJobResponse>(
-      `${this.URL}/job/job-application`,
-      createJobDto
-    );
+    return this.http.post<CreateJobResponse>(`${this.URL}/job`, createJobDto);
   }
 
   createJobApplication(
