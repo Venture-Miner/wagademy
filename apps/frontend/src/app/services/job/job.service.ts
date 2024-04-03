@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { BaseHttpService } from '../base-http/base-http.service';
 import { Observable } from 'rxjs';
 import {
+  CreateJob,
   CreateJobApplication,
   CreateJobApplicationResponse,
+  CreateJobResponse,
   FilterCompanyJobs,
   FilterJobs,
   FindManyJobsCompanyView,
@@ -19,6 +21,13 @@ import { Injectable } from '@angular/core';
 export class JobService extends BaseHttpService {
   constructor(private readonly http: HttpClient) {
     super();
+  }
+
+  create(createJobDto: CreateJob): Observable<CreateJobResponse> {
+    return this.http.post<CreateJobResponse>(
+      `${this.URL}/job/job-application`,
+      createJobDto
+    );
   }
 
   createJobApplication(
