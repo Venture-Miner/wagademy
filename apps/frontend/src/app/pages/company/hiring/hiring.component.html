@@ -9,6 +9,7 @@
           [(ngModel)]="searchJob"
           class="grow text-base-200 lg:w-[408px] w-full"
           placeholder="Search"
+          (ngModelChange)="getJobs()"
         />
       </label>
       <button
