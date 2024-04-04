@@ -211,7 +211,6 @@
               id="file"
               name="filename"
               accept=".jpg, .jpeg"
-              multiple
               class="hidden"
               (change)="onFileChange($event)"
             />
@@ -282,7 +281,7 @@
           (dragover)="onDragOver($event)"
           (dragleave)="onDragLeave()"
           (drop)="onDrop($event)"
-          (click)="myFile.click()"
+          (click)="myFileJson.click()"
         >
           <div class="flex-col flex items-center">
             <i class="bi bi-cloud-arrow-up text-[40px] text-primary"></i>
@@ -291,12 +290,11 @@
               <span class="text-base-100"> or drag and drop</span>
             </p>
             <input
-              #myFile
+              #myFileJson
               type="file"
               id="file"
               name="filename"
               accept=".json"
-              multiple
               class="hidden"
               (change)="onFileChange($event)"
             />

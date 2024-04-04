@@ -86,26 +86,10 @@ export class GptsComponent {
   onDrop(event: DragEvent) {
     event.preventDefault();
     this.isDragging = false;
-    const files = event.dataTransfer?.files;
-    if (files) this.checkFiles(files);
   }
 
   onFileChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const files = target.files;
-    if (files) this.checkFiles(files);
-  }
-
-  checkFiles(files: FileList) {
-    if (files) {
-      if (files?.length > 10) {
-        this.toastService.showToast({
-          message: 'You can only upload a maximum of 10 files.',
-          type: 'error',
-        });
-        return;
-      }
-    }
+    event.target as HTMLInputElement;
   }
 
   createFineTurning() {
