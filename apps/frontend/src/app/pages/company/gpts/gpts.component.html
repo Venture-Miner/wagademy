@@ -191,8 +191,8 @@
         <div
           [class]="
             isDragging
-              ? 'md:p-10 p-5 border-2 border-dashed border-base-200 bg-secondary rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
-              : 'md:p-10 p-5 border-2 border-dashed border-base-200 rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
+              ? 'md:p-10 p-5 border border-dashed border-base-300 bg-secondary rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
+              : 'md:p-10 p-5 border border-dashed border-base-300 rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
           "
           (dragover)="onDragOver($event)"
           (dragleave)="onDragLeave()"
@@ -276,8 +276,8 @@
         <div
           [class]="
             isDragging
-              ? 'md:p-10 p-5 border-2 border-dashed border-base-200 bg-secondary rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
-              : 'md:p-10 p-5 border-2 border-dashed border-base-200 rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
+              ? 'md:p-10 p-5 border border-dashed border-base-300 bg-secondary rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
+              : 'md:p-10 p-5 border border-dashed border-base-300 rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
           "
           (dragover)="onDragOver($event)"
           (dragleave)="onDragLeave()"
@@ -295,13 +295,13 @@
               type="file"
               id="file"
               name="filename"
-              accept=".jpg, .jpeg"
+              accept=".json"
               multiple
               class="hidden"
               (change)="onFileChange($event)"
             />
             <p class="text-center text-base-200 md:text-sm text-[10px] mt-2">
-              Maximum file size 50MB
+              json files
             </p>
           </div>
         </div>
