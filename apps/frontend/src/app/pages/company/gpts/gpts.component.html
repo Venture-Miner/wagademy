@@ -130,7 +130,9 @@
           <thead class="text-base-100 font-bold font-mono text-base">
             <tr>
               <th class="py-4 px-6" scope="col">Training data</th>
-              <th class="py-4 px-6" scope="col">Options</th>
+              <th class="py-4 px-6 pr-8 flex justify-end" scope="col">
+                Options
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -139,7 +141,7 @@
               <td class="py-4 px-6 md:px-0 md:pl-6 md:pr-40">
                 <p class="text-sm">{{ gpt.title }}</p>
               </td>
-              <td class="py-4 px-6 flex gap-4">
+              <td class="py-4 px-6 flex justify-end gap-4">
                 <i
                   class="bi bi-download text-base-200 cursor-pointer"
                   (click)="download()"
@@ -304,7 +306,7 @@
           </div>
         </div>
       </div>
-      <div class="flex gap-2 pb-14">
+      <div class="sm:flex gap-2 pb-14">
         <p class="text-base-100">Don't have a file?</p>
         <a class="font-medium text-primary cursor-pointer" [routerLink]="['/']"
           ><u>Build one now</u>
