@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
   AllocationEnum,
   EmploymentClassificationEnum,
@@ -8,11 +8,13 @@ import {
 import { JobService } from '../../services/job/job.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { formatEnumKeys } from '../../shared/utils/functions/format-enum';
+import { UserService } from '../../services/user/user.service';
+import { ModalComponent } from '../../shared/modal/modal.component';
 
 @Component({
   selector: 'wagademy-jobs-details',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, ModalComponent],
   templateUrl: './jobs-details.component.html',
   styleUrl: './jobs-details.component.scss',
 })
@@ -20,13 +22,16 @@ export class JobsDetailsComponent implements OnInit {
   id = '';
   job: JobUserView | null = null;
   applied = false;
+  isVerifying = false;
   employmentClassification = '';
   allocation = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private readonly jobService: JobService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private readonly userService: UserService,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {
@@ -41,6 +46,30 @@ export class JobsDetailsComponent implements OnInit {
   updateJobViews() {
     this.jobService.updateViews(this.id).subscribe({
       next: () => {},
+    });
+  }
+
+  completeProfile() {
+    //Change route after page is done
+    this.router.navigate(['/pages/user-profile-edit']);
+  }
+
+  validateIfUserIsAbleToApply() {
+    this.isVerifying = true;
+    this.userService.self().subscribe({
+      next: (user) => {
+        this.isVerifying = false;
+        if (!user.userProfile) {
+          window.modal['showModal']();
+        } else this.createJobApplication();
+      },
+      error: () => {
+        this.isVerifying = false;
+        this.toastService.showToast({
+          message: 'Error while verifying user.',
+          type: 'error',
+        });
+      },
     });
   }
 

@@ -33,9 +33,11 @@
         <button
           class="btn btn-primary w-[200px]"
           [disabled]="applied"
-          (click)="createJobApplication()"
+          (click)="validateIfUserIsAbleToApply()"
         >
-          @if(!applied){ Apply }@else{ Applied }
+          @if(!applied){ @if (isVerifying) {
+          <span class="loading loading-dots"></span>
+          } @else { Apply} }@else{ Applied }
         </button>
       </div>
     </div>
@@ -64,3 +66,10 @@
     </div>
   </div>
 </div>
+<wagademy-modal
+  title="Incomplete profile "
+  actionButtonLabel="Complete now"
+  message="You need to complete your profile to apply to the job position. Would you like to complete it now?"
+  (actionButtonClick)="completeProfile()"
+>
+</wagademy-modal>

@@ -29,8 +29,8 @@ export class JobsComponent implements OnInit {
     { name: 'Most recent', symbol: 'mostRecent' },
   ];
   page = 1;
-  take = 1;
-  count = 5;
+  take = 8;
+  count = 0;
   searchJob = '';
   selectedFilter: 'all' | 'featured' | 'mostRecent' = 'all';
 
