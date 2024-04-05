@@ -18,4 +18,6 @@ export const dbUser: FindOneUserResponse = {
   idRefAuth: faker.string.uuid(),
   accountType: AccountTypeEnum.COMPANY,
   walletAddress: null,
+  companyProfile: null,
+  userProfile: null,
 };

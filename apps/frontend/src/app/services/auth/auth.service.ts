@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { HttpError } from '../../shared/types/http-error';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
+// import { User } from '@wagademy/types';
 
 @Injectable({
   providedIn: 'root',
