@@ -203,8 +203,10 @@ export class JobController {
     @Query() filterJobsDto: FilterJobsDto,
     @Query() paginationDto: PaginationDto,
     @DBUser()
-    { id: userId }: User
+    { id: userId, accountType }: User
   ) {
+    if (accountType !== 'PHYSICAL_PERSON')
+      throw new UnauthorizedException('You are not able to access this.');
     return this.jobService.findManyJobsUserView(
       filterJobsDto,
       paginationDto,

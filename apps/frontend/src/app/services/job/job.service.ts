@@ -5,6 +5,8 @@ import {
   CreateJobApplication,
   CreateJobApplicationResponse,
   FilterJobs,
+  FilterUserJobApplications,
+  FindManyJobApplicationsUserView,
   FindManyJobsUserView,
   FindOneJobUserViewResponse,
   JobUserView,
@@ -37,6 +39,18 @@ export class JobService extends BaseHttpService {
       `${this.URL}/job/jobs-user-view`,
       {
         params: { ...filterJobsDto, ...paginationDto },
+      }
+    );
+  }
+
+  findManyJobApplicationsUserView(
+    filterUserJobApplicationsDto: FilterUserJobApplications,
+    paginationDto: Pagination
+  ): Observable<FindManyJobApplicationsUserView> {
+    return this.http.get<FindManyJobApplicationsUserView>(
+      `${this.URL}/job/user-job-applications/`,
+      {
+        params: { ...filterUserJobApplicationsDto, ...paginationDto },
       }
     );
   }

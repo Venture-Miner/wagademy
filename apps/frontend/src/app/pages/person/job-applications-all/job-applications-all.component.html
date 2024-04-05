@@ -15,12 +15,12 @@
       <a
         class="border-b rounded-none flex justify-center"
         [ngClass]="[
-          applicationsType === 'All'
+          applicationsType === 'all'
             ? 'border-primary text-primary'
             : 'border-base-300 text-base-300'
         ]"
-        (click)="applicationsType = 'All'"
-        >All ({{ applications.length }})</a
+        (click)="applicationsType = 'all'"
+        >All ({{ count.all }})</a
       >
     </li>
     <li class="sm:w-52 w-full">
@@ -32,44 +32,53 @@
             : 'border-base-300 text-base-300'
         ]"
         (click)="applicationsType = 'interviewInvites'"
-        >Interview invites ({{ getInterviewInvitesCount() }})</a
+        >Interview invites ({{ count.interviewInvites }})</a
       >
     </li>
   </ul>
-  @if(applicationsType === 'All'){
+  @if(applicationsType === 'all'){
   <div class="flex flex-wrap max-[513px]:justify-center gap-8 pt-6 xl:pt-0">
-    @for (applications of applications; track applications.id) {
+    @for (application of jobApplications.all; track $index) {
     <wagademy-applications-cards
-      [name]="applications.name"
-      [company]="applications.company"
+      [name]="application.job.title"
+      [company]="application.job.company.name"
+      [disabled]="application.applicationStatus !== 'INVITED'"
       (onActionButtonClick)="openModal()"
     ></wagademy-applications-cards>
     }
   </div>
   } @if(applicationsType === 'interviewInvites') {
   <div class="flex flex-wrap max-[513px]:justify-center gap-8 pt-6 xl:pt-0">
-    @for (application of applications; track application.id) {
-    <ng-container *ngIf="application.interviewInvites">
+    @for (application of jobApplications.interviewInvites; track $index) {
+    <ng-container>
       <wagademy-applications-cards
-        [name]="application.name"
-        [company]="application.company"
+        [name]="application.job.title"
+        [company]="application.job.company.name"
         (onActionButtonClick)="openModal()"
       ></wagademy-applications-cards>
     </ng-container>
     }
   </div>
-  }
-  <div
-    *ngIf="applications.length"
-    class="flex justify-center lg:justify-end pt-6 pb-3"
-  >
+  } @if(jobApplications.all.length&&applicationsType === 'all'){
+  <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination
-      [page]="page"
+      [page]="page.all"
       [take]="take"
-      [count]="count"
-      (pageChange)="page = $event; getApplications()"
+      [count]="count.all"
+      (pageChange)="page.all = $event; getJobApplications()"
     ></wagademy-pagination>
   </div>
+  } @if(jobApplications.interviewInvites.length&&applicationsType ===
+  'interviewInvites'){
+  <div class="flex justify-center lg:justify-end pt-6 pb-3">
+    <wagademy-pagination
+      [page]="page.interviewInvites"
+      [take]="take"
+      [count]="count.interviewInvites"
+      (pageChange)="page.interviewInvites = $event; getJobApplications()"
+    ></wagademy-pagination>
+  </div>
+  }
 </div>
 <wagademy-modal
   [title]="'Warning'"
