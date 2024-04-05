@@ -4,6 +4,8 @@ import { PagesComponent } from './pages.component';
 import { HomeCompanyComponent } from './company/home/home.component';
 import { HomeComponent } from './person/home/home.component';
 import { MyCertificatesComponent } from './certificates/my-certificates.component';
+import { ProfileComponent } from './company/profile/profile.component';
+import { HiringComponent } from './company/hiring/hiring.component';
 import { JobApplicationsAllComponent } from './person/job-applications-all/job-applications-all.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { JobsDetailsComponent } from './jobs-details/jobs-details.component';
@@ -12,6 +14,7 @@ import { GptChatComponent } from './person/gpt-chat/gpt-chat.component';
 import { ApplicationsJobComponent } from './company/applications-job/applications-job.component';
 import { ApplicationsProfileComponent } from './company/applications-profile/applications-profile.component';
 import { ApplicationsResultsComponent } from './company/applications-results/applications-results.component';
+import { InterviewGptComponent } from './company/interview-gpt/interview-gpt.component';
 
 const routes: Routes = [
   {
@@ -40,6 +43,14 @@ const routes: Routes = [
         component: HomeComponent,
       },
       {
+        path: 'profile',
+        component: ProfileComponent,
+      },
+      {
+        path: 'hiring',
+        component: HiringComponent,
+      },
+      {
         path: 'job-applications-all',
         component: JobApplicationsAllComponent,
       },
@@ -66,6 +77,10 @@ const routes: Routes = [
       {
         path: 'results-applications',
         component: ApplicationsResultsComponent,
+      },
+      {
+        path: 'interview-gpt',
+        component: InterviewGptComponent,
       },
     ],
   },
