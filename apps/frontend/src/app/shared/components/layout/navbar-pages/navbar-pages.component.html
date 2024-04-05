@@ -40,8 +40,16 @@
           </a>
         </li>
         <li class="hover:text-primary text-base-200 text-sm font-mono">
-          <a routerLinkActive="active-link" [routerLink]="['/my-certificates']">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['pages/certificates']"
+          >
             My certificates
+          </a>
+        </li>
+        <li class="hover:text-primary text-base-200 text-sm font-mono">
+          <a routerLinkActive="active-link" [routerLink]="['pages/jobs']">
+            Jobs
           </a>
         </li>
         <li class="hover:text-primary text-base-200 text-sm font-mono">
