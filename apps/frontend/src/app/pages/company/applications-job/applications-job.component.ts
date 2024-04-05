@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ApplicationsJobCardComponent } from '../../../shared/components/applications-job-card/applications-job-card.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import { InputSearchComponent } from '../../../shared/components/input-search/input-search.component';
 
 interface Filter {
   name: string;
@@ -34,6 +35,7 @@ interface Job {
     NgClass,
     ApplicationsJobCardComponent,
     PaginationComponent,
+    InputSearchComponent,
   ],
   templateUrl: './applications-job.component.html',
   styleUrl: './applications-job.component.scss',

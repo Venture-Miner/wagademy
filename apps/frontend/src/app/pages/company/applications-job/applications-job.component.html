@@ -4,15 +4,11 @@
       <i class="bi bi-arrow-left text-base-100 text-xl"></i>
       <p class="font-bold text-sm text-base-100 font-mono">Back</p>
     </div>
-    <label class="input flex items-center gap-2 bg-transparent text-base-100">
-      <i class="bi bi-search"></i>
-      <input
-        type="text"
-        [(ngModel)]="searchJob"
-        class="grow text-base-100"
-        placeholder="Search"
-      />
-    </label>
+    <wagademy-input-search
+      placeholder="Search"
+      [value]="searchJob"
+      (valueChange)="searchJob = $event"
+    ></wagademy-input-search>
     <div class="flex flex-wrap gap-2">
       @for (filter of filters; track filters) {
       <button
