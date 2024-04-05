@@ -44,7 +44,7 @@ export class JobApplicationsAllComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getJobApplicationsOnInit();
+    this.getJobApplications();
   }
 
   getJobApplications() {
@@ -53,39 +53,23 @@ export class JobApplicationsAllComponent implements OnInit {
       skip: (this.page[this.applicationsType] - 1) * this.take,
     };
     const filter = this.applicationsType === 'all' ? {} : { invited: true };
+    const oppositeApplicationType =
+      this.applicationsType === 'all' ? 'interviewInvites' : 'all';
     this.jobService
       .findManyJobApplicationsUserView(filter, pagination)
       .subscribe({
-        next: ({ count, jobApplications }) => {
+        next: ({ count, jobApplications, countWithFilter }) => {
           this.count[this.applicationsType] = count;
           this.jobApplications[this.applicationsType] = jobApplications;
+          this.count[oppositeApplicationType] = countWithFilter;
+        },
+        error: () => {
+          this.toastService.showToast({
+            message: 'Error while retrieving job applications.',
+            type: 'error',
+          });
         },
       });
-  }
-
-  getJobApplicationsOnInit() {
-    const filters: FilterUserJobApplications[] = [{}, { invited: true }];
-    const pagination: Pagination = {
-      take: this.take,
-      skip: 0,
-    };
-    const combinedRequests = filters.map((filters) =>
-      this.jobService.findManyJobApplicationsUserView(filters, pagination)
-    );
-    forkJoin(combinedRequests).subscribe({
-      next: (responses) => {
-        this.jobApplications.all = responses[0].jobApplications;
-        this.count.all = responses[0].count;
-        this.count.interviewInvites = responses[1].count;
-        this.jobApplications.interviewInvites = responses[1].jobApplications;
-      },
-      error: () => {
-        this.toastService.showToast({
-          message: 'Error while retrieving job applications.',
-          type: 'error',
-        });
-      },
-    });
   }
 
   openModal(id: string) {

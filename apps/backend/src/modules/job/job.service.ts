@@ -206,8 +206,12 @@ export class JobService {
     if (invited)
       AND.push({ applicationStatus: JobApplicationStatusEnum.INVITED });
     const where = { AND };
-    const [count, jobApplications] = await Promise.all([
+    const countWhere = invited ? {} : where;
+    const [count, countWithFilter, jobApplications] = await Promise.all([
       this.prismaService.jobApplication.count({ where }),
+      this.prismaService.jobApplication.count({
+        where: countWhere,
+      }),
       this.prismaService.jobApplication.findMany({
         where,
         skip,
@@ -222,7 +226,7 @@ export class JobService {
         },
       }),
     ]);
-    return { count, jobApplications };
+    return { count, countWithFilter, jobApplications };
   }
 
   findOneJobUserView(
