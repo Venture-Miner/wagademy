@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { GptListComponent } from './person/gpt-list/gpt-list.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { AccountTypeCompanyGuard } from '../guards/account-type-company.guard';
 import { AccountTypeUserGuard } from '../guards/account-type-user.guard';
@@ -48,6 +47,14 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'profile',
+        loadComponent: () =>
+          import('./company/profile/profile.component').then(
+            (c) => c.ProfileComponent
+          ),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
         path: 'hiring',
         loadComponent: () =>
           import('./company/hiring/hiring.component').then(
@@ -80,6 +87,14 @@ const routes: Routes = [
         loadComponent: () =>
           import('./person/gpt-list/gpt-list.component').then(
             (c) => c.GptListComponent
+          ),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'interview-gpt',
+        loadComponent: () =>
+          import('./company/interview-gpt/interview-gpt.component').then(
+            (c) => c.InterviewGptComponent
           ),
       },
     ],
