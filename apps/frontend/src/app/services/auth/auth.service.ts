@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { HttpError } from '../../shared/types/http-error';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
-import { User } from '@wagademy/types';
+import { AccountTypeEnum, User } from '@wagademy/types';
 import { UserService } from '../user/user.service';
 
 @Injectable({
@@ -89,7 +89,10 @@ export class AuthService {
           '/account/reset-password',
         ];
         if (authenticationRoutes.includes(currentRoute)) {
-          this.router.navigate(['/']);
+          const user = await this.getUserData();
+          const whichHome =
+            user?.accountType === AccountTypeEnum.COMPANY ? '-company' : '';
+          this.router.navigate([`/pages/home${whichHome}`]);
         }
       }
     } catch (error) {

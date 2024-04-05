@@ -16,7 +16,7 @@ export class AccountTypeUserGuard {
   }
 
   async redirectPage(): Promise<boolean> {
-    await this.router.navigate(['/pages/home']);
+    await this.router.navigate(['/pages/home-company']);
     return false;
   }
 }
