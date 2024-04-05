@@ -1,65 +1,67 @@
 <div class="container mx-auto min-h-screen px-3">
   <div class="pb-4 pt-6 flex justify-between flex-wrap gap-4">
-    <div
-      class="flex gap-2 items-center py-4 cursor-pointer"
-      [routerLink]="['/']"
-    >
+    <div class="flex gap-2 items-center cursor-pointer" [routerLink]="['/']">
       <i class="bi bi-arrow-left text-base-100 text-xl"></i>
       <p class="font-bold text-sm text-base-100 font-mono">Back</p>
     </div>
-    <label class="input flex items-center gap-2 bg-transparent text-base-200">
+    <label class="input flex items-center gap-2 bg-transparent text-base-100">
       <i class="bi bi-search"></i>
       <input
         type="text"
         [(ngModel)]="searchJob"
-        class="grow text-base-200"
+        class="grow text-base-100"
         placeholder="Search"
       />
     </label>
     <div class="flex flex-wrap gap-2">
+      @for (filter of filters; track filters) {
       <button
-        *ngFor="let filter of filters; let i = index"
-        class="border border-base-200 hover:border-none font-mono rounded-full p-2 hover:bg-primary"
+        class="border border-base-200 hover:border-none font-mono rounded-full py-1 px-3 hover:bg-secondary"
         [ngClass]="[
           filter.name === selectedFilter
-            ? 'bg-primary text-base-100 border-none'
-            : 'text-base-200 hover:text-base-100'
+            ? 'bg-secondary text-base-100 border-none'
+            : 'text-base-100 hover:text-base-100'
         ]"
         (click)="selectedFilter = filter.name"
       >
         {{ filter.name }}
       </button>
+      }
     </div>
   </div>
   <div class="flex gap-3 font-sans items-center pb-4">
     <h2 class="font-medium text-base-100 text-4xl">Job title</h2>
-    <p class="text-sm text-primary font-bold">
+    <p class="text-sm text-base-100 font-bold">
       | {{ jobs.length }} APPLICATIONS
     </p>
   </div>
   <div
-    class="max-[657px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
+    class="max-[767px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
   >
+    @for (job of filteredJobs; track filteredJobs) {
     <wagademy-applications-job-card
-      *ngFor="let job of filteredJobs; let i = index"
       [img]="job.image"
       [name]="job.title"
       [description]="job.description"
       [status]="job.status"
     >
+      @if(job.status === 'Interviewed'){
       <button
-        *ngIf="job.status === 'Interviewed'"
         class="btn btn-primary w-full"
+        [routerLink]="['/pages/results-applications']"
       >
         See Results
       </button>
+      } @if(job.status === 'Invited'){
       <button
-        *ngIf="job.status === 'Invited'"
-        class="btn btn-primary btn-outline w-full"
+        class="btn btn-primary w-full"
+        [routerLink]="['/pages/profile-applications']"
       >
         See profile
       </button>
+      }
     </wagademy-applications-job-card>
+    }
   </div>
   <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination

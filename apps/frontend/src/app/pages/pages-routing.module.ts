@@ -56,15 +56,15 @@ const routes: Routes = [
         component: GptListComponent,
       },
       {
-        path: 'applications-job',
+        path: 'job-applications',
         component: ApplicationsJobComponent,
       },
       {
-        path: 'applications-profile',
+        path: 'profile-applications',
         component: ApplicationsProfileComponent,
       },
       {
-        path: 'applications-results',
+        path: 'results-applications',
         component: ApplicationsResultsComponent,
       },
     ],
