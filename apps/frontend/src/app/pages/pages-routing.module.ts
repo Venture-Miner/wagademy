@@ -1,15 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { HomeCompanyComponent } from './company/home/home.component';
-import { HomeComponent } from './person/home/home.component';
-import { MyCertificatesComponent } from './certificates/my-certificates.component';
-import { HiringComponent } from './company/hiring/hiring.component';
-import { JobApplicationsAllComponent } from './person/job-applications-all/job-applications-all.component';
-import { JobsComponent } from './jobs/jobs.component';
-import { JobsDetailsComponent } from './jobs-details/jobs-details.component';
 import { GptListComponent } from './person/gpt-list/gpt-list.component';
-import { GptChatComponent } from './person/gpt-chat/gpt-chat.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -20,42 +13,66 @@ const routes: Routes = [
   {
     path: '',
     component: PagesComponent,
+    // canActivate: [AuthGuard],
     children: [
       {
         path: 'certificates',
-        component: MyCertificatesComponent,
+        loadComponent: () =>
+          import('./certificates/my-certificates.component').then(
+            (c) => c.MyCertificatesComponent
+          ),
       },
       {
         path: 'gptchat',
-        component: GptChatComponent,
+        loadComponent: () =>
+          import('./person/gpt-chat/gpt-chat.component').then(
+            (c) => c.GptChatComponent
+          ),
       },
       {
         path: 'home-company',
-        component: HomeCompanyComponent,
+        loadComponent: () =>
+          import('./company/home/home.component').then(
+            (c) => c.HomeCompanyComponent
+          ),
       },
       {
         path: 'home',
-        component: HomeComponent,
+        loadComponent: () =>
+          import('./person/home/home.component').then((c) => c.HomeComponent),
       },
       {
         path: 'hiring',
-        component: HiringComponent,
+        loadComponent: () =>
+          import('./company/hiring/hiring.component').then(
+            (c) => c.HiringComponent
+          ),
       },
       {
         path: 'job-applications-all',
-        component: JobApplicationsAllComponent,
+        loadComponent: () =>
+          import(
+            './person/job-applications-all/job-applications-all.component'
+          ).then((c) => c.JobApplicationsAllComponent),
       },
       {
         path: 'jobs',
-        component: JobsComponent,
+        loadComponent: () =>
+          import('./jobs/jobs.component').then((c) => c.JobsComponent),
       },
       {
         path: 'jobs-details',
-        component: JobsDetailsComponent,
+        loadComponent: () =>
+          import('./jobs-details/jobs-details.component').then(
+            (c) => c.JobsDetailsComponent
+          ),
       },
       {
         path: 'chatbot',
-        component: GptListComponent,
+        loadComponent: () =>
+          import('./person/gpt-list/gpt-list.component').then(
+            (c) => c.GptListComponent
+          ),
       },
     ],
   },
