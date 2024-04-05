@@ -67,10 +67,6 @@ export class JobsComponent implements OnInit {
       next: ({ count, jobs }) => {
         this.jobs = jobs;
         this.count = count;
-        this.toastService.showToast({
-          message: 'Jobs successfully retrieved',
-          type: 'success',
-        });
       },
       error: () => {
         this.toastService.showToast({
