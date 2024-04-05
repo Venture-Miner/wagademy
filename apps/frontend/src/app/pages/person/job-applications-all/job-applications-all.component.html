@@ -43,7 +43,7 @@
       [name]="application.job.title"
       [company]="application.job.company.name"
       [disabled]="application.applicationStatus !== 'INVITED'"
-      (onActionButtonClick)="openModal()"
+      (actionButtonClick)="openModal(application.id)"
     ></wagademy-applications-cards>
     }
   </div>
@@ -54,7 +54,7 @@
       <wagademy-applications-cards
         [name]="application.job.title"
         [company]="application.job.company.name"
-        (onActionButtonClick)="openModal()"
+        (actionButtonClick)="openModal(application.id)"
       ></wagademy-applications-cards>
     </ng-container>
     }
@@ -85,5 +85,7 @@
   [message]="
     'Please allocate 30 minutes to complete the interview. Keep in mind that this is a one-time attempt. Good luck!'
   "
-  [actionButtonLabel]="'go to interview'"
+  [actionButtonLabel]="'Go to Interview'"
+  [isLoading]="isLoading"
+  (actionButtonClick)="goToAiInterview()"
 ></wagademy-modal>

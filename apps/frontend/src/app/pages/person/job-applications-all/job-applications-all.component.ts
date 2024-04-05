@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { NgClass } from '@angular/common';
@@ -35,10 +35,12 @@ export class JobApplicationsAllComponent implements OnInit {
     all: UserJobApplication[];
     interviewInvites: UserJobApplication[];
   } = { all: [], interviewInvites: [] };
-
+  isLoading = false;
+  id = '';
   constructor(
     private readonly jobService: JobService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -86,8 +88,15 @@ export class JobApplicationsAllComponent implements OnInit {
     });
   }
 
-  openModal() {
-    console.log('hello');
-    // window.modal['showModal']();
+  openModal(id: string) {
+    this.id = id;
+    window.modal['showModal']();
+  }
+
+  goToAiInterview() {
+    this.isLoading = true;
+    this.router.navigate(['/pages/gptchat'], {
+      queryParams: { id: this.id },
+    });
   }
 }
