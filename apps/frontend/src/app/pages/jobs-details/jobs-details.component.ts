@@ -100,7 +100,7 @@ export class JobsDetailsComponent implements OnInit {
       next: () => {
         this.applied = true;
         this.toastService.showToast({
-          message: 'Successful job application!',
+          message: 'Success! You have applied for this position.',
           type: 'success',
         });
       },

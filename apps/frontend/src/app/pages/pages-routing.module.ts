@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { GptListComponent } from './person/gpt-list/gpt-list.component';
-import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -42,6 +40,13 @@ const routes: Routes = [
           import('./person/home/home.component').then((c) => c.HomeComponent),
       },
       {
+        path: 'profile',
+        loadComponent: () =>
+          import('./company/profile/profile.component').then(
+            (c) => c.ProfileComponent
+          ),
+      },
+      {
         path: 'hiring',
         loadComponent: () =>
           import('./company/hiring/hiring.component').then(
@@ -72,6 +77,13 @@ const routes: Routes = [
         loadComponent: () =>
           import('./person/gpt-list/gpt-list.component').then(
             (c) => c.GptListComponent
+          ),
+      },
+      {
+        path: 'interview-gpt',
+        loadComponent: () =>
+          import('./company/interview-gpt/interview-gpt.component').then(
+            (c) => c.InterviewGptComponent
           ),
       },
     ],
