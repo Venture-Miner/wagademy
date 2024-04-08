@@ -59,7 +59,7 @@
     </ng-container>
     }
   </div>
-  } @if(jobApplications.all.length&&applicationsType === 'all'){
+  } @if(jobApplications.all.length && applicationsType === 'all'){
   <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination
       [page]="page.all"
@@ -68,7 +68,7 @@
       (pageChange)="page.all = $event; getJobApplications()"
     ></wagademy-pagination>
   </div>
-  } @if(jobApplications.interviewInvites.length&&applicationsType ===
+  } @if(jobApplications.interviewInvites.length && applicationsType ===
   'interviewInvites'){
   <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination
