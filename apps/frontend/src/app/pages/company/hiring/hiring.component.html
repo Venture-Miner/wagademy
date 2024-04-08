@@ -182,7 +182,10 @@
         <h2 class="font-sans font-medium sm:text-4xl text-2xl text-base-100">
           Update Job
         </h2>
-        <button class="absolute right-2 top-2 text-base-100 sm:pt-6 pt-5 pr-4">
+        <button
+          class="absolute right-2 top-2 text-base-100 sm:pt-6 pt-5 pr-4"
+          (click)="resetForm()"
+        >
           ✕
         </button>
       </div>
@@ -245,6 +248,7 @@
         <button
           class="btn btn-outline btn-primary sm:w-[210px] w-full"
           [disabled]="isLoading || isUpdating"
+          (click)="resetForm()"
         >
           Cancel
         </button>

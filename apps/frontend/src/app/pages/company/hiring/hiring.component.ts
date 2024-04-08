@@ -90,6 +90,7 @@ export class HiringComponent implements OnInit {
   allocation: SelectItem<string>[] =
     formatSelectItem<AllocationEnum>(AllocationEnum);
   status: JobStatusEnum = JobStatusEnum.PUBLISHED;
+  initialStatusValue: JobStatusEnum = JobStatusEnum.PUBLISHED;
   incompleteProfile = false;
   id = '';
 
@@ -106,7 +107,13 @@ export class HiringComponent implements OnInit {
   }
 
   toggleStatus(): void {
-    this.status = this.status === 'PUBLISHED' ? 'UNPUBLISHED' : 'PUBLISHED';
+    this.status = this.status === 'UNPUBLISHED' ? 'PUBLISHED' : 'UNPUBLISHED';
+    if (this.initialStatusValue !== this.status) {
+      this.form.markAsDirty();
+    } else {
+      this.form.markAsPristine();
+    }
+    this.form.controls.jobStatus.setValue(this.status);
   }
 
   onCardClick(index: number) {
@@ -195,8 +202,8 @@ export class HiringComponent implements OnInit {
         });
         this.creatingStatus[reference] = false;
         this.getJobs();
-        this.form.reset();
         window.create_job['close']();
+        this.resetForm();
       },
       error: ({ error }) => {
         if (
@@ -232,7 +239,7 @@ export class HiringComponent implements OnInit {
 
   updateJob() {
     const updateJob: UpdateJob = {
-      ...(this.form.value as Omit<CreateJob, 'jobStatus'>),
+      ...(this.form.value as CreateJob),
     };
     this.isUpdating = true;
     this.jobService.update(this.id, updateJob).subscribe({
@@ -242,6 +249,9 @@ export class HiringComponent implements OnInit {
           type: 'success',
         });
         this.isUpdating = false;
+        this.resetForm();
+        this.getJobs();
+        window.update_job['close']();
       },
       error: () => {
         this.toastService.showToast({
@@ -253,8 +263,13 @@ export class HiringComponent implements OnInit {
     });
   }
 
+  resetForm() {
+    this.form.reset();
+  }
+
   updateJobModal(job: JobCompanyView) {
     this.id = job.id;
+    this.initialStatusValue = this.status = job.jobStatus;
     this.form.setValue({
       allocation: job.allocation,
       description: job.description,
