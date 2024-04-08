@@ -270,5 +270,6 @@ export type FindManyJobApplicationsCompanyView = {
 
 export type FindManyJobApplicationsUserView = {
   count: number;
+  countWithFilter: number;
   jobApplications: UserJobApplication[];
 };

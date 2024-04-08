@@ -29,8 +29,8 @@ export class JobsComponent implements OnInit {
     { name: 'Most recent', symbol: 'mostRecent' },
   ];
   page = 1;
-  take = 1;
-  count = 5;
+  take = 8;
+  count = 0;
   searchJob = '';
   selectedFilter: 'all' | 'featured' | 'mostRecent' = 'all';
 
@@ -67,10 +67,6 @@ export class JobsComponent implements OnInit {
       next: ({ count, jobs }) => {
         this.jobs = jobs;
         this.count = count;
-        this.toastService.showToast({
-          message: 'Jobs successfully retrieved',
-          type: 'success',
-        });
       },
       error: () => {
         this.toastService.showToast({

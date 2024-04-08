@@ -9,8 +9,11 @@ import {
   FilterCompanyJobs,
   FilterJobs,
   FindManyJobsCompanyView,
+  FilterUserJobApplications,
+  FindManyJobApplicationsUserView,
   FindManyJobsUserView,
   FindOneJobUserViewResponse,
+  JobUserView,
   Pagination,
   UpdateJob,
   UpdateJobResponse,
@@ -59,6 +62,18 @@ export class JobService extends BaseHttpService {
     });
   }
 
+  findManyJobApplicationsUserView(
+    filterUserJobApplicationsDto: FilterUserJobApplications,
+    paginationDto: Pagination
+  ): Observable<FindManyJobApplicationsUserView> {
+    return this.http.get<FindManyJobApplicationsUserView>(
+      `${this.URL}/job/user-job-applications/`,
+      {
+        params: { ...filterUserJobApplicationsDto, ...paginationDto },
+      }
+    );
+  }
+
   findOneJobUserView(
     id: string
   ): Observable<FindOneJobUserViewResponse | null> {
@@ -72,5 +87,9 @@ export class JobService extends BaseHttpService {
       `${this.URL}/job/${id}`,
       updateJobDto
     );
+  }
+
+  updateViews(id: string): Observable<JobUserView> {
+    return this.http.patch<JobUserView>(`${this.URL}/job/job-view/${id}`, {});
   }
 }

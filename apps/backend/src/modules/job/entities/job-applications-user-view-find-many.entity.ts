@@ -11,6 +11,9 @@ export class FindManyJobApplicationsUserViewEntity
   @ApiProperty({ example: 1 })
   count: number;
 
+  @ApiProperty({ example: 1 })
+  countWithFilter: number;
+
   @ApiProperty({ type: [JobApplicationUserViewEntity] })
   jobApplications: UserJobApplication[];
 }
