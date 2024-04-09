@@ -28,11 +28,13 @@
           class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
         >
           <div
-            (click)="unpublishJob.emit()"
+            (click)="updateJobStatus.emit()"
             class="flex gap-1 pb-2 cursor-pointer"
           >
             <i class="bi bi-arrow-down-left text-primary"></i>
-            <p class="font-serif text-base-100">Unpublish</p>
+            <p class="font-serif text-base-100">
+              {{ jobStatus === 'PUBLISHED' ? 'Unpublish' : 'Publish' }}
+            </p>
           </div>
           <div
             (click)="updateJob.emit()"

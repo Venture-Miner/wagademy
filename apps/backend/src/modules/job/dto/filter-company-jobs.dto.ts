@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { FilterCompanyJobs } from '@wagademy/types';
+import { Type } from 'class-transformer';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class FilterCompanyJobsDto implements FilterCompanyJobs {
@@ -19,6 +20,7 @@ export class FilterCompanyJobsDto implements FilterCompanyJobs {
     required: false,
   })
   @IsOptional()
+  @Type(() => Boolean)
   @IsBoolean()
   numberOfApplications?: boolean;
 
@@ -28,6 +30,7 @@ export class FilterCompanyJobsDto implements FilterCompanyJobs {
     required: false,
   })
   @IsOptional()
+  @Type(() => Boolean)
   @IsBoolean()
   jobViews?: boolean;
 
@@ -37,6 +40,7 @@ export class FilterCompanyJobsDto implements FilterCompanyJobs {
     required: false,
   })
   @IsOptional()
+  @Type(() => Boolean)
   @IsBoolean()
   mostRecent?: boolean;
 }
