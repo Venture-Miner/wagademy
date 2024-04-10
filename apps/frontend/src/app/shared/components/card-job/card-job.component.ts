@@ -1,6 +1,7 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { JobStatusEnum } from '@wagademy/types';
 
 @Component({
   selector: 'wagademy-card-job',
@@ -16,7 +17,8 @@ export class CardJobComponent {
   @Input() selectId: string | undefined;
   @Input() applications: number | undefined;
   @Input() view: number | undefined;
-  @Output() unpublishJob: EventEmitter<void> = new EventEmitter<void>();
+  @Input() jobStatus: JobStatusEnum = JobStatusEnum.PUBLISHED;
+  @Output() updateJobStatus: EventEmitter<void> = new EventEmitter<void>();
   @Output() updateJob: EventEmitter<void> = new EventEmitter<void>();
   @Output() removeJob: EventEmitter<void> = new EventEmitter<void>();
   @Output() interviewGPTJob: EventEmitter<void> = new EventEmitter<void>();

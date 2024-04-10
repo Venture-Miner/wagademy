@@ -6,15 +6,17 @@ import { Router } from '@angular/router';
 import { HttpError } from '../../shared/types/http-error';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
+import { User } from '@wagademy/types';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  // user = new BehaviorSubject<User | null>(null);
+  user = new BehaviorSubject<User | null>(null);
 
   constructor(
-    // private readonly userService: UserService,
+    private readonly userService: UserService,
     private readonly router: Router,
     private readonly location: Location
   ) {}
@@ -48,8 +50,8 @@ export class AuthService {
   }
 
   async loadUserData() {
-    // const user = await firstValueFrom(this.userService.self());
-    // this.user.next(user);
+    const user = await firstValueFrom(this.userService.self());
+    this.user.next(user);
   }
 
   private async handleSignUp(data: any) {
@@ -91,7 +93,7 @@ export class AuthService {
   }
 
   private handleSignOut() {
-    // this.user.next(null);
+    this.user.next(null);
     this.router.navigate(['/account/sign-in']);
   }
 }

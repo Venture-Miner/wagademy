@@ -2,14 +2,16 @@
   <div class="pb-8 pt-6">
     <h2 class="font-sans font-medium text-4xl text-base-100">Home</h2>
   </div>
+  @if(!jobs.length && !courses.length){
   <div
-    *ngIf="!applications.length && !courses.length"
     class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
   >
     <p>There are no content available</p>
   </div>
-  <div class="pb-6" *ngIf="!isLoading">
-    <div *ngIf="applications.length">
+  } @if(!isLoading){
+  <div class="pb-6">
+    @if(jobs.length){
+    <div>
       <div class="flex justify-between pb-2">
         <h3 class="text-2xl text-base-100 font-sans font-medium">
           Applications
@@ -19,20 +21,22 @@
       <div
         class="max-[657px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
       >
+        @for (job of jobs; track $index) {
         <wagademy-card
-          *ngFor="let applications of applications; let i = index"
-          [img]="applications.images"
-          [name]="applications.name"
-          [description]="applications.description"
-          [applications]="applications.applications"
+          [img]="job.company.companyProfile?.companyPhoto?.url"
+          [name]="job.title"
+          [description]="job.description"
+          [applications]="job._count.jobApplications"
           [button]="'View More'"
           [menu]="'jobs'"
-          [isOpen]="selectedCardIndex === i"
-          (click)="onCardClick(i)"
+          [isOpen]="selectedCardIndex === $index"
+          (click)="onCardClick($index)"
         ></wagademy-card>
+        }
       </div>
     </div>
-    <div *ngIf="courses.length">
+    } @if(courses.length){
+    <div>
       <div class="flex justify-between pt-6 pb-2">
         <h3 class="text-2xl text-base-100 font-sans font-medium">Courses</h3>
         <button class="text-primary font-serif text-xl">See More</button>
@@ -40,17 +44,20 @@
       <div
         class="max-[657px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
       >
+        @for (course of courses; track $index) {
         <wagademy-card
-          *ngFor="let courses of courses; let i = index"
-          [img]="courses.images"
-          [name]="courses.name"
-          [description]="courses.description"
+          [img]="course.images"
+          [name]="course.name"
+          [description]="course.description"
           [button]="'Invite GPT+'"
           [menu]="'courses'"
-          [isOpenCourses]="selectedCardCourseIndex === i"
-          (click)="onCardCourseClick(i)"
+          [isOpenCourses]="selectedCardCourseIndex === $index"
+          (click)="onCardCourseClick($index)"
         ></wagademy-card>
+        }
       </div>
     </div>
+    }
   </div>
+  }
 </div>
