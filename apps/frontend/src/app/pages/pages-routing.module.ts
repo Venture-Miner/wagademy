@@ -40,7 +40,7 @@ const routes: Routes = [
           import('./person/home/home.component').then((c) => c.HomeComponent),
       },
       {
-        path: 'profile',
+        path: 'profile-company',
         loadComponent: () =>
           import('./company/profile/profile.component').then(
             (c) => c.ProfileComponent

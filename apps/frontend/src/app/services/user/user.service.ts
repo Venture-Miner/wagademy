@@ -5,8 +5,10 @@ import { Observable } from 'rxjs';
 import {
   CreateUser,
   CreateUserResponse,
-  FindOneUserResponse,
+  FindOneCompanyProfileResponse,
   RetrieveSelfResponse,
+  UpdateCompanyProfile,
+  UpdateCompanyProfileResponse,
 } from '@wagademy/types';
 
 @Injectable({
@@ -24,13 +26,24 @@ export class UserService extends BaseHttpService {
     );
   }
 
-  self(): Observable<RetrieveSelfResponse> {
-    return this.http.get<RetrieveSelfResponse>(`${this.URL}/user/self`);
+  self(): Observable<RetrieveSelfResponse | null> {
+    return this.http.get<RetrieveSelfResponse | null>(`${this.URL}/user/self`);
   }
 
-  findCompanyProfile(id: string): Observable<FindOneUserResponse> {
-    return this.http.get<FindOneUserResponse>(
+  findCompanyProfile(
+    id: string
+  ): Observable<FindOneCompanyProfileResponse | null> {
+    return this.http.get<FindOneCompanyProfileResponse | null>(
       `${this.URL}/user/company-profile/${id}`
+    );
+  }
+
+  updateCompanyProfile(
+    updateProfileDto: UpdateCompanyProfile
+  ): Observable<UpdateCompanyProfileResponse> {
+    return this.http.patch<UpdateCompanyProfileResponse>(
+      `${this.URL}/user/company-profile`,
+      updateProfileDto
     );
   }
 }

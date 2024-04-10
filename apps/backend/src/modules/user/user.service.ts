@@ -299,14 +299,19 @@ export class UserService {
   }
 
   async findCompanyProfile(
-    id: string
+    id: string,
+    userId: string,
+    accountType: AccountTypeEnum
   ): Promise<FindOneCompanyProfileResponse | null> {
-    return this.prismaService.companyProfile.findUnique({
+    const companyProfile = await this.prismaService.companyProfile.findUnique({
       where: { id },
       include: {
         companyPhoto: { select: { url: true } },
       },
     });
+    if (userId !== companyProfile?.userId || accountType !== 'COMPANY')
+      throw new UnauthorizedException('Only the owner can access the profile.');
+    return companyProfile;
   }
 
   async findOne(id: string): Promise<FindOneUserResponse | null> {
