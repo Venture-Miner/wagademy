@@ -41,6 +41,9 @@ export class JobApplicationCompanyViewEntity
   @ApiProperty({ example: JobApplicationStatusEnum.SUBSCRIBED })
   applicationStatus: JobApplicationStatusEnum;
 
+  @ApiProperty({ example: [{ id: faker.database.mongodbObjectId() }] })
+  jobInterviewChat: { id: string }[];
+
   @ApiProperty({ example: faker.date.past() })
   createdAt: Date;
 

@@ -1,3 +1,6 @@
+import { OpenAIChatModel } from './chat';
+import { UserProfile } from './user-profile';
+
 export const EmploymentClassificationEnum = {
   FULL_TIME: 'FULL_TIME',
   CONTRACT: 'CONTRACT',
@@ -186,6 +189,7 @@ export type JobApplicationCompanyView = {
     title: string;
   };
   applicationStatus: JobApplicationStatusEnum;
+  jobInterviewChat: { id: string }[];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -205,6 +209,7 @@ export type UpdateJobApplicationCompanyView = {
     title: string;
   };
   applicationStatus: JobApplicationStatusEnum;
+  jobInterviewChat: { id: string }[];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -272,4 +277,21 @@ export type FindManyJobApplicationsUserView = {
   count: number;
   countWithFilter: number;
   jobApplications: UserJobApplication[];
+};
+
+export type GetJobInterviewResultResponse = {
+  id: string;
+  history: OpenAIChatModel[] | any;
+  jobApplication: {
+    user: {
+      userProfile: {
+        id: string;
+        name: string;
+        email: string;
+        profilePhoto: { url: string } | null;
+        contactNumber: string;
+      } | null;
+    };
+    job: JobCompanyView;
+  };
 };
