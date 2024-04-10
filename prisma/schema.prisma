@@ -123,6 +123,7 @@ model JobInterviewChat {
   history          Json
   jobApplication   JobApplication @relation(fields: [jobApplicationId], references: [id])
   jobApplicationId String         @db.ObjectId
+  maxPrompts       Int
 }
 
 enum AccountTypeEnum {

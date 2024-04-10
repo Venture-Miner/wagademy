@@ -25,7 +25,8 @@ const TOKEN_LIMIT = 300;
 export class ChatService {
   constructor(
     private readonly openAI: OpenAI,
-    private readonly prismaService: PrismaService
+    private readonly prismaService: PrismaService,
+    private readonly configService: ConfigService
   ) {}
 
   async startJobInterview(
@@ -65,8 +66,12 @@ export class ChatService {
         content: "Hello, i'm the interviewer bot, let's start your interview!",
       }
     );
+    const maxPrompts =
+      aiInterviewQuestions.length * 2 +
+      Number(this.configService.get('REDUNDANCY_PROMPTS')) +
+      2;
     return this.prismaService.jobInterviewChat.create({
-      data: { jobApplicationId, history: initialPrompt },
+      data: { jobApplicationId, history: initialPrompt, maxPrompts },
     });
   }
 
@@ -75,24 +80,7 @@ export class ChatService {
     userId: string,
     message: string
   ): Promise<ChatCompletionMessage> {
-    const chat = await this.prismaService.jobInterviewChat.findUnique({
-      where: { id },
-      include: {
-        jobApplication: {
-          select: { userId: true, id: true, applicationStatus: true },
-        },
-      },
-    });
-    if (!chat)
-      throw new NotFoundException('Chat with the provided ID does not exist');
-    if (chat.jobApplication.userId !== userId)
-      throw new UnauthorizedException(
-        'You can not modify this chat, it does not belong to you'
-      );
-    if (
-      chat.jobApplication.applicationStatus !== JobApplicationStatusEnum.INVITED
-    )
-      throw new UnauthorizedException('You can not use the chat');
+    const chat = await this.validateChat(id, userId);
 
     const model = new ConfigService().get<string>('GPT_MODEL') as string;
     const encoder = encoding_for_model(model as any);
@@ -114,19 +102,49 @@ export class ChatService {
     const assistantMessage = response.choices[0].message;
     messages = [...messages, assistantMessage];
 
-    await this.prismaService.jobInterviewChat.update({
-      where: {
-        id,
-      },
-      data: {
-        history: messages as unknown as Prisma.InputJsonValue,
-      },
-    });
-    if (response.choices[0].message.content?.includes('#finished'))
+    await this.updateChatHistory(id, messages);
+
+    if (
+      assistantMessage.content?.includes('#finished') ||
+      message.length === chat.maxPrompts
+    )
       await this.prismaService.jobApplication.update({
         where: { id: chat.jobApplication.id },
         data: { applicationStatus: JobApplicationStatusEnum.INTERVIEWED },
       });
-    return response.choices[0].message;
+
+    return assistantMessage;
+  }
+
+  async updateChatHistory(
+    id: string,
+    messages: Array<ChatCompletionMessageParam>
+  ) {
+    await this.prismaService.jobInterviewChat.update({
+      where: { id },
+      data: { history: messages as unknown as Prisma.InputJsonValue },
+    });
+  }
+
+  async validateChat(id: string, userId: string) {
+    const chat = await this.prismaService.jobInterviewChat.findUnique({
+      where: { id },
+      include: {
+        jobApplication: {
+          select: { userId: true, id: true, applicationStatus: true },
+        },
+      },
+    });
+    if (!chat)
+      throw new NotFoundException('Chat with the provided ID does not exist');
+    if (chat.jobApplication.userId !== userId)
+      throw new UnauthorizedException(
+        'You can not modify this chat, it does not belong to you'
+      );
+    if (
+      chat.jobApplication.applicationStatus !== JobApplicationStatusEnum.INVITED
+    )
+      throw new UnauthorizedException('You can not use the chat');
+    return chat;
   }
 }

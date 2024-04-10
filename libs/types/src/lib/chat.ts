@@ -2,6 +2,7 @@ export type JobInterviewChat = {
   id: string;
   history: OpenAIChatModel[];
   jobApplicationId: string;
+  maxPrompts: number;
 };
 
 export type OpenAIChatModel = {
@@ -13,6 +14,7 @@ export type CreateInterviewChatResponse = {
   id: string;
   history: OpenAIChatModel[] | any;
   jobApplicationId: string;
+  maxPrompts: number;
 };
 
 export type CreateInterviewChat = {

@@ -13,4 +13,7 @@ export class StartJobInterviewEntity implements CreateInterviewChatResponse {
 
   @ApiProperty({ example: faker.database.mongodbObjectId() })
   jobApplicationId: string;
+
+  @ApiProperty({ example: faker.number.int() })
+  maxPrompts: number;
 }
