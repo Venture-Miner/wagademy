@@ -1,10 +1,12 @@
 import {
   Body,
   Controller,
+  Get,
   HttpStatus,
   Param,
   Patch,
   Post,
+  Query,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -14,14 +16,20 @@ import {
   ApiCreatedResponse,
   ApiOperation,
   ApiTags,
+  ApiResponse,
 } from '@nestjs/swagger';
 import { User } from '@wagademy/types';
 import { DBUser } from '../../shared/decorators';
 import { CognitoUserGuard } from '../../infra';
-import { CreateChatCompletionDto, CreateInterviewChatDto } from './dto';
+import {
+  CreateChatCompletionDto,
+  CreateInterviewChatDto,
+  GetChatHistoryDto,
+} from './dto';
 import { MongoIdDto } from '../../shared/dtos';
 import {
   ChatCompletionMessageEntity,
+  FindOneChatHistoryEntity,
   StartJobInterviewEntity,
 } from './entities';
 
@@ -62,8 +70,8 @@ export class ChatController {
     summary: 'Creates a chat completion',
     description: 'Creates a chat completion with provided details.',
   })
-  @ApiCreatedResponse({
-    status: HttpStatus.CREATED,
+  @ApiResponse({
+    status: HttpStatus.OK,
     description: 'Chat completions successfully created.',
     type: ChatCompletionMessageEntity,
   })
@@ -78,5 +86,29 @@ export class ChatController {
         'Only accounts where the type is physical person can create a job.'
       );
     return this.chatService.interviewCreateChatCompletion(id, userId, message);
+  }
+
+  @Get('history')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Get a chat history',
+    description: 'Get a chat history with provided details.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Chat history successfully retrieved.',
+    type: FindOneChatHistoryEntity,
+  })
+  getChatsHistory(
+    @Query() { jobApplicationId }: GetChatHistoryDto,
+    @DBUser()
+    { id: userId, accountType }: User
+  ) {
+    if (accountType !== 'PHYSICAL_PERSON')
+      throw new UnauthorizedException(
+        'Only accounts where the type is physical person can create a job.'
+      );
+    return this.chatService.getChatHistory(jobApplicationId, userId);
   }
 }
