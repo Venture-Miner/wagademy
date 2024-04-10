@@ -1,0 +1,111 @@
+<div class="container mx-auto min-h-screen px-3 sm:px-0">
+  <div class="pb-6 pt-6 flex gap-2 items-center">
+    <h2 class="font-sans font-medium text-4xl text-base-100">GPTs</h2>
+    <p class="text-primary text-sm font-bold">| BUILD TRAINING DATA</p>
+  </div>
+  <div class="flex gap-2 pb-6">
+    <div class="w-36">
+      <wagademy-select></wagademy-select>
+    </div>
+    <div class="w-full">
+      <wagademy-input></wagademy-input>
+    </div>
+  </div>
+  <div class="gap-6 flex flex-wrap pb-20">
+    <div>
+      <div class="flex gap-2 pb-2">
+        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+          <p class="text-primary font-bold font-mono">User</p>
+        </div>
+        <div>
+          <wagademy-input></wagademy-input>
+        </div>
+      </div>
+      <div class="flex gap-2 pb-2">
+        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+          <p class="text-primary font-bold font-mono">User</p>
+        </div>
+        <div>
+          <wagademy-input></wagademy-input>
+        </div>
+      </div>
+      <div class="flex gap-2 pb-2">
+        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+          <p class="text-primary font-bold font-mono">User</p>
+        </div>
+        <div>
+          <wagademy-input></wagademy-input>
+        </div>
+      </div>
+      <div class="flex gap-2 pb-2">
+        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+          <p class="text-primary font-bold font-mono">User</p>
+        </div>
+        <div>
+          <wagademy-input></wagademy-input>
+        </div>
+      </div>
+      <div class="flex gap-2 pb-2">
+        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+          <p class="text-primary font-bold font-mono">User</p>
+        </div>
+        <div class="w-full">
+          <wagademy-input></wagademy-input>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="flex gap-2 pb-2">
+        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+          <p class="text-accent font-bold font-mono">Chatbot</p>
+        </div>
+        <div>
+          <wagademy-input></wagademy-input>
+        </div>
+        <button class="text-error" (click)="removeItem()">Remove</button>
+      </div>
+      <div class="flex gap-2 pb-2">
+        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+          <p class="text-accent font-bold font-mono">Chatbot</p>
+        </div>
+        <div>
+          <wagademy-input></wagademy-input>
+        </div>
+        <button class="text-error" (click)="removeItem()">Remove</button>
+      </div>
+      <div class="flex gap-2 pb-2">
+        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+          <p class="text-accent font-mono font-bold">Chatbot</p>
+        </div>
+        <div>
+          <wagademy-input></wagademy-input>
+        </div>
+        <button class="text-error" (click)="removeItem()">Remove</button>
+      </div>
+      <div class="flex gap-2 pb-2">
+        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+          <p class="text-accent font-bold font-mono">Chatbot</p>
+        </div>
+        <div>
+          <wagademy-input></wagademy-input>
+        </div>
+        <button class="text-error" (click)="removeItem()">Remove</button>
+      </div>
+      <div class="flex gap-2 pb-6">
+        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+          <p class="text-accent font-bold font-mono">Chatbot</p>
+        </div>
+        <div>
+          <wagademy-input></wagademy-input>
+        </div>
+        <button class="text-error" (click)="removeItem()">Remove</button>
+      </div>
+      <div class="flex justify-end" (click)="addNewItem()">
+        <button class="btn btn-primary btn-outline">Add New Item</button>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <button class="btn btn-primary" (click)="saveItems()">Save</button>
+  </div>
+</div>
