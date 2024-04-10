@@ -25,11 +25,13 @@ import {
   ConfigureAIQuestions,
   FindManyJobApplicationsUserView,
   FilterUserJobApplications,
+  GetJobInterviewResultResponse,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
 import { Prisma } from '@prisma/client';
 import { JobUserViewSelect } from '../../shared/select/job-user-view';
 import { faker } from '@faker-js/faker';
+import { getJobInterviewResultIncludes } from '../../shared/include';
 
 @Injectable()
 export class JobService {
@@ -208,6 +210,7 @@ export class JobService {
             },
           },
           job: { select: { id: true, title: true } },
+          jobInterviewChat: { select: { id: true } },
         },
       }),
     ]);
@@ -282,6 +285,16 @@ export class JobService {
           },
         },
       },
+    });
+  }
+
+  async getJobInterviewResult(
+    id: string,
+    companyId: string
+  ): Promise<GetJobInterviewResultResponse | null> {
+    return this.prismaService.jobInterviewChat.findUnique({
+      where: { id, jobApplication: { job: { companyId } } },
+      include: getJobInterviewResultIncludes,
     });
   }
 
@@ -363,6 +376,7 @@ export class JobService {
             title: true,
           },
         },
+        jobInterviewChat: { select: { id: true } },
       },
     });
   }

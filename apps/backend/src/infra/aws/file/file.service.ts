@@ -7,14 +7,18 @@ import {
 } from '@aws-sdk/client-s3';
 import * as crypto from 'crypto';
 import { UploadFileOutput } from '@wagademy/types';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class FileService {
+  constructor(private readonly configService: ConfigService) {}
   s3 = new S3({
-    region: process.env.AWS_DEFAULT_REGION as string,
+    region: this.configService.get('AWS_DEFAULT_REGION') as string,
     credentials: {
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+      secretAccessKey: this.configService.get(
+        'AWS_SECRET_ACCESS_KEY'
+      ) as string,
+      accessKeyId: this.configService.get('AWS_ACCESS_KEY_ID') as string,
     },
   });
 
@@ -27,7 +31,7 @@ export class FileService {
         client: this.s3,
         params: {
           ACL: acl,
-          Bucket: process.env.AWS_BUCKET,
+          Bucket: this.configService.get('AWS_BUCKET'),
           Body: buffer,
           Key: `${crypto.randomUUID()}-${originalname}`,
           ContentType: mimetype,
@@ -43,7 +47,7 @@ export class FileService {
 
   async removeFile(key: string): Promise<S3> {
     await this.s3.deleteObject({
-      Bucket: process.env.AWS_BUCKET,
+      Bucket: this.configService.get('AWS_BUCKET'),
       Key: key,
     });
     return this.s3;
