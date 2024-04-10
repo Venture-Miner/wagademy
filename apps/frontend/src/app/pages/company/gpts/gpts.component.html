@@ -5,6 +5,7 @@
     <button
       class="btn btn-primary w-52"
       onclick="create_fine_turning_modal.showModal()"
+      aria-label="create fine tuning"
     >
       Create Fine Tuning
     </button>
@@ -12,6 +13,7 @@
     <button
       class="btn btn-primary w-52"
       onclick="create_training_data_modal.showModal()"
+      aria-label="create training data"
     >
       Create Training Data
     </button>
@@ -20,24 +22,26 @@
   <div>
     <ul class="menu sm:menu-horizontal menu-md m-4 sm:m-0">
       <li class="sm:w-32 w-full">
-        <a
+        <div
           class="border-b-2 border-base-300 text-base-100 rounded-none font-mono flex justify-center"
           [ngClass]="{
-            'border-primary text-primary': gptType === 'FINETUNING'
+            'border-primary': gptType === 'FINETUNING'
           }"
           (click)="gptType = 'FINETUNING'"
-          >Fine tuning</a
         >
+          Fine tuning
+        </div>
       </li>
       <li class="sm:w-32 w-full">
-        <a
+        <div
           class="border-b-2 border-base-300 text-base-100 rounded-none font-mono flex justify-center"
           [ngClass]="{
-            'border-primary text-primary': gptType === 'TRAININGDATA'
+            'border-primary': gptType === 'TRAININGDATA'
           }"
           (click)="gptType = 'TRAININGDATA'"
-          >Training data</a
         >
+          Training data
+        </div>
       </li>
     </ul>
   </div>
@@ -73,7 +77,7 @@
         </thead>
         <tbody>
           @for (gpt of gpts; track gpts) {
-          <tr class="text-base-200 font-mono text-lg">
+          <tr class="text-base-100 font-mono text-lg">
             <td class="py-4 px-3">
               <div class="flex gap-8 pl-8">
                 @if(gpt.image){
@@ -100,14 +104,14 @@
                   'bg-success text-success-content': gpt.status === 'Success',
                   'bg-warning text-warning-content':
                     gpt.status === 'Processing',
-                  'bg-error text-error-content': gpt.status === 'Fail'
+                  'bg-error text-base-100': gpt.status === 'Fail'
                 }"
               >
                 {{ gpt.status }}
               </p>
             </td>
             <td class="py-4">
-              <button onclick="modal.showModal()">
+              <button onclick="modal.showModal()" aria-label="remove item">
                 <i class="bi bi-trash3 pl-8 text-base-200 cursor-pointer"></i>
               </button>
             </td>
@@ -143,7 +147,7 @@
           </thead>
           <tbody>
             @for (gpt of gptsTraining; track gptsTraining) {
-            <tr class="text-base-200 font-mono text-lg">
+            <tr class="text-base-100 font-mono text-lg">
               <td class="py-4 px-6 md:px-0 md:pl-6 md:pr-40">
                 <p class="text-sm">{{ gpt.title }}</p>
               </td>
@@ -156,7 +160,7 @@
                   class="bi bi-eye text-base-200 cursor-pointer"
                   (click)="view()"
                 ></i>
-                <button onclick="modal.showModal()">
+                <button onclick="modal.showModal()" aria-label="remove item">
                   <i class="bi bi-trash3 text-base-200 cursor-pointer"></i>
                 </button>
               </td>
@@ -215,9 +219,7 @@
               <button
                 class="rounded-full px-2 bg-neutral shadow py-1 ml-2"
                 id="remove"
-                (click)="
-                  files.length === 1 && (myFile.value = ''); removeFile(i)
-                "
+                (click)="removeFile(i)"
               >
                 <i class="bi bi-trash3 text-error"></i>
               </button>
