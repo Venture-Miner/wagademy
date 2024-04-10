@@ -1,17 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { NgClass } from '@angular/common';
 import { ApplicationsCardsComponent } from '../../../shared/components/applications-cards/applications-cards.component';
-import {
-  FilterUserJobApplications,
-  Pagination,
-  UserJobApplication,
-} from '@wagademy/types';
+import { Pagination, UserJobApplication } from '@wagademy/types';
 import { JobService } from '../../../services/job/job.service';
-import { forkJoin } from 'rxjs';
 import { ToastService } from '../../../services/toast/toast.service';
+import { Subject, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'wagademy-job-applications-all',
@@ -26,7 +22,9 @@ import { ToastService } from '../../../services/toast/toast.service';
   templateUrl: './job-applications-all.component.html',
   styleUrl: './job-applications-all.component.scss',
 })
-export class JobApplicationsAllComponent implements OnInit {
+export class JobApplicationsAllComponent implements OnInit, OnDestroy {
+  private manageTabClickSubject = new Subject<void>();
+  private subscription;
   applicationsType: 'all' | 'interviewInvites' = 'all';
   page = { interviewInvites: 1, all: 1 };
   count = { interviewInvites: 0, all: 0 };
@@ -41,7 +39,13 @@ export class JobApplicationsAllComponent implements OnInit {
     private readonly jobService: JobService,
     private toastService: ToastService,
     private router: Router
-  ) {}
+  ) {
+    this.subscription = this.manageTabClickSubject
+      .pipe(debounceTime(600))
+      .subscribe(() => {
+        this.getJobApplications();
+      });
+  }
 
   ngOnInit(): void {
     this.getJobApplications();
@@ -72,6 +76,10 @@ export class JobApplicationsAllComponent implements OnInit {
       });
   }
 
+  manageTabClick() {
+    this.manageTabClickSubject.next();
+  }
+
   openModal(id: string) {
     this.id = id;
     window.modal['showModal']();
@@ -82,5 +90,9 @@ export class JobApplicationsAllComponent implements OnInit {
     this.router.navigate(['/pages/gptchat'], {
       queryParams: { id: this.id },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
