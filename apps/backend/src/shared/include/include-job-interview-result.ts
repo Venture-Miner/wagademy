@@ -14,7 +14,18 @@ export const getJobInterviewResultIncludes = {
           },
         },
       },
-      job: { include: { _count: { select: { jobApplications: true } } } },
+      job: {
+        include: {
+          _count: { select: { jobApplications: true } },
+          company: {
+            select: {
+              companyProfile: {
+                select: { companyPhoto: { select: { url: true } } },
+              },
+            },
+          },
+        },
+      },
     },
   },
 };
