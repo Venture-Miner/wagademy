@@ -1,0 +1,52 @@
+<dialog id="filesUpload" class="modal">
+  <div class="modal-box">
+    <div
+      appDropZone
+      (dropped)="prepareImageForCropping($event)"
+      (hovered)="toggleHover($event)"
+      class="border border-dashed rounded-lg border-primary flex flex-col sm:flex-row items-center justify-center py-8"
+      [ngClass]="{ 'bg-primary bg-opacity-20': isHovering }"
+    >
+      <input
+        type="file"
+        class="hidden"
+        (change)="onFileInputChange($event)"
+        #fileInput
+      />
+      <span class="text-base-100">Drop files here or</span>
+      <span
+        class="sm:ml-1 text-primary cursor-pointer hover:underline"
+        (click)="fileInput.click()"
+        >choose</span
+      >
+    </div>
+    @if (error) {
+    <div class="text-error mt-2">{{ error }}</div>
+    } @if(imageToCrop) {
+    <div class="mt-6">
+      <wagademy-cropper
+        [imageFile]="imageToCrop"
+        (changed)="onCrop($event)"
+      ></wagademy-cropper>
+    </div>
+    } @if(!imageToCrop ) { @if(file) {
+    <img
+      [src]="objectURL"
+      alt="image preview"
+      class="rounded-md mt-6 mx-auto"
+    />
+    <div class="flex justify-end mt-2">
+      <span class="text-base-200">{{ file.size | fileSize }}</span>
+    </div>
+    }
+    <div class="modal-action">
+      <form method="dialog">
+        <div class="flex gap-4">
+          <button class="btn btn-primary btn-outline">Close</button>
+          <button class="btn btn-primary" (click)="onSave()">Save</button>
+        </div>
+      </form>
+    </div>
+    }
+  </div>
+</dialog>

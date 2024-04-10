@@ -27,7 +27,9 @@ export class InputComponent implements ControlValueAccessor {
   @Input() rightButtonType: InputRightButtonType | undefined;
   @Input() type: HTMLInputTypeAttribute = 'text';
   @Input() readonly = false;
+  @Input() disabledInput = false;
   @Input() isRightButtonDisabled = false;
+  @Input() value = '';
 
   @Output() rightButtonClick = new EventEmitter<void>();
 
@@ -62,8 +64,10 @@ export class InputComponent implements ControlValueAccessor {
     return !!(this.control?.invalid && this.control.touched);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onChange = (_: unknown) => {};
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onTouched = () => {};
 
   registerOnChange(fn: (_: unknown) => unknown) {

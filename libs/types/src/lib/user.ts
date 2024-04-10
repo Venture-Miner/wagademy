@@ -13,6 +13,8 @@ export type User = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+  companyProfile: { id: string } | null;
+  userProfile: { id: string } | null;
 };
 
 export type CreateUserResponse = {
@@ -22,6 +24,8 @@ export type CreateUserResponse = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+  companyProfile: { id: string } | null;
+  userProfile: { id: string } | null;
 };
 
 export type FindOneUserResponse = {
@@ -31,6 +35,8 @@ export type FindOneUserResponse = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+  companyProfile: { id: string } | null;
+  userProfile: { id: string } | null;
 };
 
 export type UpdateUserResponse = {
@@ -40,6 +46,8 @@ export type UpdateUserResponse = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+  companyProfile: { id: string } | null;
+  userProfile: { id: string } | null;
 };
 
 export type RetrieveSelfResponse = {
@@ -49,6 +57,8 @@ export type RetrieveSelfResponse = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+  companyProfile: { id: string } | null;
+  userProfile: { id: string } | null;
 };
 
 export type CreateUser = {

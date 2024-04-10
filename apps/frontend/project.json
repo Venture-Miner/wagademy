@@ -17,7 +17,7 @@
         "tsConfig": "apps/frontend/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/frontend/src/favicon.ico", 
+          "apps/frontend/src/favicon.ico",
           "apps/frontend/src/assets",
           "apps/frontend/src/robots.txt",
           "apps/frontend/src/sitemap.xml"
@@ -30,7 +30,7 @@
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
+              "maximumWarning": "600kb",
               "maximumError": "1mb"
             },
             {
