@@ -48,7 +48,16 @@ export class JobService {
       );
     return this.prismaService.job.create({
       data: { ...createJob, company: { connect: { id: companyId } } },
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -138,7 +147,16 @@ export class JobService {
         orderBy,
         skip,
         take,
-        include: { _count: { select: { jobApplications: true } } },
+        include: {
+          _count: { select: { jobApplications: true } },
+          company: {
+            select: {
+              companyProfile: {
+                select: { companyPhoto: { select: { url: true } } },
+              },
+            },
+          },
+        },
       }),
     ]);
     return { count, jobs };
@@ -245,7 +263,16 @@ export class JobService {
   ): Promise<FindOneJobCompanyViewResponse | null> {
     return this.prismaService.job.findFirst({
       where: { id, companyId: userId },
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -275,7 +302,16 @@ export class JobService {
     return this.prismaService.job.update({
       where: { id },
       data: updateJobDto,
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -338,7 +374,16 @@ export class JobService {
     return this.prismaService.job.update({
       where: { id },
       data: { aiInterviewQuestions },
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
     });
   }
 
