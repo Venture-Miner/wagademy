@@ -10,14 +10,14 @@ import { InputComponent } from '../../../shared/components/input/input.component
   styleUrl: './build-training-data.component.scss',
 })
 export class BuildTrainingDataComponent {
-  items: string[] = [];
+  items: any[] = Array(5).fill({});
 
-  removeItem() {
-    //
+  removeItem(index: number) {
+    this.items.splice(index, 1);
   }
 
   addNewItem() {
-    //
+    this.items.push({});
   }
 
   saveItems() {
