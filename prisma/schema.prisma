@@ -101,7 +101,7 @@ model Job {
   company                  User                         @relation(fields: [companyId], references: [id])
   companyId                String                       @db.ObjectId
   jobApplications          JobApplication[]
-  jobStatus                JobStatusEnum                @default(PUBLISHED)
+  jobStatus                JobStatusEnum
   createdAt                DateTime                     @default(now())
   updatedAt                DateTime                     @updatedAt
 }

@@ -20,4 +20,10 @@ export class RetrieveSelfResponseEntity implements RetrieveSelfResponse {
 
   @ApiProperty({ example: AccountTypeEnum.COMPANY })
   accountType: AccountTypeEnum;
+
+  @ApiProperty({ example: null })
+  companyProfile: { id: string } | null;
+
+  @ApiProperty({ example: null })
+  userProfile: { id: string } | null;
 }

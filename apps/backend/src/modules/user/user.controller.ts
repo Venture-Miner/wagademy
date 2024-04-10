@@ -93,7 +93,7 @@ export class UserController {
   ) {
     if (accountType !== 'PHYSICAL_PERSON')
       throw new UnauthorizedException(
-        'Only accounts where the type is physical person can create a user profile.'
+        'Only individual accounts are allowed to create a user profile.'
       );
     return this.userService.createUserProfile(
       { ...createProfileDto, profilePhoto },
@@ -127,7 +127,7 @@ export class UserController {
   ) {
     if (accountType !== 'COMPANY')
       throw new UnauthorizedException(
-        'Only accounts where the type is company can create a company profile.'
+        'Only company accounts are allowed to create a company profile.'
       );
     return this.userService.createCompanyProfile(
       { ...createCompanyProfileDto, companyPhoto },
@@ -140,7 +140,7 @@ export class UserController {
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
     summary: 'Find an user profile',
-    description: 'Find a profile with ID.',
+    description: 'Find a profile based on its unique ID.',
   })
   @ApiResponse({
     type: FindProfileEntity,
@@ -160,7 +160,7 @@ export class UserController {
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
     summary: 'Find a company profile',
-    description: 'Find a company profile with ID.',
+    description: 'Find a company profile based on its unique ID.',
   })
   @ApiResponse({
     type: FindOneCompanyProfileEntity,

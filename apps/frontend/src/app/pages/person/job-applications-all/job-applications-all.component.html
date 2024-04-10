@@ -1,0 +1,91 @@
+<div class="container mx-auto min-h-screen px-3 sm:px-0">
+  <div class="pb-6 pt-8">
+    <h2 class="font-sans font-medium text-4xl text-base-100 pb-2">
+      Applications
+    </h2>
+    <p class="text-base-200 font-mono md:w-7/12 w-full">
+      See all the positions you've applied for and attend interviews for those
+      where you've been invited. Remember that with a
+      <span class="text-primary font-bold">premium subscription</span>, you can
+      attend interviews without being invited.
+    </p>
+  </div>
+  <ul class="menu sm:menu-horizontal font-mono menu-md m-4 sm:m-0 pb-4">
+    <li class="sm:w-52 w-full">
+      <a
+        class="border-b rounded-none flex justify-center"
+        [ngClass]="[
+          applicationsType === 'all'
+            ? 'border-primary text-primary'
+            : 'border-base-300 text-base-300'
+        ]"
+        (click)="applicationsType = 'all'"
+        >All ({{ count.all }})</a
+      >
+    </li>
+    <li class="sm:w-52 w-full">
+      <a
+        class="border-b border-base-300 text-base-300 rounded-none flex justify-center"
+        [ngClass]="[
+          applicationsType === 'interviewInvites'
+            ? 'border-primary text-primary'
+            : 'border-base-300 text-base-300'
+        ]"
+        (click)="applicationsType = 'interviewInvites'"
+        >Interview invites ({{ count.interviewInvites }})</a
+      >
+    </li>
+  </ul>
+  @if(applicationsType === 'all'){
+  <div class="flex flex-wrap max-[513px]:justify-center gap-8 pt-6 xl:pt-0">
+    @for (application of jobApplications.all; track $index) {
+    <wagademy-applications-cards
+      [name]="application.job.title"
+      [company]="application.job.company.name"
+      [disabled]="application.applicationStatus !== 'INVITED'"
+      (actionButtonClick)="openModal(application.id)"
+    ></wagademy-applications-cards>
+    }
+  </div>
+  } @if(applicationsType === 'interviewInvites') {
+  <div class="flex flex-wrap max-[513px]:justify-center gap-8 pt-6 xl:pt-0">
+    @for (application of jobApplications.interviewInvites; track $index) {
+    <ng-container>
+      <wagademy-applications-cards
+        [name]="application.job.title"
+        [company]="application.job.company.name"
+        (actionButtonClick)="openModal(application.id)"
+      ></wagademy-applications-cards>
+    </ng-container>
+    }
+  </div>
+  } @if(jobApplications.all.length&&applicationsType === 'all'){
+  <div class="flex justify-center lg:justify-end pt-6 pb-3">
+    <wagademy-pagination
+      [page]="page.all"
+      [take]="take"
+      [count]="count.all"
+      (pageChange)="page.all = $event; getJobApplications()"
+    ></wagademy-pagination>
+  </div>
+  } @if(jobApplications.interviewInvites.length&&applicationsType ===
+  'interviewInvites'){
+  <div class="flex justify-center lg:justify-end pt-6 pb-3">
+    <wagademy-pagination
+      [page]="page.interviewInvites"
+      [take]="take"
+      [count]="count.interviewInvites"
+      (pageChange)="page.interviewInvites = $event; getJobApplications()"
+    ></wagademy-pagination>
+  </div>
+  }
+</div>
+<wagademy-modal
+  [title]="'Warning'"
+  [message]="
+    'Please allocate 30 minutes to complete the interview. Keep in mind that this is a one-time attempt. Good luck!'
+  "
+  [actionButtonLabel]="'Go to Interview'"
+  [isLoading]="isLoading"
+  (actionButtonClick)="goToAiInterview()"
+></wagademy-modal>

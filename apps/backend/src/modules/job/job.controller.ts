@@ -72,7 +72,7 @@ export class JobController {
   ) {
     if (accountType !== 'COMPANY')
       throw new UnauthorizedException(
-        'Only accounts where the type is company can create a job.'
+        'Only company accounts are allowed to create jobs.'
       );
     return this.jobService.create(createJobDto, companyId);
   }
@@ -82,12 +82,11 @@ export class JobController {
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
     summary: 'Create a job application',
-    description:
-      'Creates a job application with the given cognito user and data.',
+    description: 'Creates a job application with the given user data.',
   })
   @ApiCreatedResponse({
     status: HttpStatus.CREATED,
-    description: 'The job application has been successfully created.',
+    description: 'Job application submitted successfully.',
     type: CreateJobApplicationResponseEntity,
   })
   createJobApplication(
@@ -97,7 +96,7 @@ export class JobController {
   ) {
     if (accountType !== 'PHYSICAL_PERSON')
       throw new UnauthorizedException(
-        'Only accounts where the type is physical person can apply to a job.'
+        'Only individual accounts are allowed to apply for jobs.'
       );
     return this.jobService.createJobApplication(
       createJobApplicationDto,
@@ -109,13 +108,13 @@ export class JobController {
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary: 'Get a list of jobs of a company.',
+    summary: 'Retrieve a list of jobs belonging to a company.',
     description:
-      'Get a list of job available with some filter options and company ID.',
+      'Fetches a list of available jobs with optional filters, based on the provided company ID.',
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'The list of jobs have been successfully retrieved.',
+    description: 'List of jobs successfully retrieved.',
     type: JobCompanyViewFindManyEntity,
   })
   findManyJobsCompanyView(
@@ -137,15 +136,13 @@ export class JobController {
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary:
-      'Retrieve a list of job applications submitted for positions at the company.',
+    summary: 'Retrieve a list of job applications submitted to the company.',
     description:
-      'Retrieve a list of job applications submitted for positions at the company with some filter options and company ID.',
+      'Fetches a list of job applications submitted to the company with optional filters, based on the provided company ID.',
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    description:
-      'The list of job applications have been successfully retrieved.',
+    description: 'List of job applications successfully retrieved.',
     type: FindManyJobApplicationsCompanyViewEntity,
   })
   findManyJobApplicationsCompanyView(
@@ -169,12 +166,11 @@ export class JobController {
   @ApiOperation({
     summary: 'Retrieve a list of job applications submitted by the user.',
     description:
-      'Retrieve a list of job applications submitted by the user with some filter options and company ID.',
+      'Fetches a list of job applications submitted by the user with optional filters, based on the provided company ID.',
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    description:
-      'The list of job applications have been successfully retrieved.',
+    description: 'List of job applications successfully retrieved.',
     type: FindManyJobApplicationsUserViewEntity,
   })
   findManyJobApplicationsUserView(
@@ -196,20 +192,22 @@ export class JobController {
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary: 'Get a list of available jobs.',
-    description: 'Get a list of job available with some filter options.',
+    summary: 'Retrieve a list of available jobs',
+    description: 'Fetches a list of available jobs with optional filters.',
   })
   @ApiResponse({
     status: HttpStatus.OK,
     type: JobUserViewFindManyEntity,
-    description: 'The list of jobs have been successfully retrieved.',
+    description: 'List of jobs successfully retrieved.',
   })
   findManyJobsUserView(
     @Query() filterJobsDto: FilterJobsDto,
     @Query() paginationDto: PaginationDto,
     @DBUser()
-    { id: userId }: User
+    { id: userId, accountType }: User
   ) {
+    if (accountType !== 'PHYSICAL_PERSON')
+      throw new UnauthorizedException('You are not able to access this.');
     return this.jobService.findManyJobsUserView(
       filterJobsDto,
       paginationDto,
@@ -221,13 +219,13 @@ export class JobController {
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary: 'Get a job.',
-    description: 'Get a job by it own ID.',
+    summary: 'Retrieve a job',
+    description: 'Fetches a job based on its unique ID.',
   })
   @ApiResponse({
     type: JobCompanyViewFindOneEntity,
     status: HttpStatus.OK,
-    description: 'Jobs has been successfully retrieved.',
+    description: 'Job successfully retrieved.',
   })
   findOneJobCompanyView(
     @Param() { id }: MongoIdDto,
@@ -265,13 +263,13 @@ export class JobController {
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary: 'Get a job.',
-    description: 'Get a job by it own ID.',
+    summary: 'Retrieve a job',
+    description: 'Fetches a job based on its unique ID.',
   })
   @ApiResponse({
     type: JobUserViewFindOneEntity,
     status: HttpStatus.OK,
-    description: 'Jobs has been successfully retrieved.',
+    description: 'Job successfully retrieved.',
   })
   findOneJobUserView(
     @Param() { id }: MongoIdDto,
@@ -301,19 +299,19 @@ export class JobController {
   ) {
     if (accountType !== 'COMPANY')
       throw new UnauthorizedException(
-        'Only accounts where the type is company can update a job.'
+        'Only company accounts are permitted to update a job.'
       );
     return this.jobService.update(id, updateJobDto, userId);
   }
 
   @Patch('job-view/:id')
   @ApiOperation({
-    summary: 'Update a job views',
-    description: 'Updates a job views with provided ID.',
+    summary: 'Update a job view count',
+    description: 'Updates a job view count based on its unique ID.',
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Job views successfully updated.',
+    description: 'Job view count successfully updated.',
     type: JobUserViewUpdateEntity,
   })
   updateViews(@Param() { id }: MongoIdDto) {
@@ -324,12 +322,13 @@ export class JobController {
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary: 'Invite an user to interview',
-    description: 'Invites an user to be interviewed with job application ID.',
+    summary: 'Invite a user to interview',
+    description:
+      'Sends an invitation to a user for an interview using the job application ID.',
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Invite successfully done.',
+    description: 'Invitation successfully sent.',
     type: InviteToInterviewEntity,
   })
   inviteToInterview(
@@ -339,7 +338,7 @@ export class JobController {
   ) {
     if (accountType !== 'COMPANY')
       throw new UnauthorizedException(
-        'Only accounts where the type is company can update invite to an interview.'
+        'Only company accounts are permitted to send interview invitations.'
       );
     return this.jobService.inviteToInterview(id, userId);
   }
@@ -348,13 +347,13 @@ export class JobController {
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary: 'Configure AI questions for one job',
+    summary: 'Configure AI questions for a job',
     description:
-      'Configure AI questions for one job with job ID and provided questions.',
+      'Configures AI questions for a job using the job ID and provided questions.',
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Ai questions successfully configured.',
+    description: 'AI questions successfully configured.',
     type: InviteToInterviewEntity,
   })
   configureAIQuestions(
@@ -365,7 +364,7 @@ export class JobController {
   ) {
     if (accountType !== 'COMPANY')
       throw new UnauthorizedException(
-        'Only accounts where the type is company can update invite to an interview.'
+        'Only company accounts are permitted to configure AI questions for a job.'
       );
     return this.jobService.configureAIQuestions(
       id,
