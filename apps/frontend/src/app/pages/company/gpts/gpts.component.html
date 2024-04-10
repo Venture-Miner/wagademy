@@ -189,7 +189,7 @@
         <i class="bi bi-x-lg text-base-100 cursor-pointer"></i>
       </button>
     </div>
-    <form method="dialog">
+    <form method="dialog" [formGroup]="form">
       <div class="pb-6">
         <p class="font-mono text-sm text-base-100 pb-2">Thumbnail</p>
         <div
@@ -204,11 +204,31 @@
           (click)="myFile.click()"
         >
           <div class="flex-col flex items-center">
+            @if(files.length > 0){
+            <img
+              [src]="getImageSrc(files[0])"
+              class="w-full h-44 rounded-lg object-cover relative"
+              alt="Uploaded"
+            />
+            @for (file of files; track files; let i = $index) {
+            <div class="absolute right-0 pr-12 pt-4">
+              <button
+                class="rounded-full px-2 bg-neutral shadow py-1 ml-2"
+                id="remove"
+                (click)="
+                  files.length === 1 && (myFile.value = ''); removeFile(i)
+                "
+              >
+                <i class="bi bi-trash3 text-error"></i>
+              </button>
+            </div>
+            } } @if(files.length === 0){
             <i class="bi bi-cloud-arrow-up text-[40px] text-primary"></i>
             <p class="text-center md:text-xl text-xs">
               <span class="text-primary">Click to upload</span>
               <span class="text-base-100"> or drag and drop</span>
             </p>
+            }
             <input
               #myFile
               type="file"
@@ -218,26 +238,43 @@
               class="hidden"
               (change)="onFileChange($event)"
             />
+            @if(files.length === 0){
             <p class="text-center text-base-200 md:text-sm text-[10px] mt-2">
               Maximum file size 50MB
             </p>
+            }
           </div>
         </div>
       </div>
       <div class="pb-6">
-        <p class="font-mono text-sm text-base-100 pb-2">Title</p>
-        <wagademy-input [placeholder]="'title example'"></wagademy-input>
+        <wagademy-form-field [control]="form.controls.title" label="Title">
+          <wagademy-input
+            [placeholder]="'title example'"
+            formControlName="title"
+            type="text"
+          ></wagademy-input>
+        </wagademy-form-field>
       </div>
       <div class="pb-6">
-        <p class="font-mono text-sm text-base-100 pb-2">Description</p>
-        <textarea
-          placeholder="Type your description here..."
-          class="w-full h-[168px] bg-neutral p-4 outline-none"
-        ></textarea>
+        <wagademy-form-field
+          [control]="form.controls.description"
+          label="Description"
+        >
+          <textarea
+            placeholder="Type your description here..."
+            class="w-full h-[168px] bg-neutral p-4 outline-none"
+            formControlName="description"
+          ></textarea>
+        </wagademy-form-field>
       </div>
       <div class="pb-6">
-        <p class="font-mono text-sm text-base-100 pb-2">Training data</p>
-        <wagademy-select></wagademy-select>
+        <p class="font-mono text-sm text-base-100 pb-2"></p>
+        <wagademy-form-field
+          [control]="form.controls.trainingData"
+          label="Training data"
+        >
+          <wagademy-select></wagademy-select>
+        </wagademy-form-field>
       </div>
       <div class="sm:flex justify-center gap-4">
         <button
@@ -249,9 +286,12 @@
         <div class="pt-4 md:pt-0">
           <button
             class="btn btn-primary sm:w-[210px] w-full"
+            [disabled]="form.invalid || isLoading"
             (click)="createFineTurning()"
           >
-            Create
+            @if (isLoading) {
+            <span class="loading loading-dots"></span>
+            } @else { Create }
           </button>
         </div>
       </div>
@@ -282,26 +322,48 @@
           (dragover)="onDragOver($event)"
           (dragleave)="onDragLeave()"
           (drop)="onDrop($event)"
-          (click)="myFileJson.click()"
+          (click)="myFile.click()"
         >
           <div class="flex-col flex items-center">
+            @if(files.length > 0){
+            <img
+              [src]="getImageSrc(files[0])"
+              class="w-full h-44 rounded-lg object-cover relative"
+              alt="Uploaded"
+            />
+            @for (file of files; track files; let i = $index) {
+            <div class="absolute right-0 pr-12 pt-4">
+              <button
+                class="rounded-full px-2 bg-neutral shadow py-1 ml-2"
+                id="remove"
+                (click)="
+                  files.length === 1 && (myFile.value = ''); removeFile(i)
+                "
+              >
+                <i class="bi bi-trash3 text-error"></i>
+              </button>
+            </div>
+            } } @if(files.length === 0){
             <i class="bi bi-cloud-arrow-up text-[40px] text-primary"></i>
             <p class="text-center md:text-xl text-xs">
               <span class="text-primary">Click to upload</span>
               <span class="text-base-100"> or drag and drop</span>
             </p>
+            }
             <input
-              #myFileJson
+              #myFile
               type="file"
               id="file"
               name="filename"
-              accept=".json"
+              accept=".jason"
               class="hidden"
               (change)="onFileChange($event)"
             />
+            @if(files.length === 0){
             <p class="text-center text-base-200 md:text-sm text-[10px] mt-2">
               json files
             </p>
+            }
           </div>
         </div>
       </div>

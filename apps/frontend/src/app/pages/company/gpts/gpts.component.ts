@@ -1,4 +1,4 @@
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
@@ -6,6 +6,8 @@ import { ToastService } from '../../../services/toast/toast.service';
 import { SelectComponent } from '../../../shared/components/select/select.component';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { RouterModule } from '@angular/router';
+import { FormFieldComponent } from '../../../shared/components/form-field/form-field.component';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 interface Filter {
   name: string;
@@ -16,12 +18,13 @@ interface Filter {
   standalone: true,
   imports: [
     NgClass,
-    NgFor,
     PaginationComponent,
     InputComponent,
     SelectComponent,
     ModalComponent,
     RouterModule,
+    FormFieldComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './gpts.component.html',
   styleUrl: './gpts.component.scss',
@@ -71,8 +74,17 @@ export class GptsComponent {
   count = 5;
   isDragging = false;
   files: File[] = [];
+  form = this.fb.group({
+    title: ['', [Validators.required]],
+    description: ['', Validators.required],
+    trainingData: ['', [Validators.required]],
+  });
+  isLoading = false;
 
-  constructor(private readonly toastService: ToastService) {}
+  constructor(
+    private readonly toastService: ToastService,
+    private readonly fb: FormBuilder
+  ) {}
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
@@ -86,6 +98,10 @@ export class GptsComponent {
   onDrop(event: DragEvent) {
     event.preventDefault();
     this.isDragging = false;
+    const files = event.dataTransfer?.files;
+    if (files) {
+      this.files.push(...Array.from(files));
+    }
   }
 
   onFileChange(event: Event) {
@@ -97,6 +113,10 @@ export class GptsComponent {
       message: 'Success! Fine tuning successfully created.',
       type: 'success',
     });
+  }
+
+  removeFile(index: number) {
+    this.files.splice(index, 1);
   }
 
   removeFineTurning() {
@@ -130,5 +150,9 @@ export class GptsComponent {
       message: 'Success! Training data created successfully.',
       type: 'success',
     });
+  }
+
+  getImageSrc(file: File): string {
+    return URL.createObjectURL(file);
   }
 }
