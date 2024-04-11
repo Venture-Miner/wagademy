@@ -70,8 +70,17 @@ export class ChatService {
     userId: string
   ) {
     const chatInterview = await this.getChatHistory(jobApplicationId, userId);
-    if (chatInterview)
-      throw new UnauthorizedException("You've started this interview already");
+    if (chatInterview) {
+      const statusErrorMessage = {
+        SUBSCRIBED: "You can't start the interview",
+        INTERVIEWED: "You've already been interviewed!",
+        INVITED: "You've started the interview already",
+      };
+      throw new UnauthorizedException(
+        statusErrorMessage[chatInterview.jobApplication.applicationStatus]
+      );
+    }
+
     const jobApplication = await this.prismaService.jobApplication.findFirst({
       where: { id: jobApplicationId, userId },
       include: {
@@ -90,14 +99,6 @@ export class ChatService {
         'Job application with the provided ID does not exist'
       );
     }
-    const statusErrorMessage = {
-      SUBSCRIBED: "You can't start the interview",
-      INTERVIEWED: "You've already been interviewed!",
-    };
-    if (jobApplication.applicationStatus !== JobApplicationStatusEnum.INVITED)
-      throw new UnauthorizedException(
-        statusErrorMessage[jobApplication.applicationStatus]
-      );
 
     return jobApplication;
   }
@@ -114,6 +115,7 @@ export class ChatService {
     const tokens = encoder.encode(message);
     if (tokens.length > TOKEN_LIMIT)
       throw new BadRequestException('Token limit exceeded');
+    encoder.free();
 
     const history =
       chat.history as unknown as Array<ChatCompletionMessageParam>;
