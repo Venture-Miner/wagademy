@@ -39,6 +39,10 @@ export class GptChatComponent implements OnInit {
   isCreatingChatCompletion = false;
   isStartingTheChat = false;
   private chatType: 'jobInterViewChat' | 'chatBot' = 'jobInterViewChat';
+  pageUrl = {
+    jobInterViewChat: 'job-applications-all',
+    chatBot: 'chatbot',
+  };
   userMessage = '';
   count = 0;
   maxCharacters = 1200;
