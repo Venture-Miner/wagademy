@@ -14,8 +14,8 @@
       {{ selectedChat }}
     </p>
   </div>
-  <div class="flex flex-col relative">
-    <div class="overflow-y-scroll h-[60vh] mb-16 p-6 grid gap-12" #chatScroll>
+  <div class="flex flex-col relative h-[60vh]">
+    <div class="overflow-y-scroll mb-16 p-6 grid gap-12" #chatScroll>
       @for (message of chatTypeObject[getChatType].history; track $index) { @if
       (message.role==='assistant') {
       <p
