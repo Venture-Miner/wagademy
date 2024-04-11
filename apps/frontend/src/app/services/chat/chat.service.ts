@@ -3,6 +3,7 @@ import { BaseHttpService } from '../base-http/base-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
+  ChatCompletionMessage,
   CreateChatCompletion,
   CreateInterviewChat,
   CreateInterviewChatResponse,
@@ -30,8 +31,8 @@ export class ChatService extends BaseHttpService {
   interviewCreateChatCompletion(
     id: string,
     createChatCompletionDto: CreateChatCompletion
-  ): Observable<CreateInterviewChatResponse> {
-    return this.http.patch<CreateInterviewChatResponse>(
+  ): Observable<ChatCompletionMessage> {
+    return this.http.patch<ChatCompletionMessage>(
       `${this.URL}/chat/${id}`,
       createChatCompletionDto
     );
