@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Hub } from 'aws-amplify/utils';
 import { fetchAuthSession } from 'aws-amplify/auth';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpError } from '../../shared/types/http-error';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
-import { User } from '@wagademy/types';
+import { AccountTypeEnum, User } from '@wagademy/types';
 import { UserService } from '../user/user.service';
 
 @Injectable({
@@ -54,6 +54,11 @@ export class AuthService {
     this.user.next(user);
   }
 
+  async getUserData() {
+    const user = await firstValueFrom(this.user);
+    return user;
+  }
+
   private async handleSignUp(data: any) {
     // TODO: create user with userType & avatar
   }
@@ -84,7 +89,10 @@ export class AuthService {
           '/account/reset-password',
         ];
         if (authenticationRoutes.includes(currentRoute)) {
-          this.router.navigate(['/']);
+          const user = await this.getUserData();
+          const whichHome =
+            user?.accountType === AccountTypeEnum.COMPANY ? '-company' : '';
+          this.router.navigate([`/pages/home${whichHome}`]);
         }
       }
     } catch (error) {
