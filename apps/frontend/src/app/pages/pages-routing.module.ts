@@ -87,14 +87,14 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'profile-applications',
+        path: 'applicant-profile',
         loadComponent: () =>
           import(
             './company/applications-profile/applications-profile.component'
           ).then((c) => c.ApplicationsProfileComponent),
       },
       {
-        path: 'results-applications',
+        path: 'result-of-applications',
         loadComponent: () =>
           import(
             './company/applications-results/applications-results.component'
