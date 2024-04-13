@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
 
 @Component({
   selector: 'wagademy-applications-profile',
   standalone: true,
-  imports: [RouterModule, NgFor],
+  imports: [RouterModule, NgFor, BackButtonComponent],
   templateUrl: './applications-results.component.html',
   styleUrl: './applications-results.component.scss',
 })

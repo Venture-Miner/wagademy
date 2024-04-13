@@ -1,9 +1,6 @@
 <div class="container mx-auto min-h-screen px-3">
   <div class="pb-4 pt-6 flex justify-between flex-wrap gap-4">
-    <div class="flex gap-2 items-center cursor-pointer" [routerLink]="['/']">
-      <i class="bi bi-arrow-left text-base-100 text-xl"></i>
-      <p class="font-bold text-sm text-base-100 font-mono">Back</p>
-    </div>
+    <wagademy-back-button></wagademy-back-button>
     <wagademy-input-search
       placeholder="Search"
       [value]="searchJob"
@@ -32,7 +29,7 @@
     </p>
   </div>
   <div
-    class="max-[767px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
+    class="max-[767px]:justify-center flex-wrap justify-start flex gap-8 pt-6 xl:pt-0"
   >
     @for (job of filteredJobs; track filteredJobs) {
     <wagademy-applications-job-card

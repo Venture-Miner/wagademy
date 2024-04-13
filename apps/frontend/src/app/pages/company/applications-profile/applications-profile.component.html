@@ -1,24 +1,17 @@
 <div class="container mx-auto min-h-screen px-3">
   <div class="md:flex items-start gap-40">
-    <div
-      class="flex gap-2 items-center py-8 cursor-pointer"
-      [routerLink]="['/pages/job-applications']"
-    >
-      <i class="bi bi-arrow-left text-base-100 text-xl"></i>
-      <p class="font-bold text-sm text-base-100 font-mono">Back</p>
-    </div>
+    <wagademy-back-button></wagademy-back-button>
     <div class="py-8">
       <div class="flex justify-between pb-4">
         <div class="md:flex gap-4">
           <div class="flex justify-start pb-6 md:pb-0">
             <div
               class="container flex justify-end bg-neutral border border-neutral rounded-2xl w-[97px] h-[97px]"
-              (click)="profileImage.click()"
             >
               @if(image){
               <img
                 class="rounded-2xl object-cover w-24 h-24 border border-base-200"
-                alt="profile image"
+                alt="profile"
                 [src]="image"
               />
               } @if(!image){
@@ -26,21 +19,6 @@
                 class="w-24 h-24 bg-neutral rounded-2xl border border-base-200"
               ></div>
               }
-              <div
-                class="absolute rounded-full pt-[68px] pr-4 w-7 h-7 flex items-center justify-center cursor-pointer"
-              >
-                <input
-                  #profileImage
-                  class="hidden"
-                  type="file"
-                  accept="image/*"
-                  (change)="onFileChange($event)"
-                />
-                <i
-                  class="bi bi-pencil text-[10px] text-primary shadow bg-white-02 py-2 px-3 rounded-full"
-                  aria-hidden="true"
-                ></i>
-              </div>
             </div>
           </div>
           <div>

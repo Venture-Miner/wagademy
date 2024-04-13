@@ -1,11 +1,5 @@
 <div class="container mx-auto min-h-screen px-3">
-  <div
-    class="flex gap-2 items-center py-4 cursor-pointer"
-    [routerLink]="['/pages/job-applications']"
-  >
-    <i class="bi bi-arrow-left text-base-100 text-xl"></i>
-    <p class="font-bold text-sm text-base-100 font-mono">Back</p>
-  </div>
+  <wagademy-back-button></wagademy-back-button>
   <div class="md:flex justify-between gap-8">
     <div class="bg-neutral p-6 w-full">
       @for (question of questions; track questions) {

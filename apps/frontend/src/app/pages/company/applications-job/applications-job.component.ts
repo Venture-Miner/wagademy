@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ApplicationsJobCardComponent } from '../../../shared/components/applications-job-card/applications-job-card.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { InputSearchComponent } from '../../../shared/components/input-search/input-search.component';
+import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
 
 interface Filter {
   name: string;
@@ -36,6 +37,7 @@ interface Job {
     ApplicationsJobCardComponent,
     PaginationComponent,
     InputSearchComponent,
+    BackButtonComponent,
   ],
   templateUrl: './applications-job.component.html',
   styleUrl: './applications-job.component.scss',
@@ -113,8 +115,8 @@ export class ApplicationsJobComponent {
 
   get filteredJobs() {
     if (this.searchJob) {
-      return this.jobs.filter((course: Job) =>
-        course.title.toLowerCase().includes(this.searchJob.toLowerCase())
+      return this.jobs.filter((job: Job) =>
+        job.title.toLowerCase().includes(this.searchJob.toLowerCase())
       );
     } else {
       return this.jobs;
