@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InputComponent } from '../../../shared/components/input/input.component';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { CardJobComponent } from '../../../shared/components/card-job/card-job.component';
 import {
   FormBuilder,
@@ -16,26 +16,30 @@ import {
 } from '../../../shared/components/select/select.component';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { ToastService } from '../../../services/toast/toast.service';
-import { ToastComponent } from '../../../shared/components/toast/toast.component';
-
-interface Job {
-  applications: number;
-  name: string;
-  description: string;
-  view: number;
-}
+import {
+  AllocationEnum,
+  CreateJob,
+  EmploymentClassificationEnum,
+  FilterCompanyJobs,
+  JobCompanyView,
+  JobStatusEnum,
+  Pagination,
+  UpdateJob,
+} from '@wagademy/types';
+import { JobService } from '../../../services/job/job.service';
+import { formatSelectItem } from '../../../shared/utils/functions/format-select-item';
+import { UserService } from '../../../services/user/user.service';
+import { Router } from '@angular/router';
 
 interface Filter {
   name: string;
+  symbol: 'all' | 'numberOfApplications' | 'mostRecent' | 'jobViews';
 }
 
 @Component({
   selector: 'wagademy-hiring',
   standalone: true,
   imports: [
-    InputComponent,
-    NgIf,
-    NgFor,
     CardJobComponent,
     NgClass,
     FormsModule,
@@ -45,76 +49,71 @@ interface Filter {
     ReactiveFormsModule,
     SelectComponent,
     ModalComponent,
-    ToastComponent,
   ],
   templateUrl: './hiring.component.html',
   styleUrl: './hiring.component.scss',
 })
-export class HiringComponent {
-  jobs: Job[] = [
-    {
-      applications: 0,
-      name: 'Job name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      view: 0,
-    },
-    {
-      applications: 0,
-      name: 'Job name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      view: 0,
-    },
-    {
-      applications: 0,
-      name: 'Job name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      view: 0,
-    },
-    {
-      applications: 0,
-      name: 'Job name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      view: 0,
-    },
-  ];
+export class HiringComponent implements OnInit {
+  jobs: JobCompanyView[] = [];
   isLoading = false;
+  creatingStatus = {
+    isCreating: false,
+    isPublishing: false,
+  };
+  isUpdating = false;
+  isRedirecting = false;
+  isVerifying = false;
   searchJob = '';
-  selectedFilter = 'All';
+  selectedFilter: 'all' | 'numberOfApplications' | 'mostRecent' | 'jobViews' =
+    'all';
   selectedCardIndex: number | null = null;
   filters: Filter[] = [
-    { name: 'All' },
-    { name: 'Job views' },
-    { name: 'Most recent' },
-    { name: 'Number of applications' },
+    { name: 'All', symbol: 'all' },
+    { name: 'Job views', symbol: 'jobViews' },
+    { name: 'Most recent', symbol: 'mostRecent' },
+    { name: 'Number of applications', symbol: 'numberOfApplications' },
   ];
   page = 1;
-  take = 1;
-  count = 5;
+  take = 8;
+  count = 0;
   form = this.fb.group({
     title: ['', [Validators.required]],
     description: ['', [Validators.required]],
-    contract: ['', [Validators.required]],
-    allocation: [', [Validators.required]'],
+    employmentClassification: ['', [Validators.required]],
+    allocation: ['', [Validators.required]],
+    jobStatus: [''],
   });
-  title = 'Job title example';
-  description =
-    'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet.';
-  contract: SelectItem<string>[] = [];
-  allocation: SelectItem<string>[] = [];
-  status: 'Published' | 'Unpublished' = 'Published';
+  employmentClassification: SelectItem<string>[] =
+    formatSelectItem<EmploymentClassificationEnum>(
+      EmploymentClassificationEnum
+    );
+  allocation: SelectItem<string>[] =
+    formatSelectItem<AllocationEnum>(AllocationEnum);
+  status: JobStatusEnum = JobStatusEnum.PUBLISHED;
+  initialStatusValue: JobStatusEnum = JobStatusEnum.PUBLISHED;
   incompleteProfile = false;
+  id = '';
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly jobService: JobService,
+    private readonly userService: UserService,
+    private readonly router: Router
   ) {}
 
+  ngOnInit(): void {
+    this.getJobs();
+  }
+
   toggleStatus(): void {
-    this.status = this.status === 'Published' ? 'Unpublished' : 'Published';
+    this.status = this.status === 'UNPUBLISHED' ? 'PUBLISHED' : 'UNPUBLISHED';
+    if (this.initialStatusValue !== this.status) {
+      this.form.markAsDirty();
+    } else {
+      this.form.markAsPristine();
+    }
+    this.form.controls.jobStatus.setValue(this.status);
   }
 
   onCardClick(index: number) {
@@ -125,43 +124,187 @@ export class HiringComponent {
     }
   }
 
-  get filteredJobs() {
-    if (this.searchJob) {
-      return this.jobs.filter((job: Job) =>
-        job.name.toLowerCase().includes(this.searchJob.toLowerCase())
-      );
-    } else {
-      return this.jobs;
-    }
+  filterJobsDto() {
+    const filter: FilterCompanyJobs = {};
+    if (this.selectedFilter !== 'all') filter[this.selectedFilter] = true;
+    if (this.searchJob) filter.search = this.searchJob;
+    return filter;
   }
 
   getJobs() {
-    //
-  }
-
-  completeJob() {
-    //
-  }
-
-  removeJob() {
-    window.modal['showModal']();
-  }
-
-  updateJob() {
-    this.toastService.showToast({
-      message: 'Success! Job successfully updated.',
-      type: 'success',
+    const pagination: Pagination = {
+      take: this.take,
+      skip: (this.page - 1) * this.take,
+    };
+    const filter = this.filterJobsDto();
+    this.isLoading = true;
+    this.jobService.findManyJobsCompanyView(filter, pagination).subscribe({
+      next: ({ jobs, count }) => {
+        this.jobs = jobs;
+        this.count = count;
+        this.isLoading = false;
+      },
+      error: ({ error }) => {
+        this.isLoading = false;
+        const message =
+          error.statusCode !== 500
+            ? error.message
+            : 'Error while retrieving jobs';
+        this.toastService.showToast({
+          message,
+          type: 'error',
+        });
+      },
     });
   }
 
-  updateJobModal() {
+  completeProfile() {
+    //Change route after page is done
+    this.router.navigate(['/pages/company-profile-edit']);
+  }
+
+  verifyUser() {
+    this.isVerifying = true;
+    this.userService.self().subscribe({
+      next: (user) => {
+        this.isVerifying = false;
+
+        if (!user.companyProfile) {
+          this.incompleteProfile = true;
+          setTimeout(() => {
+            // Trick to delay the operation until after the current call stack has cleared. This will give Angular time to update the DOM.
+            window.modal['showModal']();
+          }, 0);
+        } else window.create_job['showModal']();
+      },
+      error: () => {
+        this.isVerifying = false;
+        this.toastService.showToast({
+          message: 'Error while verifying user.',
+          type: 'error',
+        });
+      },
+    });
+  }
+
+  createJob() {
+    const reference =
+      this.form.value.jobStatus === 'PUBLISHED' ? 'isPublishing' : 'isCreating';
+    this.creatingStatus[reference] = true;
+    const createJob: CreateJob = {
+      ...(this.form.value as CreateJob),
+    };
+    this.jobService.create(createJob).subscribe({
+      next: () => {
+        this.toastService.showToast({
+          message: 'Success! Job successfully created.',
+          type: 'success',
+        });
+        this.creatingStatus[reference] = false;
+        this.getJobs();
+        window.create_job['close']();
+        this.resetForm();
+      },
+      error: ({ error }) => {
+        if (
+          error.message ===
+          'You can not create a job before completing your profile.'
+        ) {
+          this.incompleteProfile = true;
+          setTimeout(() => {
+            // Trick to delay the operation until after the current call stack has cleared. This will give Angular time to update the DOM.
+            window.modal['showModal']();
+          }, 0);
+        }
+        this.toastService.showToast({
+          message: 'Error while creating Job!',
+          type: 'error',
+        });
+        this.creatingStatus[reference] = false;
+      },
+    });
+  }
+
+  deleteJob() {
+    //
+  }
+
+  openRemoveJobModal() {
+    this.incompleteProfile = false;
+    setTimeout(() => {
+      // Trick to delay the operation until after the current call stack has cleared. This will give Angular time to update the DOM.
+      window.modal['showModal']();
+    }, 0);
+  }
+
+  updateJob() {
+    const updateJob: UpdateJob = {
+      ...(this.form.value as CreateJob),
+    };
+    this.isUpdating = true;
+    this.jobService.update(this.id, updateJob).subscribe({
+      next: () => {
+        this.toastService.showToast({
+          message: 'Success! Job successfully updated.',
+          type: 'success',
+        });
+        this.isUpdating = false;
+        this.resetForm();
+        this.getJobs();
+        window.update_job['close']();
+      },
+      error: () => {
+        this.toastService.showToast({
+          message: 'Error while updating Job.',
+          type: 'error',
+        });
+        this.isUpdating = false;
+      },
+    });
+  }
+
+  resetForm() {
+    this.form.reset();
+  }
+
+  updateJobModal(job: JobCompanyView) {
+    this.id = job.id;
+    this.initialStatusValue = this.status = job.jobStatus;
+    this.form.setValue({
+      allocation: job.allocation,
+      description: job.description,
+      employmentClassification: job.employmentClassification,
+      title: job.title,
+      jobStatus: job.jobStatus,
+    });
     window.update_job['showModal']();
   }
 
-  unpublishJob() {
-    this.toastService.showToast({
-      message: 'Success! Job successfully unpublished.',
-      type: 'success',
+  updateJobStatus(id: string, index: number) {
+    this.isUpdating = true;
+    this.toggleStatus();
+    this.jobService.update(id, { jobStatus: this.status }).subscribe({
+      next: () => {
+        this.toastService.showToast({
+          message:
+            this.status === 'PUBLISHED'
+              ? 'Success! Job successfully published'
+              : 'Success! Job successfully unpublished.',
+          type: 'success',
+        });
+        this.jobs[index].jobStatus = this.status;
+        this.isUpdating = false;
+      },
+      error: () => {
+        this.toastService.showToast({
+          message:
+            this.status === 'PUBLISHED'
+              ? 'Error! while publishing Job'
+              : 'Error while unpublishing Job.',
+          type: 'error',
+        });
+        this.isUpdating = false;
+      },
     });
   }
 

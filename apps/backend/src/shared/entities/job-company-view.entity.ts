@@ -32,6 +32,13 @@ export class JobCompanyViewEntity implements JobCompanyView {
   @ApiProperty({ example: { jobApplications: faker.number.int() } })
   _count: { jobApplications: number };
 
+  @ApiProperty({
+    example: {
+      companyProfile: { companyPhoto: { url: faker.internet.url() } },
+    },
+  })
+  company: { companyProfile: { companyPhoto: { url: string } | null } | null };
+
   @ApiProperty({ example: JobStatusEnum.PUBLISHED })
   jobStatus: JobStatusEnum;
 

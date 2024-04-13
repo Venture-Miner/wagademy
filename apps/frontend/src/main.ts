@@ -13,6 +13,7 @@ declare global {
     filesUpload: HTMLFormElement;
     modal: HTMLFormElement;
     update_job: HTMLFormElement;
+    create_job: HTMLFormElement;
   }
 }
 
