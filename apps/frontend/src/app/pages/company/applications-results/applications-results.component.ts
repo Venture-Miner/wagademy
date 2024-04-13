@@ -17,7 +17,7 @@ export class ApplicationsResultsComponent {
   phone = '+55 11 912345-6789';
   job = 'Software Developer';
   description =
-    'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.';
+    'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company. We are looking for a highly motivated and experienced systems developer to join our technology team. The ideal candidate will be responsible for designing, developing, testing and implementing efficient and scalable software systems. The selected candidate will work closely with other developers, as well as project management and quality teams, to ensure systems meet customer and business requirements. The candidate must have experience in software development and be able to work on complex and large-scale projects using the most modern technologies and development tools.';
   modality = 'Full time';
   schedule = 'Remote work';
   questions = [

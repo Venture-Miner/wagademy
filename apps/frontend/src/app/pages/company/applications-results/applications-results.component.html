@@ -35,12 +35,14 @@
         </div>
       </div>
       <div class="pt-10">
-        <div class="bg-neutral rounded-2xl p-4 lg:w-[416px] w-full">
+        <div class="bg-neutral rounded-2xl p-4 lg:w-[416px] h-[264px] w-full">
           <div class="flex gap-2 pb-6">
             <div class="font-mono">
               <p class="text-base-100 font-bold pb-2">{{ job }}</p>
-              <p class="pb-6 text-base-100">{{ description }}</p>
-              <div class="flex gap-2">
+              <p class="text-base-100 overflow-hidden line-clamp-3">
+                {{ description }}
+              </p>
+              <div class="flex gap-2 pt-6">
                 <i class="bi bi-clock text-primary"></i>
                 <p class="pb-2 text-base-100">{{ modality }}</p>
               </div>
@@ -49,7 +51,12 @@
                 <p class="text-base-100">{{ schedule }}</p>
               </div>
               <div class="flex justify-end">
-                <button class="text-base-100">View job</button>
+                <button
+                  class="text-base-100"
+                  onclick="view_job_modal.showModal()"
+                >
+                  View job
+                </button>
               </div>
             </div>
           </div>
@@ -58,3 +65,32 @@
     </div>
   </div>
 </div>
+<dialog id="view_job_modal" class="modal">
+  <div class="modal-box">
+    <div class="flex justify-between items-center pb-14">
+      <h2
+        class="text-base-100 mx-auto font-sans md:text-4xl text-2xl font-medium"
+      >
+        View job
+      </h2>
+      <i
+        class="bi bi-x-lg text-base-100 cursor-pointer"
+        onclick="view_job_modal.close()"
+      ></i>
+    </div>
+    <form method="dialog">
+      <div class="font-mono">
+        <p class="text-base-100 font-bold pb-2">{{ job }}</p>
+        <p class="pb-6 text-base-100">{{ description }}</p>
+        <div class="flex gap-2">
+          <i class="bi bi-clock text-primary"></i>
+          <p class="pb-2 text-base-100">{{ modality }}</p>
+        </div>
+        <div class="flex gap-2 pb-6">
+          <i class="bi bi-telephone text-primary"></i>
+          <p class="text-base-100">{{ schedule }}</p>
+        </div>
+      </div>
+    </form>
+  </div>
+</dialog>
