@@ -5,9 +5,9 @@
     <div class="w-full flex justify-between xl:w-auto">
       <a [routerLink]="'/'">
         <img
-          width="211.42px"
-          height="40px"
-          src="./assets/img/images/img-logo-navbar.webp"
+          width="212"
+          height="40"
+          ngSrc="./assets/img/images/img-logo-navbar.webp"
           alt="wagademy logo"
         />
       </a>
@@ -66,12 +66,14 @@
         </li>
         <li>
           <img
-            [src]="
+            [ngSrc]="
               existingProfileImage ||
               './assets/img/images/img-default-profile.svg'
             "
-            class="w-10 h-10 rounded-full border border-primary"
+            class="rounded-full border border-primary"
             alt="profile"
+            width="40"
+            height="40"
           />
         </li>
       </ul>

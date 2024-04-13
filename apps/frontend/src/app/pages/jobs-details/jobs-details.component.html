@@ -47,12 +47,14 @@
       >
         <div class="flex gap-2 items-center pb-6">
           <img
-            [src]="
+            [ngSrc]="
               job?.company?.companyProfile?.companyPhoto?.url ||
               './assets/img/images/img-card-content.png'
             "
-            class="w-24 h-24 rounded-2xl"
+            class="rounded-2xl"
             alt="logo company"
+            width="96"
+            height="96"
           />
           <h3 class="font-sans font-medium text-2xl text-base-100">
             {{ job?.company?.companyProfile?.name }}

@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
   selector: 'wagademy-navbar-pages',
   templateUrl: './navbar-pages.component.html',
   styleUrls: ['./navbar-pages.component.scss'],
-  imports: [RouterModule, NgClass],
+  imports: [RouterModule, NgClass, NgOptimizedImage],
 })
 export class NavbarPagesComponent {
   showMenu = false;

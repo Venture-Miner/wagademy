@@ -14,7 +14,7 @@
           <img
             *ngIf="background"
             class="object-cover h-[200px] md:w-[37rem] xl:w-[72rem] lg:w-[55rem] 2xl:w-[85rem] sm:w-[37rem] rounded-lg container bg-neutral"
-            [src]="background"
+            [ngSrc]="background"
             alt="background profile"
           />
         </div>
@@ -53,7 +53,7 @@
           <img
             *ngIf="profilePhoto"
             class="rounded-3xl object-cover w-48 h-46"
-            [src]="profilePhoto"
+            [ngSrc]="profilePhoto"
           />
           <div
             *ngIf="editProfile === true"

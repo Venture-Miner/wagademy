@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -7,7 +7,14 @@ import { InputComponent } from '../../../shared/components/input/input.component
 @Component({
   selector: 'wagademy-profile',
   standalone: true,
-  imports: [RouterModule, NgIf, FormsModule, InputComponent, NgFor],
+  imports: [
+    RouterModule,
+    NgIf,
+    FormsModule,
+    InputComponent,
+    NgFor,
+    NgOptimizedImage,
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
