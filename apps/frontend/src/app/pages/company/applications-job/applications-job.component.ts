@@ -1,28 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InputComponent } from '../../../shared/components/input/input.component';
-import { NgClass, NgFor, NgIf } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ApplicationsJobCardComponent } from '../../../shared/components/applications-job-card/applications-job-card.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { InputSearchComponent } from '../../../shared/components/input-search/input-search.component';
 import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
-import { JobApplicationStatusEnum } from '@wagademy/types';
+import {
+  FilterCompanyJobApplications,
+  JobApplicationCompanyView,
+  Pagination,
+} from '@wagademy/types';
+import { JobService } from '../../../services/job/job.service';
+import { ToastService } from '../../../services/toast/toast.service';
 
 interface Filter {
   name: string;
-}
-
-interface Job {
-  image: string;
-  title: string;
-  description: string;
-  jobType: string;
-  allocation: string;
-  responsibilities: string;
-  company: string;
-  info: string;
-  applicationStatus: JobApplicationStatusEnum;
+  symbol: 'all' | 'invited' | 'mostRecent' | 'interviewed';
 }
 
 @Component({
@@ -30,8 +25,6 @@ interface Job {
   standalone: true,
   imports: [
     InputComponent,
-    NgIf,
-    NgFor,
     RouterModule,
     FormsModule,
     NgClass,
@@ -43,84 +36,64 @@ interface Job {
   templateUrl: './applications-job.component.html',
   styleUrl: './applications-job.component.scss',
 })
-export class ApplicationsJobComponent {
-  jobs: Job[] = [
-    {
-      image: './assets/img/images/img-card-content-example.png',
-      title: 'Darrell',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      jobType: 'Full time',
-      allocation: 'Remote work',
-      responsibilities:
-        'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
-      company: 'Dole Inc.',
-      info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
-      applicationStatus: 'INTERVIEWED',
-    },
-    {
-      image: './assets/img/images/img-card-content-example.png',
-      title: 'Bessie',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      jobType: 'Full time',
-      allocation: 'Remote work',
-      responsibilities:
-        'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
-      company: 'Dole Inc.',
-      info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
-      applicationStatus: 'INTERVIEWED',
-    },
-    {
-      image: './assets/img/images/img-card-content-example.png',
-      title: 'Marvin',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      jobType: 'Full time',
-      allocation: 'Remote work',
-      responsibilities:
-        'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
-      company: 'Dole Inc.',
-      info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
-      applicationStatus: 'INTERVIEWED',
-    },
-    {
-      image: './assets/img/images/img-card-content-example.png',
-      title: 'Claire',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-      jobType: 'Full time',
-      allocation: 'Remote work',
-      responsibilities:
-        'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
-      company: 'Dole Inc.',
-      info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
-      applicationStatus: 'INVITED',
-    },
-  ];
+export class ApplicationsJobComponent implements OnInit {
+  jobApplications: JobApplicationCompanyView[] = [];
+  jobId = '';
+  jobTitle = '';
+  selectedFilter: 'all' | 'interviewed' | 'mostRecent' | 'invited' = 'all';
   filters: Filter[] = [
-    { name: 'All' },
-    { name: 'Most recent' },
-    { name: 'Invited' },
-    { name: 'Interviewed' },
+    { name: 'All', symbol: 'all' },
+    { name: 'Most recent', symbol: 'mostRecent' },
+    { name: 'Invited', symbol: 'invited' },
+    { name: 'Interviewed', symbol: 'interviewed' },
   ];
   page = 1;
-  take = 1;
-  count = 5;
+  take = 8;
+  count = 0;
   searchJob = '';
-  selectedFilter = 'All';
 
-  sendInvite() {
-    //
+  constructor(
+    private readonly jobService: JobService,
+    private activatedRoute: ActivatedRoute,
+    private toastService: ToastService
+  ) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      const jobId = params.get('jobId');
+      if (jobId) this.jobId = jobId;
+    });
+    this.listJobApplications();
   }
 
-  get filteredJobs() {
-    if (this.searchJob) {
-      return this.jobs.filter((job: Job) =>
-        job.title.toLowerCase().includes(this.searchJob.toLowerCase())
-      );
-    } else {
-      return this.jobs;
-    }
+  filterJobApplicationsDto() {
+    const filter: FilterCompanyJobApplications = {};
+    if (this.selectedFilter !== 'all') filter[this.selectedFilter] = true;
+    if (this.searchJob) filter.search = this.searchJob;
+    if (this.jobId) filter.jobId = this.jobId;
+    return filter;
+  }
+
+  listJobApplications() {
+    const pagination: Pagination = {
+      take: this.take,
+      skip: (this.page - 1) * this.take,
+    };
+    const filter = this.filterJobApplicationsDto();
+    this.jobService
+      .findManyJobApplicationsCompanyView(filter, pagination)
+      .subscribe({
+        next: ({ count, jobApplications }) => {
+          this.count = count;
+          this.jobApplications = jobApplications;
+          this.jobTitle = jobApplications[0].job.title;
+        },
+        error: () => {
+          this.toastService.showToast({
+            message: 'Error while retrieving job  applications',
+            type: 'error',
+          });
+        },
+      });
   }
 }
