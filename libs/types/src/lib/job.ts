@@ -258,6 +258,7 @@ export type FilterCompanyJobApplications = {
   invited?: boolean;
   mostRecent?: boolean;
   interviewed?: boolean;
+  jobId?: string;
 };
 
 export type FilterUserJobApplications = {

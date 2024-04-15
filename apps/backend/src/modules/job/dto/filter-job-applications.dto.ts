@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { FilterCompanyJobApplications } from '@wagademy/types';
 import { Type } from 'class-transformer';
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsMongoId, IsOptional, IsString } from 'class-validator';
 
 export class FilterCompanyJobApplicationsDto
   implements FilterCompanyJobApplications
@@ -46,4 +46,12 @@ export class FilterCompanyJobApplicationsDto
   @Type(() => Boolean)
   @IsBoolean()
   mostRecent?: boolean;
+
+  @ApiProperty({
+    example: faker.database.mongodbObjectId(),
+    description: 'the ID of the job',
+  })
+  @IsOptional()
+  @IsMongoId()
+  jobId?: string;
 }

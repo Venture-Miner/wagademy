@@ -165,7 +165,13 @@ export class JobService {
   }
 
   async findManyJobApplicationsCompanyView(
-    { interviewed, invited, mostRecent, search }: FilterCompanyJobApplications,
+    {
+      interviewed,
+      invited,
+      mostRecent,
+      search,
+      jobId,
+    }: FilterCompanyJobApplications,
     { skip, take }: Pagination,
     userId: string
   ): Promise<FindManyJobApplicationsCompanyView> {
@@ -188,6 +194,7 @@ export class JobService {
     if (invited)
       AND.push({ applicationStatus: JobApplicationStatusEnum.INVITED });
     if (mostRecent) orderBy.push({ createdAt: 'desc' });
+    if (jobId) AND.push({ jobId });
     const where = { AND };
     const [count, jobApplications] = await Promise.all([
       this.prismaService.jobApplication.count({ where }),
