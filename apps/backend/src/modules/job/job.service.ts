@@ -324,8 +324,17 @@ export class JobService {
     id: string,
     companyId: string
   ): Promise<GetJobInterviewResultResponse | null> {
+    const jobApplication = await this.prismaService.jobApplication.findUnique({
+      where: { id },
+      select: { jobInterviewChat: { select: { id: true } } },
+    });
+    if (!jobApplication)
+      throw new NotFoundException('There is no application from provided ID');
     return this.prismaService.jobInterviewChat.findUnique({
-      where: { id, jobApplication: { job: { companyId } } },
+      where: {
+        id: jobApplication.jobInterviewChat[0].id,
+        jobApplication: { job: { companyId } },
+      },
       include: getJobInterviewResultIncludes,
     });
   }
