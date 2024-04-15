@@ -107,7 +107,7 @@ export class ChatController {
   ) {
     if (accountType !== 'PHYSICAL_PERSON')
       throw new UnauthorizedException(
-        'Only accounts where the type is physical person can create a job.'
+        'Only accounts where the type is physical person can get the chat history.'
       );
     return this.chatService.getChatHistory(jobApplicationId, userId);
   }
