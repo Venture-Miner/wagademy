@@ -75,7 +75,7 @@ const routes: Routes = [
           import('./jobs/jobs.component').then((c) => c.JobsComponent),
       },
       {
-        path: 'jobs-details',
+        path: 'job-details',
         loadComponent: () =>
           import('./jobs-details/jobs-details.component').then(
             (c) => c.JobsDetailsComponent
