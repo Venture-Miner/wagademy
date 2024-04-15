@@ -361,6 +361,10 @@ export class JobService {
       throw new UnauthorizedException(
         'You are not able to invite the user since you do not own this job position.'
       );
+    if (jobApplication.applicationStatus !== 'SUBSCRIBED')
+      throw new UnauthorizedException(
+        'You are not able to invite the user since the user is invited or already did the interview .'
+      );
     return this.prismaService.jobApplication.update({
       where: { id },
       data: { applicationStatus: JobApplicationStatusEnum.INVITED },
