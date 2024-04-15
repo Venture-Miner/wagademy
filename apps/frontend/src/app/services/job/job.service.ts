@@ -103,6 +103,13 @@ export class JobService extends BaseHttpService {
     );
   }
 
+  inviteToInterview(id: string): Observable<UpdateJobResponse> {
+    return this.http.patch<UpdateJobResponse>(
+      `${this.URL}/job/invite-to-interview/${id}`,
+      {}
+    );
+  }
+
   updateViews(id: string): Observable<JobUserView> {
     return this.http.patch<JobUserView>(`${this.URL}/job/job-view/${id}`, {});
   }
