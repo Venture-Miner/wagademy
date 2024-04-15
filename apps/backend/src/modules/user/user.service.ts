@@ -39,6 +39,10 @@ export class UserService {
   async create(createUser: CreateUser): Promise<CreateUserResponse> {
     return this.prismaService.user.create({
       data: { ...createUser },
+      include: {
+        companyProfile: { select: { id: true } },
+        userProfile: { select: { id: true } },
+      },
     });
   }
 
@@ -131,6 +135,10 @@ export class UserService {
     return this.prismaService.user.update({
       where: { id: userId },
       data: updateUser,
+      include: {
+        companyProfile: { select: { id: true } },
+        userProfile: { select: { id: true } },
+      },
     });
   }
 
@@ -303,6 +311,12 @@ export class UserService {
   }
 
   async findOne(id: string): Promise<FindOneUserResponse | null> {
-    return this.prismaService.user.findUnique({ where: { id } });
+    return this.prismaService.user.findUnique({
+      where: { id },
+      include: {
+        companyProfile: { select: { id: true } },
+        userProfile: { select: { id: true } },
+      },
+    });
   }
 }

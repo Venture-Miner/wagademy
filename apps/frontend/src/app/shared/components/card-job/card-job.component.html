@@ -1,0 +1,107 @@
+<div
+  class="group sm:w-[304px] w-[230px] h-[280px] bg-neutral mx-auto hover:shadow-lg flex justify-center relative rounded-lg"
+>
+  <div
+    class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"
+    *ngIf="isOpen"
+  ></div>
+  <div class="font-mono sm:w-[304px] w-[280px]">
+    <div class="p-4">
+      <div
+        class="flex gap-2 justify-center bg-base-100 p-2 w-[164px] rounded-full"
+      >
+        <i class="bi bi-briefcase text-primary"></i>
+        <p class="text-neutral font-mono">Job views</p>
+        <p class="text-neutral font-mono">+ {{ view }}</p>
+      </div>
+    </div>
+    <div class="absolute top-0 right-0 p-2">
+      <div
+        (click)="isOpen = true"
+        class="bg-neutral shadow-md cursor-pointer rounded-full py-1 px-2"
+      >
+        <i class="bi bi-three-dots-vertical text-base-100"></i>
+      </div>
+      <div class="absolute top-0 right-0 p-2">
+        <div
+          *ngIf="isOpen"
+          class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
+        >
+          <div
+            (click)="updateJobStatus.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <i class="bi bi-arrow-down-left text-primary"></i>
+            <p class="font-serif text-base-100">
+              {{ jobStatus === 'PUBLISHED' ? 'Unpublish' : 'Publish' }}
+            </p>
+          </div>
+          <div
+            (click)="updateJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <i class="bi bi-check-lg text-primary"></i>
+            <p class="font-serif text-base-100">Update</p>
+          </div>
+          <div
+            (click)="removeJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <i class="bi bi-trash3 text-error"></i>
+            <p class="font-serif text-base-100">Remove</p>
+          </div>
+          <div
+            (click)="interviewGPTJob.emit()"
+            class="flex gap-1 cursor-pointer pb-2"
+          >
+            <i class="bi bi-arrow-down-left text-primary"></i>
+            <p class="font-serif text-base-100">Interview GPT</p>
+          </div>
+          <div
+            (click)="copyLinkJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <img src="./assets/icons/icon-robot.svg" alt="robot" />
+            <p class="font-serif text-base-100">Copy link</p>
+          </div>
+          <div (click)="isOpen = false" class="flex gap-1 cursor-pointer">
+            <i class="bi bi-x-lg text-base-200"></i>
+            <p class="font-serif text-base-100">Close</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="px-4 bottom-4 bg-neutral w-full"
+      [ngClass]="[
+        isOpen === true
+          ? ''
+          : 'group-hover:-translate-y-8 absolute duration-300'
+      ]"
+    >
+      <h3
+        class="text-base-100 font-sans font-medium text-2xl pb-1 text-ellipsis overflow-hidden whitespace-nowrap"
+      >
+        {{ name }}
+      </h3>
+      <div class="">
+        <p class="text-base-200 font-mono line-clamp-2 pt-1">
+          {{ description }}
+        </p>
+      </div>
+      <p class="font-sans font-bold text-sm text-primary pb-6 pt-4">
+        {{ applications }} APPLICATIONS
+      </p>
+    </div>
+    <div class="absolute bottom-0 w-full p-4">
+      <div
+        class="opacity-0 w-full duration-300"
+        [ngClass]="[isOpen === true ? '' : 'group-hover:opacity-100']"
+      >
+        <button class="btn btn-primary w-full" (click)="onViewMoreClick()">
+          View Applications
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

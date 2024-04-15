@@ -8,10 +8,12 @@ import { UserModule } from '../modules/user/user.module';
 import { JobModule } from '../modules/job/job.module';
 import { QueueModule } from '../modules/chat-bot/queue/queue.module';
 import { ChatBotModule } from '../modules/chat-bot/chat-bot.module';
+import { ChatModule } from '../modules/chat/chat.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    ChatModule,
     FileModule,
     JobModule,
     PrismaModule,

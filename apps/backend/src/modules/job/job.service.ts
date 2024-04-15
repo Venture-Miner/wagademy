@@ -25,11 +25,13 @@ import {
   ConfigureAIQuestions,
   FindManyJobApplicationsUserView,
   FilterUserJobApplications,
+  GetJobInterviewResultResponse,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
 import { Prisma } from '@prisma/client';
 import { JobUserViewSelect } from '../../shared/select/job-user-view';
 import { faker } from '@faker-js/faker';
+import { getJobInterviewResultIncludes } from '../../shared/include';
 
 @Injectable()
 export class JobService {
@@ -48,7 +50,16 @@ export class JobService {
       );
     return this.prismaService.job.create({
       data: { ...createJob, company: { connect: { id: companyId } } },
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -138,7 +149,16 @@ export class JobService {
         orderBy,
         skip,
         take,
-        include: { _count: { select: { jobApplications: true } } },
+        include: {
+          _count: { select: { jobApplications: true } },
+          company: {
+            select: {
+              companyProfile: {
+                select: { companyPhoto: { select: { url: true } } },
+              },
+            },
+          },
+        },
       }),
     ]);
     return { count, jobs };
@@ -190,6 +210,7 @@ export class JobService {
             },
           },
           job: { select: { id: true, title: true } },
+          jobInterviewChat: { select: { id: true } },
         },
       }),
     ]);
@@ -206,8 +227,21 @@ export class JobService {
     if (invited)
       AND.push({ applicationStatus: JobApplicationStatusEnum.INVITED });
     const where = { AND };
-    const [count, jobApplications] = await Promise.all([
+
+    const countWhere = !invited
+      ? {
+          AND: [
+            { userId },
+            { applicationStatus: JobApplicationStatusEnum.INVITED },
+          ],
+        }
+      : { userId };
+
+    const [count, countWithFilter, jobApplications] = await Promise.all([
       this.prismaService.jobApplication.count({ where }),
+      this.prismaService.jobApplication.count({
+        where: countWhere,
+      }),
       this.prismaService.jobApplication.findMany({
         where,
         skip,
@@ -222,7 +256,7 @@ export class JobService {
         },
       }),
     ]);
-    return { count, jobApplications };
+    return { count, countWithFilter, jobApplications };
   }
 
   findOneJobUserView(
@@ -241,7 +275,26 @@ export class JobService {
   ): Promise<FindOneJobCompanyViewResponse | null> {
     return this.prismaService.job.findFirst({
       where: { id, companyId: userId },
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  async getJobInterviewResult(
+    id: string,
+    companyId: string
+  ): Promise<GetJobInterviewResultResponse | null> {
+    return this.prismaService.jobInterviewChat.findUnique({
+      where: { id, jobApplication: { job: { companyId } } },
+      include: getJobInterviewResultIncludes,
     });
   }
 
@@ -271,7 +324,16 @@ export class JobService {
     return this.prismaService.job.update({
       where: { id },
       data: updateJobDto,
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -314,6 +376,7 @@ export class JobService {
             title: true,
           },
         },
+        jobInterviewChat: { select: { id: true } },
       },
     });
   }
@@ -334,7 +397,16 @@ export class JobService {
     return this.prismaService.job.update({
       where: { id },
       data: { aiInterviewQuestions },
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
     });
   }
 

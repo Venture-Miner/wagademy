@@ -1,0 +1,184 @@
+<div
+  class="sm:w-[304px] w-[280px] bg-neutral hover:shadow-lg mx-auto flex relative rounded-lg"
+  [ngClass]="[
+    details === 'more'
+      ? 'h-[280px] cursor-pointer'
+      : 'group  justify-center h-[336px]'
+  ]"
+>
+  <div
+    class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"
+    *ngIf="isOpen || isOpenCourses"
+  ></div>
+  <div
+    class="font-mono"
+    [ngClass]="[details === 'more' ? 'w-[80px]' : 'sm:w-[304px] w-[230px]']"
+  >
+    <img
+      *ngIf="img"
+      [src]="img"
+      class="object-cover"
+      [ngClass]="[
+        details === 'more'
+          ? ' h-[80px] w-[80px] pl-4 pt-4 rounded'
+          : 'h-40 w-full rounded-t-lg'
+      ]"
+      alt="image"
+    />
+    <img
+      *ngIf="!img"
+      [src]="'./assets/img/images/img-card-fallback.webp'"
+      class="object-cover"
+      [ngClass]="[
+        details === 'more'
+          ? ' h-[80px] w-[80px] pl-4 pt-4 rounded'
+          : 'h-40 w-full rounded-t-lg'
+      ]"
+      alt="fallback image"
+    />
+    <div *ngIf="menu === 'jobs'" class="absolute top-0 right-0 p-2">
+      <div
+        (click)="isOpen = true"
+        class="bg-neutral shadow-md cursor-pointer rounded-full py-1 px-2"
+      >
+        <i class="bi bi-three-dots-vertical text-base-100"></i>
+      </div>
+      <div class="absolute top-0 right-0 p-2">
+        <div
+          *ngIf="isOpen"
+          class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
+        >
+          <div
+            (click)="unpublishJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <i class="bi bi-arrow-down-left text-primary"></i>
+            <p class="font-serif text-base-100">Unpublish</p>
+          </div>
+          <div
+            (click)="updateJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <i class="bi bi-check-lg text-primary"></i>
+            <p class="font-serif text-base-100">Update</p>
+          </div>
+          <div
+            (click)="removeJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <i class="bi bi-trash3 text-error"></i>
+            <p class="font-serif text-base-100">Remove</p>
+          </div>
+          <div
+            (click)="interviewGPTJob.emit()"
+            class="flex gap-1 cursor-pointer pb-2"
+          >
+            <i class="bi bi-arrow-down-left text-primary"></i>
+            <p class="font-serif text-base-100">Interview GPT</p>
+          </div>
+          <div
+            (click)="copyLinkJob.emit()"
+            class="flex gap-1 pb-2 cursor-pointer"
+          >
+            <img src="./assets/icons/icon-robot.svg" alt="robot" />
+            <p class="font-serif text-base-100">Copy link</p>
+          </div>
+          <div (click)="isOpen = false" class="flex gap-1 cursor-pointer">
+            <i class="bi bi-x-lg text-base-200"></i>
+            <p class="font-serif text-base-100">Close</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="menu === 'courses'" class="absolute top-0 right-0 p-2">
+      <div
+        (click)="isOpenCourses = true"
+        class="bg-neutral shadow-md cursor-pointer rounded-full py-1 px-2"
+      >
+        <i class="bi bi-three-dots-vertical text-base-100"></i>
+      </div>
+      <div class="absolute top-0 right-0 p-2">
+        <div
+          *ngIf="isOpenCourses"
+          class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
+        >
+          <div
+            (click)="updateCourse.emit()"
+            class="flex gap-1 pb-6 cursor-pointer"
+          >
+            <i class="bi bi-check-lg text-primary"></i>
+            <p class="font-serif text-base-100">Update</p>
+          </div>
+          <div
+            (click)="removeCourse.emit()"
+            class="flex gap-1 pb-6 cursor-pointer"
+          >
+            <i class="bi bi-trash3 text-error"></i>
+            <p class="font-serif text-base-100">Remove</p>
+          </div>
+          <div
+            (click)="certificatesCourse.emit()"
+            class="flex gap-1 cursor-pointer pb-6"
+          >
+            <i class="bi bi-award text-primary"></i>
+            <p class="font-serif text-base-100">Certificates</p>
+          </div>
+          <div
+            (click)="isOpenCourses = false"
+            class="flex gap-1 cursor-pointer"
+          >
+            <i class="bi bi-x-lg text-base-200"></i>
+            <p class="font-serif text-base-100">Close</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="px-4 bottom-4 bg-neutral w-full"
+      [ngClass]="[
+        isOpenCourses === true || isOpen === true
+          ? ''
+          : 'group-hover:-translate-y-8 absolute duration-300'
+      ]"
+    >
+      <p
+        *ngIf="applications"
+        class="font-sans font-bold text-sm text-primary pb-1 pt-4"
+      >
+        {{ applications }} APPLICATIONS
+      </p>
+      <h3
+        [ngClass]="{
+          'text-base font-mono font-bold': details === 'more',
+          'font-sans font-medium text-2xl': details !== 'more',
+          'pt-4': !applications
+        }"
+        class="text-base-100 font-sans font-medium text-2xl pb-1 text-ellipsis overflow-hidden whitespace-nowrap"
+      >
+        {{ name }}
+      </h3>
+      <div class="pb-6">
+        <p
+          [ngClass]="[applications ? 'h-[76px]' : 'h-[108px]']"
+          class="text-base-200 font-mono h-24 overflow-hidden line-clamp-3"
+        >
+          {{ description }}
+        </p>
+      </div>
+    </div>
+    <div *ngIf="details === 'main'" class="absolute bottom-0 w-full p-4">
+      <div
+        class="opacity-0 w-full duration-300"
+        [ngClass]="[
+          isOpenCourses === true || isOpen === true
+            ? ''
+            : 'group-hover:opacity-100'
+        ]"
+      >
+        <button class="btn btn-primary w-full" (click)="onViewMoreClick()">
+          {{ button }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

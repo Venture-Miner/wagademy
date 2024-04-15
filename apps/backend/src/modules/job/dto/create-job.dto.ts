@@ -4,6 +4,7 @@ import {
   AllocationEnum,
   CreateJob,
   EmploymentClassificationEnum,
+  JobStatusEnum,
 } from '@wagademy/types';
 import { IsEnum, IsString } from 'class-validator';
 
@@ -31,4 +32,12 @@ export class CreateJobDto implements CreateJob {
   })
   @IsEnum(AllocationEnum)
   allocation: AllocationEnum;
+
+  @ApiProperty({
+    example: JobStatusEnum.PUBLISHED,
+    description: 'the job status',
+    enum: JobStatusEnum,
+  })
+  @IsEnum(JobStatusEnum)
+  jobStatus: JobStatusEnum;
 }

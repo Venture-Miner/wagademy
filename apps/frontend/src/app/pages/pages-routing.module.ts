@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { HomeComponent } from './person/home/home.component';
-import { MyCertificatesComponent } from './certificates/my-certificates.component';
-import { GptChatComponent } from './gpt-chat/gpt-chat.component';
+import { AuthGuard } from '../guards/auth.guard';
+import { AccountTypeCompanyGuard } from '../guards/account-type-company.guard';
+import { AccountTypeUserGuard } from '../guards/account-type-user.guard';
 
 const routes: Routes = [
   {
@@ -16,16 +16,107 @@ const routes: Routes = [
     component: PagesComponent,
     children: [
       {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
         path: 'certificates',
-        component: MyCertificatesComponent,
+        loadComponent: () =>
+          import('./certificates/my-certificates.component').then(
+            (c) => c.MyCertificatesComponent
+          ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
         path: 'gptchat',
-        component: GptChatComponent,
+        loadComponent: () =>
+          import('./person/gpt-chat/gpt-chat.component').then(
+            (c) => c.GptChatComponent
+          ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'home-company',
+        loadComponent: () =>
+          import('./company/home/home.component').then(
+            (c) => c.HomeCompanyComponent
+          ),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
         path: 'home',
-        component: HomeComponent,
+        loadComponent: () =>
+          import('./person/home/home.component').then((c) => c.HomeComponent),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'profile',
+        loadComponent: () =>
+          import('./company/profile/profile.component').then(
+            (c) => c.ProfileComponent
+          ),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'hiring',
+        loadComponent: () =>
+          import('./company/hiring/hiring.component').then(
+            (c) => c.HiringComponent
+          ),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
+        path: 'job-applications-all',
+        loadComponent: () =>
+          import(
+            './person/job-applications-all/job-applications-all.component'
+          ).then((c) => c.JobApplicationsAllComponent),
+      },
+      {
+        path: 'jobs',
+        loadComponent: () =>
+          import('./jobs/jobs.component').then((c) => c.JobsComponent),
+      },
+      {
+        path: 'jobs-details',
+        loadComponent: () =>
+          import('./jobs-details/jobs-details.component').then(
+            (c) => c.JobsDetailsComponent
+          ),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
+        path: 'chatbot',
+        loadComponent: () =>
+          import('./person/gpt-list/gpt-list.component').then(
+            (c) => c.GptListComponent
+          ),
+      },
+      {
+        path: 'job-applications',
+        loadComponent: () =>
+          import('./company/applications-job/applications-job.component').then(
+            (c) => c.ApplicationsJobComponent
+          ),
+      },
+      {
+        path: 'applicant-profile',
+        loadComponent: () =>
+          import(
+            './company/applications-profile/applications-profile.component'
+          ).then((c) => c.ApplicationsProfileComponent),
+      },
+      {
+        path: 'result-of-applications',
+        loadComponent: () =>
+          import(
+            './company/applications-results/applications-results.component'
+          ).then((c) => c.ApplicationsResultsComponent),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'interview-gpt',
+        loadComponent: () =>
+          import('./company/interview-gpt/interview-gpt.component').then(
+            (c) => c.InterviewGptComponent
+          ),
       },
     ],
   },
