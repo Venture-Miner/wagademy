@@ -38,7 +38,20 @@
       [description]="job.description"
       [status]="job.applicationStatus"
     >
-      @if(job.applicationStatus==='INTERVIEWED'){
+      @if(job.applicationStatus ==='INVITED'){
+      <div
+        class="tooltip tooltip-warning w-full"
+        data-tip="You can't see the results yet, has the candidate hasn't had an interview with the AI yet."
+      >
+        <button
+          class="btn btn-primary w-full"
+          [routerLink]="['/pages/result-of-applications']"
+          disabled
+        >
+          See Results
+        </button>
+      </div>
+      } @if(job.applicationStatus ==='INTERVIEWED'){
       <button
         class="btn btn-primary w-full"
         [routerLink]="['/pages/result-of-applications']"
