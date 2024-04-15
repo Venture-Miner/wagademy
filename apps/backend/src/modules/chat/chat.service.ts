@@ -70,12 +70,13 @@ export class ChatService {
     userId: string
   ) {
     const chatInterview = await this.getChatHistory(jobApplicationId, userId);
-    if (chatInterview) {
-      const statusErrorMessage = {
+    const statusErrorMessage = {
         SUBSCRIBED: "You can't start the interview",
         INTERVIEWED: "You've already been interviewed!",
         INVITED: "You've started the interview already",
       };
+    
+    if (chatInterview) {
       throw new UnauthorizedException(
         statusErrorMessage[chatInterview.jobApplication.applicationStatus]
       );
@@ -99,6 +100,11 @@ export class ChatService {
         'Job application with the provided ID does not exist'
       );
     }
+    
+    if (jobApplication.applicationStatus!=='INVITED)
+         throw new UnauthorizedException(
+        statusErrorMessage[jobApplication.applicationStatus]
+      );
 
     return jobApplication;
   }
