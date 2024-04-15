@@ -20,21 +20,21 @@ model User {
   companyProfile CompanyProfile?
   chatBots       ChatBot[]
   invitations    Invitation[]
-  transactions   Transaction[]
+  trainingData   TrainingData[]
 }
 
 model CompanyProfile {
-  id                         String     @id @default(auto()) @map("_id") @db.ObjectId
+  id                         String   @id @default(auto()) @map("_id") @db.ObjectId
   name                       String
   about                      String
-  companyPhoto               ImageFile? @relation(name: "companyPhoto", fields: [companyPhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  companyPhotoId             String?    @db.ObjectId
+  companyPhoto               File?    @relation(name: "companyPhoto", fields: [companyPhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  companyPhotoId             String?  @db.ObjectId
   areaOfExpertise            String
   whatIsTheCompanyLookingFor String[]
-  user                       User       @relation(fields: [userId], references: [id])
-  userId                     String     @unique @db.ObjectId
-  createdAt                  DateTime   @default(now())
-  updatedAt                  DateTime   @updatedAt
+  user                       User     @relation(fields: [userId], references: [id])
+  userId                     String   @unique @db.ObjectId
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
 }
 
 model UserProfile {
@@ -52,7 +52,7 @@ model UserProfile {
   skillsAndCompetencies  String[]
   user                   User                     @relation(fields: [userId], references: [id])
   userId                 String                   @unique @db.ObjectId
-  profilePhoto           ImageFile?               @relation(name: "profilePhoto", fields: [profilePhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  profilePhoto           File?                    @relation(name: "profilePhoto", fields: [profilePhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   profilePhotoId         String?                  @db.ObjectId
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
@@ -71,6 +71,14 @@ model Education {
   userProfileId String?      @db.ObjectId
 }
 
+model TrainingData {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  file   File   @relation(name: "file", fields: [fileId], references: [id], onDelete: Cascade)
+  fileId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+}
+
 model ProfessionalExperience {
   id                   String       @id @default(auto()) @map("_id") @db.ObjectId
   company              String
@@ -83,12 +91,13 @@ model ProfessionalExperience {
   userProfileId        String?      @db.ObjectId
 }
 
-model ImageFile {
+model File {
   id             String           @id @default(auto()) @map("_id") @db.ObjectId
   url            String
   key            String           @unique
   userProfile    UserProfile[]    @relation(name: "profilePhoto")
   companyProfile CompanyProfile[] @relation(name: "companyPhoto")
+  trainingData   TrainingData[]   @relation(name: "file")
   chatBot        ChatBot[]
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
@@ -131,29 +140,21 @@ model JobInterviewChat {
 }
 
 model ChatBot {
-  id           String            @id @default(auto()) @map("_id") @db.ObjectId
-  idRefOpenAI  String
-  name         String
-  about        String
-  user         User              @relation(fields: [userId], references: [id])
-  userId       String            @db.ObjectId
-  status       ChatBotStatusEnum @default(PROCESSING)
-  transactions Transaction[]
-  invitations  Invitation[]
-  thumbnail    ImageFile         @relation(fields: [thumbnailId], references: [id])
-  thumbnailId  String            @db.ObjectId
-  createdAt    DateTime          @default(now())
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  fineTuningJobId String
+  name            String
+  about           String
+  user            User              @relation(fields: [userId], references: [id])
+  userId          String            @db.ObjectId
+  status          ChatBotStatusEnum @default(PROCESSING)
+  views           Int               @default(0)
+  invitations     Invitation[]
+  thumbnail       File              @relation(fields: [thumbnailId], references: [id])
+  thumbnailId     String            @db.ObjectId
+  createdAt       DateTime          @default(now())
 }
 
 model Invitation {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  chatBot   ChatBot @relation(fields: [chatBotId], references: [id])
-  chatBotId String  @db.ObjectId
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String  @db.ObjectId
-}
-
-model Transaction {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   chatBot   ChatBot @relation(fields: [chatBotId], references: [id])
   chatBotId String  @db.ObjectId

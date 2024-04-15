@@ -89,6 +89,7 @@ export class UserService {
         professionalExperience,
         ...profileData
       } = createProfile;
+
       const createUserProfileData: Prisma.UserProfileCreateInput = {
         ...profileData,
         education: { createMany: { data: education } },
