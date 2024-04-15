@@ -63,7 +63,10 @@
       <button
         class="btn btn-neutral border-primary text-primary hover:btn-primary w-full"
         [routerLink]="['/pages/applicant-profile']"
-        [queryParams]="{ userProfileId: job.user.userProfile?.id }"
+        [queryParams]="{
+          userProfileId: job.user.userProfile?.id,
+          jobApplicationId: job.id
+        }"
       >
         See profile
       </button>
