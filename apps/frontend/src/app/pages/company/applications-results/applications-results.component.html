@@ -1,7 +1,7 @@
 <div class="container mx-auto min-h-screen px-3">
   <wagademy-back-button></wagademy-back-button>
-  <div class="md:flex justify-between gap-8">
-    <div class="bg-neutral p-6 w-full">
+  <div class="lg:flex justify-between gap-8">
+    <div class="bg-neutral p-6 w-full rounded-2xl">
       @for (history of chatHistory; track history) {
       <div class="font-mono">
         @if(history.role==='assistant'){
@@ -12,7 +12,7 @@
       </div>
       }
     </div>
-    <div class="pt-6 md:pt-0">
+    <div class="pt-6 lg:pt-2">
       <div class="bg-neutral rounded-2xl p-4 lg:w-[416px] w-full">
         <div class="flex gap-2 pb-6 items-start">
           @if(interviewResult.jobApplication.user.userProfile?.profilePhoto?.url){
@@ -26,7 +26,7 @@
           } @else {
           <img [src]="fallbackImage" alt="profile user" />
           }
-          <div class="font-mono">
+          <div class="font-mono pb-1 ml-1">
             <p class="text-base-100 font-bold">
               {{ interviewResult.jobApplication.user.userProfile?.name }}
             </p>
