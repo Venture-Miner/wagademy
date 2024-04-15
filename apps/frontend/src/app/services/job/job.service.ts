@@ -20,6 +20,7 @@ import {
   FindManyJobApplicationsCompanyView,
   FilterCompanyJobApplications,
   FindOneJobApplicationCompanyView,
+  GetJobInterviewResultResponse,
 } from '@wagademy/types';
 import { Injectable } from '@angular/core';
 
@@ -102,6 +103,14 @@ export class JobService extends BaseHttpService {
   ): Observable<FindOneJobApplicationCompanyView | null> {
     return this.http.get<FindOneJobApplicationCompanyView | null>(
       `${this.URL}/job/job-application/${id}`
+    );
+  }
+
+  getJobInterviewResult(
+    id: string
+  ): Observable<GetJobInterviewResultResponse | null> {
+    return this.http.get<GetJobInterviewResultResponse | null>(
+      `${this.URL}/job/job-interview-result/${id}`
     );
   }
 

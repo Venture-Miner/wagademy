@@ -104,7 +104,7 @@ const routes: Routes = [
           ).then((c) => c.ApplicationsProfileComponent),
       },
       {
-        path: 'result-of-applications',
+        path: 'result-of-application',
         loadComponent: () =>
           import(
             './company/applications-results/applications-results.component'

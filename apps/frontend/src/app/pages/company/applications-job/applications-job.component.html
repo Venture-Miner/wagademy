@@ -43,18 +43,12 @@
         class="tooltip tooltip-warning w-full"
         data-tip="You can't see the results yet, as the candidate hasn't had an interview with the AI yet."
       >
-        <button
-          class="btn btn-primary w-full"
-          [routerLink]="['/pages/result-of-applications']"
-          disabled
-        >
-          See Results
-        </button>
+        <button class="btn btn-primary w-full" disabled>See Results</button>
       </div>
       } @if(job.applicationStatus ==='INTERVIEWED'){
       <button
         class="btn btn-primary w-full"
-        [routerLink]="['/pages/result-of-applications']"
+        [routerLink]="['/pages/result-of-application']"
         [queryParams]="{ jobApplicationId: job.id }"
       >
         See Results
