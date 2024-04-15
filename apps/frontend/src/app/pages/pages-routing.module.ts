@@ -90,6 +90,27 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'job-applications',
+        loadComponent: () =>
+          import('./company/applications-job/applications-job.component').then(
+            (c) => c.ApplicationsJobComponent
+          ),
+      },
+      {
+        path: 'applicant-profile',
+        loadComponent: () =>
+          import(
+            './company/applications-profile/applications-profile.component'
+          ).then((c) => c.ApplicationsProfileComponent),
+      },
+      {
+        path: 'result-of-applications',
+        loadComponent: () =>
+          import(
+            './company/applications-results/applications-results.component'
+          ).then((c) => c.ApplicationsResultsComponent),
+      },
+      {
         canActivate: [AuthGuard, AccountTypeCompanyGuard],
         path: 'interview-gpt',
         loadComponent: () =>
