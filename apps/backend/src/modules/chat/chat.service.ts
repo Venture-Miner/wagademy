@@ -101,7 +101,7 @@ export class ChatService {
       );
     }
     
-    if (jobApplication.applicationStatus!=='INVITED)
+    if (jobApplication.applicationStatus!=='INVITED')
          throw new UnauthorizedException(
         statusErrorMessage[jobApplication.applicationStatus]
       );
