@@ -259,6 +259,28 @@ export class JobController {
     return this.jobService.getJobInterviewResult(id, userId);
   }
 
+  @Get('job-application/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Get a job application.',
+    description: 'Get a job application by it own ID.',
+  })
+  @ApiResponse({
+    type: JobInterviewResultEntity,
+    status: HttpStatus.OK,
+    description: 'Jobs application has been successfully retrieved.',
+  })
+  findOneJobApplicationCompanyView(
+    @Param() { id }: MongoIdDto,
+    @DBUser()
+    { accountType }: User
+  ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException('You are not able to access this.');
+    return this.jobService.findOneJobApplicationCompanyView(id);
+  }
+
   @Get('job-user-view/:id')
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)

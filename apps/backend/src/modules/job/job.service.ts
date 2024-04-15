@@ -26,6 +26,7 @@ import {
   FindManyJobApplicationsUserView,
   FilterUserJobApplications,
   GetJobInterviewResultResponse,
+  JobApplicationCompanyView,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
 import { Prisma } from '@prisma/client';
@@ -273,6 +274,30 @@ export class JobService {
     return this.prismaService.job.findUnique({
       where: { id },
       select: JobUserViewSelect(userId),
+    });
+  }
+
+  findOneJobApplicationCompanyView(
+    id: string
+  ): Promise<JobApplicationCompanyView | null> {
+    return this.prismaService.jobApplication.findUnique({
+      where: { id },
+      include: {
+        user: {
+          include: {
+            userProfile: {
+              select: {
+                id: true,
+                name: true,
+                profilePhoto: { select: { url: true } },
+                about: true,
+              },
+            },
+          },
+        },
+        job: { select: { id: true, title: true } },
+        jobInterviewChat: { select: { id: true } },
+      },
     });
   }
 
