@@ -194,6 +194,26 @@ export type JobApplicationCompanyView = {
   updatedAt: Date;
 };
 
+export type FindOneJobApplicationCompanyView = {
+  id: string;
+  user: {
+    userProfile: {
+      id: string;
+      name: string;
+      profilePhoto: { url: string } | null;
+      about: string;
+    } | null;
+  };
+  job: {
+    id: string;
+    title: string;
+  };
+  applicationStatus: JobApplicationStatusEnum;
+  jobInterviewChat: { id: string }[];
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 export type UpdateJobApplicationCompanyView = {
   id: string;
   user: {

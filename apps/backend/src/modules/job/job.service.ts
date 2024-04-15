@@ -26,7 +26,7 @@ import {
   FindManyJobApplicationsUserView,
   FilterUserJobApplications,
   GetJobInterviewResultResponse,
-  JobApplicationCompanyView,
+  FindOneJobApplicationCompanyView,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
 import { Prisma } from '@prisma/client';
@@ -279,7 +279,7 @@ export class JobService {
 
   findOneJobApplicationCompanyView(
     id: string
-  ): Promise<JobApplicationCompanyView | null> {
+  ): Promise<FindOneJobApplicationCompanyView | null> {
     return this.prismaService.jobApplication.findUnique({
       where: { id },
       include: {

@@ -19,6 +19,7 @@ import {
   UpdateJobResponse,
   FindManyJobApplicationsCompanyView,
   FilterCompanyJobApplications,
+  FindOneJobApplicationCompanyView,
 } from '@wagademy/types';
 import { Injectable } from '@angular/core';
 
@@ -93,6 +94,14 @@ export class JobService extends BaseHttpService {
   ): Observable<FindOneJobUserViewResponse | null> {
     return this.http.get<FindOneJobUserViewResponse | null>(
       `${this.URL}/job/job-user-view/${id}`
+    );
+  }
+
+  findOneJobApplicationCompanyView(
+    id: string
+  ): Observable<FindOneJobApplicationCompanyView | null> {
+    return this.http.get<FindOneJobApplicationCompanyView | null>(
+      `${this.URL}/job/job-application/${id}`
     );
   }
 
