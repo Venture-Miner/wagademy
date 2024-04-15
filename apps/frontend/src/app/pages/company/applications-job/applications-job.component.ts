@@ -7,6 +7,7 @@ import { ApplicationsJobCardComponent } from '../../../shared/components/applica
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { InputSearchComponent } from '../../../shared/components/input-search/input-search.component';
 import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
+import { JobApplicationStatusEnum } from '@wagademy/types';
 
 interface Filter {
   name: string;
@@ -21,7 +22,7 @@ interface Job {
   responsibilities: string;
   company: string;
   info: string;
-  status: string;
+  applicationStatus: JobApplicationStatusEnum;
 }
 
 @Component({
@@ -55,7 +56,7 @@ export class ApplicationsJobComponent {
         'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
       company: 'Dole Inc.',
       info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
-      status: 'Interviewed',
+      applicationStatus: 'INTERVIEWED',
     },
     {
       image: './assets/img/images/img-card-content-example.png',
@@ -68,7 +69,7 @@ export class ApplicationsJobComponent {
         'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
       company: 'Dole Inc.',
       info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
-      status: 'Interviewed',
+      applicationStatus: 'INTERVIEWED',
     },
     {
       image: './assets/img/images/img-card-content-example.png',
@@ -81,7 +82,7 @@ export class ApplicationsJobComponent {
         'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
       company: 'Dole Inc.',
       info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
-      status: 'Interviewed',
+      applicationStatus: 'INTERVIEWED',
     },
     {
       image: './assets/img/images/img-card-content-example.png',
@@ -94,7 +95,7 @@ export class ApplicationsJobComponent {
         'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.',
       company: 'Dole Inc.',
       info: 'Dole Inc. is a technology company that offers innovative solutions in software development, IT consulting services and cloud solutions for companies in different sectors.',
-      status: 'Invited',
+      applicationStatus: 'INVITED',
     },
   ];
   filters: Filter[] = [
