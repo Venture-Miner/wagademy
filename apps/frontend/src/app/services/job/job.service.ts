@@ -17,6 +17,8 @@ import {
   Pagination,
   UpdateJob,
   UpdateJobResponse,
+  FindManyJobApplicationsCompanyView,
+  FilterCompanyJobApplications,
 } from '@wagademy/types';
 import { Injectable } from '@angular/core';
 
@@ -67,9 +69,21 @@ export class JobService extends BaseHttpService {
     paginationDto: Pagination
   ): Observable<FindManyJobApplicationsUserView> {
     return this.http.get<FindManyJobApplicationsUserView>(
-      `${this.URL}/job/user-job-applications/`,
+      `${this.URL}/job/user-job-applications`,
       {
         params: { ...filterUserJobApplicationsDto, ...paginationDto },
+      }
+    );
+  }
+
+  findManyJobApplicationsCompanyView(
+    filterCompanyJobApplicationsDto: FilterCompanyJobApplications,
+    paginationDto: Pagination
+  ): Observable<FindManyJobApplicationsCompanyView> {
+    return this.http.get<FindManyJobApplicationsCompanyView>(
+      `${this.URL}/job/job-applications`,
+      {
+        params: { ...filterCompanyJobApplicationsDto, ...paginationDto },
       }
     );
   }
