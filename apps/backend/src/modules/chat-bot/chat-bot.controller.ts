@@ -21,10 +21,18 @@ import { CognitoUserGuard } from '../../infra';
 import { PaginationDto } from '../../shared/dtos';
 import { User } from '@wagademy/types';
 import { ApiFiles, DBUser } from '../../shared/decorators';
-import { FilterChatbotsDto } from './dto/filter-company-jobs.dto';
 import { ChatBotService } from './chat-bot.service';
-import { UploadTrainingDataDto } from './dto/upload-training-data.dto';
 import { validateTrainingData } from './utils/validate-training-data';
+import {
+  CreateFineTuningJobResponseEntity,
+  FindManyChatBotsResponseEntity,
+  UploadTrainingDataResponseEntity,
+} from './entities';
+import {
+  CreateFineTuningJobDto,
+  FilterChatbotsDto,
+  UploadTrainingDataDto,
+} from './dto';
 
 @ApiTags('Chat Bot')
 @Controller('chat-bot')
@@ -42,7 +50,7 @@ export class ChatBotController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'List of chatbots successfully retrieved.',
-    // type: TODO
+    type: FindManyChatBotsResponseEntity,
   })
   findManyChatBots(
     @Query() filterChatbotsDto: FilterChatbotsDto,
@@ -67,7 +75,7 @@ export class ChatBotController {
   @ApiCreatedResponse({
     status: HttpStatus.CREATED,
     description: 'Training data successfully uploaded.',
-    // type: TODO,
+    type: UploadTrainingDataResponseEntity,
   })
   @ApiFiles(['trainingData'])
   async uploadTrainingData(
@@ -88,5 +96,34 @@ export class ChatBotController {
         'Only individual accounts are allowed to upload training data.'
       );
     return this.chatBotService.uploadTrainingData(trainingDataFile, userId);
+  }
+
+  @Post()
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Create a new fine tuning job.',
+    description: 'Creates a new fine tuning job for the chatbot.',
+  })
+  @ApiCreatedResponse({
+    status: HttpStatus.CREATED,
+    description: 'Fine tuning job successfully created.',
+    type: CreateFineTuningJobResponseEntity,
+  })
+  @ApiFiles(['thumbnail'])
+  create(
+    @Body() createFineTuningJobDto: CreateFineTuningJobDto,
+    @UploadedFiles()
+    { thumbnail }: { thumbnail: Express.Multer.File[] },
+    @DBUser() { id: companyId, accountType }: User
+  ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only company accounts are allowed to create fine tuning jobs.'
+      );
+    return this.chatBotService.createFineTuningJob(
+      { ...createFineTuningJobDto, thumbnail: thumbnail[0] },
+      companyId
+    );
   }
 }

@@ -13,8 +13,15 @@ export class CreateFineTuningJobDto implements CreateFineTuningJob {
   description: string;
 
   @ApiProperty({
-    description: 'training data ID',
-    example: faker.string.uuid(),
+    type: 'string',
+    format: 'binary',
+    description: 'thumbnail image for the chatbot',
+  })
+  thumbnail: Express.Multer.File;
+
+  @ApiProperty({
+    description: 'id of the training data to be used for fine-tuning',
+    example: faker.database.mongodbObjectId(),
   })
   @IsString()
   trainingDataId: string;
