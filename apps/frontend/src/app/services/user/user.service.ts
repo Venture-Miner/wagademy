@@ -41,9 +41,17 @@ export class UserService extends BaseHttpService {
   updateCompanyProfile(
     updateProfileDto: UpdateCompanyProfile
   ): Observable<UpdateCompanyProfileResponse> {
+    const formData: FormData = new FormData();
+    if (updateProfileDto.companyPhoto)
+      formData.append('companyPhoto', updateProfileDto.companyPhoto as File);
+    Object.keys(updateProfileDto).forEach((key) => {
+      if (key !== 'companyPhoto') {
+        formData.append(key, (updateProfileDto as any)[key]);
+      }
+    });
     return this.http.patch<UpdateCompanyProfileResponse>(
       `${this.URL}/user/company-profile`,
-      updateProfileDto
+      formData
     );
   }
 }

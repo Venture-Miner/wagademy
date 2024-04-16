@@ -2,7 +2,7 @@ import { NgClass } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AccountTypeEnum } from '@wagademy/types';
-import { AuthService } from 'apps/frontend/src/app/services/auth/auth.service';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   standalone: true,
@@ -22,7 +22,7 @@ export class NavbarPagesComponent implements OnInit {
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.authService
       .getUserData()
       .then((user) => {

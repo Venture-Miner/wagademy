@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
   backgroundFile!: File;
   profilePhotoFile!: File;
   profilePhoto!: string;
+  profilePhotoToCompare = '';
   companyName = '';
   about = '';
   areaOfExpertise = '';
@@ -110,6 +111,7 @@ export class ProfileComponent implements OnInit {
       this.background = fileUrl;
     } else {
       this.profilePhotoFile = file;
+      this.form.value.profilePhoto = fileUrl;
       this.profilePhoto = fileUrl;
     }
     this.validateForm();
@@ -127,7 +129,7 @@ export class ProfileComponent implements OnInit {
       this.companyName !== this.form.value.companyName ||
       this.about !== this.form.value.about ||
       this.areaOfExpertise !== this.form.value.areaOfExpertise ||
-      this.profilePhoto !== this.form.value.profilePhoto ||
+      this.profilePhotoToCompare !== this.form.value.profilePhoto ||
       !this.areEqual(
         this.originalWhatIsTheCompanyLookingFor,
         this.form.value.whatIsTheCompanyLookingFor as Array<string>
@@ -150,6 +152,7 @@ export class ProfileComponent implements OnInit {
     this.whatIsTheCompanyLookingFor = profile?.whatIsTheCompanyLookingFor ?? [];
     this.companyName = profile?.name ?? '';
     this.profilePhoto = profile?.companyPhoto?.url ?? '';
+    this.profilePhotoToCompare = this.profilePhoto;
     this.originalWhatIsTheCompanyLookingFor =
       profile?.whatIsTheCompanyLookingFor
         ? [...profile.whatIsTheCompanyLookingFor]
@@ -158,7 +161,7 @@ export class ProfileComponent implements OnInit {
 
   getDto() {
     const updateDto: UpdateCompanyProfile = {};
-    if (this.profilePhoto !== this.form.value.profilePhoto)
+    if (this.profilePhotoToCompare !== this.form.value.profilePhoto)
       updateDto.companyPhoto = this.profilePhotoFile;
     if (this.about !== this.form.value.about)
       updateDto.about = this.form.value.about as string;
@@ -180,6 +183,7 @@ export class ProfileComponent implements OnInit {
   updateProfile() {
     this.isUpdating = true;
     const updateDto = this.getDto();
+    console.log(updateDto);
     this.userService.updateCompanyProfile(updateDto).subscribe({
       next: (profile) => {
         this.isUpdating = false;

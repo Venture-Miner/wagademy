@@ -47,7 +47,7 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeCompanyGuard],
-        path: 'profile',
+        path: 'company-profile',
         loadComponent: () =>
           import('./company/profile/profile.component').then(
             (c) => c.ProfileComponent
