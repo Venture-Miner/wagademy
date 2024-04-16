@@ -118,6 +118,14 @@ const routes: Routes = [
             (c) => c.InterviewGptComponent
           ),
       },
+      {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'create-profile',
+        loadComponent: () =>
+          import('./company/create-profile/create-profile.component').then(
+            (c) => c.CreateProfileComponent
+          ),
+      },
     ],
   },
 ];
