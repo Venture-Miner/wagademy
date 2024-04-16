@@ -251,19 +251,21 @@ export class UserController {
     status: HttpStatus.OK,
     description: 'Company profile successfully updated.',
   })
-  @ApiFiles(['companyPhoto'])
+  @ApiFiles(['companyPhoto', 'backgroundPhoto'])
   async updateCompanyProfile(
     @DBUser()
     { id: userId }: User,
     @UploadedFiles()
     photo: {
       companyPhoto?: Express.Multer.File[];
+      backgroundPhoto?: Express.Multer.File[];
     },
     @Body() updateCompanyProfileDto: UpdateCompanyProfileDto
   ) {
     return this.userService.updateCompanyProfile(userId, {
       ...updateCompanyProfileDto,
       companyPhoto: photo?.companyPhoto,
+      backgroundPhoto: photo?.backgroundPhoto,
     });
   }
 }

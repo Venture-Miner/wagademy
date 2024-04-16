@@ -25,6 +25,8 @@ import {
   UpdateCompanyProfileResponse,
   FindOneCompanyProfileResponse,
   AccountTypeEnum,
+  UserProfileOnHandlingImage,
+  ImageType,
 } from '@wagademy/types';
 import { FileService } from '../../infra';
 import { Prisma } from '@prisma/client';
@@ -73,6 +75,7 @@ export class UserService {
         data: createCompanyProfileData,
         include: {
           companyPhoto: { select: { url: true } },
+          backgroundPhoto: { select: { url: true } },
         },
       });
     } catch (error) {
@@ -199,36 +202,42 @@ export class UserService {
   ): Promise<UpdateCompanyProfileResponse> {
     const pictureKeyAndUrl: { key: string; url: string }[] = [];
     try {
-      const { companyPhoto, ...profileData } = updateProfile;
+      const {
+        ...profileData
+      }: Omit<UpdateCompanyProfile, 'companyPhoto' | 'backgroundPhoto'> =
+        updateProfile;
       const updateUserProfileData: Prisma.CompanyProfileUpdateInput = {
         ...profileData,
       };
-      if (companyPhoto) {
-        const userProfile = await this.prismaService.companyProfile.findUnique({
-          where: { userId },
-          select: { companyPhoto: { select: { key: true } } },
-        });
-        if (userProfile?.companyPhoto?.key)
-          await this.fileService.removeFile(userProfile.companyPhoto.key);
-        const { key, url } = await this.fileService.uploadFile(
-          companyPhoto[0],
-          'public-read'
-        );
-        pictureKeyAndUrl.push({ key, url });
-        updateUserProfileData.companyPhoto = {
-          upsert: { create: { key, url }, update: { key, url } },
-        };
-      }
+      ['companyPhoto', 'backgroundPhoto'].forEach(
+        async (imageType: ImageType) => {
+          const image = updateProfile[imageType];
+          if (image) {
+            const { url, key } = await this.handleImages(
+              userId,
+              image,
+              imageType
+            );
+            pictureKeyAndUrl.push({ key, url });
+            updateUserProfileData[imageType] = {
+              upsert: { create: { key, url }, update: { key, url } },
+            };
+          }
+        }
+      );
       return this.prismaService.companyProfile.update({
         where: { userId },
         data: updateUserProfileData,
         include: {
           companyPhoto: { select: { url: true } },
+          backgroundPhoto: { select: { url: true } },
         },
       });
     } catch (error) {
       if (pictureKeyAndUrl.length) {
-        await this.fileService.removeFile(pictureKeyAndUrl[0].key);
+        for (const { key } of pictureKeyAndUrl) {
+          await this.fileService.removeFile(key);
+        }
       }
       throw new BadRequestException(error, 'Error updating profile:');
     }
@@ -307,6 +316,7 @@ export class UserService {
       where: { id },
       include: {
         companyPhoto: { select: { url: true } },
+        backgroundPhoto: { select: { url: true } },
       },
     });
     if (userId !== companyProfile?.userId || accountType !== 'COMPANY')
@@ -322,5 +332,25 @@ export class UserService {
         userProfile: { select: { id: true } },
       },
     });
+  }
+
+  async handleImages(
+    userId: string,
+    image: File | Express.Multer.File[],
+    imageType: ImageType
+  ) {
+    const select = { [imageType]: { select: { key: true } } };
+    const userProfile: UserProfileOnHandlingImage =
+      await this.prismaService.companyProfile.findUnique({
+        where: { userId },
+        select,
+      });
+    const imageKey = userProfile?.[imageType]?.key;
+    if (imageKey) await this.fileService.removeFile(imageKey);
+    const { key, url } = await this.fileService.uploadFile(
+      image[0],
+      'public-read'
+    );
+    return { key, url };
   }
 }
