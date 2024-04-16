@@ -111,7 +111,7 @@ export class ProfileComponent implements OnInit {
       this.background = fileUrl;
     } else {
       this.profilePhotoFile = file;
-      this.form.value.profilePhoto = fileUrl;
+      this.form.patchValue({ profilePhoto: fileUrl });
       this.profilePhoto = fileUrl;
     }
     this.validateForm();
