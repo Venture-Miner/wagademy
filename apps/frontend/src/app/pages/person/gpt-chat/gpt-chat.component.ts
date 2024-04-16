@@ -10,11 +10,12 @@ import {
 import { ToastService } from '../../../services/toast/toast.service';
 import { HttpError } from '../../../shared/types/http-error';
 import { FormsModule } from '@angular/forms';
+import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
 
 @Component({
   selector: 'wagademy-gpt-chat',
   standalone: true,
-  imports: [RouterModule, ModalComponent, FormsModule],
+  imports: [RouterModule, ModalComponent, BackButtonComponent, FormsModule],
   templateUrl: './gpt-chat.component.html',
   styleUrl: './gpt-chat.component.scss',
 })
