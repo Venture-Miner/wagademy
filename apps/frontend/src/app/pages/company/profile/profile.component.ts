@@ -130,10 +130,11 @@ export class ProfileComponent implements OnInit {
       this.about !== this.form.value.about ||
       this.areaOfExpertise !== this.form.value.areaOfExpertise ||
       this.profilePhotoToCompare !== this.form.value.profilePhoto ||
-      !this.areEqual(
+      (!this.areEqual(
         this.originalWhatIsTheCompanyLookingFor,
         this.form.value.whatIsTheCompanyLookingFor as Array<string>
-      )
+      ) &&
+        this.form.value.whatIsTheCompanyLookingFor?.length)
     )
       this.validForm = true;
     else this.validForm = false;
@@ -183,7 +184,6 @@ export class ProfileComponent implements OnInit {
   updateProfile() {
     this.isUpdating = true;
     const updateDto = this.getDto();
-    console.log(updateDto);
     this.userService.updateCompanyProfile(updateDto).subscribe({
       next: (profile) => {
         this.isUpdating = false;
