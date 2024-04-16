@@ -264,7 +264,7 @@ export class JobController {
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
     summary: 'Get a job application.',
-    description: 'Get a job application by it own ID.',
+    description: 'Get a job application by its own ID.',
   })
   @ApiResponse({
     type: JobInterviewResultEntity,
