@@ -1,0 +1,366 @@
+<form class="container px-5 mx-auto min-h-screen" [formGroup]="form">
+  <div class="md:flex gap-36 pt-8">
+    @if(step === 1){
+    <div class="w-full">
+      <div class="md:flex w-full gap-8">
+        <div
+          class="container flex justify-end bg-neutral border-2 rounded-3xl border-base-300 w-48 h-48"
+        >
+          @if(!profilePhoto){
+          <div class="rounded-3xl bg-neutral object-cover w-48 h-46"></div>
+          } @if(profilePhoto){
+          <img
+            class="rounded-3xl object-cover w-48 h-46"
+            [src]="profilePhoto"
+            alt="profile company"
+          />
+          }
+          <div
+            class="absolute rounded-3xl pt-40 pr-3 w-9 h-9 flex items-center justify-center cursor-pointer"
+            (click)="profilePhoto.click()"
+          >
+            <input
+              #profilePhoto
+              class="hidden"
+              type="file"
+              accept="image/*"
+              (change)="onFileChange($event)"
+            />
+            <i
+              class="bi bi-pencil text-sm text-primary shadow bg-neutral py-2 px-3 rounded-full"
+              aria-hidden="true"
+            ></i>
+          </div>
+        </div>
+        <div class="w-full">
+          <div class="w-full">
+            <wagademy-form-field
+              [control]="form.controls.companyName"
+              label="Company name"
+            >
+              <wagademy-input placeholder="Company name"></wagademy-input>
+            </wagademy-form-field>
+            <div class="pt-4">
+              <wagademy-form-field
+                [control]="form.controls.areaOfExpertise"
+                label="Area of expertise"
+              >
+                <wagademy-input
+                  placeholder="Area of expertise"
+                ></wagademy-input>
+              </wagademy-form-field>
+            </div>
+            <div class="pb-6">
+              <wagademy-form-field
+                [control]="form.controls.description"
+                label="Description"
+              >
+                <textarea
+                  class="h-28 w-full outline-none p-2 text-base-100 bg-neutral"
+                  placeholder="Tell us more about yourself"
+                ></textarea>
+              </wagademy-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex md:justify-end justify-center md:pt-36">
+        <button class="btn btn-primary w-[200px]" (click)="step = 2">
+          Next
+        </button>
+      </div>
+    </div>
+    } @if(step === 2){
+    <div class="w-full">
+      <p class="text-base-100 text-sm font-mono pb-2">
+        You need to fill in up to 10 words to describe what you are looking for.
+      </p>
+      <div>
+        <wagademy-input
+          (keyup.enter)="addAreaOfInterest()"
+          formControlName="newWord"
+        ></wagademy-input>
+        <div class="grid md:grid-cols-2 grid-cols-1 gap-4 pt-6">
+          @for(word of areaOfInterest; track areaOfInterest; let i = $index){
+          <div
+            class="bg-neutral flex gap-2 rounded-sm justify-between font-sm font-mono py-1 px-2"
+          >
+            <p class="text-base-100">{{ word }}</p>
+            <i
+              (click)="removeAreaOfInterest(i)"
+              class="bi bi-x-lg text-error cursor-pointer"
+            ></i>
+          </div>
+          }
+        </div>
+      </div>
+      <div class="md:flex justify-end md:pt-36 gap-6">
+        <button
+          class="btn btn-primary btn-outline md:w-[200px] w-full"
+          (click)="step = 2"
+        >
+          Previous
+        </button>
+        <div class="pt-4 md:pt-0">
+          <button
+            class="btn btn-primary md:w-[200px] w-full"
+            (click)="step = 3"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+    } @if(step === 1 || step === 2){
+    <div class="lg:w-[304px]">
+      <ul class="steps steps-vertical">
+        <li class="step step-primary text-base-100">Profile</li>
+        <li
+          class="step text-base-200"
+          [ngClass]="{
+            'step-primary text-base-100': step === 2
+          }"
+        >
+          What your are loking for?
+        </li>
+      </ul>
+    </div>
+    }
+  </div>
+  @if(step === 3){
+  <div class="md:flex">
+    <wagademy-back-button></wagademy-back-button>
+    <div class="flex justify-center w-full">
+      <div class="w-full">
+        <h2
+          class="font-sans font-medium md:text-4xl text-2xl text-base-100 text-center"
+        >
+          Confirm your details
+        </h2>
+        <h3
+          class="pb-6 font-sans text-primary font-medium text-2xl pt-8 md:pl-24"
+        >
+          Company
+        </h3>
+        <div class="relative">
+          <div
+            class="md:pl-24 md:flex justify-center gap-4 pb-4 md:justify-start"
+          >
+            <div
+              class="container flex justify-end bg-neutral border-2 rounded-3xl border-base-300 w-28 h-28"
+            >
+              @if(!profilePhoto) {
+              <div class="rounded-3xl bg-neutral object-cover w-24 h-24"></div>
+              } @if(profilePhoto){
+              <img
+                class="rounded-3xl object-cover w-24 h-24"
+                [src]="profilePhoto"
+                alt="profile"
+              />
+              }
+              <div
+                class="absolute rounded-3xl pt-20 pr-3 w-9 h-9 flex items-center justify-center cursor-pointer"
+                (click)="profilePhoto.click()"
+              >
+                <input
+                  #profilePhoto
+                  class="hidden"
+                  type="file"
+                  accept="image/*"
+                  (change)="onFileChange($event)"
+                />
+                <i
+                  class="bi bi-pencil text-sm text-primary shadow bg-neutral py-2 px-3 rounded-full"
+                  aria-hidden="true"
+                ></i>
+              </div>
+            </div>
+            <div class="w-full">
+              <div>
+                <div class="w-full pt-2">
+                  @if (editProfileSectionOne) {
+                  <wagademy-input
+                    [disabledInput]="!editProfileSectionOne"
+                    [value]="companyName"
+                  ></wagademy-input>
+                  <div class="pt-2">
+                    <wagademy-input
+                      [disabledInput]="!editProfileSectionOne"
+                      [value]="areaOfExpertise"
+                    ></wagademy-input>
+                  </div>
+                  }@else {
+                  <h3
+                    class="font-sans text-2xl font-medium text-base-100 pb-2 pt-3"
+                  >
+                    {{ companyName }}
+                  </h3>
+                  <div class="flex gap-2">
+                    <i class="bi bi-lightning-charge text-primary"></i>
+                    <p class="text-base-200 font-mono">
+                      {{ areaOfExpertise }}
+                    </p>
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pb-6 md:pl-24">
+          <div class="pb-6">
+            <p class="text-primary font-mono font-bold pb-2">Description</p>
+            <textarea
+              class="h-44 w-full outline-none p-2 text-base-100 bg-neutral"
+              [value]="description"
+              [disabled]="!editProfileSectionOne"
+            ></textarea>
+          </div>
+          @if (!editProfileSectionOne) {
+          <div class="pt-6 pb-[50px] flex justify-end">
+            <button
+              class="text-base-100 font-bold font-mono"
+              (click)="toggleEditProfileSectionOne()"
+            >
+              Edit <i class="bi bi-pencil text-primary pl-2"></i>
+            </button>
+          </div>
+          }@else{
+          <div class="pt-6 pb-[50px] flex justify-end">
+            <button
+              class="text-base-100 font-bold font-mono"
+              (click)="toggleEditProfileSectionOne()"
+            >
+              Update <i class="bi bi-check2 text-primary pl-2"></i>
+            </button>
+          </div>
+          }
+          <div>
+            <p class="text-primary font-bold font-mono pb-4">
+              What your are looking for?
+            </p>
+            @if(editProfileSectionTwo){
+            <div>
+              <wagademy-input
+                formControlName="newWord"
+                (keyup.enter)="addAreaOfInterest()"
+              ></wagademy-input>
+              <div class="flex flex-wrap gap-4 pt-6">
+                @for(word of areaOfInterest; track addAreaOfInterest; let i =
+                $index){
+                <div
+                  class="bg-neutral flex gap-2 rounded-3xl font-sm font-mono py-1 px-2"
+                >
+                  <p class="text-base-100">{{ word }}</p>
+                  <i
+                    (click)="removeAreaOfInterest(i)"
+                    class="bi bi-x-lg text-error cursor-pointer"
+                  ></i>
+                </div>
+                }
+              </div>
+            </div>
+            } @if(!editProfileSectionTwo){
+            <div class="flex flex-wrap gap-4">
+              @for(word of areaOfInterest; track areaOfInterest){
+              <div
+                class="bg-neutral rounded-3xl text-base-100 font-sm font-mono py-1 px-2"
+              >
+                {{ word }}
+              </div>
+              }
+            </div>
+            } @if (!editProfileSectionTwo) {
+            <div class="pt-6 pb-[50px] flex justify-end">
+              <button
+                class="text-base-100 font-bold font-mono"
+                (click)="toggleEditProfileSectionTwo()"
+              >
+                Edit <i class="bi bi-pencil text-primary pl-2"></i>
+              </button>
+            </div>
+            }@else{
+            <div class="pt-6 pb-[50px] flex justify-end">
+              <button
+                class="text-base-100 font-bold font-mono"
+                (click)="toggleEditProfileSectionTwo()"
+              >
+                Update <i class="bi bi-check2 text-primary pl-2"></i>
+              </button>
+            </div>
+            }
+            <div class="flex justify-center">
+              <button
+                class="btn btn-primary w-[200px]"
+                (click)="saveAndConfirm()"
+              >
+                Save And Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</form>
+<dialog id="create_job_modal" class="modal">
+  <div class="modal-box">
+    <div class="flex justify-between items-center pb-14">
+      <h2
+        class="text-base-100 mx-auto font-sans md:text-4xl text-2xl font-medium"
+      >
+        Create job
+      </h2>
+      <i
+        class="bi bi-x-lg text-base-100 cursor-pointer"
+        onclick="create_job_modal.close()"
+      ></i>
+    </div>
+    <form method="dialog" [formGroup]="createJobForm">
+      <wagademy-form-field
+        [control]="createJobForm.controls.jobName"
+        label="Job title"
+      >
+        <wagademy-input formControlName="jobName"></wagademy-input>
+      </wagademy-form-field>
+      <div class="pt-6">
+        <wagademy-form-field
+          [control]="createJobForm.controls.description"
+          label="Description"
+        >
+          <textarea
+            class="h-44 w-full outline-none p-2 text-base-100 bg-neutral"
+            formControlName="description"
+          ></textarea>
+        </wagademy-form-field>
+      </div>
+      <div class="pt-6">
+        <wagademy-form-field
+          [control]="createJobForm.controls.contract"
+          label="Contract"
+        >
+          <wagademy-select formControlName="contract"> </wagademy-select>
+        </wagademy-form-field>
+      </div>
+      <div class="pt-6 pb-14">
+        <wagademy-form-field
+          [control]="createJobForm.controls.allocation"
+          label="Allocation "
+        >
+          <wagademy-select formControlName="allocation"> </wagademy-select>
+        </wagademy-form-field>
+      </div>
+      <div class="md:flex gap-4 w-full">
+        <button class="btn btn-primary btn-outline md:w-[210px] w-full">
+          Create
+        </button>
+        <div class="md:pt-0 pt-4">
+          <button class="btn btn-primary md:w-[210px] w-full">
+            Create And Publish
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</dialog>
