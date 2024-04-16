@@ -57,10 +57,12 @@
           [view]="job.views"
           [isOpen]="selectedCardIndex === $index"
           [jobStatus]="job.jobStatus"
+          [jobId]="job.id"
           (click)="onCardClick($index)"
           (updateJob)="updateJobModal(job)"
           (updateJobStatus)="updateJobStatus(job.id, $index)"
           (removeJob)="openRemoveJobModal()"
+          (copyLinkJob)="copyLink(job.id)"
         ></wagademy-card-job>
         }
       </div>
