@@ -6,6 +6,7 @@ import {
   CreateUser,
   CreateUserResponse,
   FindOneCompanyProfileResponse,
+  FindOneProfileResponse,
   RetrieveSelfResponse,
   UpdateCompanyProfile,
   UpdateCompanyProfileResponse,
@@ -52,6 +53,12 @@ export class UserService extends BaseHttpService {
     return this.http.patch<UpdateCompanyProfileResponse>(
       `${this.URL}/user/company-profile`,
       formData
+    );
+  }
+
+  findUserProfile(id: string): Observable<FindOneProfileResponse | null> {
+    return this.http.get<FindOneProfileResponse | null>(
+      `${this.URL}/user/user-profile/${id}`
     );
   }
 }

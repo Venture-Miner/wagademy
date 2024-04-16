@@ -1,82 +1,119 @@
-import { Component } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { DatePipe, Location } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
+import { UserService } from '../../../services/user/user.service';
+import { ToastService } from '../../../services/toast/toast.service';
+import { JobApplicationStatusEnum, UserProfile } from '@wagademy/types';
+import { JobService } from '../../../services/job/job.service';
 
 @Component({
   selector: 'wagademy-applications-profile',
   standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    RouterModule,
-    NgFor,
-    ModalComponent,
-    BackButtonComponent,
-  ],
+  imports: [RouterModule, ModalComponent, BackButtonComponent, DatePipe],
   templateUrl: './applications-profile.component.html',
   styleUrl: './applications-profile.component.scss',
 })
-export class ApplicationsProfileComponent {
-  profilePhotoFile!: File;
-  image!: string;
-  name = 'Marvin Wilson';
-  email = 'randall.cooper@email.com';
-  phone = '+55 11 912345-6789';
-  job = 'Software Developer';
-  description =
-    'Responsible for creating, maintaining and updating software systems, according to the needs and requirements of customers and the company.';
-  modality = 'Full time';
-  schedule = 'Remote work';
-  locale = 'USA';
-  birthday = '01/10/1977';
-  state = 'Los Angeles';
-  about =
-    'Im Randall, a Software Engineering professional with 15 years experience, specializing in Project Management. Skilled in leadership, strategic planning, and effective communication, I prioritize tasks, maintain high productivity, and value collaboration. Always seeking growth opportunities.';
-  course =
-    'bachelor Federal University of Minas Gerais (UFMG) - Belo Horizonte, Minas Gerais';
-  period = '02 / 2020 - 02 / 2024';
-  courseDescription =
-    'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ';
-  company = 'Company';
-  periodWork = '02 / 2020 - Current work';
-  jobDescription =
-    'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ';
-  areaOfExpertise = [
-    'word example',
-    'word example',
-    'word example',
-    'word example',
-    'word example',
-    'word example',
-    'word example',
-    'word example',
-  ];
-  skillsAndCompetences = [
-    'word example',
-    'word example',
-    'word example',
-    'word example',
-    'word example',
-    'word example',
-    'word example',
-    'word example',
-  ];
+export class ApplicationsProfileComponent implements OnInit {
+  userProfileId = '';
+  jobApplicationId = '';
+  userProfile: UserProfile = {
+    id: '',
+    name: '',
+    email: '',
+    dateOfBirth: new Date(),
+    contactNumber: '',
+    country: '',
+    state: '',
+    about: '',
+    userId: '',
+    education: [],
+    professionalExperience: [],
+    areasOfExpertise: [],
+    skillsAndCompetencies: [],
+    profilePhoto: null,
+  };
+  profilePhoto = '';
+  jobApplicationStatus: JobApplicationStatusEnum =
+    JobApplicationStatusEnum.SUBSCRIBED;
+  isLoading = false;
+
+  constructor(
+    private readonly userService: UserService,
+    private activatedRoute: ActivatedRoute,
+    private toastService: ToastService,
+    private readonly jobService: JobService,
+    private location: Location
+  ) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      const userProfileId = params.get('userProfileId');
+      if (userProfileId) this.userProfileId = userProfileId;
+      const jobApplicationId = params.get('jobApplicationId');
+      if (jobApplicationId) this.jobApplicationId = jobApplicationId;
+    });
+    this.getProfile();
+    this.getJobApplication();
+  }
+
+  getProfile() {
+    this.userService.findUserProfile(this.userProfileId).subscribe({
+      next: (userProfile) => {
+        this.userProfile = userProfile as UserProfile;
+        this.profilePhoto = this.userProfile.profilePhoto?.url ?? '';
+      },
+      error: () => {
+        this.toastService.showToast({
+          message: 'Error while retrieving profile',
+          type: 'error',
+        });
+      },
+    });
+  }
+
+  getJobApplication() {
+    this.jobService
+      .findOneJobApplicationCompanyView(this.jobApplicationId)
+      .subscribe({
+        next: (jobApplication) => {
+          if (!jobApplication) {
+            this.toastService.showToast({
+              message: 'Job application does not exist',
+              type: 'error',
+            });
+            this.location.back();
+          } else this.jobApplicationStatus = jobApplication?.applicationStatus;
+        },
+        error: () => {
+          this.toastService.showToast({
+            message: 'Error while retrieving job application data',
+            type: 'error',
+          });
+        },
+      });
+  }
 
   sendInvite() {
-    //
-  }
-
-  onFileChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const files = target.files;
-    if (files) this.handleFile(files[0]);
-  }
-
-  handleFile(file: File) {
-    const fileUrl = URL.createObjectURL(file);
-    this.profilePhotoFile = file;
-    this.image = fileUrl;
+    this.isLoading = true;
+    this.jobService.inviteToInterview(this.jobApplicationId).subscribe({
+      next: () => {
+        this.jobApplicationStatus = 'INVITED';
+        this.toastService.showToast({
+          message: 'User successfully invited',
+          type: 'success',
+        });
+        this.isLoading = false;
+        window.modal['close']();
+      },
+      error: () => {
+        this.toastService.showToast({
+          message: 'Error while inviting user',
+          type: 'error',
+        });
+        this.isLoading = false;
+      },
+    });
   }
 }

@@ -314,4 +314,26 @@ export class HiringComponent implements OnInit {
       type: 'success',
     });
   }
+
+  copyLink(id: string) {
+    const currentUrl = window.location.href;
+
+    const baseUrl = currentUrl.split('/').slice(0, 3).join('/');
+
+    const link = `${baseUrl}/pages/job-details?id=${id}`;
+    navigator.clipboard
+      .writeText(link)
+      .then(() => {
+        this.toastService.showToast({
+          message: 'Link copied to clipboard!',
+          type: 'success',
+        });
+      })
+      .catch(() => {
+        this.toastService.showToast({
+          message: 'Failed to copy link to clipboard.',
+          type: 'error',
+        });
+      });
+  }
 }

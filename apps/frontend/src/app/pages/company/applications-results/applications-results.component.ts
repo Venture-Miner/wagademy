@@ -1,17 +1,53 @@
-import { Component } from '@angular/core';
-import { NgFor } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
+import { JobService } from '../../../services/job/job.service';
+import {
+  AllocationEnum,
+  EmploymentClassificationEnum,
+  GetJobInterviewResultResponse,
+  OpenAIChatModel,
+} from '@wagademy/types';
+import { formatEnumKeys } from '../../../shared/utils/functions/format-enum';
 
 @Component({
   selector: 'wagademy-applications-profile',
   standalone: true,
-  imports: [RouterModule, NgFor, BackButtonComponent],
+  imports: [RouterModule, BackButtonComponent],
   templateUrl: './applications-results.component.html',
   styleUrl: './applications-results.component.scss',
 })
-export class ApplicationsResultsComponent {
+export class ApplicationsResultsComponent implements OnInit {
+  interviewResult: GetJobInterviewResultResponse = {
+    id: '',
+    history: undefined,
+    jobApplication: {
+      user: {
+        userProfile: null,
+      },
+      job: {
+        id: '',
+        title: '',
+        description: '',
+        employmentClassification: 'FULL_TIME',
+        allocation: 'REMOTE',
+        aiInterviewQuestions: [],
+        views: 0,
+        _count: {
+          jobApplications: 0,
+        },
+        company: {
+          companyProfile: null,
+        },
+        jobStatus: 'PUBLISHED',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    },
+  };
+  chatHistory: OpenAIChatModel[] = [];
   image = './assets/img/images/img-default-profile.svg';
+  fallbackImage = './assets/img/images/img-default-profile.svg';
   name = 'Marvin Wilson';
   email = 'randall.cooper@email.com';
   phone = '+55 11 912345-6789';
@@ -52,4 +88,42 @@ export class ApplicationsResultsComponent {
         'Clara walked through the narrow streets of the small town, her steps echoing softly on the cobblestone pavement worn by time.',
     },
   ];
+  userProfileId = '';
+  jobApplicationId = '';
+  employmentClassification = '';
+  allocation = '';
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private readonly jobService: JobService
+  ) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      const jobApplicationId = params.get('jobApplicationId');
+      if (jobApplicationId) this.jobApplicationId = jobApplicationId;
+    });
+    this.getApplicationResult();
+  }
+
+  getApplicationResult() {
+    this.jobService.getJobInterviewResult(this.jobApplicationId).subscribe({
+      next: (interviewResult) => {
+        if (interviewResult) {
+          this.userProfileId =
+            interviewResult.jobApplication.user.userProfile?.id ?? '';
+          this.interviewResult = interviewResult;
+          this.chatHistory = interviewResult.history;
+          this.employmentClassification =
+            formatEnumKeys<EmploymentClassificationEnum>(
+              interviewResult.jobApplication.job
+                ?.employmentClassification as EmploymentClassificationEnum
+            ) as string;
+          this.allocation = formatEnumKeys<AllocationEnum>(
+            interviewResult.jobApplication.job?.allocation as AllocationEnum
+          ) as string;
+        }
+      },
+    });
+  }
 }
