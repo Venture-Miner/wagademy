@@ -9,6 +9,10 @@ export function validateTrainingData(trainingDataFile: Express.Multer.File) {
     throw new Error('Invalid JSON format.');
   }
 
+  if (dataset.length < 5) {
+    throw new Error('Insufficient data.');
+  }
+
   dataset.forEach((ex) => {
     const messages = ex.messages;
     if (!messages || !Array.isArray(messages)) {
