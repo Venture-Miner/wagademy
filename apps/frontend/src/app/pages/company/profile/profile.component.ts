@@ -126,15 +126,15 @@ export class ProfileComponent implements OnInit {
 
   validateForm() {
     if (
-      this.companyName !== this.form.value.companyName ||
-      this.about !== this.form.value.about ||
-      this.areaOfExpertise !== this.form.value.areaOfExpertise ||
-      this.profilePhotoToCompare !== this.form.value.profilePhoto ||
-      (!this.areEqual(
-        this.originalWhatIsTheCompanyLookingFor,
-        this.form.value.whatIsTheCompanyLookingFor as Array<string>
-      ) &&
-        this.form.value.whatIsTheCompanyLookingFor?.length)
+      this.form.value.whatIsTheCompanyLookingFor?.length &&
+      (this.companyName !== this.form.value.companyName ||
+        this.about !== this.form.value.about ||
+        this.areaOfExpertise !== this.form.value.areaOfExpertise ||
+        this.profilePhotoToCompare !== this.form.value.profilePhoto ||
+        !this.areEqual(
+          this.originalWhatIsTheCompanyLookingFor,
+          this.form.value.whatIsTheCompanyLookingFor as Array<string>
+        ))
     )
       this.validForm = true;
     else this.validForm = false;
