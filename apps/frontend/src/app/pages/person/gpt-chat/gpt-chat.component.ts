@@ -96,27 +96,20 @@ export class GptChatComponent implements OnInit {
           } else this.startJobInterview();
         },
         error: ({ error }: { error: HttpError }) => {
-          const type = error.statusCode === 401 ? 'warning' : 'error';
           const messageError =
             error.statusCode === 401
               ? error.message
               : 'Error while retrieving chat';
-          this.toastService.showToast({
-            message: messageError,
-            type: type,
-          });
-          if (type === 'warning')
-            this.companyAccessingUnauthorizedRoute(error.message);
+          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
           this.isStartingTheChat = false;
         },
       });
   }
 
   companyAccessingUnauthorizedRoute(message: string) {
-    if (
-      message ===
-      'Only accounts where the type is physical person can get the chat history.'
-    )
+    const expectedErrorMessage =
+      'Only accounts where the type is physical person can get the chat history.';
+    if (message === expectedErrorMessage)
       this.router.navigate(['/pages/home-company']);
   }
 
@@ -135,17 +128,24 @@ export class GptChatComponent implements OnInit {
           const messageError = codes.includes(error.statusCode)
             ? error.message
             : 'Error while retrieving chat';
-          const type = error.statusCode === 401 ? 'warning' : 'error';
-          this.toastService.showToast({
-            message: messageError,
-            type: type,
-          });
-          if (type === 'warning')
-            this.companyAccessingUnauthorizedRoute(error.message);
-          else this.router.navigate(['/pages/job-applications-all']);
+          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
           this.isStartingTheChat = false;
         },
       });
+  }
+
+  private handleErrorAndRedirectIfUnauthorized(
+    error: HttpError,
+    messageError: string
+  ) {
+    const toastType = error.statusCode === 401 ? 'warning' : 'error';
+    this.toastService.showToast({
+      message: messageError,
+      type: toastType,
+    });
+    if (toastType === 'warning')
+      this.companyAccessingUnauthorizedRoute(error.message);
+    else this.router.navigate(['/pages/job-applications-all']);
   }
 
   chatCompletion() {
@@ -168,17 +168,8 @@ export class GptChatComponent implements OnInit {
           const messageError = codes.includes(error.statusCode)
             ? error.message
             : 'Error while generating chat completion';
-          const type = error.statusCode === 401 ? 'warning' : 'error';
-          this.toastService.showToast({
-            message: messageError,
-            type: type,
-          });
+          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
           this.isCreatingChatCompletion = false;
-          if (codes.includes(error.statusCode)) {
-            if (type === 'warning')
-              this.companyAccessingUnauthorizedRoute(error.message);
-            else this.router.navigate(['/pages/job-applications-all']);
-          }
         },
       });
   }
