@@ -11,6 +11,7 @@ import { UserService } from '../../../services/user/user.service';
 import { ToastService } from '../../../services/toast/toast.service';
 import { FormFieldComponent } from '../../../shared/components/form-field/form-field.component';
 import { CompanyProfile, UpdateCompanyProfile } from '@wagademy/types';
+import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
 
 @Component({
   selector: 'wagademy-profile',
@@ -21,6 +22,7 @@ import { CompanyProfile, UpdateCompanyProfile } from '@wagademy/types';
     InputComponent,
     FormFieldComponent,
     ReactiveFormsModule,
+    BackButtonComponent,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',

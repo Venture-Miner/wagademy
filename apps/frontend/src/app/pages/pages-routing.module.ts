@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
+import { AuthGuard } from '../guards/auth.guard';
+import { AccountTypeCompanyGuard } from '../guards/account-type-company.guard';
+import { AccountTypeUserGuard } from '../guards/account-type-user.guard';
 
 const routes: Routes = [
   {
@@ -11,9 +14,9 @@ const routes: Routes = [
   {
     path: '',
     component: PagesComponent,
-    // canActivate: [AuthGuard],
     children: [
       {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
         path: 'certificates',
         loadComponent: () =>
           import('./certificates/my-certificates.component').then(
@@ -21,6 +24,7 @@ const routes: Routes = [
           ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
         path: 'gptchat',
         loadComponent: () =>
           import('./person/gpt-chat/gpt-chat.component').then(
@@ -28,6 +32,7 @@ const routes: Routes = [
           ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
         path: 'home-company',
         loadComponent: () =>
           import('./company/home/home.component').then(
@@ -35,18 +40,21 @@ const routes: Routes = [
           ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
         path: 'home',
         loadComponent: () =>
           import('./person/home/home.component').then((c) => c.HomeComponent),
       },
       {
-        path: 'profile-company',
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'profile',
         loadComponent: () =>
           import('./company/profile/profile.component').then(
             (c) => c.ProfileComponent
           ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
         path: 'hiring',
         loadComponent: () =>
           import('./company/hiring/hiring.component').then(
@@ -54,6 +62,7 @@ const routes: Routes = [
           ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
         path: 'job-applications-all',
         loadComponent: () =>
           import(
@@ -73,6 +82,7 @@ const routes: Routes = [
           ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
         path: 'chatbot',
         loadComponent: () =>
           import('./person/gpt-list/gpt-list.component').then(
@@ -80,6 +90,28 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'job-applications',
+        loadComponent: () =>
+          import('./company/applications-job/applications-job.component').then(
+            (c) => c.ApplicationsJobComponent
+          ),
+      },
+      {
+        path: 'applicant-profile',
+        loadComponent: () =>
+          import(
+            './company/applications-profile/applications-profile.component'
+          ).then((c) => c.ApplicationsProfileComponent),
+      },
+      {
+        path: 'result-of-applications',
+        loadComponent: () =>
+          import(
+            './company/applications-results/applications-results.component'
+          ).then((c) => c.ApplicationsResultsComponent),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
         path: 'interview-gpt',
         loadComponent: () =>
           import('./company/interview-gpt/interview-gpt.component').then(

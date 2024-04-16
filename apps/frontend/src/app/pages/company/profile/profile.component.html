@@ -1,9 +1,43 @@
 <div class="container px-5 mx-auto min-h-screen">
   <div>
     <form [formGroup]="form" class="content">
-      <div class="flex gap-2 items-center py-4 cursor-pointer">
-        <i class="bi bi-arrow-left text-base-100 text-xl"></i>
-        <p class="font-bold text-sm text-base-100 font-mono">Back</p>
+      <wagademy-back-button></wagademy-back-button>
+      <div class="absolute">
+        <div class="relative">
+          <div class="container pr-6 md:pr-0">
+            @if(!background){
+            <div
+              class="object-cover h-[200px] md:w-[37rem] xl:w-[72rem] lg:w-[55rem] 2xl:w-[85rem] w-full sm:w-[37rem] rounded-lg container bg-neutral"
+            ></div>
+            } @else{
+            <img
+              class="object-cover h-[200px] md:w-[37rem] xl:w-[72rem] lg:w-[55rem] 2xl:w-[85rem] sm:w-[37rem] rounded-lg container bg-neutral"
+              [src]="background"
+              alt="background profile"
+            />
+            }
+          </div>
+          @if(editProfile){
+          <div class="container flex justify-end pr-10">
+            <div
+              class="absolute top-1/4 rounded-full shadow z-50 w-9 h-9 flex items-center justify-center cursor-pointer"
+              (click)="background.click()"
+            >
+              <input
+                #background
+                class="hidden"
+                type="file"
+                accept="image/*"
+                (change)="onFileChange($event, true)"
+              />
+              <i
+                class="bi bi-pencil text-sm text-primary shadow bg-neutral py-2 px-3 rounded-full"
+                aria-hidden="true"
+              ></i>
+            </div>
+          </div>
+          }
+        </div>
       </div>
       <div class="absolute">
         <div class="relative">

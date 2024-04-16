@@ -41,6 +41,7 @@ import {
   InviteToInterviewEntity,
   JobCompanyViewFindManyEntity,
   JobCompanyViewFindOneEntity,
+  JobInterviewResultEntity,
   JobUserViewFindManyEntity,
   JobUserViewFindOneEntity,
   JobUserViewUpdateEntity,
@@ -234,6 +235,28 @@ export class JobController {
     if (accountType !== 'COMPANY')
       throw new UnauthorizedException('You are not able to access this.');
     return this.jobService.findOneJobCompanyView(id, userId);
+  }
+
+  @Get('job-interview-result/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Get a job interview result.',
+    description: 'Get a job interview result by it own ID.',
+  })
+  @ApiResponse({
+    type: JobInterviewResultEntity,
+    status: HttpStatus.OK,
+    description: 'Jobs interview result has been successfully retrieved.',
+  })
+  getJobInterviewResult(
+    @Param() { id }: MongoIdDto,
+    @DBUser()
+    { id: userId, accountType }: User
+  ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException('You are not able to access this.');
+    return this.jobService.getJobInterviewResult(id, userId);
   }
 
   @Get('job-user-view/:id')
