@@ -202,15 +202,13 @@ export class UserService {
   ): Promise<UpdateCompanyProfileResponse> {
     const pictureKeyAndUrl: { key: string; url: string }[] = [];
     try {
-      const {
-        ...profileData
-      }: Omit<UpdateCompanyProfile, 'companyPhoto' | 'backgroundPhoto'> =
-        updateProfile;
+      const { backgroundPhoto, companyPhoto, ...profileData } = updateProfile;
       const updateUserProfileData: Prisma.CompanyProfileUpdateInput = {
         ...profileData,
       };
-      ['companyPhoto', 'backgroundPhoto'].forEach(
-        async (imageType: ImageType) => {
+      const imageTypes: ImageType[] = ['companyPhoto', 'backgroundPhoto'];
+      await Promise.all(
+        imageTypes.map(async (imageType) => {
           const image = updateProfile[imageType];
           if (image) {
             const { url, key } = await this.handleImages(
@@ -223,8 +221,9 @@ export class UserService {
               upsert: { create: { key, url }, update: { key, url } },
             };
           }
-        }
+        })
       );
+
       return this.prismaService.companyProfile.update({
         where: { userId },
         data: updateUserProfileData,
