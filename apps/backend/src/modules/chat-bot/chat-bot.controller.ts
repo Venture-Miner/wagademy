@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Query,
+  Res,
   UnauthorizedException,
   UploadedFiles,
   UseGuards,
@@ -19,7 +20,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CognitoUserGuard } from '../../infra';
 import { MongoIdDto, PaginationDto } from '../../shared/dtos';
 import { User } from '@wagademy/types';
 import { ApiFiles, DBUser } from '../../shared/decorators';
@@ -29,6 +29,7 @@ import {
   CreateFineTuningJobResponseEntity,
   FindManyChatBotsResponseEntity,
   UploadTrainingDataResponseEntity,
+  FindManyTrainingDataResponseEntity,
 } from './entities';
 import {
   CreateFineTuningJobDto,
@@ -36,6 +37,7 @@ import {
   UploadTrainingDataDto,
   FilterCompanyChatBotsDto,
 } from './dto';
+import { CognitoUserGuard } from '../../infra';
 
 @ApiTags('Chat Bot')
 @Controller('chat-bot')
@@ -59,14 +61,36 @@ export class ChatBotController {
   findManyCompanyChatBots(
     @Query() filterCompanyChatbotsDto: FilterCompanyChatBotsDto,
     @Query() paginationDto: PaginationDto,
-    @DBUser()
-    { id: userId }: User
+    @DBUser() { id: userId }: User
   ) {
     return this.chatBotService.findManyCompanyChatBots(
       filterCompanyChatbotsDto,
       paginationDto,
       userId
     );
+  }
+
+  @Get('training-data/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Retrieve training data content by id.',
+    description: 'Fetches training data content by id.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Training data content successfully retrieved.',
+  })
+  async getTrainingDataContent(
+    @Res() res: Response,
+    @Param() { id }: MongoIdDto,
+    @DBUser() { id: userId }: User
+  ) {
+    const fileStream = await this.chatBotService.getTrainingDataContent(
+      id,
+      userId
+    );
+    return fileStream.pipe(res);
   }
 
   @Get()
@@ -171,5 +195,59 @@ export class ChatBotController {
   })
   deleteChatBot(@Param() { id }: MongoIdDto, @DBUser() { id: userId }: User) {
     return this.chatBotService.delete(id, userId);
+  }
+
+  @Get('training-data')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Retrieve a list of training data.',
+    description: 'Fetches a list of training data.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'List of training data successfully retrieved.',
+    type: FindManyTrainingDataResponseEntity,
+  })
+  findManyTrainingData(
+    @Query() paginationDto: PaginationDto,
+    @DBUser() { id: userId }: User
+  ) {
+    return this.chatBotService.findManyTrainingData(paginationDto, userId);
+  }
+
+  @Post('init-chat')
+  // @ApiBearerAuth()
+  // @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Init chat.',
+    description: 'Init chat.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Chat successfully initiated.',
+  })
+  initChat(
+    @Body() { chatBotId, userId }: { chatBotId: string; userId: string }
+  ) {
+    return this.chatBotService.initChat(chatBotId, userId);
+  }
+
+  @Delete('training-data/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Delete training data.',
+    description: 'Deletes training data.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Training data successfully deleted.',
+  })
+  deleteTrainingData(
+    @Param() { id }: MongoIdDto,
+    @DBUser() { id: userId }: User
+  ) {
+    return this.chatBotService.deleteTrainingData(id, userId);
   }
 }

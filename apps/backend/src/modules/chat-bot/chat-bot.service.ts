@@ -6,6 +6,8 @@ import {
   FilterChatbots,
   FilterCompanyChatbots,
   FindManyChatBotsResponse,
+  FindManyTrainingDataResponse,
+  GetTrainingDataContentResponse,
   Pagination,
   UploadTrainingDataResponse,
 } from '@wagademy/types';
@@ -13,7 +15,8 @@ import { ChatBotStatusEnum, Prisma } from '@prisma/client';
 import OpenAI from 'openai';
 import { toFile } from 'openai/uploads';
 import { FileService } from '../../infra';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { Readable } from 'stream';
 
 @Injectable()
 export class ChatBotService {
@@ -25,7 +28,7 @@ export class ChatBotService {
     private readonly openAI: OpenAI
   ) {}
 
-  @Cron('* 1 * * * *')
+  @Cron(CronExpression.EVERY_MINUTE)
   async statusCron() {
     this.logger.debug('Checking for processing fine-tuning jobs...');
     const processingFineTuningJobs = await this.prismaService.chatBot.findMany({
@@ -167,8 +170,53 @@ export class ChatBotService {
     if (!chatBot) throw new BadRequestException('Chatbot not found.');
     const { status, fineTuningJobId } = chatBot;
     await this.prismaService.chatBot.delete({ where: { id } });
-    if (status === 'PROCESSING') {
+    if (status === ChatBotStatusEnum.PROCESSING) {
       await this.openAI.fineTuning.jobs.cancel(fineTuningJobId);
     }
+  }
+
+  async deleteTrainingData(id: string, userId: string) {
+    const trainingData = await this.prismaService.trainingData.findFirst({
+      where: { id, user: { id: userId } },
+    });
+    if (!trainingData)
+      throw new BadRequestException('Training data not found.');
+    await this.openAI.files.del(trainingData.fileId);
+    await this.prismaService.trainingData.delete({ where: { id } });
+  }
+
+  async getTrainingDataContent(
+    id: string,
+    userId: string
+  ): Promise<GetTrainingDataContentResponse> {
+    const trainingData = await this.prismaService.trainingData.findFirst({
+      where: { id, user: { id: userId } },
+    });
+    if (!trainingData)
+      throw new BadRequestException('Training data not found.');
+    const file = await this.openAI.files.content(trainingData.fileId);
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const fileStream = Readable.from(buffer);
+    return fileStream;
+  }
+
+  async findManyTrainingData(
+    pagination: Pagination,
+    userId: string
+  ): Promise<FindManyTrainingDataResponse> {
+    const [count, trainingData] = await Promise.all([
+      this.prismaService.trainingData.count({ where: { userId } }),
+      this.prismaService.trainingData.findMany({
+        where: { userId },
+        skip: pagination.skip,
+        take: pagination.take,
+      }),
+    ]);
+    return { count, trainingData };
+  }
+
+  async initChat(chatBotId: string, userId: string) {
+    //TODO: Implement this method
   }
 }

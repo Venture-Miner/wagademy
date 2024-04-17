@@ -10,6 +10,13 @@ export type FilterCompanyChatbots = {
   status?: ChatBotStatusEnum;
 };
 
+export type GetTrainingDataContentResponse = any;
+
+export type FindManyTrainingDataResponse = {
+  count: number;
+  trainingData: TrainingData[];
+};
+
 export type CreateFineTuningJob = {
   title: string;
   description: string;
@@ -33,12 +40,30 @@ export type FindOneChatBotResponse = {
   createdAt: Date;
 };
 
+export type ChatBot = {
+  id: string;
+  fineTuningJobId: string;
+  title: string;
+  description: string;
+  userId: string;
+  status: ChatBotStatusEnum;
+  views: number;
+  thumbnailId: string;
+  createdAt: Date;
+};
+
 export type FindManyChatBotsResponse = {
   count: number;
   chatBots: FindOneChatBotResponse[];
 };
 
 export type UploadTrainingDataResponse = {
+  id: string;
+  fileId: string;
+  userId: string;
+};
+
+export type TrainingData = {
   id: string;
   fileId: string;
   userId: string;

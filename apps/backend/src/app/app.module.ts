@@ -8,6 +8,7 @@ import { UserModule } from '../modules/user/user.module';
 import { JobModule } from '../modules/job/job.module';
 import { ChatBotModule } from '../modules/chat-bot/chat-bot.module';
 import { ChatModule } from '../modules/chat/chat.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ChatModule } from '../modules/chat/chat.module';
     PrismaModule,
     UserModule,
     ChatBotModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService, CognitoUserStrategy, CognitoUserGuard],
