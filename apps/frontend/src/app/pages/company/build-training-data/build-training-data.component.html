@@ -1,38 +1,48 @@
-<div class="container mx-auto min-h-screen px-3 sm:px-0">
+<div class="container mx-auto min-h-screen px-3 sm:px-0" [formGroup]="form">
   <div class="pb-6 pt-8 flex gap-2 items-center">
     <h2 class="font-sans font-medium text-4xl text-base-100">GPTs</h2>
     <p class="text-primary text-sm font-bold">| BUILD TRAINING DATA</p>
   </div>
   <div class="flex gap-2 pb-8">
     <div class="w-32">
-      <wagademy-select></wagademy-select>
+      <wagademy-form-field [control]="form.controls.chatOption">
+        <wagademy-select formControlName="chatOption"></wagademy-select>
+      </wagademy-form-field>
     </div>
     <div class="w-full">
-      <wagademy-input></wagademy-input>
+      <wagademy-form-field [control]="form.controls.chatTheme">
+        <wagademy-input formControlName="chatTheme"></wagademy-input>
+      </wagademy-form-field>
     </div>
   </div>
   @for (item of items; track items; let i = $index) {
   <div class="gap-8 sm:flex">
     <div class="w-full">
-      <div class="flex gap-2 pb-2">
-        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
-          <p class="text-primary font-bold font-mono">User</p>
+      <wagademy-form-field [control]="form.controls.userQuestion">
+        <div class="flex gap-2 pb-2">
+          <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+            <p class="text-primary font-bold font-mono">User</p>
+          </div>
+          <div class="w-full">
+            <wagademy-input formControlName="userQuestion"></wagademy-input>
+          </div>
         </div>
-        <div class="w-full">
-          <wagademy-input></wagademy-input>
-        </div>
-      </div>
+      </wagademy-form-field>
     </div>
     <div class="w-full">
-      <div class="flex gap-2 pb-2">
-        <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
-          <p class="text-accent font-bold font-mono">Chatbot</p>
+      <wagademy-form-field [control]="form.controls.answerQuestion">
+        <div class="flex gap-2 pb-2">
+          <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+            <p class="text-accent font-bold font-mono">Chatbot</p>
+          </div>
+          <div class="w-full flex gap-2">
+            <wagademy-input formControlName="answerQuestion"></wagademy-input>
+            <button class="text-error lg:pl-8" (click)="removeItem(i)">
+              Remove
+            </button>
+          </div>
         </div>
-        <div class="w-full">
-          <wagademy-input></wagademy-input>
-        </div>
-        <button class="text-error pl-8" (click)="removeItem(i)">Remove</button>
-      </div>
+      </wagademy-form-field>
     </div>
   </div>
   }
