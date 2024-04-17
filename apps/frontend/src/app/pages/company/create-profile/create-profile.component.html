@@ -1,8 +1,8 @@
 <form class="container px-5 mx-auto min-h-screen" [formGroup]="form">
-  <div class="md:flex gap-36 pt-8">
+  <div class="md:flex xl:gap-36 gap-16 justify-center pt-8">
     @if(step === 1){
     <div class="w-full">
-      <div class="md:flex w-full gap-8">
+      <div class="xl:flex w-full gap-8">
         <div
           class="container flex justify-end bg-neutral border-2 rounded-3xl border-base-300 w-48 h-48"
         >
@@ -32,35 +32,28 @@
             ></i>
           </div>
         </div>
-        <div class="w-full">
-          <div class="w-full">
+        <div class="w-full lg:w-[640px]">
+          <wagademy-form-field
+            [control]="form.controls.companyName"
+            label="Company name"
+          >
+            <wagademy-input placeholder="Company name"></wagademy-input>
+          </wagademy-form-field>
+          <div class="pt-4">
             <wagademy-form-field
-              [control]="form.controls.companyName"
-              label="Company name"
+              [control]="form.controls.areaOfExpertise"
+              label="Area of expertise"
             >
-              <wagademy-input placeholder="Company name"></wagademy-input>
+              <wagademy-input placeholder="Area of expertise"></wagademy-input>
             </wagademy-form-field>
-            <div class="pt-4">
-              <wagademy-form-field
-                [control]="form.controls.areaOfExpertise"
-                label="Area of expertise"
-              >
-                <wagademy-input
-                  placeholder="Area of expertise"
-                ></wagademy-input>
-              </wagademy-form-field>
-            </div>
-            <div class="pb-6">
-              <wagademy-form-field
-                [control]="form.controls.description"
-                label="Description"
-              >
-                <textarea
-                  class="h-28 w-full outline-none p-2 text-base-100 bg-neutral"
-                  placeholder="Tell us more about yourself"
-                ></textarea>
-              </wagademy-form-field>
-            </div>
+          </div>
+          <div class="pb-6">
+            <wagademy-form-field [control]="form.controls.about" label="About">
+              <textarea
+                class="h-28 w-full outline-none p-2 text-base-100 bg-neutral"
+                placeholder="Tell us more about yourself"
+              ></textarea>
+            </wagademy-form-field>
           </div>
         </div>
       </div>
@@ -71,57 +64,60 @@
       </div>
     </div>
     } @if(step === 2){
-    <div class="w-full">
-      <p class="text-base-100 text-sm font-mono pb-2">
-        You need to fill in up to 10 words to describe what you are looking for.
-      </p>
-      <div>
-        <wagademy-input
-          (keyup.enter)="addAreaOfInterest()"
-          formControlName="newWord"
-        ></wagademy-input>
-        <div class="grid md:grid-cols-2 grid-cols-1 gap-4 pt-6">
-          @for(word of areaOfInterest; track areaOfInterest; let i = $index){
-          <div
-            class="bg-neutral flex gap-2 rounded-sm justify-between font-sm font-mono py-1 px-2"
-          >
-            <p class="text-base-100">{{ word }}</p>
-            <i
-              (click)="removeAreaOfInterest(i)"
-              class="bi bi-x-lg text-error cursor-pointer"
-            ></i>
+    <div class="flex justify-center">
+      <div class="w-full lg:w-[640px]">
+        <p class="text-base-100 text-sm font-mono pb-2">
+          You need to fill in up to 10 words to describe what you are looking
+          for.
+        </p>
+        <div>
+          <wagademy-input
+            (keyup.enter)="addAreaOfInterest()"
+            formControlName="newWord"
+          ></wagademy-input>
+          <div class="grid md:grid-cols-2 grid-cols-1 gap-4 pt-6">
+            @for(word of areaOfInterest; track areaOfInterest; let i = $index){
+            <div
+              class="bg-neutral flex gap-2 rounded-sm justify-between font-sm font-mono py-1 px-2"
+            >
+              <p class="text-base-100">{{ word }}</p>
+              <i
+                (click)="removeAreaOfInterest(i)"
+                class="bi bi-x-lg text-error cursor-pointer"
+              ></i>
+            </div>
+            }
           </div>
-          }
         </div>
-      </div>
-      <div class="md:flex justify-end md:pt-36 gap-6">
-        <button
-          class="btn btn-primary btn-outline md:w-[200px] w-full"
-          (click)="step = 2"
-        >
-          Previous
-        </button>
-        <div class="pt-4 md:pt-0">
+        <div class="md:flex justify-end md:pt-36 pt-10 gap-6">
           <button
-            class="btn btn-primary md:w-[200px] w-full"
-            (click)="step = 3"
+            class="btn btn-primary btn-outline md:w-[200px] w-full"
+            (click)="step = 2"
           >
-            Next
+            Previous
           </button>
+          <div class="pt-4 md:pt-0">
+            <button
+              class="btn btn-primary md:w-[200px] w-full"
+              (click)="step = 3"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>
     } @if(step === 1 || step === 2){
-    <div class="lg:w-[304px]">
-      <ul class="steps steps-vertical">
+    <div class="w-[360px]">
+      <ul class="steps steps-vertical text-base-200">
         <li class="step step-primary text-base-100">Profile</li>
         <li
-          class="step text-base-200"
+          class="step"
           [ngClass]="{
             'step-primary text-base-100': step === 2
           }"
         >
-          What your are loking for?
+          What are you looking for?
         </li>
       </ul>
     </div>
@@ -209,10 +205,10 @@
         </div>
         <div class="pb-6 md:pl-24">
           <div class="pb-6">
-            <p class="text-primary font-mono font-bold pb-2">Description</p>
+            <p class="text-primary font-mono font-bold pb-2">About</p>
             <textarea
               class="h-44 w-full outline-none p-2 text-base-100 bg-neutral"
-              [value]="description"
+              [value]="about"
               [disabled]="!editProfileSectionOne"
             ></textarea>
           </div>
@@ -304,63 +300,3 @@
   </div>
   }
 </form>
-<dialog id="create_job_modal" class="modal">
-  <div class="modal-box">
-    <div class="flex justify-between items-center pb-14">
-      <h2
-        class="text-base-100 mx-auto font-sans md:text-4xl text-2xl font-medium"
-      >
-        Create job
-      </h2>
-      <i
-        class="bi bi-x-lg text-base-100 cursor-pointer"
-        onclick="create_job_modal.close()"
-      ></i>
-    </div>
-    <form method="dialog" [formGroup]="createJobForm">
-      <wagademy-form-field
-        [control]="createJobForm.controls.jobName"
-        label="Job title"
-      >
-        <wagademy-input formControlName="jobName"></wagademy-input>
-      </wagademy-form-field>
-      <div class="pt-6">
-        <wagademy-form-field
-          [control]="createJobForm.controls.description"
-          label="Description"
-        >
-          <textarea
-            class="h-44 w-full outline-none p-2 text-base-100 bg-neutral"
-            formControlName="description"
-          ></textarea>
-        </wagademy-form-field>
-      </div>
-      <div class="pt-6">
-        <wagademy-form-field
-          [control]="createJobForm.controls.contract"
-          label="Contract"
-        >
-          <wagademy-select formControlName="contract"> </wagademy-select>
-        </wagademy-form-field>
-      </div>
-      <div class="pt-6 pb-14">
-        <wagademy-form-field
-          [control]="createJobForm.controls.allocation"
-          label="Allocation "
-        >
-          <wagademy-select formControlName="allocation"> </wagademy-select>
-        </wagademy-form-field>
-      </div>
-      <div class="md:flex gap-4 w-full">
-        <button class="btn btn-primary btn-outline md:w-[210px] w-full">
-          Create
-        </button>
-        <div class="md:pt-0 pt-4">
-          <button class="btn btn-primary md:w-[210px] w-full">
-            Create And Publish
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-</dialog>

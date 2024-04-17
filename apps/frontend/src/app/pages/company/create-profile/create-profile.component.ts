@@ -31,24 +31,18 @@ export class CreateProfileComponent {
   form = this.fb.group({
     companyName: ['', Validators.required],
     areaOfExpertise: ['', Validators.required],
-    description: ['', Validators.required],
+    about: ['', Validators.required],
     newWord: [''],
   });
   step: 1 | 2 | 3 = 1;
   areaOfInterest: string[] = [];
   newWord = '';
   companyName = 'Pandas LTDA.';
-  description =
+  about =
     'Pandas LTDA. is a leader in customized technological solutions. Specializing in software development, data analysis, and IT consulting, our technology-driven team is committed to simplifying complex processes. We prioritize excellence, offering tailor-made solutions that drive the growth and success of our clients businesses. Join us and embark on this journey towards the future of technology.';
   areaOfExpertise = 'Area of expertise';
   editProfileSectionOne = false;
   editProfileSectionTwo = false;
-  createJobForm = this.fb.group({
-    jobName: ['', Validators.required],
-    description: ['', Validators.required],
-    contract: ['', Validators.required],
-    allocation: ['', Validators.required],
-  });
 
   constructor(
     private readonly fb: FormBuilder,
