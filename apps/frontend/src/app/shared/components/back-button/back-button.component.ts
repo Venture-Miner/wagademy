@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -9,9 +10,12 @@ import { Location } from '@angular/common';
   styleUrl: './back-button.component.scss',
 })
 export class BackButtonComponent {
-  constructor(public location: Location) {}
+  @Input() routerLink: string | undefined;
+  constructor(public location: Location, private router: Router) {}
 
   back() {
-    this.location.back();
+    if (this.routerLink) {
+      this.router.navigate([this.routerLink]);
+    } else this.location.back();
   }
 }

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import {
   CreateUser,
   CreateUserResponse,
+  FindOneProfileResponse,
   FindOneUserResponse,
   RetrieveSelfResponse,
 } from '@wagademy/types';
@@ -31,6 +32,12 @@ export class UserService extends BaseHttpService {
   findCompanyProfile(id: string): Observable<FindOneUserResponse> {
     return this.http.get<FindOneUserResponse>(
       `${this.URL}/user/company-profile/${id}`
+    );
+  }
+
+  findUserProfile(id: string): Observable<FindOneProfileResponse | null> {
+    return this.http.get<FindOneProfileResponse | null>(
+      `${this.URL}/user/user-profile/${id}`
     );
   }
 }
