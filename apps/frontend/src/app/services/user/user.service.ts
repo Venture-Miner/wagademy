@@ -45,8 +45,13 @@ export class UserService extends BaseHttpService {
     const formData: FormData = new FormData();
     if (updateProfileDto.companyPhoto)
       formData.append('companyPhoto', updateProfileDto.companyPhoto as File);
+    if (updateProfileDto.backgroundPhoto)
+      formData.append(
+        'backgroundPhoto',
+        updateProfileDto.backgroundPhoto as File
+      );
     Object.keys(updateProfileDto).forEach((key) => {
-      if (key !== 'companyPhoto') {
+      if (key !== 'companyPhoto' && key !== 'backgroundPhoto') {
         formData.append(key, (updateProfileDto as any)[key]);
       }
     });

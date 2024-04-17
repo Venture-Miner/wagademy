@@ -17,7 +17,7 @@
             />
             }
           </div>
-          @if(editProfile){
+          @if(editProfile && !isUpdating){
           <div class="container flex justify-end pr-10">
             <div
               class="absolute top-1/4 rounded-full shadow z-50 w-9 h-9 flex items-center justify-center cursor-pointer"
@@ -52,7 +52,7 @@
               [src]="profilePhoto"
               alt="profile"
             />
-            } @if(editProfile){
+            } @if(editProfile && !isUpdating){
             <div
               class="absolute rounded-3xl pt-40 pr-3 w-9 h-9 flex items-center justify-center cursor-pointer"
               (click)="profilePhoto.click()"
@@ -120,7 +120,9 @@
               [disabled]="form.invalid || !validForm || isUpdating"
               (click)="updateProfile()"
             >
-              Update Profile
+              @if(isUpdating){
+              <span class="loading loading-dots"></span>
+              } @else{ Update Profile}
             </button>
           </div>
           }
