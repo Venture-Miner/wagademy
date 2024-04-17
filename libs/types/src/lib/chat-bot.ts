@@ -6,6 +6,10 @@ export type FilterChatbots = {
   mostRecent?: boolean;
 };
 
+export type FilterCompanyChatbots = {
+  status?: ChatBotStatusEnum;
+};
+
 export type CreateFineTuningJob = {
   title: string;
   description: string;

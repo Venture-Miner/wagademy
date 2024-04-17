@@ -2,8 +2,10 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
+  Param,
   Post,
   Query,
   UnauthorizedException,
@@ -18,7 +20,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CognitoUserGuard } from '../../infra';
-import { PaginationDto } from '../../shared/dtos';
+import { MongoIdDto, PaginationDto } from '../../shared/dtos';
 import { User } from '@wagademy/types';
 import { ApiFiles, DBUser } from '../../shared/decorators';
 import { ChatBotService } from './chat-bot.service';
@@ -32,12 +34,40 @@ import {
   CreateFineTuningJobDto,
   FilterChatbotsDto,
   UploadTrainingDataDto,
+  FilterCompanyChatBotsDto,
 } from './dto';
 
 @ApiTags('Chat Bot')
 @Controller('chat-bot')
 export class ChatBotController {
   constructor(private readonly chatBotService: ChatBotService) {}
+
+  @Get('company')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary:
+      'Retrieve a list of chatbots belonging to the company with optional filters.',
+    description:
+      'Fetches a list of chatbots associated with the company, with the ability to optionally filter by status.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'List of chatbots successfully retrieved.',
+    type: FindManyChatBotsResponseEntity,
+  })
+  findManyCompanyChatBots(
+    @Query() filterCompanyChatbotsDto: FilterCompanyChatBotsDto,
+    @Query() paginationDto: PaginationDto,
+    @DBUser()
+    { id: userId }: User
+  ) {
+    return this.chatBotService.findManyCompanyChatBots(
+      filterCompanyChatbotsDto,
+      paginationDto,
+      userId
+    );
+  }
 
   @Get()
   @ApiBearerAuth()
@@ -125,5 +155,21 @@ export class ChatBotController {
       { ...createFineTuningJobDto, thumbnail: thumbnail[0] },
       companyId
     );
+  }
+
+  @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Delete a chatbot.',
+    description:
+      'Deletes a chatbot and cancels any ongoing fine tuning jobs associated with it.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Chatbot successfully deleted.',
+  })
+  deleteChatBot(@Param() { id }: MongoIdDto, @DBUser() { id: userId }: User) {
+    return this.chatBotService.delete(id, userId);
   }
 }

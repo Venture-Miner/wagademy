@@ -1,25 +1,56 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '@wagademy/prisma';
 import {
   CreateFineTuningJob,
   CreateFineTuningJobResponse,
   FilterChatbots,
+  FilterCompanyChatbots,
   FindManyChatBotsResponse,
   Pagination,
   UploadTrainingDataResponse,
 } from '@wagademy/types';
-import { Prisma } from '@prisma/client';
+import { ChatBotStatusEnum, Prisma } from '@prisma/client';
 import OpenAI from 'openai';
 import { toFile } from 'openai/uploads';
 import { FileService } from '../../infra';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class ChatBotService {
+  private readonly logger = new Logger(ChatBotService.name);
+
   constructor(
     private readonly prismaService: PrismaService,
     private readonly fileService: FileService,
     private readonly openAI: OpenAI
   ) {}
+
+  @Cron('* 1 * * * *')
+  async statusCron() {
+    this.logger.debug('Checking for processing fine-tuning jobs...');
+    const processingFineTuningJobs = await this.prismaService.chatBot.findMany({
+      where: { status: ChatBotStatusEnum.PROCESSING },
+    });
+    const responses = await Promise.all(
+      processingFineTuningJobs.map(({ fineTuningJobId }) => {
+        return this.openAI.fineTuning.jobs.retrieve(fineTuningJobId);
+      })
+    );
+    responses.forEach(async (response) => {
+      const { status, id: fineTuningJobId } = response;
+      if (status === 'succeeded') {
+        await this.prismaService.chatBot.update({
+          where: { fineTuningJobId },
+          data: { status: ChatBotStatusEnum.SUCCESS },
+        });
+      } else if (status === 'failed') {
+        await this.prismaService.chatBot.update({
+          where: { fineTuningJobId },
+          data: { status: ChatBotStatusEnum.FAIL },
+        });
+      }
+    });
+  }
 
   async findManyChatBots(
     { featured, invited, mostRecent }: FilterChatbots,
@@ -27,7 +58,9 @@ export class ChatBotService {
     userId: string
   ): Promise<FindManyChatBotsResponse> {
     const orderBy: Prisma.ChatBotOrderByWithRelationInput[] = [];
-    const AND: Prisma.ChatBotWhereInput[] = [];
+    const AND: Prisma.ChatBotWhereInput[] = [
+      { status: ChatBotStatusEnum.SUCCESS },
+    ];
     if (featured) {
       orderBy.push({ views: 'desc' });
     }
@@ -49,7 +82,27 @@ export class ChatBotService {
     return { count, chatBots };
   }
 
-  // The size of all the files uploaded by one organization can be up to 100 GB.
+  async findManyCompanyChatBots(
+    { status }: FilterCompanyChatbots,
+    { skip, take }: Pagination,
+    userId: string
+  ): Promise<FindManyChatBotsResponse> {
+    const AND: Prisma.ChatBotWhereInput[] = [{ userId }];
+    if (status) {
+      AND.push({ status });
+    }
+    const [count, chatBots] = await Promise.all([
+      this.prismaService.chatBot.count({ where: { AND } }),
+      this.prismaService.chatBot.findMany({
+        where: { AND },
+        skip,
+        take,
+      }),
+    ]);
+    return { count, chatBots };
+  }
+
+  // REVIEW: The size of all the files uploaded by one organization can be up to 100 GB.
   async uploadTrainingData(
     file: Express.Multer.File,
     userId: string
@@ -80,9 +133,9 @@ export class ChatBotService {
       },
     });
     if (!trainingData)
-      throw new UnauthorizedException('Training data not found.');
+      throw new BadRequestException('Training data not found.');
     const { fileId } = trainingData;
-    const { id } = await this.openAI.fineTuning.jobs.create({
+    const { id: fineTuningJobId } = await this.openAI.fineTuning.jobs.create({
       training_file: fileId,
       model: 'gpt-3.5-turbo',
     });
@@ -92,7 +145,7 @@ export class ChatBotService {
     );
     return this.prismaService.chatBot.create({
       data: {
-        fineTuningJobId: id,
+        fineTuningJobId,
         thumbnail: {
           create: {
             key,
@@ -105,5 +158,17 @@ export class ChatBotService {
         },
       },
     });
+  }
+
+  async delete(id: string, userId: string) {
+    const chatBot = await this.prismaService.chatBot.findFirst({
+      where: { id, user: { id: userId } },
+    });
+    if (!chatBot) throw new BadRequestException('Chatbot not found.');
+    const { status, fineTuningJobId } = chatBot;
+    await this.prismaService.chatBot.delete({ where: { id } });
+    if (status === 'PROCESSING') {
+      await this.openAI.fineTuning.jobs.cancel(fineTuningJobId);
+    }
   }
 }

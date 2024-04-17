@@ -139,7 +139,7 @@ model JobInterviewChat {
 
 model ChatBot {
   id              String            @id @default(auto()) @map("_id") @db.ObjectId
-  fineTuningJobId String
+  fineTuningJobId String            @unique
   title           String
   description     String
   user            User              @relation(fields: [userId], references: [id])
