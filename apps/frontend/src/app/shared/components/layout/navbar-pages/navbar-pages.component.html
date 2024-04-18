@@ -24,6 +24,7 @@
         ></i>
       </button>
     </div>
+    @if(accountType === PHYSICAL_PERSON){
     <div>
       <ul
         [ngClass]="{ hidden: !showMenu }"
@@ -64,17 +65,197 @@
             class="bi bi-bell-fill hover:text-primary text-base-200 hover:font-bold"
           ></i>
         </li>
-        <li>
-          <img
-            [src]="
-              existingProfileImage ||
-              './assets/img/images/img-default-profile.svg'
-            "
-            class="w-10 h-10 rounded-full border border-primary"
-            alt="profile"
-          />
+        <li class="relative">
+          <button
+            aria-haspopup="true"
+            aria-expanded="true"
+            id="menu"
+            (click)="toggleDropdown()"
+          >
+            <img
+              [src]="
+                existingProfileImage ||
+                './assets/img/images/img-default-profile.svg'
+              "
+              class="w-10 h-10 rounded-full border border-primary"
+              alt="profile"
+            />
+          </button>
+          @if(openMenu){
+          <div
+            class="mt-2 rounded-lg absolute w-36 bg-white z-10 xl:right-1/2 xl:transform shadow-lg"
+          >
+            <div
+              class="p-4"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="menu"
+            >
+              <div class="py-3">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/profile']"
+                    >Profile</a
+                  >
+                </div>
+              </div>
+              <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/job-applications-all']"
+                    >Applications</a
+                  >
+                </div>
+              </div>
+              <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/credits']"
+                    >Credits</a
+                  >
+                </div>
+              </div>
+              <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/settings']"
+                    >Settings</a
+                  >
+                </div>
+              </div>
+              <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <button>Logout</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          }
         </li>
       </ul>
     </div>
+    } @if(accountType === COMPANY){
+    <div>
+      <ul
+        [ngClass]="{ hidden: !showMenu }"
+        class="xl:flex grid items-center justify-end xl:gap-4 gap-2"
+      >
+        <li
+          class="hover:text-primary text-base-100 text-sm font-mono pt-2 xl:pt-0"
+        >
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/home-company']"
+          >
+            Home
+          </a>
+        </li>
+        <li class="hover:text-primary text-base-200 text-sm font-mono">
+          <a routerLinkActive="active-link" [routerLink]="['/pages/courses']">
+            Courses
+          </a>
+        </li>
+        <li class="hover:text-primary text-base-200 text-sm font-mono">
+          <a routerLinkActive="active-link" [routerLink]="['pages/hiring']">
+            Hiring
+          </a>
+        </li>
+        <li class="hover:text-primary text-base-100 text-sm font-mono">
+          <a routerLinkActive="active-link" [routerLink]="['/pages/chatbot']">
+            GPTs
+          </a>
+        </li>
+        <li class="xl:px-4 cursor-pointer pl-3">
+          <i
+            class="bi bi-bell-fill hover:text-primary text-base-200 hover:font-bold"
+          ></i>
+        </li>
+        <li class="relative">
+          <button
+            aria-haspopup="true"
+            aria-expanded="true"
+            id="menu"
+            (click)="toggleDropdown()"
+          >
+            <img
+              [src]="
+                existingProfileImage ||
+                './assets/img/images/img-default-profile.svg'
+              "
+              class="w-10 h-10 rounded-full border border-primary"
+              alt="profile"
+            />
+          </button>
+          @if(openMenu){
+          <div
+            class="mt-2 rounded-lg absolute w-36 bg-white z-10 xl:right-1/2 xl:transform shadow-lg"
+          >
+            <div
+              class="p-4"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="menu"
+            >
+              <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/company-profile']"
+                    >Profile</a
+                  >
+                </div>
+              </div>
+              <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/credits']"
+                    >Credits</a
+                  >
+                </div>
+              </div>
+              <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/settings']"
+                    >Settings</a
+                  >
+                </div>
+              </div>
+              <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <button>Logout</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </li>
+      </ul>
+    </div>
+    }
   </div>
 </nav>

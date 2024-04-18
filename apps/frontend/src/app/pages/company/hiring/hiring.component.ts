@@ -169,7 +169,7 @@ export class HiringComponent implements OnInit {
       next: (user) => {
         this.isVerifying = false;
 
-        if (!user.companyProfile) {
+        if (!user?.companyProfile) {
           this.incompleteProfile = true;
           setTimeout(() => {
             // Trick to delay the operation until after the current call stack has cleared. This will give Angular time to update the DOM.
@@ -313,5 +313,27 @@ export class HiringComponent implements OnInit {
       message: 'Success! Job successfully published.',
       type: 'success',
     });
+  }
+
+  copyLink(id: string) {
+    const currentUrl = window.location.href;
+
+    const baseUrl = currentUrl.split('/').slice(0, 3).join('/');
+
+    const link = `${baseUrl}/pages/job-details?id=${id}`;
+    navigator.clipboard
+      .writeText(link)
+      .then(() => {
+        this.toastService.showToast({
+          message: 'Link copied to clipboard!',
+          type: 'success',
+        });
+      })
+      .catch(() => {
+        this.toastService.showToast({
+          message: 'Failed to copy link to clipboard.',
+          type: 'error',
+        });
+      });
   }
 }

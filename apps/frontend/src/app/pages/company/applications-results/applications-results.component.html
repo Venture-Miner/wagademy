@@ -1,0 +1,128 @@
+<div class="container mx-auto min-h-screen px-3">
+  <wagademy-back-button></wagademy-back-button>
+  <div class="lg:flex justify-between gap-8">
+    <div class="bg-neutral p-6 w-full rounded-2xl">
+      @for (history of chatHistory; track history) {
+      <div class="font-mono">
+        @if(history.role==='assistant'){
+        <p class="font-bold text-base-100">{{ history.content }}</p>
+        } @if(history.role==='user'){
+        <p class="text-base-100 pb-6">{{ history.content }}</p>
+        }
+      </div>
+      }
+    </div>
+    <div class="pt-6 lg:pt-2">
+      <div class="bg-neutral rounded-2xl p-4 lg:w-[416px] w-full">
+        <div class="flex gap-2 pb-6 items-start">
+          @if(interviewResult.jobApplication.user.userProfile?.profilePhoto?.url){
+          <img
+            class="rounded-full w-12 h-12 border-primary border-[2px]"
+            [src]="
+              interviewResult.jobApplication.user.userProfile?.profilePhoto?.url
+            "
+            alt="profile user"
+          />
+          } @else {
+          <img [src]="fallbackImage" alt="profile user" />
+          }
+          <div class="font-mono pb-1 ml-1">
+            <p class="text-base-100 font-bold">
+              {{ interviewResult.jobApplication.user.userProfile?.name }}
+            </p>
+            <div class="flex gap-2">
+              <i class="bi bi-envelope text-primary"></i>
+              <p class="text-base-100">
+                {{ interviewResult.jobApplication.user.userProfile?.email }}
+              </p>
+            </div>
+            <div class="flex gap-2 pb-6">
+              <i class="bi bi-telephone text-primary"></i>
+              <p class="text-base-100">
+                {{
+                  interviewResult.jobApplication.user.userProfile?.contactNumber
+                }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <button
+            class="text-base-100"
+            [routerLink]="['/pages/applicant-profile']"
+            [queryParams]="{userProfileId,jobApplicationId}"
+          >
+            View profile
+          </button>
+        </div>
+      </div>
+      <div class="pt-10">
+        <div class="bg-neutral rounded-2xl p-4 lg:w-[416px] h-[264px] w-full">
+          <div class="flex gap-2 pb-6">
+            <div class="font-mono">
+              <p class="text-base-100 font-bold pb-2">
+                {{ interviewResult.jobApplication.job.title }}
+              </p>
+              <p class="text-base-100 overflow-hidden line-clamp-3">
+                {{ interviewResult.jobApplication.job.description }}
+              </p>
+              <div class="flex gap-2 pt-6">
+                <i class="bi bi-clock text-primary"></i>
+                <p class="pb-2 text-base-100">
+                  {{ employmentClassification }}
+                </p>
+              </div>
+              <div class="flex gap-2 pb-6">
+                <i class="bi bi-laptop text-primary"></i>
+                <p class="text-base-100">
+                  {{ allocation }}
+                </p>
+              </div>
+              <div class="flex justify-end">
+                <button
+                  class="text-base-100"
+                  onclick="view_job_modal.showModal()"
+                >
+                  View job
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<dialog id="view_job_modal" class="modal">
+  <div class="modal-box">
+    <div class="flex justify-between items-center pb-14">
+      <h2
+        class="text-base-100 mx-auto font-sans md:text-4xl text-2xl font-medium"
+      >
+        View job
+      </h2>
+      <i
+        class="bi bi-x-lg text-base-100 cursor-pointer"
+        onclick="view_job_modal.close()"
+      ></i>
+    </div>
+    <form method="dialog">
+      <div class="font-mono">
+        <p class="text-base-100 font-bold pb-2">
+          {{ interviewResult.jobApplication.job.title }}
+        </p>
+        <p class="pb-6 text-base-100">
+          {{ interviewResult.jobApplication.job.description }}
+        </p>
+        <div class="flex gap-2">
+          <i class="bi bi-clock text-primary"></i>
+          <p class="pb-2 text-base-100">{{ employmentClassification }}</p>
+        </div>
+        <div class="flex gap-2 pb-6">
+          <i class="bi bi-laptop text-primary"></i>
+          <p class="text-base-100">{{ allocation }}</p>
+        </div>
+      </div>
+    </form>
+  </div>
+</dialog>

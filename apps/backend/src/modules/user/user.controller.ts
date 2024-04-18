@@ -167,8 +167,12 @@ export class UserController {
     status: HttpStatus.OK,
     description: 'Company profile retrieved successfully.',
   })
-  async findCompanyProfile(@Param() { id }: MongoIdDto) {
-    return this.userService.findCompanyProfile(id);
+  async findCompanyProfile(
+    @Param() { id }: MongoIdDto,
+    @DBUser()
+    { id: userId, accountType }: User
+  ) {
+    return this.userService.findCompanyProfile(id, userId, accountType);
   }
 
   @Get('self')
@@ -224,16 +228,14 @@ export class UserController {
     @DBUser()
     { id: userId }: User,
     @UploadedFiles()
-    {
-      profilePhoto,
-    }: {
+    photo: {
       profilePhoto?: Express.Multer.File[];
     },
     @Body() updateProfileDto: UpdateProfileDto
   ) {
     return this.userService.updateUserProfile(userId, {
       ...updateProfileDto,
-      profilePhoto,
+      profilePhoto: photo?.profilePhoto,
     });
   }
 
@@ -249,21 +251,21 @@ export class UserController {
     status: HttpStatus.OK,
     description: 'Company profile successfully updated.',
   })
-  @ApiFiles(['companyPhoto'])
+  @ApiFiles(['companyPhoto', 'backgroundPhoto'])
   async updateCompanyProfile(
     @DBUser()
     { id: userId }: User,
     @UploadedFiles()
-    {
-      companyPhoto,
-    }: {
+    photo: {
       companyPhoto?: Express.Multer.File[];
+      backgroundPhoto?: Express.Multer.File[];
     },
     @Body() updateCompanyProfileDto: UpdateCompanyProfileDto
   ) {
     return this.userService.updateCompanyProfile(userId, {
       ...updateCompanyProfileDto,
-      companyPhoto,
+      companyPhoto: photo?.companyPhoto,
+      backgroundPhoto: photo?.backgroundPhoto,
     });
   }
 }

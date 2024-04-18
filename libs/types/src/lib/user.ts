@@ -72,3 +72,13 @@ export type UpdateUser = {
   name?: string;
   walletAddress?: string;
 };
+
+export type ImageType = 'backgroundPhoto' | 'companyPhoto';
+
+export type UserProfileOnHandlingImage =
+  | {
+      [K in ImageType]?: {
+        key: string;
+      };
+    }
+  | null;
