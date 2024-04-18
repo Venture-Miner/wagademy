@@ -1,5 +1,7 @@
 @if(step === 1) {
 <wagademy-user-data
+  [profilePhoto]="profilePhoto"
+  (imageUploaded)="onImageUploaded($event)"
   [userData]="userData"
   (nextStep)="step = 2"
 ></wagademy-user-data>
@@ -35,7 +37,10 @@
     Confirm your details
   </p>
   <div class="mb-4">
-    <wagademy-photo-upload [size]="'small'"></wagademy-photo-upload>
+    <wagademy-photo-upload
+      [profilePhoto]="profilePhoto"
+      [size]="'small'"
+    ></wagademy-photo-upload>
   </div>
   <p class="text-xl font-bold text-primary mb-6">Profile</p>
   @if (editMode) {
@@ -91,7 +96,6 @@
           ></wagademy-select>
         </wagademy-form-field>
       </div>
-
       <div class="md:w-1/2">
         <wagademy-form-field
           [control]="userData.controls['state']"
@@ -278,7 +282,6 @@
       <span class="bg-base-200 w-1 h-1 rounded-full"></span>
       <p>{{ item.endDate }}</p>
     </div>
-
     <p class="text-neutral-950">{{ item.description }}</p>
   </div>
   }
@@ -427,7 +430,6 @@
       <span class="bg-base-200 w-1 h-1 rounded-full"></span>
       <p>{{ item.endDate }}</p>
     </div>
-
     <p class="text-neutral-950">{{ item.description }}</p>
   </div>
   }

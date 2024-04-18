@@ -1,6 +1,10 @@
 <div class="flex flex-col md:flex-row min-h-screen pt-8">
   <div class="pl-8 lg:pl-20">
-    <wagademy-photo-upload [size]="'big'"></wagademy-photo-upload>
+    <wagademy-photo-upload
+      [profilePhoto]="profilePhoto"
+      (onImageUploaded)="onImageUploaded($event)"
+      [size]="'big'"
+    ></wagademy-photo-upload>
   </div>
   <div class="md:w-1/2 px-8">
     <button class="text-primary px-2 mt-3 md:mt-0 mb-3">
@@ -17,7 +21,6 @@
           </wagademy-input>
         </wagademy-form-field>
       </div>
-
       <div class="mb-4">
         <wagademy-form-field
           [control]="userData.controls['email']"
@@ -31,7 +34,6 @@
           </wagademy-input>
         </wagademy-form-field>
       </div>
-
       <div class="flex flex-col md:flex-row md:gap-10">
         <div class="md:w-1/2 mb-4">
           <wagademy-form-field
@@ -42,7 +44,6 @@
             </wagademy-input>
           </wagademy-form-field>
         </div>
-
         <div class="md:w-1/2 mb-4">
           <wagademy-form-field
             [control]="userData.controls['cellphone']"
@@ -57,7 +58,6 @@
           </wagademy-form-field>
         </div>
       </div>
-
       <div class="flex flex-col md:flex-row md:gap-10">
         <div class="md:w-1/2 mb-4">
           <wagademy-form-field
@@ -70,7 +70,6 @@
             ></wagademy-select>
           </wagademy-form-field>
         </div>
-
         <div class="md:w-1/2 mb-4">
           <wagademy-form-field
             [control]="userData.controls['state']"
@@ -83,14 +82,12 @@
           </wagademy-form-field>
         </div>
       </div>
-
       <div>
         <wagademy-form-field label="About" [control]="userData.controls.about">
           <wagademy-text-area formControlName="about"></wagademy-text-area>
         </wagademy-form-field>
       </div>
     </form>
-
     <div class="flex justify-end mt-14">
       <button
         class="btn btn-primary text-base-100 text-xl w-48"

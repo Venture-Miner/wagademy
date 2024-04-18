@@ -37,9 +37,9 @@ export type UserData = {
 })
 export class UserDataComponent {
   @Input() userData!: FormGroup<UserData>;
+  @Input() profilePhoto!: string | undefined;
   @Output() nextStep = new EventEmitter<void>();
-  @Output() imageUploaded = new EventEmitter<File>();
-  imageData: File | undefined;
+  @Output() imageUploaded = new EventEmitter<string>();
 
   mockCountries: SelectItem<string>[] = [
     { value: 'BR', label: 'Brazil' },
@@ -50,4 +50,8 @@ export class UserDataComponent {
     { value: 'MG', label: 'Minas Gerais' },
     { value: 'TX', label: 'Texas' },
   ];
+
+  onImageUploaded(imageUrl: string) {
+    this.imageUploaded.emit(imageUrl);
+  }
 }

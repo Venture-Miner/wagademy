@@ -55,6 +55,8 @@ export class UserProfileComponent {
     { value: 'TX', label: 'Texas' },
   ];
 
+  profilePhoto: string | undefined;
+
   editMode = false;
 
   step = 1;
@@ -186,5 +188,9 @@ export class UserProfileComponent {
     if (index >= 0 && index < this.skills.length) {
       this.skills.splice(index, 1);
     }
+  }
+
+  onImageUploaded(imageUrl: string) {
+    this.profilePhoto = imageUrl;
   }
 }

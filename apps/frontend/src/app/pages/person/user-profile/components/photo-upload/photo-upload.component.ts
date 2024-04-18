@@ -9,19 +9,20 @@ import { CommonModule } from '@angular/common';
   styleUrl: './photo-upload.component.css',
 })
 export class PhotoUploadComponent {
-  @Input() profilePhoto: File | undefined;
+  @Input() profilePhoto: string | undefined;
   @Input() size: 'small' | 'big' = 'small';
-  @Output() imageUploaded = new EventEmitter<File>();
+  @Output() onImageUploaded = new EventEmitter<string>();
 
   handleFileInput(event: any) {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.profilePhoto = e.target.result;
+        const fileUrl = URL.createObjectURL(file);
+        this.profilePhoto = fileUrl;
+        this.onImageUploaded.emit(fileUrl);
       };
       reader.readAsDataURL(file);
-      this.imageUploaded.emit(file);
     }
   }
 }
