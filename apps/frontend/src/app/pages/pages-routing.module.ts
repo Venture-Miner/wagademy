@@ -128,8 +128,12 @@ const routes: Routes = [
           ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
         path: 'complete-profile',
-        component: CompleteProfileComponent,
+        loadComponent: () =>
+          import('./person/user-profile/complete-profile.component').then(
+            (c) => c.CompleteProfileComponent
+          ),
       },
     ],
   },
