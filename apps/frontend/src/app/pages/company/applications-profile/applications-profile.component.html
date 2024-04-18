@@ -1,0 +1,159 @@
+<div class="container mx-auto min-h-screen px-3">
+  <div class="md:flex items-start gap-40">
+    <wagademy-back-button></wagademy-back-button>
+    <div class="py-8">
+      <div class="flex justify-between pb-4">
+        <div class="sm:flex gap-4">
+          <div class="flex justify-start pb-6 md:pb-0">
+            <div
+              class="container flex justify-end bg-neutral border border-neutral rounded-2xl w-[97px] h-[97px]"
+            >
+              @if(profilePhoto){
+              <img
+                class="rounded-2xl object-cover w-24 h-24 border border-base-200"
+                alt="profile"
+                [src]="profilePhoto"
+              />
+              } @if(!profilePhoto.length){
+              <div
+                class="w-24 h-24 bg-neutral rounded-2xl border border-base-200"
+              ></div>
+              }
+            </div>
+          </div>
+          <div>
+            <h3 class="font-sans font-medium text-base-100 text-2xl pb-2">
+              {{ userProfile.name }}
+            </h3>
+            <div class="flex gap-2 pb-2">
+              <i class="bi bi-envelope text-primary"></i>
+              <p class="font-mono text-base-100">{{ userProfile.email }}</p>
+            </div>
+            <div class="flex gap-2 pb-2">
+              <i class="bi bi-geo text-primary"></i>
+              <p class="font-mono text-base-100">{{ userProfile.state }}</p>
+            </div>
+          </div>
+          <div class="pt-2">
+            <div class="flex gap-2 pb-2">
+              <i class="bi bi-cake text-primary"></i>
+              <p class="font-mono text-base-100">
+                {{ userProfile.dateOfBirth | date : 'dd/MM/yyyy' }}
+              </p>
+            </div>
+            <div class="flex gap-2 pb-2">
+              <i class="bi bi-telephone text-primary"></i>
+              <p class="font-mono text-base-100">
+                {{ userProfile.contactNumber }}
+              </p>
+            </div>
+            <div class="flex gap-2 pb-2">
+              <i class="bi bi-globe text-primary"></i>
+              <p class="font-mono text-base-100">{{ userProfile.country }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pb-12">
+        <p class="text-base-100 font-mono font-bold pb-2">About</p>
+        <p class="font-mono text-base-100">{{ userProfile.about }}</p>
+      </div>
+      <div>
+        <h3 class="text-base-100 font-sans font-medium text-2xl pb-6">
+          Education
+        </h3>
+        @for (education of userProfile.education; track $index) {
+        <p class="text-base-100 font-mono font-bold pb-1">
+          {{ education.course }}
+        </p>
+        <p class="text-base-100">
+          <span class="font-semibold font-sans">{{
+            education.degree.toUpperCase()
+          }}</span>
+          {{ education.institution }}
+        </p>
+        <p class="text-base-100 text-sm pb-4">
+          {{ education.startDate | date : 'dd/MM/yyyy' }} -
+          {{ education.endDate | date : 'dd/MM/yyyy' }}
+        </p>
+        <p class="text-base-100 pb-12">{{ education.description }}</p>
+        }
+        <div>
+          <h3 class="text-base-100 font-sans font-medium text-2xl pb-6">
+            Professional experience
+          </h3>
+          @for (professionalExperience of userProfile.professionalExperience;
+          track $index) {
+          <p class="text-base-100 font-mono font-bold pb-1">
+            {{ professionalExperience.jobTitle }}
+          </p>
+          <p class="text-base-100">
+            {{ professionalExperience.company }}
+          </p>
+          @if(professionalExperience.currentlyWorkingHere){
+          <p class="text-base-100 text-sm pb-4">
+            {{ professionalExperience.startDate | date : 'dd/MM/yyyy' }} -
+            {{ professionalExperience.currentlyWorkingHere }}
+          </p>
+          }@else {
+          <p class="text-base-100 text-sm pb-4">
+            {{ professionalExperience.startDate | date : 'dd/MM/yyyy' }} -
+            {{ professionalExperience.endDate | date : 'dd/MM/yyyy' }}
+          </p>
+          }
+          <p class="text-base-100 pb-12">
+            {{ professionalExperience.description }}
+          </p>
+          }
+        </div>
+        <div class="pb-12">
+          <h3 class="text-base-100 font-sans font-medium text-2xl pb-6">
+            Area of expertise
+          </h3>
+          <div class="flex flex-wrap gap-4">
+            @for (areaOfExpertise of userProfile.areasOfExpertise; track
+            areaOfExpertise) {
+            <div
+              class="bg-neutral rounded-3xl text-base-100 font-sm font-mono py-1 px-2"
+            >
+              {{ areaOfExpertise }}
+            </div>
+            }
+          </div>
+        </div>
+        <div class="pb-10">
+          <h3 class="text-base-100 font-sans font-medium text-2xl pb-6">
+            Skills and competences
+          </h3>
+          <div class="flex flex-wrap gap-4">
+            @for (skillsAndCompetencies of userProfile.skillsAndCompetencies;
+            track skillsAndCompetencies) {
+            <div
+              class="bg-neutral rounded-3xl text-base-100 font-sm font-mono py-1 px-2"
+            >
+              {{ skillsAndCompetencies }}
+            </div>
+            }
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <button
+            class="btn btn-primary w-64"
+            [disabled]="jobApplicationStatus !== 'SUBSCRIBED'"
+            onclick="modal.showModal()"
+          >
+            Invite To Interview With AI
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<wagademy-modal
+  title="Invite"
+  actionButtonLabel="Yes, send invite"
+  message="Are you sure you want to send the interview invitation to this candidate?"
+  (actionButtonClick)="sendInvite()"
+  [isLoading]="isLoading"
+>
+</wagademy-modal>

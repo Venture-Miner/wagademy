@@ -17,14 +17,14 @@ export interface SelectItem<T> {
 
 @Component({
   standalone: true,
-  imports: [NgFor, NgClass],
+  imports: [NgClass, NgFor],
   selector: 'wagademy-select',
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss',
 })
 export class SelectComponent implements ControlValueAccessor {
   @Input() items: SelectItem<string | number | boolean>[] = [];
-  @Input() placeholder = 'Select your option';
+  @Input() placeholder = 'Select';
 
   @ViewChild('select', { static: true, read: ElementRef })
   elementRef!: ElementRef;

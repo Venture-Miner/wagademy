@@ -6,10 +6,12 @@ import { CognitoUserGuard, CognitoUserStrategy, FileModule } from '../infra';
 import { PrismaModule } from '@wagademy/prisma';
 import { UserModule } from '../modules/user/user.module';
 import { JobModule } from '../modules/job/job.module';
+import { ChatModule } from '../modules/chat/chat.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    ChatModule,
     FileModule,
     JobModule,
     PrismaModule,

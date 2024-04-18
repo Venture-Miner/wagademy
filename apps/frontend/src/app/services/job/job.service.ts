@@ -2,13 +2,25 @@ import { HttpClient } from '@angular/common/http';
 import { BaseHttpService } from '../base-http/base-http.service';
 import { Observable } from 'rxjs';
 import {
+  CreateJob,
   CreateJobApplication,
   CreateJobApplicationResponse,
+  CreateJobResponse,
+  FilterCompanyJobs,
   FilterJobs,
+  FindManyJobsCompanyView,
+  FilterUserJobApplications,
+  FindManyJobApplicationsUserView,
   FindManyJobsUserView,
   FindOneJobUserViewResponse,
   JobUserView,
   Pagination,
+  UpdateJob,
+  UpdateJobResponse,
+  FindManyJobApplicationsCompanyView,
+  FilterCompanyJobApplications,
+  FindOneJobApplicationCompanyView,
+  GetJobInterviewResultResponse,
 } from '@wagademy/types';
 import { Injectable } from '@angular/core';
 
@@ -18,6 +30,10 @@ import { Injectable } from '@angular/core';
 export class JobService extends BaseHttpService {
   constructor(private readonly http: HttpClient) {
     super();
+  }
+
+  create(createJobDto: CreateJob): Observable<CreateJobResponse> {
+    return this.http.post<CreateJobResponse>(`${this.URL}/job`, createJobDto);
   }
 
   createJobApplication(
@@ -41,11 +57,74 @@ export class JobService extends BaseHttpService {
     );
   }
 
+  findManyJobsCompanyView(
+    filterCompanyJobsDto: FilterCompanyJobs,
+    paginationDto: Pagination
+  ): Observable<FindManyJobsCompanyView> {
+    return this.http.get<FindManyJobsCompanyView>(`${this.URL}/job`, {
+      params: { ...filterCompanyJobsDto, ...paginationDto },
+    });
+  }
+
+  findManyJobApplicationsUserView(
+    filterUserJobApplicationsDto: FilterUserJobApplications,
+    paginationDto: Pagination
+  ): Observable<FindManyJobApplicationsUserView> {
+    return this.http.get<FindManyJobApplicationsUserView>(
+      `${this.URL}/job/user-job-applications`,
+      {
+        params: { ...filterUserJobApplicationsDto, ...paginationDto },
+      }
+    );
+  }
+
+  findManyJobApplicationsCompanyView(
+    filterCompanyJobApplicationsDto: FilterCompanyJobApplications,
+    paginationDto: Pagination
+  ): Observable<FindManyJobApplicationsCompanyView> {
+    return this.http.get<FindManyJobApplicationsCompanyView>(
+      `${this.URL}/job/job-applications`,
+      {
+        params: { ...filterCompanyJobApplicationsDto, ...paginationDto },
+      }
+    );
+  }
+
   findOneJobUserView(
     id: string
   ): Observable<FindOneJobUserViewResponse | null> {
     return this.http.get<FindOneJobUserViewResponse | null>(
       `${this.URL}/job/job-user-view/${id}`
+    );
+  }
+
+  findOneJobApplicationCompanyView(
+    id: string
+  ): Observable<FindOneJobApplicationCompanyView | null> {
+    return this.http.get<FindOneJobApplicationCompanyView | null>(
+      `${this.URL}/job/job-application/${id}`
+    );
+  }
+
+  getJobInterviewResult(
+    id: string
+  ): Observable<GetJobInterviewResultResponse | null> {
+    return this.http.get<GetJobInterviewResultResponse | null>(
+      `${this.URL}/job/job-interview-result/${id}`
+    );
+  }
+
+  update(id: string, updateJobDto: UpdateJob): Observable<UpdateJobResponse> {
+    return this.http.patch<UpdateJobResponse>(
+      `${this.URL}/job/${id}`,
+      updateJobDto
+    );
+  }
+
+  inviteToInterview(id: string): Observable<UpdateJobResponse> {
+    return this.http.patch<UpdateJobResponse>(
+      `${this.URL}/job/invite-to-interview/${id}`,
+      {}
     );
   }
 

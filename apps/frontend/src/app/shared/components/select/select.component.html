@@ -6,7 +6,9 @@
   (blur)="onBlur()"
 >
   <option disabled selected value="">{{ placeholder }}</option>
-  <option *ngFor="let item of items" [value]="item.value">
+  @for (item of items; track $index) {
+  <option [value]="item.value">
     {{ item.label }}
   </option>
+  }
 </select>

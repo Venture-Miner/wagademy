@@ -25,11 +25,14 @@ import {
   ConfigureAIQuestions,
   FindManyJobApplicationsUserView,
   FilterUserJobApplications,
+  GetJobInterviewResultResponse,
+  FindOneJobApplicationCompanyView,
 } from '@wagademy/types';
 import { PrismaService } from '@wagademy/prisma';
 import { Prisma } from '@prisma/client';
 import { JobUserViewSelect } from '../../shared/select/job-user-view';
 import { faker } from '@faker-js/faker';
+import { getJobInterviewResultIncludes } from '../../shared/include';
 
 @Injectable()
 export class JobService {
@@ -48,7 +51,16 @@ export class JobService {
       );
     return this.prismaService.job.create({
       data: { ...createJob, company: { connect: { id: companyId } } },
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -138,14 +150,29 @@ export class JobService {
         orderBy,
         skip,
         take,
-        include: { _count: { select: { jobApplications: true } } },
+        include: {
+          _count: { select: { jobApplications: true } },
+          company: {
+            select: {
+              companyProfile: {
+                select: { companyPhoto: { select: { url: true } } },
+              },
+            },
+          },
+        },
       }),
     ]);
     return { count, jobs };
   }
 
   async findManyJobApplicationsCompanyView(
-    { interviewed, invited, mostRecent, search }: FilterCompanyJobApplications,
+    {
+      interviewed,
+      invited,
+      mostRecent,
+      search,
+      jobId,
+    }: FilterCompanyJobApplications,
     { skip, take }: Pagination,
     userId: string
   ): Promise<FindManyJobApplicationsCompanyView> {
@@ -168,6 +195,7 @@ export class JobService {
     if (invited)
       AND.push({ applicationStatus: JobApplicationStatusEnum.INVITED });
     if (mostRecent) orderBy.push({ createdAt: 'desc' });
+    if (jobId) AND.push({ jobId });
     const where = { AND };
     const [count, jobApplications] = await Promise.all([
       this.prismaService.jobApplication.count({ where }),
@@ -190,6 +218,7 @@ export class JobService {
             },
           },
           job: { select: { id: true, title: true } },
+          jobInterviewChat: { select: { id: true } },
         },
       }),
     ]);
@@ -206,8 +235,21 @@ export class JobService {
     if (invited)
       AND.push({ applicationStatus: JobApplicationStatusEnum.INVITED });
     const where = { AND };
-    const [count, jobApplications] = await Promise.all([
+
+    const countWhere = !invited
+      ? {
+          AND: [
+            { userId },
+            { applicationStatus: JobApplicationStatusEnum.INVITED },
+          ],
+        }
+      : { userId };
+
+    const [count, countWithFilter, jobApplications] = await Promise.all([
       this.prismaService.jobApplication.count({ where }),
+      this.prismaService.jobApplication.count({
+        where: countWhere,
+      }),
       this.prismaService.jobApplication.findMany({
         where,
         skip,
@@ -222,7 +264,7 @@ export class JobService {
         },
       }),
     ]);
-    return { count, jobApplications };
+    return { count, countWithFilter, jobApplications };
   }
 
   findOneJobUserView(
@@ -235,13 +277,65 @@ export class JobService {
     });
   }
 
+  findOneJobApplicationCompanyView(
+    id: string
+  ): Promise<FindOneJobApplicationCompanyView | null> {
+    return this.prismaService.jobApplication.findUnique({
+      where: { id },
+      include: {
+        user: {
+          include: {
+            userProfile: {
+              select: {
+                id: true,
+                name: true,
+                profilePhoto: { select: { url: true } },
+                about: true,
+              },
+            },
+          },
+        },
+        job: { select: { id: true, title: true } },
+        jobInterviewChat: { select: { id: true } },
+      },
+    });
+  }
+
   findOneJobCompanyView(
     id: string,
     userId: string
   ): Promise<FindOneJobCompanyViewResponse | null> {
     return this.prismaService.job.findFirst({
       where: { id, companyId: userId },
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  async getJobInterviewResult(
+    id: string,
+    companyId: string
+  ): Promise<GetJobInterviewResultResponse | null> {
+    const jobApplication = await this.prismaService.jobApplication.findUnique({
+      where: { id },
+      select: { jobInterviewChat: { select: { id: true } } },
+    });
+    if (!jobApplication)
+      throw new NotFoundException('There is no application from provided ID');
+    return this.prismaService.jobInterviewChat.findUnique({
+      where: {
+        id: jobApplication.jobInterviewChat[0].id,
+        jobApplication: { job: { companyId } },
+      },
+      include: getJobInterviewResultIncludes,
     });
   }
 
@@ -271,7 +365,16 @@ export class JobService {
     return this.prismaService.job.update({
       where: { id },
       data: updateJobDto,
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -291,6 +394,10 @@ export class JobService {
     if (jobApplication.job.companyId !== userId)
       throw new UnauthorizedException(
         'You are not able to invite the user since you do not own this job position.'
+      );
+    if (jobApplication.applicationStatus !== 'SUBSCRIBED')
+      throw new UnauthorizedException(
+        'You are not able to invite the user since the user is invited or already did the interview .'
       );
     return this.prismaService.jobApplication.update({
       where: { id },
@@ -314,6 +421,7 @@ export class JobService {
             title: true,
           },
         },
+        jobInterviewChat: { select: { id: true } },
       },
     });
   }
@@ -334,7 +442,16 @@ export class JobService {
     return this.prismaService.job.update({
       where: { id },
       data: { aiInterviewQuestions },
-      include: { _count: { select: { jobApplications: true } } },
+      include: {
+        _count: { select: { jobApplications: true } },
+        company: {
+          select: {
+            companyProfile: {
+              select: { companyPhoto: { select: { url: true } } },
+            },
+          },
+        },
+      },
     });
   }
 
