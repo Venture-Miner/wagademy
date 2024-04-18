@@ -41,10 +41,10 @@ import { PhotoUploadComponent } from './components/photo-upload/photo-upload.com
     SkillsComponent,
     PhotoUploadComponent,
   ],
-  templateUrl: './complete-profile.component.html',
-  styleUrl: './complete-profile.component.css',
+  templateUrl: './user-profile.component.html',
+  styleUrl: './user-profile.component.css',
 })
-export class CompleteProfileComponent {
+export class UserProfileComponent {
   mockCountries: SelectItem<string>[] = [
     { value: 'BR', label: 'Brazil' },
     { value: 'EUA', label: 'United States' },
