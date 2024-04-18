@@ -40,13 +40,16 @@ export class GptChatComponent implements OnInit {
   isCreatingChatCompletion = false;
   isStartingTheChat = false;
   private chatType: 'jobInterViewChat' | 'chatBot' = 'jobInterViewChat';
-  pageUrl = {
-    jobInterViewChat: 'job-applications-all',
-    chatBot: 'chatbot',
-  };
   userMessage = '';
   count = 0;
   maxCharacters = 1200;
+  private readonly RETRIEVE_CHAT_HISTORY_MESSAGE = 'Error while retrieving chat';
+  private readonly NOT_INVITED_MESSAGE = 'You are not authorized to access the chat because you were not invited';
+  private readonly NOT_AUTHORIZED_MESSAGE = 'Only accounts where the type is physical person can get the chat history';
+  private readonly CHAT_COMPLETION_MESSAGE = 'Error while generating chat completion';
+  private readonly APPLICATIONS_URL = '/pages/job-applications-all';
+  private readonly HOME_COMPANY_URL = '/pages/home-company';
+
 
   constructor(
     private readonly chatService: ChatService,
@@ -85,11 +88,10 @@ export class GptChatComponent implements OnInit {
               JobApplicationStatusEnum.INVITED
             ) {
               this.toastService.showToast({
-                message:
-                  'You are not authorized to access the chat because you were not invited',
+                message: this.NOT_INVITED_MESSAGE,
                 type: 'warning',
               });
-              this.router.navigate(['/pages/job-applications-all']);
+              this.router.navigate([this.APPLICATIONS_URL]);
             }
             this.chatTypeObject.jobInterViewChat = chatHistory;
             this.isStartingTheChat = false;
@@ -99,7 +101,7 @@ export class GptChatComponent implements OnInit {
           const messageError =
             error.statusCode === 401
               ? error.message
-              : 'Error while retrieving chat';
+              : this.RETRIEVE_CHAT_HISTORY_MESSAGE;
           this.handleErrorAndRedirectIfUnauthorized(error, messageError);
           this.isStartingTheChat = false;
         },
@@ -107,10 +109,8 @@ export class GptChatComponent implements OnInit {
   }
 
   companyAccessingUnauthorizedRoute(message: string) {
-    const expectedErrorMessage =
-      'Only accounts where the type is physical person can get the chat history.';
-    if (message === expectedErrorMessage)
-      this.router.navigate(['/pages/home-company']);
+    if (message === this.NOT_AUTHORIZED_MESSAGE)
+      this.router.navigate([this.HOME_COMPANY_URL]);
   }
 
   startJobInterview() {
@@ -127,7 +127,7 @@ export class GptChatComponent implements OnInit {
           const codes = [401, 404];
           const messageError = codes.includes(error.statusCode)
             ? error.message
-            : 'Error while retrieving chat';
+            : this.RETRIEVE_CHAT_HISTORY_MESSAGE;
           this.handleErrorAndRedirectIfUnauthorized(error, messageError);
           this.isStartingTheChat = false;
         },
@@ -167,7 +167,7 @@ export class GptChatComponent implements OnInit {
           const codes = [400, 401, 404];
           const messageError = codes.includes(error.statusCode)
             ? error.message
-            : 'Error while generating chat completion';
+            : this.CHAT_COMPLETION_MESSAGE;
           this.handleErrorAndRedirectIfUnauthorized(error, messageError);
           this.isCreatingChatCompletion = false;
         },
