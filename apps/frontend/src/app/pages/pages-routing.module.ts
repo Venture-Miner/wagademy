@@ -12,6 +12,7 @@ import { JobsDetailsComponent } from './jobs-details/jobs-details.component';
 import { GptListComponent } from './person/gpt-list/gpt-list.component';
 import { GptChatComponent } from './person/gpt-chat/gpt-chat.component';
 import { InterviewGptComponent } from './company/interview-gpt/interview-gpt.component';
+import { CompleteProfileComponent } from './person/user-profile/complete-profile.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
       {
         path: 'interview-gpt',
         component: InterviewGptComponent,
+      },
+      {
+        path: 'complete-profile',
+        component: CompleteProfileComponent,
       },
     ],
   },
