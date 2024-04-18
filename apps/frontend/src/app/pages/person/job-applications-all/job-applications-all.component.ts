@@ -88,7 +88,7 @@ export class JobApplicationsAllComponent implements OnInit, OnDestroy {
   goToAiInterview() {
     this.isLoading = true;
     this.router.navigate(['/pages/gptchat'], {
-      queryParams: { id: this.id },
+      queryParams: { jobApplicationId: this.id },
     });
   }
 

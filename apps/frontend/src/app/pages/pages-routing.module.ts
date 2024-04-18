@@ -47,7 +47,7 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeCompanyGuard],
-        path: 'profile',
+        path: 'company-profile',
         loadComponent: () =>
           import('./company/profile/profile.component').then(
             (c) => c.ProfileComponent
@@ -75,7 +75,7 @@ const routes: Routes = [
           import('./jobs/jobs.component').then((c) => c.JobsComponent),
       },
       {
-        path: 'jobs-details',
+        path: 'job-details',
         loadComponent: () =>
           import('./jobs-details/jobs-details.component').then(
             (c) => c.JobsDetailsComponent
@@ -88,6 +88,27 @@ const routes: Routes = [
           import('./person/gpt-list/gpt-list.component').then(
             (c) => c.GptListComponent
           ),
+      },
+      {
+        path: 'job-applications',
+        loadComponent: () =>
+          import('./company/applications-job/applications-job.component').then(
+            (c) => c.ApplicationsJobComponent
+          ),
+      },
+      {
+        path: 'applicant-profile',
+        loadComponent: () =>
+          import(
+            './company/applications-profile/applications-profile.component'
+          ).then((c) => c.ApplicationsProfileComponent),
+      },
+      {
+        path: 'result-of-application',
+        loadComponent: () =>
+          import(
+            './company/applications-results/applications-results.component'
+          ).then((c) => c.ApplicationsResultsComponent),
       },
       {
         canActivate: [AuthGuard, AccountTypeCompanyGuard],
@@ -104,6 +125,14 @@ const routes: Routes = [
           import(
             './company/build-training-data/build-training-data.component'
           ).then((c) => c.BuildTrainingDataComponent),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'create-profile',
+        loadComponent: () =>
+          import('./company/create-profile/create-profile.component').then(
+            (c) => c.CreateProfileComponent
+          ),
       },
     ],
   },
