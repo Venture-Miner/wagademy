@@ -1,11 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  CreateInterviewChatResponse,
-  JobApplicationStatusEnum,
-} from '@wagademy/types';
+import { FindOneChatHistory, JobApplicationStatusEnum } from '@wagademy/types';
 
-export class StartJobInterviewEntity implements CreateInterviewChatResponse {
+export class FindOneChatHistoryEntity implements FindOneChatHistory {
   @ApiProperty({ example: faker.database.mongodbObjectId() })
   id: string;
 
