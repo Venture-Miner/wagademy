@@ -1,8 +1,11 @@
+import { JobApplicationStatusEnum } from './job';
+
 export type JobInterviewChat = {
   id: string;
   history: OpenAIChatModel[];
   jobApplicationId: string;
   maxPrompts: number;
+  jobApplication: { applicationStatus: JobApplicationStatusEnum };
 };
 
 export type OpenAIChatModel = {
@@ -15,6 +18,15 @@ export type CreateInterviewChatResponse = {
   history: OpenAIChatModel[] | any;
   jobApplicationId: string;
   maxPrompts: number;
+  jobApplication: { applicationStatus: JobApplicationStatusEnum };
+};
+
+export type FindOneChatHistory = {
+  id: string;
+  history: OpenAIChatModel[] | any;
+  jobApplicationId: string;
+  maxPrompts: number;
+  jobApplication: { applicationStatus: JobApplicationStatusEnum };
 };
 
 export type CreateInterviewChat = {
@@ -23,6 +35,10 @@ export type CreateInterviewChat = {
 
 export type CreateChatCompletion = {
   message: string;
+};
+
+export type GetChatHistory = {
+  jobApplicationId: string;
 };
 
 export interface ChatCompletionMessage {
