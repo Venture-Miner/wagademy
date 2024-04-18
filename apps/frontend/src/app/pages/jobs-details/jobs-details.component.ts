@@ -60,7 +60,7 @@ export class JobsDetailsComponent implements OnInit {
     this.userService.self().subscribe({
       next: (user) => {
         this.isVerifying = false;
-        if (!user.userProfile) {
+        if (!user?.userProfile) {
           window.modal['showModal']();
         } else this.createJobApplication();
       },

@@ -17,6 +17,10 @@ import {
   Pagination,
   UpdateJob,
   UpdateJobResponse,
+  FindManyJobApplicationsCompanyView,
+  FilterCompanyJobApplications,
+  FindOneJobApplicationCompanyView,
+  GetJobInterviewResultResponse,
 } from '@wagademy/types';
 import { Injectable } from '@angular/core';
 
@@ -67,9 +71,21 @@ export class JobService extends BaseHttpService {
     paginationDto: Pagination
   ): Observable<FindManyJobApplicationsUserView> {
     return this.http.get<FindManyJobApplicationsUserView>(
-      `${this.URL}/job/user-job-applications/`,
+      `${this.URL}/job/user-job-applications`,
       {
         params: { ...filterUserJobApplicationsDto, ...paginationDto },
+      }
+    );
+  }
+
+  findManyJobApplicationsCompanyView(
+    filterCompanyJobApplicationsDto: FilterCompanyJobApplications,
+    paginationDto: Pagination
+  ): Observable<FindManyJobApplicationsCompanyView> {
+    return this.http.get<FindManyJobApplicationsCompanyView>(
+      `${this.URL}/job/job-applications`,
+      {
+        params: { ...filterCompanyJobApplicationsDto, ...paginationDto },
       }
     );
   }
@@ -82,10 +98,33 @@ export class JobService extends BaseHttpService {
     );
   }
 
+  findOneJobApplicationCompanyView(
+    id: string
+  ): Observable<FindOneJobApplicationCompanyView | null> {
+    return this.http.get<FindOneJobApplicationCompanyView | null>(
+      `${this.URL}/job/job-application/${id}`
+    );
+  }
+
+  getJobInterviewResult(
+    id: string
+  ): Observable<GetJobInterviewResultResponse | null> {
+    return this.http.get<GetJobInterviewResultResponse | null>(
+      `${this.URL}/job/job-interview-result/${id}`
+    );
+  }
+
   update(id: string, updateJobDto: UpdateJob): Observable<UpdateJobResponse> {
     return this.http.patch<UpdateJobResponse>(
       `${this.URL}/job/${id}`,
       updateJobDto
+    );
+  }
+
+  inviteToInterview(id: string): Observable<UpdateJobResponse> {
+    return this.http.patch<UpdateJobResponse>(
+      `${this.URL}/job/invite-to-interview/${id}`,
+      {}
     );
   }
 

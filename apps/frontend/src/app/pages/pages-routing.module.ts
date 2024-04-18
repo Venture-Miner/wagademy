@@ -47,7 +47,7 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeCompanyGuard],
-        path: 'profile',
+        path: 'company-profile',
         loadComponent: () =>
           import('./company/profile/profile.component').then(
             (c) => c.ProfileComponent
@@ -75,7 +75,7 @@ const routes: Routes = [
           import('./jobs/jobs.component').then((c) => c.JobsComponent),
       },
       {
-        path: 'jobs-details',
+        path: 'job-details',
         loadComponent: () =>
           import('./jobs-details/jobs-details.component').then(
             (c) => c.JobsDetailsComponent
@@ -104,7 +104,7 @@ const routes: Routes = [
           ).then((c) => c.ApplicationsProfileComponent),
       },
       {
-        path: 'result-of-applications',
+        path: 'result-of-application',
         loadComponent: () =>
           import(
             './company/applications-results/applications-results.component'
@@ -116,6 +116,14 @@ const routes: Routes = [
         loadComponent: () =>
           import('./company/interview-gpt/interview-gpt.component').then(
             (c) => c.InterviewGptComponent
+          ),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'create-profile',
+        loadComponent: () =>
+          import('./company/create-profile/create-profile.component').then(
+            (c) => c.CreateProfileComponent
           ),
       },
     ],

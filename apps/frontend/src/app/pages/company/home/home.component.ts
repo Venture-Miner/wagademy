@@ -4,11 +4,12 @@ import { CardComponent } from '../../../shared/components/card/card.component';
 import { JobCompanyView, Pagination } from '@wagademy/types';
 import { JobService } from '../../../services/job/job.service';
 import { ToastService } from '../../../services/toast/toast.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'wagademy-home-company',
   standalone: true,
-  imports: [InputComponent, CardComponent],
+  imports: [InputComponent, CardComponent, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

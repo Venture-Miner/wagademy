@@ -9,6 +9,7 @@ import {
   ChatCompletionMessage,
   CreateInterviewChat,
   CreateInterviewChatResponse,
+  FindOneChatHistory,
   JobApplicationStatusEnum,
   OpenAIChatModel,
 } from '@wagademy/types';
@@ -33,24 +34,12 @@ export class ChatService {
     { jobApplicationId }: CreateInterviewChat,
     userId: string
   ): Promise<CreateInterviewChatResponse> {
+    const jobApplication = await this.validateInterviewCreation(
+      jobApplicationId,
+      userId
+    );
+
     const initialPrompt: OpenAIChatModel[] = [];
-    const jobApplication = await this.prismaService.jobApplication.findFirst({
-      where: { id: jobApplicationId, userId },
-      include: {
-        job: {
-          select: {
-            aiInterviewQuestions: true,
-            title: true,
-            description: true,
-          },
-        },
-      },
-    });
-    if (!jobApplication) {
-      throw new NotFoundException(
-        'Job application with the provided ID does not exist'
-      );
-    }
     const {
       job: { aiInterviewQuestions, description, title },
     } = jobApplication;
@@ -72,7 +61,52 @@ export class ChatService {
       2;
     return this.prismaService.jobInterviewChat.create({
       data: { jobApplicationId, history: initialPrompt, maxPrompts },
+      include: { jobApplication: { select: { applicationStatus: true } } },
     });
+  }
+
+  private async validateInterviewCreation(
+    jobApplicationId: string,
+    userId: string
+  ) {
+    const chatInterview = await this.getChatHistory(jobApplicationId, userId);
+    const statusErrorMessage = {
+        SUBSCRIBED: "You can't start the interview",
+        INTERVIEWED: "You've already been interviewed!",
+        INVITED: "You've started the interview already",
+      };
+    
+    if (chatInterview) {
+      throw new UnauthorizedException(
+        statusErrorMessage[chatInterview.jobApplication.applicationStatus]
+      );
+    }
+
+    const jobApplication = await this.prismaService.jobApplication.findFirst({
+      where: { id: jobApplicationId, userId },
+      include: {
+        job: {
+          select: {
+            aiInterviewQuestions: true,
+            title: true,
+            description: true,
+          },
+        },
+      },
+    });
+
+    if (!jobApplication) {
+      throw new NotFoundException(
+        'Job application with the provided ID does not exist'
+      );
+    }
+    
+    if (jobApplication.applicationStatus!=='INVITED')
+         throw new UnauthorizedException(
+        statusErrorMessage[jobApplication.applicationStatus]
+      );
+
+    return jobApplication;
   }
 
   async interviewCreateChatCompletion(
@@ -87,6 +121,7 @@ export class ChatService {
     const tokens = encoder.encode(message);
     if (tokens.length > TOKEN_LIMIT)
       throw new BadRequestException('Token limit exceeded');
+    encoder.free();
 
     const history =
       chat.history as unknown as Array<ChatCompletionMessageParam>;
@@ -146,5 +181,15 @@ export class ChatService {
     )
       throw new UnauthorizedException('You can not use the chat');
     return chat;
+  }
+
+  getChatHistory(
+    jobApplicationId: string,
+    userId: string
+  ): Promise<FindOneChatHistory | null> {
+    return this.prismaService.jobInterviewChat.findFirst({
+      where: { jobApplicationId, jobApplication: { userId } },
+      include: { jobApplication: { select: { applicationStatus: true } } },
+    });
   }
 }

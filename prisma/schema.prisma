@@ -30,6 +30,8 @@ model CompanyProfile {
   about                      String
   companyPhoto               File?    @relation(name: "companyPhoto", fields: [companyPhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   companyPhotoId             String?  @db.ObjectId
+  backgroundPhoto            File?    @relation(name: "backgroundPhoto", fields: [backgroundPhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  backgroundPhotoId          String?  @db.ObjectId
   areaOfExpertise            String
   whatIsTheCompanyLookingFor String[]
   user                       User     @relation(fields: [userId], references: [id])
@@ -92,14 +94,15 @@ model ProfessionalExperience {
 }
 
 model File {
-  id             String           @id @default(auto()) @map("_id") @db.ObjectId
-  url            String
-  key            String           @unique
-  userProfile    UserProfile[]    @relation(name: "profilePhoto")
-  companyProfile CompanyProfile[] @relation(name: "companyPhoto")
-  chatBot        ChatBot[]
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+  id                       String           @id @default(auto()) @map("_id") @db.ObjectId
+  url                      String
+  key                      String           @unique
+  userProfile              UserProfile[]    @relation(name: "profilePhoto")
+  companyProfile           CompanyProfile[] @relation(name: "companyPhoto")
+  companyProfileBackground CompanyProfile[] @relation(name: "backgroundPhoto")
+  chatBot                  ChatBot[]
+  createdAt                DateTime         @default(now())
+  updatedAt                DateTime         @updatedAt
 }
 
 model Job {

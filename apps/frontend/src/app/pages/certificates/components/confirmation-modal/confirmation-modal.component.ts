@@ -11,11 +11,11 @@ import { CommonModule } from '@angular/common';
 export class ConfirmationModalComponent {
   isModalOpen = false;
 
-  @Input() courseImage: string = '';
-  @Input() courseName: string = '';
-  @Input() courseDescription: string = '';
-  @Input() courseStatus: string = '';
-  @Input() courseProgress: number = 0;
+  @Input() courseImage = '';
+  @Input() courseName = '';
+  @Input() courseDescription = '';
+  @Input() courseStatus = '';
+  @Input() courseProgress = 0;
 
   @Output() claimEvent = new EventEmitter();
 
