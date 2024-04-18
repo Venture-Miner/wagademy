@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ChatBotStatusEnum } from '@prisma/client';
 import { FindOneChatBotResponse } from '@wagademy/types';
 
-export class FindOneChatBotsResponseEntity implements FindOneChatBotResponse {
+export class FindOneChatBotResponseEntity implements FindOneChatBotResponse {
   @ApiProperty({ example: faker.database.mongodbObjectId() })
   id: string;
 

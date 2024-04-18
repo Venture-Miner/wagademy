@@ -1,13 +1,19 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '@wagademy/prisma';
 import {
+  CreateChatBotCompletion,
+  CreateChatCompletionResponse,
   CreateFineTuningJob,
   CreateFineTuningJobResponse,
   FilterChatbots,
   FilterCompanyChatbots,
   FindManyChatBotsResponse,
   FindManyTrainingDataResponse,
+  GetChatBotHistoryResponse,
   GetTrainingDataContentResponse,
+  InitChatBotResponse,
+  InviteToChatBot,
+  InviteToChatBotResponse,
   Pagination,
   UploadTrainingDataResponse,
 } from '@wagademy/types';
@@ -17,6 +23,7 @@ import { toFile } from 'openai/uploads';
 import { FileService } from '../../infra';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Readable } from 'stream';
+import { ChatCompletionMessageParam } from 'openai/resources';
 
 @Injectable()
 export class ChatBotService {
@@ -40,11 +47,11 @@ export class ChatBotService {
       })
     );
     responses.forEach(async (response) => {
-      const { status, id: fineTuningJobId } = response;
+      const { status, id: fineTuningJobId, fine_tuned_model } = response;
       if (status === 'succeeded') {
         await this.prismaService.chatBot.update({
           where: { fineTuningJobId },
-          data: { status: ChatBotStatusEnum.SUCCESS },
+          data: { status: ChatBotStatusEnum.SUCCESS, model: fine_tuned_model },
         });
       } else if (status === 'failed') {
         await this.prismaService.chatBot.update({
@@ -216,7 +223,144 @@ export class ChatBotService {
     return { count, trainingData };
   }
 
-  async initChat(chatBotId: string, userId: string) {
-    //TODO: Implement this method
+  async initChatBot(
+    userId: string,
+    chatBotId: string
+  ): Promise<InitChatBotResponse> {
+    const history = await this.prismaService.chatBotHistory.findFirst({
+      where: { chatBotId, userId },
+    });
+    if (history) {
+      throw new BadRequestException('Chatbot already initialized.');
+    }
+    const chatBot = await this.prismaService.chatBot.findFirst({
+      where: {
+        id: chatBotId,
+      },
+    });
+    if (!chatBot) {
+      throw new BadRequestException('Chatbot not found.');
+    }
+    if (chatBot.status !== ChatBotStatusEnum.SUCCESS) {
+      throw new BadRequestException('Chatbot is not ready.');
+    }
+    const [chatBotHistory] = await this.prismaService.$transaction([
+      this.prismaService.chatBotHistory.create({
+        data: {
+          chatBot: {
+            connect: { id: chatBotId },
+          },
+          user: {
+            connect: { id: userId },
+          },
+          history: [
+            {
+              role: 'assistant',
+              content: "Hi, I'm here to help you!",
+            },
+          ],
+        },
+      }),
+      this.prismaService.chatBot.update({
+        where: { id: chatBotId },
+        data: { views: { increment: 1 } },
+      }),
+    ]);
+    return chatBotHistory;
+  }
+
+  async inviteUser(
+    { chatBotId, userId }: InviteToChatBot,
+    companyId
+  ): Promise<InviteToChatBotResponse> {
+    const chatBot = await this.prismaService.chatBot.findFirst({
+      where: { id: chatBotId, user: { id: companyId } },
+    });
+    if (!chatBot) {
+      throw new BadRequestException('Chatbot not found.');
+    }
+    return this.prismaService.invitation.create({
+      data: {
+        chatBot: {
+          connect: { id: chatBotId },
+        },
+        user: {
+          connect: { id: userId },
+        },
+      },
+    });
+  }
+
+  async removeInvitation(id: string, companyId: string) {
+    const invitation = await this.prismaService.invitation.findFirst({
+      where: {
+        id,
+        chatBot: { userId: companyId },
+      },
+    });
+    if (!invitation) {
+      throw new BadRequestException('Invitation not found.');
+    }
+    await this.prismaService.invitation.delete({
+      where: { id },
+    });
+  }
+
+  async createChatCompletion(
+    { chatBotId, message }: CreateChatBotCompletion,
+    userId: string
+  ): Promise<CreateChatCompletionResponse> {
+    const chatBot = await this.prismaService.chatBot.findFirst({
+      where: { id: chatBotId },
+    });
+    if (!chatBot) {
+      throw new BadRequestException('Chatbot not found.');
+    }
+    const model = chatBot.model;
+    if (!model) {
+      throw new BadRequestException('Chatbot is not ready.');
+    }
+    const chatBotHistory = await this.prismaService.chatBotHistory.findFirst({
+      where: { chatBotId, userId },
+    });
+    if (!chatBotHistory) {
+      throw new BadRequestException('Chatbot not initialized.');
+    }
+    const invitation = await this.prismaService.invitation.findFirst({
+      where: { chatBotId, userId },
+    });
+    if (invitation) {
+      //TODO: Charge company credits
+    } else {
+      //TODO: Charge user credits
+    }
+    let messages: Array<ChatCompletionMessageParam> = [
+      ...(chatBotHistory.history as unknown as Array<ChatCompletionMessageParam>),
+      { role: 'user', content: message },
+    ];
+    const response = await this.openAI.chat.completions.create({
+      model,
+      messages,
+    });
+    const assistantMessage = response.choices[0].message;
+    messages = [...messages, assistantMessage];
+    await this.prismaService.chatBotHistory.update({
+      where: { id: chatBotId },
+      data: { history: messages as unknown as Prisma.InputJsonValue },
+    });
+    return assistantMessage;
+  }
+
+  async getChatHistory(
+    userId: string,
+    chatBotId: string
+  ): Promise<GetChatBotHistoryResponse> {
+    const chatBotHistory = await this.prismaService.chatBotHistory.findFirst({
+      where: { chatBotId, userId },
+    });
+    if (!chatBotHistory) {
+      throw new BadRequestException('Chatbot not initialized.');
+    }
+    return chatBotHistory;
   }
 }

@@ -20,10 +20,8 @@ import { DBUser } from '../../shared/decorators';
 import { CognitoUserGuard } from '../../infra';
 import { CreateChatCompletionDto, CreateInterviewChatDto } from './dto';
 import { MongoIdDto } from '../../shared/dtos';
-import {
-  ChatCompletionMessageEntity,
-  StartJobInterviewEntity,
-} from './entities';
+import { StartJobInterviewEntity } from './entities';
+import { ChatCompletionMessageEntity } from '../../shared/entities';
 
 @ApiTags('Chat')
 @Controller('chat')

@@ -30,14 +30,20 @@ import {
   FindManyChatBotsResponseEntity,
   UploadTrainingDataResponseEntity,
   FindManyTrainingDataResponseEntity,
+  InviteToChatBotResponseEntity,
+  InitChatBotResponseEntity,
+  GetChatBotHistoryResponseEntity,
 } from './entities';
 import {
   CreateFineTuningJobDto,
   FilterChatbotsDto,
   UploadTrainingDataDto,
   FilterCompanyChatBotsDto,
+  InviteToChatBotDto,
+  CreateChatBotCompletionDto,
 } from './dto';
 import { CognitoUserGuard } from '../../infra';
+import { ChatCompletionMessageEntity } from '../../shared/entities';
 
 @ApiTags('Chat Bot')
 @Controller('chat-bot')
@@ -190,7 +196,7 @@ export class ChatBotController {
       'Deletes a chatbot and cancels any ongoing fine tuning jobs associated with it.',
   })
   @ApiResponse({
-    status: HttpStatus.OK,
+    status: HttpStatus.NO_CONTENT,
     description: 'Chatbot successfully deleted.',
   })
   deleteChatBot(@Param() { id }: MongoIdDto, @DBUser() { id: userId }: User) {
@@ -216,21 +222,42 @@ export class ChatBotController {
     return this.chatBotService.findManyTrainingData(paginationDto, userId);
   }
 
-  @Post('init-chat')
-  // @ApiBearerAuth()
-  // @UseGuards(CognitoUserGuard)
+  @Post('init-chat-bot/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
   @ApiOperation({
     summary: 'Init chat.',
     description: 'Init chat.',
   })
   @ApiResponse({
-    status: HttpStatus.OK,
+    status: HttpStatus.CREATED,
     description: 'Chat successfully initiated.',
+    type: InitChatBotResponseEntity,
   })
   initChat(
-    @Body() { chatBotId, userId }: { chatBotId: string; userId: string }
+    @Param() { id: chatBotId }: MongoIdDto,
+    @DBUser() { id: userId }: User
   ) {
-    return this.chatBotService.initChat(chatBotId, userId);
+    return this.chatBotService.initChatBot(userId, chatBotId);
+  }
+
+  @Post('invite')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Invite user to use chatbot.',
+    description: 'Invite user to use chatbot.',
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'User successfully invited.',
+    type: InviteToChatBotResponseEntity,
+  })
+  inviteUser(
+    @Body() inviteToChatBotDto: InviteToChatBotDto,
+    @DBUser() { id: companyId }: User
+  ) {
+    return this.chatBotService.inviteUser(inviteToChatBotDto, companyId);
   }
 
   @Delete('training-data/:id')
@@ -241,7 +268,7 @@ export class ChatBotController {
     description: 'Deletes training data.',
   })
   @ApiResponse({
-    status: HttpStatus.OK,
+    status: HttpStatus.NO_CONTENT,
     description: 'Training data successfully deleted.',
   })
   deleteTrainingData(
@@ -249,5 +276,61 @@ export class ChatBotController {
     @DBUser() { id: userId }: User
   ) {
     return this.chatBotService.deleteTrainingData(id, userId);
+  }
+
+  @Delete('invite/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Remove invitation.',
+    description: 'Remove invitation.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT,
+    description: 'Invitation successfully removed.',
+  })
+  removeInvitation(
+    @Param() { id: invitationId }: MongoIdDto,
+    @DBUser() { id: userId }: User
+  ) {
+    return this.chatBotService.removeInvitation(invitationId, userId);
+  }
+
+  @Post('chat-completion')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Create chat completion.',
+    description: 'Create chat completion.',
+  })
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Chat completion successfully created.',
+    type: ChatCompletionMessageEntity,
+  })
+  createChatCompletion(
+    @Body() createChatCompletionDto: CreateChatBotCompletionDto,
+    @DBUser() { id: userId }: User
+  ) {
+    return this.chatBotService.createChatCompletion(
+      createChatCompletionDto,
+      userId
+    );
+  }
+
+  @Get('history/:id')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Retrieve chatbot history.',
+    description: 'Retrieve chatbot history.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Chatbot history successfully retrieved.',
+    type: GetChatBotHistoryResponseEntity,
+  })
+  getChatHistory(@Param() { id }: MongoIdDto, @DBUser() { id: userId }: User) {
+    return this.chatBotService.getChatHistory(id, userId);
   }
 }

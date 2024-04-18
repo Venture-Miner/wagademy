@@ -5,3 +5,6 @@ export * from './upload-training-data-response.entity';
 export * from './chat-bot.entity';
 export * from './training-data.entity';
 export * from './find-many-training-data-response.entity';
+export * from './invite-to-chat-bot-response.entity';
+export * from './init-chat-bot-response.entity';
+export * from './get-chat-history-response.entity';
