@@ -4,7 +4,6 @@ import { PagesComponent } from './pages.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { AccountTypeCompanyGuard } from '../guards/account-type-company.guard';
 import { AccountTypeUserGuard } from '../guards/account-type-user.guard';
-import { CompleteProfileComponent } from './person/user-profile/complete-profile.component';
 
 const routes: Routes = [
   {
@@ -129,10 +128,10 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeUserGuard],
-        path: 'complete-profile',
+        path: 'user-profile',
         loadComponent: () =>
-          import('./person/user-profile/complete-profile.component').then(
-            (c) => c.CompleteProfileComponent
+          import('./person/user-profile/user-profile.component').then(
+            (c) => c.UserProfileComponent
           ),
       },
     ],
