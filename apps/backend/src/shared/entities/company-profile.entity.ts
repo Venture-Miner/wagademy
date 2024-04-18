@@ -23,4 +23,7 @@ export class CompanyProfileEntity implements CompanyProfile {
 
   @ApiProperty({ example: faker.internet.url() })
   companyPhoto: { url: string };
+
+  @ApiProperty({ example: faker.internet.url() })
+  backgroundPhoto: { url: string } | null;
 }

@@ -169,7 +169,7 @@ export class HiringComponent implements OnInit {
       next: (user) => {
         this.isVerifying = false;
 
-        if (!user.companyProfile) {
+        if (!user?.companyProfile) {
           this.incompleteProfile = true;
           setTimeout(() => {
             // Trick to delay the operation until after the current call stack has cleared. This will give Angular time to update the DOM.

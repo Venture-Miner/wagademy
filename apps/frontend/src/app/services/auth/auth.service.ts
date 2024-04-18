@@ -56,6 +56,10 @@ export class AuthService {
 
   async getUserData() {
     const user = await firstValueFrom(this.user);
+    if (!user) {
+      await this.loadUserData();
+      return firstValueFrom(this.user);
+    }
     return user;
   }
 
