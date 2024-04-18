@@ -145,7 +145,7 @@ export class GptChatComponent implements OnInit {
     });
     if (toastType === 'warning')
       this.companyAccessingUnauthorizedRoute(error.message);
-    else this.router.navigate(['/pages/job-applications-all']);
+    else this.router.navigate([this.APPLICATIONS_URL]);
   }
 
   chatCompletion() {
