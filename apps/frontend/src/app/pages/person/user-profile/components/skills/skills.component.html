@@ -1,0 +1,63 @@
+<div class="flex flex-col md:flex-row pt-8 min-h-screen">
+  <div class="w-full sm:h-[500px] relative px-8 xl:pl-[336px]">
+    <form [formGroup]="skillsForm">
+      <wagademy-form-field
+        [control]="skillsForm.controls['newExpertise']"
+        label="You need to fill up to 10 words to describe your skills and competencies"
+      >
+        <wagademy-input
+          placeholder="Word Example"
+          type="text"
+          formControlName="newSkill"
+          (keydown.enter)="addSkill()"
+        >
+        </wagademy-input>
+      </wagademy-form-field>
+    </form>
+
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+      <li
+        class="bg-neutral text-neutral-950 p-1 rounded-md flex justify-between"
+        *ngFor="let skill of skills; let i = index"
+      >
+        <p>{{ skill }}</p>
+        <button (click)="removeSkill(i)">
+          <img src="./assets/icons/icon-close.svg" />
+        </button>
+      </li>
+    </ul>
+
+    <div class="sm:absolute sm:bottom-0 sm:right-9">
+      <div
+        class="flex flex-col sm:flex-row sm:justify-end items-center mt-14 mb-8 gap-4"
+      >
+        <button
+          class="btn btn-primary text-base-100 text-xl w-48"
+          (click)="previousStep.emit()"
+        >
+          Previous
+        </button>
+
+        <button
+          class="btn btn-primary text-base-100 text-xl w-48"
+          (click)="nextStep.emit()"
+          [disabled]="skills.length < 1"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-1/2 justify-center max-h-[375px] hidden md:flex">
+    <ul class="steps steps-vertical">
+      <li class="step step-primary text-neutral-950">Profile</li>
+      <li class="step step-primary text-neutral-950">Education</li>
+      <li class="step step-primary text-neutral-950">Area of expertise</li>
+      <li class="step step-primary text-neutral-950">
+        Professional experience
+      </li>
+      <li class="step step-primary text-neutral-950">Skills and competences</li>
+    </ul>
+  </div>
+</div>
