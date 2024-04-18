@@ -32,9 +32,20 @@ export class UserService extends BaseHttpService {
   createCompanyProfile(
     createCompanyProfileDto: CreateCompanyProfile
   ): Observable<CreateCompanyProfileResponse> {
+    const formData: FormData = new FormData();
+    if (createCompanyProfileDto.companyPhoto)
+      formData.append(
+        'companyPhoto',
+        createCompanyProfileDto.companyPhoto as File
+      );
+    Object.keys(createCompanyProfileDto).forEach((key) => {
+      if (key !== 'companyPhoto') {
+        formData.append(key, (createCompanyProfileDto as any)[key]);
+      }
+    });
     return this.http.post<CreateCompanyProfileResponse>(
       `${this.URL}/user/create-company-profile`,
-      createCompanyProfileDto
+      formData
     );
   }
 
