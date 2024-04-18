@@ -3,6 +3,8 @@ import { BaseHttpService } from '../base-http/base-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
+  CreateCompanyProfile,
+  CreateCompanyProfileResponse,
   CreateUser,
   CreateUserResponse,
   FindOneCompanyProfileResponse,
@@ -27,8 +29,17 @@ export class UserService extends BaseHttpService {
     );
   }
 
-  self(): Observable<RetrieveSelfResponse | null> {
-    return this.http.get<RetrieveSelfResponse | null>(`${this.URL}/user/self`);
+  createCompanyProfile(
+    createCompanyProfileDto: CreateCompanyProfile
+  ): Observable<CreateCompanyProfileResponse> {
+    return this.http.post<CreateCompanyProfileResponse>(
+      `${this.URL}/user/create-company-profile`,
+      createCompanyProfileDto
+    );
+  }
+
+  self(): Observable<RetrieveSelfResponse> {
+    return this.http.get<RetrieveSelfResponse>(`${this.URL}/user/self`);
   }
 
   findCompanyProfile(
