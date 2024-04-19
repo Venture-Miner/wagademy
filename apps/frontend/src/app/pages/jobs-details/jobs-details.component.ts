@@ -51,8 +51,7 @@ export class JobsDetailsComponent implements OnInit {
   }
 
   completeProfile() {
-    //Change route after page is done
-    this.router.navigate(['/pages/user-profile-edit']);
+    this.router.navigate(['/pages/create-profile']);
   }
 
   validateIfUserIsAbleToApply() {

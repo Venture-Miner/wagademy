@@ -12,6 +12,7 @@ import { BackButtonComponent } from '../../../shared/components/back-button/back
 import { ToastService } from '../../../services/toast/toast.service';
 import { UserService } from '../../../services/user/user.service';
 import { CreateCompanyProfile } from '@wagademy/types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'wagademy-create-profile',
@@ -57,7 +58,8 @@ export class CreateProfileComponent {
   constructor(
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly router: Router
   ) {}
 
   onFileChange(event: Event) {
@@ -136,6 +138,7 @@ export class CreateProfileComponent {
           type: 'success',
         });
         this.isCreating = false;
+        this.router.navigate(['/pages/hiring']);
       },
       error: () => {
         this.toastService.showToast({
