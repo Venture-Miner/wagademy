@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AccountTypeEnum } from '@wagademy/types';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { Hub } from 'aws-amplify/utils';
 
 @Component({
   standalone: true,
@@ -41,5 +42,11 @@ export class NavbarPagesComponent implements OnInit {
 
   toggleDropdown() {
     this.openMenu = !this.openMenu;
+  }
+
+  logout() {
+    Hub.dispatch('auth', {
+      event: 'signedOut',
+    });
   }
 }
