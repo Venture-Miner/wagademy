@@ -11,11 +11,17 @@ import { formatEnumKeys } from '../../shared/utils/functions/format-enum';
 import { UserService } from '../../services/user/user.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { NgOptimizedImage } from '@angular/common';
+import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
 
 @Component({
   selector: 'wagademy-jobs-details',
   standalone: true,
-  imports: [RouterModule, ModalComponent, NgOptimizedImage],
+  imports: [
+    RouterModule,
+    ModalComponent,
+    BackButtonComponent,
+    NgOptimizedImage,
+  ],
   templateUrl: './jobs-details.component.html',
   styleUrl: './jobs-details.component.scss',
 })
@@ -60,7 +66,7 @@ export class JobsDetailsComponent implements OnInit {
     this.userService.self().subscribe({
       next: (user) => {
         this.isVerifying = false;
-        if (!user.userProfile) {
+        if (!user?.userProfile) {
           window.modal['showModal']();
         } else this.createJobApplication();
       },

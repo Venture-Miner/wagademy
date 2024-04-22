@@ -1,10 +1,9 @@
 <div
   class="group sm:w-[304px] w-[230px] h-[280px] bg-neutral mx-auto hover:shadow-lg flex justify-center relative rounded-lg"
 >
-  <div
-    class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"
-    *ngIf="isOpen"
-  ></div>
+  @if(isOpen){
+  <div class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"></div>
+  }
   <div class="font-mono sm:w-[304px] w-[280px]">
     <div class="p-4">
       <div
@@ -23,10 +22,8 @@
         <i class="bi bi-three-dots-vertical text-base-100"></i>
       </div>
       <div class="absolute top-0 right-0 p-2">
-        <div
-          *ngIf="isOpen"
-          class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
-        >
+        @if(isOpen){
+        <div class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2">
           <div
             (click)="updateJobStatus.emit()"
             class="flex gap-1 pb-2 cursor-pointer"
@@ -74,6 +71,7 @@
             <p class="font-serif text-base-100">Close</p>
           </div>
         </div>
+        }
       </div>
     </div>
     <div
@@ -103,7 +101,11 @@
         class="opacity-0 w-full duration-300"
         [ngClass]="[isOpen === true ? '' : 'group-hover:opacity-100']"
       >
-        <button class="btn btn-primary w-full" (click)="onViewMoreClick()">
+        <button
+          class="btn btn-primary w-full"
+          (click)="onViewMoreClick()"
+          [disabled]="!applications"
+        >
           View Applications
         </button>
       </div>

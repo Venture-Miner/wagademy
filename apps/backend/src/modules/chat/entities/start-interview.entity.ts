@@ -1,6 +1,9 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateInterviewChatResponse } from '@wagademy/types';
+import {
+  CreateInterviewChatResponse,
+  JobApplicationStatusEnum,
+} from '@wagademy/types';
 
 export class StartJobInterviewEntity implements CreateInterviewChatResponse {
   @ApiProperty({ example: faker.database.mongodbObjectId() })
@@ -16,4 +19,9 @@ export class StartJobInterviewEntity implements CreateInterviewChatResponse {
 
   @ApiProperty({ example: faker.number.int() })
   maxPrompts: number;
+
+  @ApiProperty({
+    example: { applicationStatus: JobApplicationStatusEnum.INVITED },
+  })
+  jobApplication: { applicationStatus: JobApplicationStatusEnum };
 }

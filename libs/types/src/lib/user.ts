@@ -68,7 +68,22 @@ export type CreateUser = {
   accountType: AccountTypeEnum;
 };
 
+export type CreateUserFrontendDto = {
+  name: string;
+  accountType: AccountTypeEnum;
+};
+
 export type UpdateUser = {
   name?: string;
   walletAddress?: string;
 };
+
+export type ImageType = 'backgroundPhoto' | 'companyPhoto';
+
+export type UserProfileOnHandlingImage =
+  | {
+      [K in ImageType]?: {
+        key: string;
+      };
+    }
+  | null;

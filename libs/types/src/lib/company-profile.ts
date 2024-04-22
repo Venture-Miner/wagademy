@@ -3,6 +3,7 @@ export type CompanyProfile = {
   name: string;
   about: string;
   companyPhoto: { url: string } | null;
+  backgroundPhoto: { url: string } | null;
   areaOfExpertise: string;
   whatIsTheCompanyLookingFor: string[];
   userId: string;
@@ -21,6 +22,7 @@ export type CreateCompanyProfileResponse = {
   name: string;
   about: string;
   companyPhoto: { url: string } | null;
+  backgroundPhoto: { url: string } | null;
   areaOfExpertise: string;
   whatIsTheCompanyLookingFor: string[];
   userId: string;
@@ -30,6 +32,7 @@ export type UpdateCompanyProfile = {
   name?: string;
   about?: string;
   companyPhoto?: File | Express.Multer.File[];
+  backgroundPhoto?: File | Express.Multer.File[];
   areaOfExpertise?: string;
   whatIsTheCompanyLookingFor?: string[];
 };
@@ -39,6 +42,7 @@ export type UpdateCompanyProfileResponse = {
   name: string;
   about: string;
   companyPhoto: { url: string } | null;
+  backgroundPhoto: { url: string } | null;
   areaOfExpertise: string;
   whatIsTheCompanyLookingFor: string[];
   userId: string;
@@ -49,6 +53,7 @@ export type FindOneCompanyProfileResponse = {
   name: string;
   about: string;
   companyPhoto: { url: string } | null;
+  backgroundPhoto: { url: string } | null;
   areaOfExpertise: string;
   whatIsTheCompanyLookingFor: string[];
   userId: string;
