@@ -45,7 +45,7 @@ export class JobsComponent implements OnInit {
   }
 
   jobDetails(id: string) {
-    this.router.navigate(['/pages/jobs-details'], {
+    this.router.navigate(['/pages/job-details'], {
       queryParams: { id },
     });
   }
