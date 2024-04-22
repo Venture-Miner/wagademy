@@ -6,6 +6,7 @@ import { InputComponent } from '../../../shared/components/input/input.component
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { FormsModule } from '@angular/forms';
+import { InputSearchComponent } from '../../../shared/components/input-search/input-search.component';
 
 interface Filter {
   name: string;
@@ -30,6 +31,7 @@ interface ChatBots {
     CardComponent,
     FormsModule,
     NgClass,
+    InputSearchComponent,
   ],
   templateUrl: './gpt-list.component.html',
   styleUrl: './gpt-list.component.scss',
