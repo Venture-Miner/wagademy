@@ -68,6 +68,11 @@ export type CreateUser = {
   accountType: AccountTypeEnum;
 };
 
+export type CreateUserFrontendDto = {
+  name: string;
+  accountType: AccountTypeEnum;
+};
+
 export type UpdateUser = {
   name?: string;
   walletAddress?: string;
