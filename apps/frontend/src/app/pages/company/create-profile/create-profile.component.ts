@@ -32,7 +32,7 @@ export class CreateProfileComponent {
   profilePhotoFile!: File;
   profilePhoto!: string;
   form = this.fb.group({
-    companyName: ['', Validators.required],
+    name: ['', Validators.required],
     areaOfExpertise: ['', Validators.required],
     about: ['', Validators.required],
     whatIsTheCompanyLookingFor: [
@@ -46,7 +46,7 @@ export class CreateProfileComponent {
   step: 1 | 2 | 3 = 1;
   whatIsTheCompanyLookingFor: string[] = [];
   newWord = '';
-  companyName = '';
+  name = '';
   about = '';
   areaOfExpertise = '';
   editProfileSectionOne = false;
@@ -79,7 +79,7 @@ export class CreateProfileComponent {
     if (
       this.form.controls.areaOfExpertise.valid &&
       this.form.controls.about.valid &&
-      this.form.controls.companyName.valid
+      this.form.controls.name.valid
     ) {
       this.stepIsValid = true;
     } else this.stepIsValid = false;
