@@ -201,11 +201,11 @@
           >
           </wagademy-input>
         </wagademy-form-field>
-        <wagademy-form-field [control]="educationItem.get('fieldOfStudy')!">
+        <wagademy-form-field [control]="educationItem.get('course')!">
           <wagademy-input
             placeholder="Course name"
             type="text"
-            formControlName="fieldOfStudy"
+            formControlName="course"
           >
           </wagademy-input>
         </wagademy-form-field>
@@ -272,7 +272,7 @@
     *ngFor="let item of educationForm.get('items')?.value; let i = index"
     class="mb-3"
   >
-    <p class="text-neutral-950 font-bold">{{ item.fieldOfStudy }}</p>
+    <p class="text-neutral-950 font-bold">{{ item.course }}</p>
     <div class="flex flex-col sm:flex-row gap-2 text-base-200">
       <p class="font-bold">{{ item.degree }}</p>
       <p>{{ item.institution }}</p>

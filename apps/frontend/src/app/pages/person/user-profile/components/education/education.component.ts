@@ -44,7 +44,7 @@ export class EducationComponent {
         'Federal University of Minas Gerais (UFMG) - Belo Horizonte, Minas Gerais',
         Validators.required,
       ],
-      fieldOfStudy: ['Course name'],
+      course: ['Course name'],
       startDate: ['2024-04-03', Validators.required],
       endDate: ['2024-04-03', Validators.required],
       description: [
