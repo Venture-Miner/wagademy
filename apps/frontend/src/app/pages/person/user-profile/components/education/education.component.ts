@@ -6,11 +6,11 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { NgClass, NgFor } from '@angular/common';
-import { FormFieldComponent } from 'apps/frontend/src/app/shared/components/form-field/form-field.component';
-import { InputComponent } from 'apps/frontend/src/app/shared/components/input/input.component';
-import { SelectComponent } from 'apps/frontend/src/app/shared/components/select/select.component';
-import { TextAreaComponent } from 'apps/frontend/src/app/shared/components/text-area/text-area.component';
+import { NgClass } from '@angular/common';
+import { FormFieldComponent } from '../../../../../shared/components/form-field/form-field.component';
+import { InputComponent } from '../../../../../shared/components/input/input.component';
+import { SelectComponent } from '../../../../../shared/components/select/select.component';
+import { TextAreaComponent } from '../../../../../shared/components/text-area/text-area.component';
 
 @Component({
   selector: 'wagademy-education',
@@ -19,7 +19,6 @@ import { TextAreaComponent } from 'apps/frontend/src/app/shared/components/text-
   styleUrls: ['./education.component.css'],
   imports: [
     NgClass,
-    NgFor,
     FormFieldComponent,
     InputComponent,
     ReactiveFormsModule,
@@ -33,8 +32,6 @@ export class EducationComponent {
   @Output() previousStep = new EventEmitter<void>();
 
   constructor(private fb: FormBuilder) {}
-
-  ngOnInit() {}
 
   addEducationItem(): void {
     this.educationItems.push(this.createEducationItem());

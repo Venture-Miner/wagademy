@@ -10,12 +10,9 @@
   <div class="md:w-1/2 px-8">
     <form [formGroup]="educationForm">
       <div formArrayName="items">
+        @for (educationItem of educationItems.controls; track educationItem;let
+        i =$index,last =$last ) {
         <div
-          *ngFor="
-            let educationItem of educationItems.controls;
-            let i = index;
-            let last = last
-          "
           [formGroupName]="i"
           [ngClass]="{
             'border-t-2 border-neutral-300/20 mt-8 pt-8': i > 0
@@ -122,6 +119,7 @@
             /></button
           >}
         </div>
+        }
       </div>
     </form>
     <div

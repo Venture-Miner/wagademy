@@ -1,14 +1,13 @@
-import { NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormFieldComponent } from 'apps/frontend/src/app/shared/components/form-field/form-field.component';
-import { InputComponent } from 'apps/frontend/src/app/shared/components/input/input.component';
+import { PhotoUploadComponent } from '../photo-upload/photo-upload.component';
 import {
   SelectComponent,
   SelectItem,
-} from 'apps/frontend/src/app/shared/components/select/select.component';
-import { TextAreaComponent } from 'apps/frontend/src/app/shared/components/text-area/text-area.component';
-import { PhotoUploadComponent } from '../photo-upload/photo-upload.component';
+} from '../../../../../shared/components/select/select.component';
+import { FormFieldComponent } from '../../../../../shared/components/form-field/form-field.component';
+import { TextAreaComponent } from '../../../../../shared/components/text-area/text-area.component';
+import { InputComponent } from '../../../../../shared/components/input/input.component';
 
 export type UserData = {
   name: FormControl<string | null>;
@@ -29,7 +28,6 @@ export type UserData = {
     ReactiveFormsModule,
     FormFieldComponent,
     SelectComponent,
-    NgIf,
     InputComponent,
     TextAreaComponent,
     PhotoUploadComponent,

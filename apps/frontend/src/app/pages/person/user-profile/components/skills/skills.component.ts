@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgFor } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { FormFieldComponent } from 'apps/frontend/src/app/shared/components/form-field/form-field.component';
-import { InputComponent } from 'apps/frontend/src/app/shared/components/input/input.component';
+import { FormFieldComponent } from '../../../../../shared/components/form-field/form-field.component';
+import { InputComponent } from '../../../../../shared/components/input/input.component';
 
 @Component({
   selector: 'wagademy-skills',
   standalone: true,
-  imports: [FormFieldComponent, InputComponent, ReactiveFormsModule, NgFor],
+  imports: [FormFieldComponent, InputComponent, ReactiveFormsModule],
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.css',
 })

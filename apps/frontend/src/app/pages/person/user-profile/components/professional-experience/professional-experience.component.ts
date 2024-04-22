@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   FormArray,
   FormBuilder,
@@ -7,10 +7,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { FormFieldComponent } from 'apps/frontend/src/app/shared/components/form-field/form-field.component';
-import { InputComponent } from 'apps/frontend/src/app/shared/components/input/input.component';
-import { SelectComponent } from 'apps/frontend/src/app/shared/components/select/select.component';
-import { TextAreaComponent } from 'apps/frontend/src/app/shared/components/text-area/text-area.component';
+import { FormFieldComponent } from '../../../../../shared/components/form-field/form-field.component';
+import { TextAreaComponent } from '../../../../../shared/components/text-area/text-area.component';
+import { SelectComponent } from '../../../../../shared/components/select/select.component';
+import { InputComponent } from '../../../../../shared/components/input/input.component';
 
 @Component({
   selector: 'wagademy-professional-experience',
@@ -22,7 +22,6 @@ import { TextAreaComponent } from 'apps/frontend/src/app/shared/components/text-
     SelectComponent,
     TextAreaComponent,
     NgClass,
-    NgFor,
   ],
   templateUrl: './professional-experience.component.html',
   styleUrl: './professional-experience.component.css',

@@ -15,15 +15,16 @@
       </wagademy-form-field>
     </form>
     <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+      @for (expertise of expertises; track expertise;let i = $index) {
       <li
         class="bg-neutral text-neutral-950 p-1 rounded-md flex justify-between"
-        *ngFor="let expertise of expertises; let i = index"
       >
         <p>{{ expertise }}</p>
         <button (click)="removeExpertise(i)">
-          <img src="./assets/icons/icon-close.svg" />
+          <img src="./assets/icons/icon-close.svg" alt="close button icon" />
         </button>
       </li>
+      }
     </ul>
     <div class="sm:absolute sm:bottom-0 sm:right-9">
       <div
