@@ -25,7 +25,8 @@
       </details>
     </div>
     <div>
-      <ng-container *ngFor="let question of questions; let i = index">
+      @for(question of questions; track questions; let i = $index){
+      <ng-container>
         <div class="py-2">
           <details class="bg-neutral rounded">
             <summary
@@ -74,6 +75,7 @@
           </details>
         </div>
       </ng-container>
+      }
     </div>
   </div>
 </div>

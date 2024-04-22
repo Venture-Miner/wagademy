@@ -60,8 +60,8 @@
         : 'sm:grid-cols-2 lg:grid-cols-4 justify-items-center'
     "
   >
+    @for(course of filteredCourses; track filteredCourses){
     <div
-      *ngFor="let course of filteredCourses"
       (click)="selectedCourse = course"
       class="p-4 bg-neutral-400/10 rounded-lg flex-shrink-0 flex hover:shadow-lg hover:ease-in-out hover:duration-150 cursor-pointer"
       [ngClass]="
@@ -75,7 +75,7 @@
             'mr-4': displayStyle === 'list',
           }"
         [ngSrc]="course.img"
-        alt="Course image"
+        alt="course"
         width="80"
         height="80"
         class="object-cover rounded mb-4"
@@ -94,18 +94,19 @@
           }"
           class="text-xl text-center mt-auto font-serif sm:hidden p-2"
         >
+          @if(course.status === 'claimed'){
           <button
-            *ngIf="course.status === 'claimed'"
             class="p-2 text-xl font-serif sm:hidden text-primary text-center"
           >
             View In Wallet
           </button>
+          } @if(course.status !== 'claimed'){
           <button
-            *ngIf="course.status !== 'claimed'"
             class="text-xl btn sm:hidden btn-primary bg-primary font-normal w-full"
           >
             Claim
           </button>
+          }
         </div>
       </div>
       <div
@@ -115,26 +116,25 @@
             : 'mt-auto w-full flex justify-center'
         "
       >
+        @if(course.status === 'claimed'){
         <button
-          *ngIf="course.status === 'claimed'"
           class="p-2 text-xl font-serif hidden sm:block text-primary text-center"
         >
           View In Wallet
         </button>
-
+        } @if(course.status !== 'claimed'){
         <button
-          *ngIf="course.status !== 'claimed'"
           class="text-xl btn hidden sm:block btn-primary bg-primary font-normal w-full"
         >
           Claim
         </button>
+        }
       </div>
     </div>
+    }
   </div>
-  <div
-    *ngIf="filteredCourses.length"
-    class="flex justify-center lg:justify-end pt-6 pb-3"
-  >
+  @if(filteredCourses.length){
+  <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination
       [page]="page"
       [take]="take"
@@ -142,9 +142,10 @@
       (pageChange)="page = $event; getCourses()"
     ></wagademy-pagination>
   </div>
+  }
 </div>
+@if(selectedCourse){
 <wagademy-confirmation-modal
-  *ngIf="selectedCourse"
   (claimEvent)="showCertificate()"
   [courseImage]="selectedCourse.img"
   [courseName]="selectedCourse.name"
@@ -152,7 +153,6 @@
   [courseProgress]="selectedCourse.progress"
   [courseStatus]="selectedCourse.status"
 ></wagademy-confirmation-modal>
-<wagademy-certificate
-  *ngIf="selectedCourse && displayCertificate"
-  [courseName]="selectedCourse.name"
-></wagademy-certificate>
+} @if(selectedCourse && displayCertificate){
+<wagademy-certificate [courseName]="selectedCourse.name"></wagademy-certificate>
+}

@@ -1,11 +1,11 @@
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { InputComponent } from '../../../shared/components/input/input.component';
 
 @Component({
   selector: 'wagademy-interview-gpt',
   standalone: true,
-  imports: [NgClass, InputComponent, NgFor],
+  imports: [NgClass, InputComponent],
   templateUrl: './interview-gpt.component.html',
   styleUrl: './interview-gpt.component.scss',
 })

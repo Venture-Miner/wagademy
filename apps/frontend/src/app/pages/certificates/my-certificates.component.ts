@@ -1,11 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  NgClass,
-  NgFor,
-  NgIf,
-  NgOptimizedImage,
-  TitleCasePipe,
-} from '@angular/common';
+import { NgClass, NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
@@ -25,12 +19,10 @@ interface Course {
   standalone: true,
   imports: [
     RouterModule,
-    NgFor,
     TitleCasePipe,
     NgClass,
     FormsModule,
     PaginationComponent,
-    NgIf,
     ConfirmationModalComponent,
     CertificateComponent,
     NgOptimizedImage,

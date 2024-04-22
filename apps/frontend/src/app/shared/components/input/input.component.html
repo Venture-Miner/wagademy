@@ -1,11 +1,12 @@
 <div class="relative">
+  @if(leftIcon){
   <div
-    *ngIf="leftIcon"
     class="flex absolute inset-y-0 left-0 items-center pl-3"
     [ngClass]="hasError() ? 'text-error' : 'text-primary'"
   >
     <i class="{{ leftIcon }}"></i>
   </div>
+  }
   <input
     [ngClass]="hasError() ? 'input-error' : 'focus:border-primary'"
     class="input w-full px-9"
@@ -18,8 +19,8 @@
     [disabled]="disabledInput"
     [value]="value"
   />
+  @if(rightButtonType){
   <button
-    *ngIf="rightButtonType"
     type="button"
     class="absolute inset-y-0 right-0 pr-3 flex items-center text-base-100"
     (click)="rightButtonMap[rightButtonType].action()"
@@ -27,4 +28,5 @@
   >
     <i [ngClass]="rightButtonMap[rightButtonType].icon"></i>
   </button>
+  }
 </div>
