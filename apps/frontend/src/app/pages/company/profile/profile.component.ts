@@ -12,12 +12,16 @@ import { ToastService } from '../../../services/toast/toast.service';
 import { FormFieldComponent } from '../../../shared/components/form-field/form-field.component';
 import { CompanyProfile, UpdateCompanyProfile } from '@wagademy/types';
 import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'wagademy-profile',
   standalone: true,
   imports: [
     RouterModule,
+    FormsModule,
+    InputComponent,
+    NgOptimizedImage,
     FormsModule,
     InputComponent,
     FormFieldComponent,

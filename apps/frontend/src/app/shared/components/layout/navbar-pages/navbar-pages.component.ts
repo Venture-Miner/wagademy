@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -16,7 +16,7 @@ import { Hub } from 'aws-amplify/utils';
   selector: 'wagademy-navbar-pages',
   templateUrl: './navbar-pages.component.html',
   styleUrls: ['./navbar-pages.component.scss'],
-  imports: [RouterModule, NgClass],
+  imports: [RouterModule, NgClass, NgOptimizedImage],
 })
 export class NavbarPagesComponent implements OnInit {
   showMenu = false;
