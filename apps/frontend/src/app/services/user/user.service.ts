@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import {
   CreateCompanyProfile,
   CreateCompanyProfileResponse,
-  CreateUser,
+  CreateUserFrontendDto,
   CreateUserResponse,
   FindOneCompanyProfileResponse,
   FindOneProfileResponse,
@@ -22,7 +22,7 @@ export class UserService extends BaseHttpService {
     super();
   }
 
-  create(createUserDto: CreateUser): Observable<CreateUserResponse> {
+  create(createUserDto: CreateUserFrontendDto): Observable<CreateUserResponse> {
     return this.http.post<CreateUserResponse>(
       `${this.URL}/user`,
       createUserDto

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Hub } from 'aws-amplify/utils';
 import { fetchAuthSession } from 'aws-amplify/auth';
-import { BehaviorSubject, firstValueFrom, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
-import { HttpError } from '../../shared/types/http-error';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { AccountTypeEnum, User } from '@wagademy/types';
 import { UserService } from '../user/user.service';
@@ -39,7 +37,7 @@ export class AuthService {
     Hub.listen('custom', async ({ payload }) => {
       switch (payload.event) {
         case 'signedUp': {
-          this.handleSignUp(payload.data);
+          this.handleSignUp(payload.data as any);
           break;
         }
         default:
@@ -63,8 +61,21 @@ export class AuthService {
     return user;
   }
 
-  private async handleSignUp(data: any) {
-    // TODO: create user with userType & avatar
+  private async handleSignUp(data: {
+    name: string;
+    userType: AccountTypeEnum;
+  }) {
+    const user = await firstValueFrom(
+      this.userService.create({ name: data.name, accountType: data.userType })
+    );
+    this.user.next(user);
+    this.handleRouteToRedirect(user);
+  }
+
+  private handleRouteToRedirect(user: User | null) {
+    const whichHome =
+      user?.accountType === AccountTypeEnum.COMPANY ? '-company' : '';
+    this.router.navigate([`/pages/home${whichHome}`]);
   }
 
   private async handleSignIn() {
@@ -73,18 +84,6 @@ export class AuthService {
       if (!idToken) return;
       try {
         await this.loadUserData();
-      } catch (error) {
-        if (!(error instanceof HttpErrorResponse)) throw error;
-        // TODO: Throw error code in the api instead of handling it by message
-        const message = (error.error as HttpError).message;
-        if (
-          message === 'The authenticated user does not exist in the database.'
-        ) {
-          // const user = await firstValueFrom(this.userService.create());
-          // this.user.next(user);
-        } else {
-          throw error;
-        }
       } finally {
         const currentRoute = this.location.path();
         const authenticationRoutes = [
@@ -94,9 +93,7 @@ export class AuthService {
         ];
         if (authenticationRoutes.includes(currentRoute)) {
           const user = await this.getUserData();
-          const whichHome =
-            user?.accountType === AccountTypeEnum.COMPANY ? '-company' : '';
-          this.router.navigate([`/pages/home${whichHome}`]);
+          this.handleRouteToRedirect(user);
         }
       }
     } catch (error) {
@@ -104,8 +101,9 @@ export class AuthService {
     }
   }
 
-  private handleSignOut() {
+  private async handleSignOut() {
     this.user.next(null);
+    localStorage.clear();
     this.router.navigate(['/account/sign-in']);
   }
 }
