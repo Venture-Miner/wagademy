@@ -2,9 +2,9 @@
   <div>
     <form [formGroup]="form" class="content">
       <wagademy-back-button></wagademy-back-button>
-      <div class="absolute">
+      <div class="absolute max-[639px]:w-[100%]">
         <div class="relative">
-          <div class="container pr-6 md:pr-0">
+          <div class="container max-[639px]:w-[90%]">
             @if(!background){
             <div
               class="object-cover h-[200px] md:w-[37rem] xl:w-[72rem] lg:w-[55rem] 2xl:w-[85rem] w-full sm:w-[37rem] rounded-lg container bg-neutral"
@@ -18,7 +18,7 @@
             }
           </div>
           @if(editProfile && !isUpdating){
-          <div class="container flex justify-end pr-10">
+          <div class="container flex justify-end max-[639px]:pr-20 sm:pr-10">
             <div
               class="absolute top-1/4 rounded-full shadow z-50 w-9 h-9 flex items-center justify-center cursor-pointer"
               (click)="background.click()"
