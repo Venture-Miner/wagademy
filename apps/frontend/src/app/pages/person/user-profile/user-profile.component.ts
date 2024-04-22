@@ -65,7 +65,13 @@ export class UserProfileComponent {
     name: ['Jacob Jones', Validators.required],
     email: ['jones.jacob@email.com', [Validators.required, Validators.email]],
     birth: ['2024-04-03', Validators.required],
-    cellphone: ['+55 11 912345-6789', Validators.required],
+    cellphone: [
+      '+55 11 912345-6789',
+      [
+        Validators.required,
+        Validators.pattern(/^(00|\+|\*|#|[0-9])([0-9]+ ?)*[0-9]+$/),
+      ],
+    ],
     country: ['BR', Validators.required],
     state: ['MG', Validators.required],
     about: [

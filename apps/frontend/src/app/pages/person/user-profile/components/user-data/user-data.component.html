@@ -7,9 +7,6 @@
     ></wagademy-photo-upload>
   </div>
   <div class="md:w-1/2 px-8">
-    <button class="text-primary px-2 mt-3 md:mt-0 mb-3">
-      Complete with Linkedin
-    </button>
     <form [formGroup]="userData">
       <div class="mb-4">
         <wagademy-form-field [control]="userData.controls['name']" label="Name">
@@ -48,11 +45,13 @@
           <wagademy-form-field
             [control]="userData.controls['cellphone']"
             label="Contact number"
+            [isInputMandatory]="true"
           >
             <wagademy-input
               placeholder="+55 11 91234-5678"
               type="text"
               formControlName="cellphone"
+              pattern="^[0-9\+\*\# ]*$"
             >
             </wagademy-input>
           </wagademy-form-field>

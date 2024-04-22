@@ -30,6 +30,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() disabledInput = false;
   @Input() isRightButtonDisabled = false;
   @Input() value = '';
+  @Input() pattern = '';
 
   @Output() rightButtonClick = new EventEmitter<void>();
 
