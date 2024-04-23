@@ -10,6 +10,9 @@ import {
 import { NgClass } from '@angular/common';
 import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
 import { ToastService } from '../../../services/toast/toast.service';
+import { UserService } from '../../../services/user/user.service';
+import { CreateCompanyProfile } from '@wagademy/types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'wagademy-create-profile',
@@ -29,24 +32,34 @@ export class CreateProfileComponent {
   profilePhotoFile!: File;
   profilePhoto!: string;
   form = this.fb.group({
-    companyName: ['', Validators.required],
+    name: ['', Validators.required],
     areaOfExpertise: ['', Validators.required],
     about: ['', Validators.required],
-    newWord: [''],
+    whatIsTheCompanyLookingFor: [
+      this.fb.array<string>(
+        [],
+        [Validators.maxLength(10), Validators.minLength(1)]
+      ),
+    ],
+    profilePhoto: [''],
   });
   step: 1 | 2 | 3 = 1;
-  areaOfInterest: string[] = [];
+  whatIsTheCompanyLookingFor: string[] = [];
   newWord = '';
-  companyName = 'Pandas LTDA.';
-  about =
-    'Pandas LTDA. is a leader in customized technological solutions. Specializing in software development, data analysis, and IT consulting, our technology-driven team is committed to simplifying complex processes. We prioritize excellence, offering tailor-made solutions that drive the growth and success of our clients businesses. Join us and embark on this journey towards the future of technology.';
-  areaOfExpertise = 'Area of expertise';
+  name = '';
+  about = '';
+  areaOfExpertise = '';
   editProfileSectionOne = false;
   editProfileSectionTwo = false;
+  private stepIsValid = false;
+  private isMax = false;
+  private isCreating = false;
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly userService: UserService,
+    private readonly router: Router
   ) {}
 
   onFileChange(event: Event) {
@@ -59,22 +72,51 @@ export class CreateProfileComponent {
     const fileUrl = URL.createObjectURL(file);
     this.profilePhotoFile = file;
     this.profilePhoto = fileUrl;
-    this.validateForm();
+    this.form.patchValue({ profilePhoto: fileUrl });
   }
 
-  validateForm() {
-    //
+  validateFirstStep() {
+    if (
+      this.form.controls.areaOfExpertise.valid &&
+      this.form.controls.about.valid &&
+      this.form.controls.name.valid
+    ) {
+      this.stepIsValid = true;
+    } else this.stepIsValid = false;
   }
 
-  removeAreaOfInterest(index: number) {
-    this.areaOfInterest.splice(index, 1);
+  get stepIsValidValue() {
+    return this.stepIsValid;
   }
 
-  addAreaOfInterest() {
-    const newWord = this.form.value.newWord?.trim() ?? '';
-    if (newWord !== '') {
-      this.areaOfInterest.push(newWord);
-      this.form.get('newWord')?.setValue('');
+  get isMaxValue() {
+    return this.isMax;
+  }
+
+  get isCreatingValue() {
+    return this.isCreating;
+  }
+
+  set changeStepIsValidValue(valid: boolean) {
+    this.stepIsValid = valid;
+  }
+
+  removeWhatIsTheCompanyLookingFor(index: number) {
+    this.whatIsTheCompanyLookingFor.splice(index, 1);
+    if (this.whatIsTheCompanyLookingFor.length < 10) this.isMax = false;
+    this.form.controls.whatIsTheCompanyLookingFor.setValue(
+      this.whatIsTheCompanyLookingFor
+    );
+  }
+
+  addWhatIsTheCompanyLookingFor() {
+    if (this.newWord.trim() !== '') {
+      this.whatIsTheCompanyLookingFor.push(this.newWord.trim());
+      if (this.whatIsTheCompanyLookingFor.length === 10) this.isMax = true;
+      this.form.controls.whatIsTheCompanyLookingFor.setValue(
+        this.whatIsTheCompanyLookingFor
+      );
+      this.newWord = '';
     }
   }
 
@@ -87,9 +129,33 @@ export class CreateProfileComponent {
   }
 
   saveAndConfirm() {
-    this.toastService.showToast({
-      message: 'Success! Profile successfully completed.',
-      type: 'success',
+    this.isCreating = true;
+    const createProfileDto = this.getDto();
+    this.userService.createCompanyProfile(createProfileDto).subscribe({
+      next: () => {
+        this.toastService.showToast({
+          message: 'Success! Profile successfully completed.',
+          type: 'success',
+        });
+        this.isCreating = false;
+        this.router.navigate(['/pages/hiring']);
+      },
+      error: () => {
+        this.toastService.showToast({
+          message: 'Error while creating your profile.',
+          type: 'error',
+        });
+        this.isCreating = false;
+      },
     });
+  }
+
+  private getDto() {
+    const { profilePhoto, ...data } = this.form.value;
+    const createProfile: CreateCompanyProfile = {
+      ...(data as Omit<CreateCompanyProfile, 'companyPhoto'>),
+    };
+    if (profilePhoto) createProfile.companyPhoto = this.profilePhotoFile;
+    return createProfile;
   }
 }
