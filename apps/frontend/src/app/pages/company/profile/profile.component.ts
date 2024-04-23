@@ -91,7 +91,11 @@ export class ProfileComponent implements OnInit {
       next: (profile) => {
         this.setInitialValues(profile);
       },
-      error: () => {
+      error: (error) => {
+        if(error.status === 404) {
+          this.router.navigate(['/pages/create-company-profile']);
+          return;
+        }
         this.toastService.showToast({
           message: 'Error while retrieving profile',
           type: 'error',
