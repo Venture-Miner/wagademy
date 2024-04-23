@@ -93,10 +93,11 @@
           >
             <img
               [ngSrc]="
-                existingProfileImage ||
-                './assets/img/images/img-default-profile.svg'
+                profilePhoto || './assets/img/images/img-default-profile.svg'
               "
-              class="w-10 h-10 rounded-full border border-primary"
+              class="rounded-full border border-primary"
+              width="40"
+              height="40"
               alt="profile"
             />
           </button>
@@ -231,11 +232,12 @@
           >
             <img
               [ngSrc]="
-                existingProfileImage ||
-                './assets/img/images/img-default-profile.svg'
+                profilePhoto || './assets/img/images/img-default-profile.svg'
               "
-              class="w-10 h-10 rounded-full border border-primary"
+              class="rounded-full border border-primary"
               alt="profile"
+              width="40"
+              height="40"
             />
           </button>
           @if(openMenu === true){
