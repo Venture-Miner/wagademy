@@ -3,14 +3,15 @@
     class="container mx-auto flex flex-wrap items-center justify-between px-5 py-4"
   >
     <div class="flex w-full justify-between xl:w-auto">
-      <img
-        [routerLink]="['/']"
-        class="cursor-pointer"
-        width="212px"
-        height="40px"
-        src="./assets/img/images/img-logo-navbar.webp"
-        alt="wagademy logo"
-      />
+      <a [routerLink]="'/'">
+        <img
+          width="212"
+          height="40"
+          class="cursor-pointer"
+          ngSrc="./assets/img/images/img-logo-navbar.webp"
+          alt="wagademy logo"
+        />
+      </a>
       <button
         aria-label="menu"
         class="cursor-pointer text-xl xl:hidden"

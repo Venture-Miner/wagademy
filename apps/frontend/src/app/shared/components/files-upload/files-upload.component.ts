@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CropperComponent } from './components/cropper/cropper.component';
 import { DialogService } from './services/dialog/dialog.service';
 import { DropZoneDirective } from './directives/drop-zone.directive';
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { FileSizePipe } from './pipes/file-size.pipe';
 
 @Component({
@@ -10,15 +10,21 @@ import { FileSizePipe } from './pipes/file-size.pipe';
   templateUrl: './files-upload.component.html',
   styleUrls: ['./files-upload.component.scss'],
   standalone: true,
-  imports: [CropperComponent, DropZoneDirective, NgClass, FileSizePipe],
+  imports: [
+    CropperComponent,
+    DropZoneDirective,
+    NgClass,
+    FileSizePipe,
+    NgOptimizedImage,
+  ],
 })
 export class FilesUploadComponent {
-  isHovering: boolean = false;
+  isHovering = false;
   error = '';
 
   imageToCrop: File | null = null;
   file: File | null = null;
-  objectURL: string = '';
+  objectURL = '';
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 

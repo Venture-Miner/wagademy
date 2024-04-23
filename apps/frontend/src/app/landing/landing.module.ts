@@ -6,12 +6,13 @@ import { FooterComponent } from '../shared/components/layout/footer/footer.compo
 import { RouterModule } from '@angular/router';
 import { NavbarLandingComponent } from '../shared/components/layout/navbar-landing/navbar-landing.component';
 @NgModule({
-  declarations: [LandingComponent, FooterComponent],
+  declarations: [LandingComponent],
   imports: [
     CommonModule,
     RouterModule,
     LandingRoutingModule,
     NavbarLandingComponent,
+    FooterComponent,
   ],
   providers: [],
 })

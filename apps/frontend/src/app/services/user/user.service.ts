@@ -3,7 +3,9 @@ import { BaseHttpService } from '../base-http/base-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
-  CreateUser,
+  CreateCompanyProfile,
+  CreateCompanyProfileResponse,
+  CreateUserFrontendDto,
   CreateUserResponse,
   FindOneCompanyProfileResponse,
   FindOneProfileResponse,
@@ -20,15 +22,35 @@ export class UserService extends BaseHttpService {
     super();
   }
 
-  create(createUserDto: CreateUser): Observable<CreateUserResponse> {
+  create(createUserDto: CreateUserFrontendDto): Observable<CreateUserResponse> {
     return this.http.post<CreateUserResponse>(
       `${this.URL}/user`,
       createUserDto
     );
   }
 
-  self(): Observable<RetrieveSelfResponse | null> {
-    return this.http.get<RetrieveSelfResponse | null>(`${this.URL}/user/self`);
+  createCompanyProfile(
+    createCompanyProfileDto: CreateCompanyProfile
+  ): Observable<CreateCompanyProfileResponse> {
+    const formData: FormData = new FormData();
+    if (createCompanyProfileDto.companyPhoto)
+      formData.append(
+        'companyPhoto',
+        createCompanyProfileDto.companyPhoto as File
+      );
+    Object.keys(createCompanyProfileDto).forEach((key) => {
+      if (key !== 'companyPhoto') {
+        formData.append(key, (createCompanyProfileDto as any)[key]);
+      }
+    });
+    return this.http.post<CreateCompanyProfileResponse>(
+      `${this.URL}/user/create-company-profile`,
+      formData
+    );
+  }
+
+  self(): Observable<RetrieveSelfResponse> {
+    return this.http.get<RetrieveSelfResponse>(`${this.URL}/user/self`);
   }
 
   findCompanyProfile(

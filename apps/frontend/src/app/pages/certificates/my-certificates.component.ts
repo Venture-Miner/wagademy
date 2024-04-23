@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { NgClass, NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import {
+  NgClass,
+  NgFor,
+  NgIf,
+  NgOptimizedImage,
+  TitleCasePipe,
+} from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
@@ -27,6 +33,7 @@ interface Course {
     NgIf,
     ConfirmationModalComponent,
     CertificateComponent,
+    NgOptimizedImage,
   ],
   templateUrl: './my-certificates.component.html',
   styleUrl: './my-certificates.component.css',
@@ -91,5 +98,7 @@ export class MyCertificatesComponent {
     this.displayCertificate = true;
   }
 
-  getCourses() {}
+  getCourses() {
+    //TODO
+  }
 }
