@@ -48,9 +48,11 @@
             <div class="rounded-3xl bg-neutral object-cover w-48 h-46"></div>
             }@else{
             <img
-              class="rounded-3xl object-cover w-48 h-46"
+              class="rounded-3xl object-cover"
               [ngSrc]="profilePhoto"
               alt="profile"
+              width="192"
+              height="176"
             />
             } @if(editProfile && !isUpdating){
             <div
