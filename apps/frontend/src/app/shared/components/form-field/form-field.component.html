@@ -23,6 +23,12 @@
           {{ errorKey && getError(errorKey).requiredLength }}
           characters</span
         >
+        <span *ngSwitchCase="'startDateGreaterThanEndDate'"
+          >Start date cannot be greater than end date</span
+        >
+        <span *ngSwitchCase="'datesAreEqual'"
+          >Start and end dates cannot be equal</span
+        >
         <ng-container *ngSwitchCase="'customvalidator'">
           <ul
             *ngIf="

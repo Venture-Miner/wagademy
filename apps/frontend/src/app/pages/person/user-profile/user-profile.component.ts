@@ -23,6 +23,7 @@ import { ExpertiseComponent } from './components/expertise/expertise.component';
 import { ProfessionalExperienceComponent } from './components/professional-experience/professional-experience.component';
 import { SkillsComponent } from './components/skills/skills.component';
 import { PhotoUploadComponent } from './components/photo-upload/photo-upload.component';
+import { dateValidator } from '../../../shared/utils/date-comparison-validator';
 
 @Component({
   selector: 'wagademy-complete-profile',
@@ -111,31 +112,37 @@ export class UserProfileComponent {
   }
 
   createEducationItem(): FormGroup {
-    return this.fb.group({
-      degree: ['BACHELOR', Validators.required],
-      institution: [
-        'Federal University of Minas Gerais (UFMG) - Belo Horizonte, Minas Gerais',
-        Validators.required,
-      ],
-      course: ['Course name'],
-      startDate: ['2024-04-03', Validators.required],
-      endDate: ['2024-04-03', Validators.required],
-      description: [
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
-      ],
-    });
+    return this.fb.group(
+      {
+        degree: ['BACHELOR', Validators.required],
+        institution: [
+          'Federal University of Minas Gerais (UFMG) - Belo Horizonte, Minas Gerais',
+          Validators.required,
+        ],
+        course: ['Course name'],
+        startDate: ['2024-04-03', Validators.required],
+        endDate: ['2024-04-03', Validators.required],
+        description: [
+          'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
+        ],
+      },
+      { validators: dateValidator() }
+    );
   }
 
   createProfessionalExperienceItem(): FormGroup {
-    return this.fb.group({
-      company: ['Company', Validators.required],
-      jobTitle: ['Job title', Validators.required],
-      startDate: ['2024-04-03', Validators.required],
-      endDate: ['02024-04-03', Validators.required],
-      description: [
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
-      ],
-    });
+    return this.fb.group(
+      {
+        company: ['Company', Validators.required],
+        jobTitle: ['Job title', Validators.required],
+        startDate: ['2024-04-03', Validators.required],
+        endDate: ['02024-04-03', Validators.required],
+        description: [
+          'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
+        ],
+      },
+      { validators: dateValidator() }
+    );
   }
 
   addEducationItem(): void {

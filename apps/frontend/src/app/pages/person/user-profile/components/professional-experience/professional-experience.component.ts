@@ -11,6 +11,7 @@ import { FormFieldComponent } from '../../../../../shared/components/form-field/
 import { TextAreaComponent } from '../../../../../shared/components/text-area/text-area.component';
 import { SelectComponent } from '../../../../../shared/components/select/select.component';
 import { InputComponent } from '../../../../../shared/components/input/input.component';
+import { dateValidator } from 'apps/frontend/src/app/shared/utils/date-comparison-validator';
 
 @Component({
   selector: 'wagademy-professional-experience',
@@ -34,15 +35,18 @@ export class ProfessionalExperienceComponent {
   constructor(private fb: FormBuilder) {}
 
   createProfessionalExperienceItem(): FormGroup {
-    return this.fb.group({
-      company: ['Company', Validators.required],
-      jobTitle: ['Job title', Validators.required],
-      startDate: ['2024-04-03', Validators.required],
-      endDate: ['02024-04-03', Validators.required],
-      description: [
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
-      ],
-    });
+    return this.fb.group(
+      {
+        company: ['Company', Validators.required],
+        jobTitle: ['Job title', Validators.required],
+        startDate: ['2024-04-03', Validators.required],
+        endDate: ['02024-04-03', Validators.required],
+        description: [
+          'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
+        ],
+      },
+      { validators: dateValidator() }
+    );
   }
 
   get professionalExperienceItems(): FormArray {
