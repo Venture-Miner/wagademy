@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { AccountTypeEnum } from '@wagademy/types';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Hub } from 'aws-amplify/utils';
-import { UserService } from 'apps/frontend/src/app/services/user/user.service';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   standalone: true,
