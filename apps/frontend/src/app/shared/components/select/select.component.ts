@@ -2,8 +2,10 @@ import { NgClass, NgFor } from '@angular/common';
 import {
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   Optional,
+  Output,
   Renderer2,
   Self,
   ViewChild,
@@ -24,6 +26,7 @@ export interface SelectItem<T> {
 })
 export class SelectComponent implements ControlValueAccessor {
   @Input() items: SelectItem<string | number | boolean>[] = [];
+  @Output() selectionChange: EventEmitter<string> = new EventEmitter<string>();
   @Input() placeholder = 'Select';
 
   @ViewChild('select', { static: true, read: ElementRef })
@@ -67,6 +70,7 @@ export class SelectComponent implements ControlValueAccessor {
   onInputChange() {
     const value = this.elementRef.nativeElement.value;
     this.onChange(value);
+    this.selectionChange.emit(value);
   }
 
   onBlur() {

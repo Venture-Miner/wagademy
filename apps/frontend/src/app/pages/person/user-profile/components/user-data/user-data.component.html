@@ -61,21 +61,24 @@
         <div class="md:w-1/2 mb-4">
           <wagademy-form-field
             [control]="userData.controls['country']"
+            label="Country"
             class="w-full"
           >
             <wagademy-select
-              [items]="mockCountries"
+              (selectionChange)="onCountrySelect($event)"
+              [items]="countries"
               [formControl]="userData.controls['country']"
             ></wagademy-select>
           </wagademy-form-field>
         </div>
         <div class="md:w-1/2 mb-4">
           <wagademy-form-field
+            label="State"
             [control]="userData.controls['state']"
             class="w-full"
           >
             <wagademy-select
-              [items]="mockStates"
+              [items]="states"
               [formControl]="userData.controls['state']"
             ></wagademy-select>
           </wagademy-form-field>

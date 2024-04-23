@@ -1,5 +1,6 @@
 @if(step === 1) {
 <wagademy-user-data
+  [countries]="countries"
   [profilePhoto]="profilePhoto"
   (imageUploaded)="onImageUploaded($event)"
   [userData]="userData"
@@ -91,8 +92,9 @@
           class="w-full"
         >
           <wagademy-select
-            [items]="mockCountries"
+            [items]="countries"
             [formControl]="userData.controls['country']"
+            (selectionChange)="onCountrySelect($event)"
           ></wagademy-select>
         </wagademy-form-field>
       </div>
@@ -102,7 +104,7 @@
           class="w-full"
         >
           <wagademy-select
-            [items]="mockStates"
+            [items]="states"
             [formControl]="userData.controls['state']"
           ></wagademy-select>
         </wagademy-form-field>

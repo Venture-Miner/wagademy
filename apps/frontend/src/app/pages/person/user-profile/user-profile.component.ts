@@ -24,7 +24,19 @@ import { ProfessionalExperienceComponent } from './components/professional-exper
 import { SkillsComponent } from './components/skills/skills.component';
 import { PhotoUploadComponent } from './components/photo-upload/photo-upload.component';
 import { dateValidator } from '../../../shared/utils/date-comparison-validator';
+import { HttpClient } from '@angular/common/http';
+import { ToastService } from '../../../services/toast/toast.service';
 
+interface Country {
+  iso2: string;
+  name: string;
+}
+
+export interface State {
+  country_code: string;
+  state_code: string;
+  name: string;
+}
 @Component({
   selector: 'wagademy-complete-profile',
   standalone: true,
@@ -46,20 +58,11 @@ import { dateValidator } from '../../../shared/utils/date-comparison-validator';
   styleUrl: './user-profile.component.css',
 })
 export class UserProfileComponent {
-  mockCountries: SelectItem<string>[] = [
-    { value: 'BR', label: 'Brazil' },
-    { value: 'EUA', label: 'United States' },
-  ];
-
-  mockStates: SelectItem<string>[] = [
-    { value: 'MG', label: 'Minas Gerais' },
-    { value: 'TX', label: 'Texas' },
-  ];
-
+  countries: SelectItem<string>[] = [];
+  states: SelectItem<string>[] = [];
+  selectedCountry: string | null = '';
   profilePhoto: string | undefined;
-
   editMode = false;
-
   step = 1;
 
   userData = this.fb.group({
@@ -73,8 +76,8 @@ export class UserProfileComponent {
         Validators.pattern(/^(00|\+|\*|#|[0-9])([0-9]+ ?)*[0-9]+$/),
       ],
     ],
-    country: ['BR', Validators.required],
-    state: ['MG', Validators.required],
+    country: ['', Validators.required],
+    state: ['', Validators.required],
     about: [
       'I’m Jacob, a professional with a degree in Software Engineering and a specialization in Project Management',
       Validators.required,
@@ -93,7 +96,11 @@ export class UserProfileComponent {
 
   skills: string[] = ['Word example', 'Word example'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private toastService: ToastService
+  ) {
     this.educationForm = this.fb.group({
       items: this.fb.array([this.createEducationItem()]),
     });
@@ -109,6 +116,8 @@ export class UserProfileComponent {
     this.skillsForm = this.fb.group({
       newSkill: [''],
     });
+
+    this.getCountries();
   }
 
   createEducationItem(): FormGroup {
@@ -205,5 +214,50 @@ export class UserProfileComponent {
 
   onImageUploaded(imageUrl: string) {
     this.profilePhoto = imageUrl;
+  }
+
+  getCountries() {
+    this.http.get<Country[]>('./assets/countries/countries.json').subscribe({
+      next: (data: Country[]) => {
+        this.countries = data.map((country) => ({
+          value: country.iso2,
+          label: country.name,
+        }));
+      },
+      error: () => {
+        this.toastService.showToast({
+          message: 'Failed fetching countries.',
+          type: 'error',
+        });
+      },
+    });
+  }
+
+  onCountrySelect(event: string) {
+    this.selectedCountry = event;
+    this.states = [];
+    if (this.selectedCountry) {
+      this.getStates(this.selectedCountry);
+    }
+  }
+
+  getStates(countryIso2: string) {
+    this.http.get<State[]>('./assets/countries/states.json').subscribe({
+      next: (data: State[]) => {
+        const filteredStates = data.filter(
+          (state) => state.country_code === countryIso2
+        );
+        this.states = filteredStates.map((state) => ({
+          value: state.name,
+          label: state.name,
+        }));
+      },
+      error: () => {
+        this.toastService.showToast({
+          message: 'Failed fetching states.',
+          type: 'error',
+        });
+      },
+    });
   }
 }
