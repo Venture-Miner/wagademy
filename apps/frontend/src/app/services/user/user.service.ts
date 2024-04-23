@@ -3,7 +3,7 @@ import { BaseHttpService } from '../base-http/base-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
-  CreateUser,
+  CreateUserFrontendDto,
   CreateUserResponse,
   FindOneCompanyProfileResponse,
   FindOneProfileResponse,
@@ -20,7 +20,7 @@ export class UserService extends BaseHttpService {
     super();
   }
 
-  create(createUserDto: CreateUser): Observable<CreateUserResponse> {
+  create(createUserDto: CreateUserFrontendDto): Observable<CreateUserResponse> {
     return this.http.post<CreateUserResponse>(
       `${this.URL}/user`,
       createUserDto
