@@ -61,7 +61,7 @@
         <span *ngSwitchCase="'pattern'">
           @if(patternError){
           <span>{{ patternError }}</span>
-          } @if(!patternError){
+          } @else{
           <span>Pattern does not match</span>
           }
         </span>

@@ -100,7 +100,7 @@
           >
             View In Wallet
           </button>
-          } @if(course.status !== 'claimed'){
+          } @else{
           <button
             class="text-xl btn sm:hidden btn-primary bg-primary font-normal w-full"
           >
@@ -122,7 +122,7 @@
         >
           View In Wallet
         </button>
-        } @if(course.status !== 'claimed'){
+        } @else{
         <button
           class="text-xl btn hidden sm:block btn-primary bg-primary font-normal w-full"
         >
