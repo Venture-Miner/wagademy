@@ -161,8 +161,7 @@ export class HiringComponent implements OnInit {
   }
 
   completeProfile() {
-    //Change route after page is done
-    this.router.navigate(['/pages/company-profile-edit']);
+    this.router.navigate(['/pages/create-company-profile']);
   }
 
   verifyUser() {

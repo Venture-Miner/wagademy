@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -10,13 +10,14 @@ import { RouterModule } from '@angular/router';
 import { AccountTypeEnum } from '@wagademy/types';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Hub } from 'aws-amplify/utils';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   standalone: true,
   selector: 'wagademy-navbar-pages',
   templateUrl: './navbar-pages.component.html',
   styleUrls: ['./navbar-pages.component.scss'],
-  imports: [RouterModule, NgClass],
+  imports: [RouterModule, NgClass, NgOptimizedImage],
 })
 export class NavbarPagesComponent implements OnInit {
   showMenu = false;
@@ -27,11 +28,16 @@ export class NavbarPagesComponent implements OnInit {
   @ViewChild('dropdown') dropdown!: ElementRef;
   @ViewChild('toggleNavbarButton') toggleNavbarButton!: ElementRef;
   @ViewChild('list') list!: ElementRef;
+  profilePhoto!: any;
 
   readonly PHYSICAL_PERSON = AccountTypeEnum.PHYSICAL_PERSON;
   readonly COMPANY = AccountTypeEnum.COMPANY;
 
-  constructor(private authService: AuthService, private renderer: Renderer2) {
+  constructor(
+    private authService: AuthService,
+    private renderer: Renderer2,
+    private readonly userService: UserService
+  ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       const target = e.target as Node;
       const isOutsideToggleButton =
@@ -53,16 +59,48 @@ export class NavbarPagesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fetchUserData();
+  }
+
+  fetchUserData() {
     this.authService
       .getUserData()
       .then((user) => {
         if (user) {
           this.accountType = user.accountType;
+          if (user.companyProfile?.id) {
+            this.fetchCompanyProfile(user.companyProfile.id);
+          }
+          if (user.userProfile?.id) {
+            this.fetchUserProfile(user.userProfile.id);
+          }
         }
       })
       .catch((error) => {
         console.error('Error getting user data:', error);
       });
+  }
+
+  fetchCompanyProfile(profileId: string) {
+    this.userService.findCompanyProfile(profileId).subscribe({
+      next: (profile) => {
+        this.profilePhoto = profile?.companyPhoto?.url;
+      },
+      error: (error) => {
+        console.error('Error fetching company profile:', error);
+      },
+    });
+  }
+
+  fetchUserProfile(profileId: string) {
+    this.userService.findUserProfile(profileId).subscribe({
+      next: (profile) => {
+        this.profilePhoto = profile?.profilePhoto?.url;
+      },
+      error: (error) => {
+        console.error('Error fetching user profile:', error);
+      },
+    });
   }
 
   toggleNavbar() {

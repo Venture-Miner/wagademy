@@ -23,7 +23,7 @@
           ? ' h-[80px] w-[80px] pl-4 pt-4 rounded'
           : 'h-40 w-full rounded-t-lg'
       ]"
-      alt="image"
+      alt="card"
     />
     <img
       *ngIf="!img"
@@ -34,7 +34,7 @@
           ? ' h-[80px] w-[80px] pl-4 pt-4 rounded'
           : 'h-40 w-full rounded-t-lg'
       ]"
-      alt="fallback image"
+      alt="fallback"
     />
     <div *ngIf="menu === 'jobs'" class="absolute top-0 right-0 p-2">
       <div
@@ -80,7 +80,7 @@
             (click)="copyLinkJob.emit()"
             class="flex gap-1 pb-2 cursor-pointer"
           >
-            <img src="./assets/icons/icon-robot.svg" alt="robot" />
+            <img ngSrc="./assets/icons/icon-robot.svg" alt="robot" />
             <p class="font-serif text-base-100">Copy link</p>
           </div>
           <div (click)="isOpen = false" class="flex gap-1 cursor-pointer">
