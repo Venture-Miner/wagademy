@@ -125,6 +125,13 @@ const routes: Routes = [
           import('./company/gpts/gpts.component').then((c) => c.GptsComponent),
       },
       {
+        path: 'build-training-data',
+        loadComponent: () =>
+          import(
+            './company/build-training-data/build-training-data.component'
+          ).then((c) => c.BuildTrainingDataComponent),
+      },
+      {
         canActivate: [AuthGuard, AccountTypeCompanyGuard],
         path: 'create-company-profile',
         loadComponent: () =>

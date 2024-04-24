@@ -11,12 +11,12 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { HTMLInputTypeAttribute } from '../../types/html-input-type-attribute';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { InputRightButtonType } from '../../types/input-right-button-type';
 
 @Component({
   standalone: true,
-  imports: [NgClass, NgIf],
+  imports: [NgClass],
   selector: 'wagademy-input',
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',

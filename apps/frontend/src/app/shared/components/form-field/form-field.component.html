@@ -2,13 +2,16 @@
   <div class="label flex justify-between">
     <span class="label-text text-base-100"
       >{{ label }}
-      <span *ngIf="isInputMandatory" class="text-error ml-1">*</span>
+      @if(isInputMandatory){
+      <span class="text-error ml-1">*</span>
+      }
     </span>
   </div>
   <div>
     <ng-content></ng-content>
     <div class="text-error mt-2">
-      <ng-container *ngIf="hasError()" [ngSwitch]="errorKey">
+      @if(hasError()){
+      <ng-container [ngSwitch]="errorKey">
         <span *ngSwitchCase="'min'">Minimum {{ getError(errorKey!).min }}</span>
         <span *ngSwitchCase="'email'">Invalid email</span>
         <span *ngSwitchCase="'max'">Maximum {{ getError(errorKey!).max }}</span>
@@ -30,10 +33,8 @@
               else default
             "
           >
-            <li
-              *ngFor="let error of getError(errorKey!)"
-              class="flex gap-2 items-center"
-            >
+            @for(error of getError(errorKey!); track $index){
+            <li class="flex gap-2 items-center">
               <div
                 class="rounded-full w-2 h-2"
                 [ngClass]="{
@@ -49,6 +50,7 @@
                 >{{ error.message }}</span
               >
             </li>
+            }
           </ul>
           <ng-template #default>
             <span>
@@ -57,10 +59,14 @@
           >
         </ng-container>
         <span *ngSwitchCase="'pattern'">
-          <span *ngIf="patternError">{{ patternError }}</span>
-          <span *ngIf="!patternError">Pattern does not match</span>
+          @if(patternError){
+          <span>{{ patternError }}</span>
+          } @else{
+          <span>Pattern does not match</span>
+          }
         </span>
       </ng-container>
+      }
     </div>
   </div>
 </label>
