@@ -1,4 +1,4 @@
-import { NgClass, NgIf, NgSwitchCase, NgSwitch, NgFor } from '@angular/common';
+import { NgClass, NgIf, NgSwitchCase, NgSwitch } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { PasswordComplexityErrors } from '../../utils/password-complexity-validator';
@@ -6,7 +6,7 @@ import { PasswordComplexityErrors } from '../../utils/password-complexity-valida
 @Component({
   selector: 'wagademy-form-field',
   standalone: true,
-  imports: [NgClass, NgSwitchCase, NgIf, NgSwitch, NgFor],
+  imports: [NgClass, NgSwitchCase, NgIf, NgSwitch],
   templateUrl: './form-field.component.html',
   styleUrl: './form-field.component.scss',
 })
@@ -14,7 +14,7 @@ export class FormFieldComponent {
   @Input() label = '';
   @Input() control?: AbstractControl;
   @Input() patternError: string | undefined;
-  @Input() isInputMandatory: boolean = false;
+  @Input() isInputMandatory = false;
 
   hasError() {
     return !!(this.control?.invalid && this.control.touched);

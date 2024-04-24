@@ -6,16 +6,15 @@
       : 'group  justify-center h-[336px]'
   ]"
 >
-  <div
-    class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"
-    *ngIf="isOpen || isOpenCourses"
-  ></div>
+  @if(isOpen || isOpenCourses){
+  <div class="absolute inset-0 bg-base-100 bg-opacity-40 rounded-lg"></div>
+  }
   <div
     class="font-mono"
     [ngClass]="[details === 'more' ? 'w-[80px]' : 'sm:w-[304px] w-[230px]']"
   >
+    @if(img){
     <img
-      *ngIf="img"
       [src]="img"
       class="object-cover"
       [ngClass]="[
@@ -25,8 +24,8 @@
       ]"
       alt="card"
     />
+    }@else{
     <img
-      *ngIf="!img"
       [src]="'./assets/img/images/img-card-fallback.webp'"
       class="object-cover"
       [ngClass]="[
@@ -36,7 +35,8 @@
       ]"
       alt="fallback"
     />
-    <div *ngIf="menu === 'jobs'" class="absolute top-0 right-0 p-2">
+    } @if(menu === 'jobs'){
+    <div class="absolute top-0 right-0 p-2">
       <div
         (click)="isOpen = true"
         class="bg-neutral shadow-md cursor-pointer rounded-full py-1 px-2"
@@ -44,10 +44,8 @@
         <i class="bi bi-three-dots-vertical text-base-100"></i>
       </div>
       <div class="absolute top-0 right-0 p-2">
-        <div
-          *ngIf="isOpen"
-          class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
-        >
+        @if(isOpen){
+        <div class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2">
           <div
             (click)="unpublishJob.emit()"
             class="flex gap-1 pb-2 cursor-pointer"
@@ -80,7 +78,12 @@
             (click)="copyLinkJob.emit()"
             class="flex gap-1 pb-2 cursor-pointer"
           >
-            <img ngSrc="./assets/icons/icon-robot.svg" alt="robot" />
+            <img
+              ngSrc="./assets/icons/icon-robot.svg"
+              width="20"
+              height="20"
+              alt="robot"
+            />
             <p class="font-serif text-base-100">Copy link</p>
           </div>
           <div (click)="isOpen = false" class="flex gap-1 cursor-pointer">
@@ -88,9 +91,11 @@
             <p class="font-serif text-base-100">Close</p>
           </div>
         </div>
+        }
       </div>
     </div>
-    <div *ngIf="menu === 'courses'" class="absolute top-0 right-0 p-2">
+    } @if(menu === 'courses'){
+    <div class="absolute top-0 right-0 p-2">
       <div
         (click)="isOpenCourses = true"
         class="bg-neutral shadow-md cursor-pointer rounded-full py-1 px-2"
@@ -98,10 +103,8 @@
         <i class="bi bi-three-dots-vertical text-base-100"></i>
       </div>
       <div class="absolute top-0 right-0 p-2">
-        <div
-          *ngIf="isOpenCourses"
-          class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2"
-        >
+        @if(isOpenCourses){
+        <div class="bg-neutral rounded-lg shadow w-[164px] px-5 py-2">
           <div
             (click)="updateCourse.emit()"
             class="flex gap-1 pb-6 cursor-pointer"
@@ -131,8 +134,10 @@
             <p class="font-serif text-base-100">Close</p>
           </div>
         </div>
+        }
       </div>
     </div>
+    }
     <div
       class="px-4 bottom-4 bg-neutral w-full"
       [ngClass]="[
@@ -141,12 +146,11 @@
           : 'group-hover:-translate-y-8 absolute duration-300'
       ]"
     >
-      <p
-        *ngIf="applications"
-        class="font-sans font-bold text-sm text-primary pb-1 pt-4"
-      >
+      @if(applications){
+      <p class="font-sans font-bold text-sm text-primary pb-1 pt-4">
         {{ applications }} APPLICATIONS
       </p>
+      }
       <h3
         [ngClass]="{
           'text-base font-mono font-bold': details === 'more',
@@ -166,7 +170,8 @@
         </p>
       </div>
     </div>
-    <div *ngIf="details === 'main'" class="absolute bottom-0 w-full p-4">
+    @if(details === 'main'){
+    <div class="absolute bottom-0 w-full p-4">
       <div
         class="opacity-0 w-full duration-300"
         [ngClass]="[
@@ -180,5 +185,6 @@
         </button>
       </div>
     </div>
+    }
   </div>
 </div>
