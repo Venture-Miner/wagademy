@@ -120,6 +120,11 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'gpts',
+        loadComponent: () =>
+          import('./company/gpts/gpts.component').then((c) => c.GptsComponent),
+      },
+      {
         path: 'build-training-data',
         loadComponent: () =>
           import(
