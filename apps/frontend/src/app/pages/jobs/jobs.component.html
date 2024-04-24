@@ -1,16 +1,11 @@
 <div class="container mx-auto min-h-screen px-3">
   <div class="pb-8 pt-6 flex justify-between flex-wrap gap-4">
     <h2 class="font-sans font-medium text-4xl text-base-100">Jobs</h2>
-    <label class="input flex items-center gap-2 bg-transparent text-base-200">
-      <i class="bi bi-search"></i>
-      <input
-        type="text"
-        [(ngModel)]="searchJob"
-        class="grow text-base-200"
-        placeholder="Search"
-        (ngModelChange)="findManyJobs()"
-      />
-    </label>
+    <wagademy-input-search
+      placeholder="Search"
+      [value]="searchJob"
+      (valueChange)="searchJob = $event; findManyJobs()"
+    ></wagademy-input-search>
     <div class="flex flex-wrap gap-2">
       @for (filter of filters; track $index) {
       <button

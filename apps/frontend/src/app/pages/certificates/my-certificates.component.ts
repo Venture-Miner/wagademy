@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { PaginationComponent } from '../../shared/components/pagination/pagination.component';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { CertificateComponent } from './components/certificate/certificate.component';
+import { InputSearchComponent } from '../../shared/components/input-search/input-search.component';
 
 interface Course {
   name: string;
@@ -33,6 +34,7 @@ interface Course {
     NgIf,
     ConfirmationModalComponent,
     CertificateComponent,
+    InputSearchComponent,
     NgOptimizedImage,
   ],
   templateUrl: './my-certificates.component.html',

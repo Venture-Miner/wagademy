@@ -2,15 +2,11 @@
   <div class="pb-8 pt-6 flex justify-between flex-wrap gap-4">
     <h2 class="font-sans font-medium text-4xl text-base-100">Chatbots</h2>
     <div>
-      <label class="input flex items-center gap-2 bg-transparent text-base-200">
-        <i class="bi bi-search"></i>
-        <input
-          type="text"
-          [(ngModel)]="searchChat"
-          class="grow text-base-200"
-          placeholder="Search"
-        />
-      </label>
+      <wagademy-input-search
+        placeholder="Search"
+        [value]="searchChat"
+        (valueChange)="searchChat = $event; getChatBots()"
+      ></wagademy-input-search>
     </div>
     <div class="flex flex-wrap gap-2">
       <button

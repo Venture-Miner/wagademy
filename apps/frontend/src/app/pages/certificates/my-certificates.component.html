@@ -40,15 +40,11 @@
       </button>
     </div>
     <div>
-      <label class="input flex items-center gap-2 bg-transparent text-base-200">
-        <i class="bi bi-search"></i>
-        <input
-          type="text"
-          [(ngModel)]="searchTerm"
-          class="grow text-base-200"
-          placeholder="Search"
-        />
-      </label>
+      <wagademy-input-search
+        placeholder="Search"
+        [value]="searchTerm"
+        (valueChange)="searchTerm = $event; getCourses()"
+      ></wagademy-input-search>
     </div>
   </div>
   <div
