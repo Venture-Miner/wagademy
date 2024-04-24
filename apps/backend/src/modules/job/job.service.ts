@@ -386,7 +386,9 @@ export class JobService {
   ): Promise<UpdateJobApplicationCompanyView> {
     const jobApplication = await this.prismaService.jobApplication.findUnique({
       where: { id },
-      include: { job: { select: { companyId: true } } },
+      include: {
+        job: { select: { companyId: true, aiInterviewQuestions: true } },
+      },
     });
     if (!jobApplication) {
       throw new NotFoundException(
@@ -400,6 +402,10 @@ export class JobService {
     if (jobApplication.applicationStatus !== 'SUBSCRIBED')
       throw new UnauthorizedException(
         'You are not able to invite the user since the user is invited or already did the interview .'
+      );
+    if (!jobApplication.job.aiInterviewQuestions.length)
+      throw new UnauthorizedException(
+        'You are not able to invite the user before adding interview questions in the job position.'
       );
     return this.prismaService.jobApplication.update({
       where: { id },
