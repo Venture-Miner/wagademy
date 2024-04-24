@@ -120,6 +120,14 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeCompanyGuard],
+        path: 'build-training-data',
+        loadComponent: () =>
+          import(
+            './company/build-training-data/build-training-data.component'
+          ).then((c) => c.BuildTrainingDataComponent),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
         path: 'create-company-profile',
         loadComponent: () =>
           import('./company/create-profile/create-profile.component').then(
