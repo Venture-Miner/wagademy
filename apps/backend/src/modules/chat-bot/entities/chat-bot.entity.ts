@@ -1,7 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { ChatBotStatusEnum } from '@prisma/client';
-import { ChatBot } from '@wagademy/types';
+import { ChatBot, File } from '@wagademy/types';
+import { FileEntity } from '../../../shared/entities/file.entity';
 
 export class ChatbotEntity implements ChatBot {
   @ApiProperty({ example: faker.database.mongodbObjectId() })
@@ -27,6 +28,9 @@ export class ChatbotEntity implements ChatBot {
 
   @ApiProperty({ example: faker.database.mongodbObjectId() })
   thumbnailId: string;
+
+  @ApiProperty({ type: FileEntity })
+  thumbnail: File;
 
   @ApiProperty({ example: faker.date.recent() })
   createdAt: Date;

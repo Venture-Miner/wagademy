@@ -63,7 +63,7 @@ export class ChatBotService {
   }
 
   async findManyChatBots(
-    { featured, invited, mostRecent }: FilterChatbots,
+    { featured, invited, mostRecent, search }: FilterChatbots,
     { skip, take }: Pagination,
     userId: string
   ): Promise<FindManyChatBotsResponse> {
@@ -80,6 +80,9 @@ export class ChatBotService {
     if (mostRecent) {
       orderBy.push({ createdAt: 'desc' });
     }
+    if (search) {
+      AND.push({ title: { contains: search, mode: 'insensitive' } });
+    }
     const [count, chatBots] = await Promise.all([
       this.prismaService.chatBot.count({ where: { AND } }),
       this.prismaService.chatBot.findMany({
@@ -87,6 +90,7 @@ export class ChatBotService {
         orderBy,
         skip,
         take,
+        include: { thumbnail: true },
       }),
     ]);
     return { count, chatBots };
@@ -107,6 +111,7 @@ export class ChatBotService {
         where: { AND },
         skip,
         take,
+        include: { thumbnail: true },
       }),
     ]);
     return { count, chatBots };
@@ -167,6 +172,7 @@ export class ChatBotService {
           connect: { id: userId },
         },
       },
+      include: { thumbnail: true },
     });
   }
 
@@ -227,6 +233,17 @@ export class ChatBotService {
     userId: string,
     chatBotId: string
   ): Promise<InitChatBotResponse> {
+    const userIsInvited = await this.prismaService.invitation.count({
+      where: {
+        userId,
+        chatBotId,
+      },
+    });
+    //TODO: check if user has credits
+    const userHasCredits = false;
+    if (!userIsInvited && !userHasCredits) {
+      throw new BadRequestException('User is not invited nor has credits.');
+    }
     const history = await this.prismaService.chatBotHistory.findFirst({
       where: { chatBotId, userId },
     });

@@ -1,10 +1,12 @@
 import { ChatBotStatusEnum } from '@prisma/client';
 import OpenAI from 'openai';
+import { File } from './shared';
 
 export type FilterChatbots = {
   invited?: boolean;
   featured?: boolean;
   mostRecent?: boolean;
+  search?: string;
 };
 
 export type FilterCompanyChatbots = {
@@ -38,6 +40,7 @@ export type FindOneChatBotResponse = {
   status: ChatBotStatusEnum;
   views: number;
   thumbnailId: string;
+  thumbnail: File;
   createdAt: Date;
 };
 
@@ -50,12 +53,13 @@ export type ChatBot = {
   status: ChatBotStatusEnum;
   views: number;
   thumbnailId: string;
+  thumbnail: File;
   createdAt: Date;
 };
 
 export type FindManyChatBotsResponse = {
   count: number;
-  chatBots: FindOneChatBotResponse[];
+  chatBots: ChatBot[];
 };
 
 export type UploadTrainingDataResponse = {
@@ -79,6 +83,7 @@ export type CreateFineTuningJobResponse = {
   status: ChatBotStatusEnum;
   views: number;
   thumbnailId: string;
+  thumbnail: File;
   createdAt: Date;
 };
 
