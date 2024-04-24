@@ -111,7 +111,7 @@ export class GptListComponent implements OnInit {
         const chatBotAlreadyInit = 'Chatbot already initialized.';
         const notInvitedAndNoCredits = 'User is not invited nor has credits.';
 
-        if (notInvitedAndNoCredits) {
+        if (error.error.message === notInvitedAndNoCredits) {
           window.modal['showModal']();
         } else if (error.error.message === chatBotAlreadyInit) {
           this.router.navigate(['/pages/gptchat']);
