@@ -114,7 +114,9 @@ export class GptListComponent implements OnInit {
         if (error.error.message === notInvitedAndNoCredits) {
           window.modal['showModal']();
         } else if (error.error.message === chatBotAlreadyInit) {
-          this.router.navigate(['/pages/gptchat']);
+          this.router.navigate(['/pages/gptchat'], {
+            queryParams: { chatBotId: id },
+          });
         } else {
           this.toastService.showToast({
             message: error.error.message,
