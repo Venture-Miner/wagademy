@@ -1,4 +1,4 @@
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'wagademy-interview-gpt',
   standalone: true,
-  imports: [NgClass, InputComponent, NgFor, BackButtonComponent, FormsModule],
+  imports: [NgClass, InputComponent, BackButtonComponent, FormsModule],
   templateUrl: './interview-gpt.component.html',
   styleUrl: './interview-gpt.component.scss',
 })
