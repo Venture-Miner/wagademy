@@ -217,7 +217,9 @@ export class JobService {
               },
             },
           },
-          job: { select: { id: true, title: true } },
+          job: {
+            select: { id: true, title: true, aiInterviewQuestions: true },
+          },
           jobInterviewChat: { select: { id: true } },
         },
       }),
@@ -295,7 +297,7 @@ export class JobService {
             },
           },
         },
-        job: { select: { id: true, title: true } },
+        job: { select: { id: true, title: true, aiInterviewQuestions: true } },
         jobInterviewChat: { select: { id: true } },
       },
     });
@@ -419,6 +421,7 @@ export class JobService {
           select: {
             id: true,
             title: true,
+            aiInterviewQuestions: true,
           },
         },
         jobInterviewChat: { select: { id: true } },

@@ -21,6 +21,8 @@ import {
   FilterCompanyJobApplications,
   FindOneJobApplicationCompanyView,
   GetJobInterviewResultResponse,
+  ConfigureAIQuestions,
+  FindOneJobCompanyViewResponse,
 } from '@wagademy/types';
 import { Injectable } from '@angular/core';
 
@@ -106,6 +108,14 @@ export class JobService extends BaseHttpService {
     );
   }
 
+  findOneJobCompanyView(
+    id: string
+  ): Observable<FindOneJobCompanyViewResponse | null> {
+    return this.http.get<FindOneJobCompanyViewResponse | null>(
+      `${this.URL}/job/job-company-view/${id}`
+    );
+  }
+
   getJobInterviewResult(
     id: string
   ): Observable<GetJobInterviewResultResponse | null> {
@@ -118,6 +128,16 @@ export class JobService extends BaseHttpService {
     return this.http.patch<UpdateJobResponse>(
       `${this.URL}/job/${id}`,
       updateJobDto
+    );
+  }
+
+  configureAIQuestions(
+    id: string,
+    configureAIQuestionsDto: ConfigureAIQuestions
+  ): Observable<UpdateJobResponse> {
+    return this.http.patch<UpdateJobResponse>(
+      `${this.URL}/job/configure-ai-questions/${id}`,
+      configureAIQuestionsDto
     );
   }
 
