@@ -30,6 +30,7 @@ import { JobService } from '../../../services/job/job.service';
 import { formatSelectItem } from '../../../shared/utils/functions/format-select-item';
 import { UserService } from '../../../services/user/user.service';
 import { Router } from '@angular/router';
+import { InputSearchComponent } from '../../../shared/components/input-search/input-search.component';
 
 interface Filter {
   name: string;
@@ -49,6 +50,7 @@ interface Filter {
     ReactiveFormsModule,
     SelectComponent,
     ModalComponent,
+    InputSearchComponent,
   ],
   templateUrl: './hiring.component.html',
   styleUrl: './hiring.component.scss',
@@ -159,8 +161,7 @@ export class HiringComponent implements OnInit {
   }
 
   completeProfile() {
-    //Change route after page is done
-    this.router.navigate(['/pages/company-profile-edit']);
+    this.router.navigate(['/pages/create-company-profile']);
   }
 
   verifyUser() {

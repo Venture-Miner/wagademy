@@ -5,13 +5,14 @@
     <div class="w-full flex justify-between xl:w-auto">
       <a [routerLink]="'/'">
         <img
-          width="211.42px"
-          height="40px"
-          src="./assets/img/images/img-logo-navbar.webp"
+          width="212"
+          height="40"
+          ngSrc="./assets/img/images/img-logo-navbar.webp"
           alt="wagademy logo"
         />
       </a>
       <button
+        #toggleNavbarButton
         aria-label="menu"
         class="cursor-pointer text-xl xl:hidden"
         type="button"
@@ -25,7 +26,7 @@
       </button>
     </div>
     @if(accountType === PHYSICAL_PERSON){
-    <div>
+    <div #list>
       <ul
         [ngClass]="{ hidden: !showMenu }"
         class="xl:flex grid items-center justify-end xl:gap-4 gap-2"
@@ -33,12 +34,20 @@
         <li
           class="hover:text-primary text-base-100 text-sm font-mono pt-2 xl:pt-0"
         >
-          <a routerLinkActive="active-link" [routerLink]="['/pages/home']">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/home']"
+            (click)="showMenu = false"
+          >
             Home
           </a>
         </li>
         <li class="hover:text-primary text-base-100 text-sm font-mono">
-          <a routerLinkActive="active-link" [routerLink]="['/my-courses']">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/my-courses']"
+            (click)="showMenu = false"
+          >
             My courses
           </a>
         </li>
@@ -46,17 +55,26 @@
           <a
             routerLinkActive="active-link"
             [routerLink]="['pages/certificates']"
+            (click)="showMenu = false"
           >
             My certificates
           </a>
         </li>
         <li class="hover:text-primary text-base-100 text-sm font-mono">
-          <a routerLinkActive="active-link" [routerLink]="['/pages/jobs']">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/jobs']"
+            (click)="showMenu = false"
+          >
             Jobs
           </a>
         </li>
         <li class="hover:text-primary text-base-100 text-sm font-mono">
-          <a routerLinkActive="active-link" [routerLink]="['/pages/chatbot']">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/chatbot']"
+            (click)="showMenu = false"
+          >
             GPTs
           </a>
         </li>
@@ -67,22 +85,25 @@
         </li>
         <li class="relative">
           <button
+            #toggleButton
             aria-haspopup="true"
             aria-expanded="true"
             id="menu"
             (click)="toggleDropdown()"
           >
             <img
-              [src]="
-                existingProfileImage ||
-                './assets/img/images/img-default-profile.svg'
+              [ngSrc]="
+                profilePhoto || './assets/img/images/img-default-profile.svg'
               "
-              class="w-10 h-10 rounded-full border border-primary"
+              class="rounded-full h-10 border border-primary"
+              width="40"
+              height="40"
               alt="profile"
             />
           </button>
           @if(openMenu){
           <div
+            #dropdown
             class="mt-2 rounded-lg absolute w-36 bg-white z-10 xl:right-1/2 xl:transform shadow-lg"
           >
             <div
@@ -98,6 +119,7 @@
                   <a
                     routerLinkActive="active-link"
                     [routerLink]="['/pages/profile']"
+                    (click)="showMenu = false; openMenu = false"
                     >Profile</a
                   >
                 </div>
@@ -109,6 +131,7 @@
                   <a
                     routerLinkActive="active-link"
                     [routerLink]="['/pages/job-applications-all']"
+                    (click)="showMenu = false; openMenu = false"
                     >Applications</a
                   >
                 </div>
@@ -120,6 +143,7 @@
                   <a
                     routerLinkActive="active-link"
                     [routerLink]="['/pages/credits']"
+                    (click)="showMenu = false; openMenu = false"
                     >Credits</a
                   >
                 </div>
@@ -131,6 +155,7 @@
                   <a
                     routerLinkActive="active-link"
                     [routerLink]="['/pages/settings']"
+                    (click)="showMenu = false; openMenu = false"
                     >Settings</a
                   >
                 </div>
@@ -139,7 +164,7 @@
                 <div
                   class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
                 >
-                  <button>Logout</button>
+                  <button (click)="logout()">Logout</button>
                 </div>
               </div>
             </div>
@@ -149,33 +174,46 @@
       </ul>
     </div>
     } @if(accountType === COMPANY){
-    <div>
+    <div #list>
       <ul
         [ngClass]="{ hidden: !showMenu }"
         class="xl:flex grid items-center justify-end xl:gap-4 gap-2"
       >
         <li
-          class="hover:text-primary text-base-200 text-sm font-mono pt-2 xl:pt-0"
+          class="hover:text-primary text-base-100 text-sm font-mono pt-2 xl:pt-0"
         >
           <a
             routerLinkActive="active-link"
             [routerLink]="['/pages/home-company']"
+            (click)="showMenu = false"
           >
             Home
           </a>
         </li>
         <li class="hover:text-primary text-base-200 text-sm font-mono">
-          <a routerLinkActive="active-link" [routerLink]="['/pages/courses']">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/courses']"
+            (click)="showMenu = false"
+          >
             Courses
           </a>
         </li>
         <li class="hover:text-primary text-base-200 text-sm font-mono">
-          <a routerLinkActive="active-link" [routerLink]="['pages/hiring']">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/hiring']"
+            (click)="showMenu = false"
+          >
             Hiring
           </a>
         </li>
         <li class="hover:text-primary text-base-200 text-sm font-mono">
-          <a routerLinkActive="active-link" [routerLink]="['/pages/chatbot']">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/chatbot']"
+            (click)="showMenu = false"
+          >
             GPTs
           </a>
         </li>
@@ -186,22 +224,25 @@
         </li>
         <li class="relative">
           <button
+            #toggleButton
             aria-haspopup="true"
             aria-expanded="true"
             id="menu"
             (click)="toggleDropdown()"
           >
             <img
-              [src]="
-                existingProfileImage ||
-                './assets/img/images/img-default-profile.svg'
+              [ngSrc]="
+                profilePhoto || './assets/img/images/img-default-profile.svg'
               "
-              class="w-10 h-10 rounded-full border border-primary"
+              class="rounded-full h-10 border border-primary"
               alt="profile"
+              width="40"
+              height="40"
             />
           </button>
-          @if(openMenu){
+          @if(openMenu === true){
           <div
+            #dropdown
             class="mt-2 rounded-lg absolute w-36 bg-white z-10 xl:right-1/2 xl:transform shadow-lg"
           >
             <div
@@ -217,6 +258,7 @@
                   <a
                     routerLinkActive="active-link"
                     [routerLink]="['/pages/company-profile']"
+                    (click)="showMenu = false; openMenu = false"
                     >Profile</a
                   >
                 </div>
@@ -228,6 +270,7 @@
                   <a
                     routerLinkActive="active-link"
                     [routerLink]="['/pages/credits']"
+                    (click)="showMenu = false; openMenu = false"
                     >Credits</a
                   >
                 </div>
@@ -239,6 +282,7 @@
                   <a
                     routerLinkActive="active-link"
                     [routerLink]="['/pages/settings']"
+                    (click)="showMenu = false; openMenu = false"
                     >Settings</a
                   >
                 </div>
@@ -247,7 +291,7 @@
                 <div
                   class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
                 >
-                  <button>Logout</button>
+                  <button (click)="logout()">Logout</button>
                 </div>
               </div>
             </div>

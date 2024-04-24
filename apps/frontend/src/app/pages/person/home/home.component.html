@@ -2,63 +2,62 @@
   <div class="pb-8 pt-6">
     <h2 class="font-sans font-medium text-4xl text-base-100">Home</h2>
   </div>
+  @if(!jobs.length && !chatbots.length && !courses.length){
   <div
-    *ngIf="!jobs.length && !chatbots.length && !courses.length"
     class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
   >
     <p>There is no content available</p>
   </div>
-  <div *ngIf="!isLoading">
-    <div *ngIf="courses.length">
-      <div class="flex justify-between pb-2">
-        <h3 class="text-2xl text-base-100 font-sans font-medium">Courses</h3>
-        <button class="text-primary font-serif text-xl">See More</button>
-      </div>
-      <div
-        class="flex flex-wrap max-[657px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
-      >
-        <wagademy-card
-          *ngFor="let courses of courses"
-          [img]="courses.images"
-          [name]="courses.name"
-          [description]="courses.description"
-          [button]="'View More'"
-        ></wagademy-card>
-      </div>
-    </div>
-    <div *ngIf="jobs.length">
-      <div class="flex justify-between pb-2 pt-6">
-        <h3 class="text-2xl text-base-100 font-sans font-medium">Jobs</h3>
-        <button class="text-primary font-serif text-xl">See More</button>
-      </div>
-      <div
-        class="flex flex-wrap max-[657px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
-      >
-        <wagademy-card
-          *ngFor="let jobs of jobs"
-          [img]="jobs.images"
-          [name]="jobs.name"
-          [description]="jobs.description"
-          [button]="'View More'"
-        ></wagademy-card>
-      </div>
-    </div>
-    <div *ngIf="chatbots.length">
-      <div class="flex justify-between pt-6 pb-2">
-        <h3 class="text-2xl text-base-100 font-sans font-medium">Chatbots</h3>
-        <button class="text-primary font-serif text-xl">See More</button>
-      </div>
-      <div
-        class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
-      >
-        <wagademy-card
-          *ngFor="let chatbots of chatbots"
-          [img]="chatbots.images"
-          [name]="chatbots.name"
-          [description]="chatbots.description"
-          [button]="'Chat With Chatboot'"
-        ></wagademy-card>
-      </div>
-    </div>
+  } @if(!isLoading){ @if(courses.length){
+  <div class="flex justify-between pb-2">
+    <h3 class="text-2xl text-base-100 font-sans font-medium">Courses</h3>
+    <button class="text-primary font-serif text-xl">See More</button>
   </div>
+  <div
+    class="flex flex-wrap max-[657px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
+  >
+    @for(courses of courses; track $index){
+    <wagademy-card
+      [img]="courses.images"
+      [name]="courses.name"
+      [description]="courses.description"
+      [button]="'View More'"
+    ></wagademy-card>
+    }
+  </div>
+  } @if(jobs.length){
+  <div class="flex justify-between pb-2 pt-6">
+    <h3 class="text-2xl text-base-100 font-sans font-medium">Jobs</h3>
+    <button class="text-primary font-serif text-xl">See More</button>
+  </div>
+  <div
+    class="flex flex-wrap max-[657px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
+  >
+    @for(jobs of jobs; track $index){
+    <wagademy-card
+      [img]="jobs.images"
+      [name]="jobs.name"
+      [description]="jobs.description"
+      [button]="'View More'"
+    ></wagademy-card>
+    }
+  </div>
+  } @if(chatbots.length){
+  <div class="flex justify-between pt-6 pb-2">
+    <h3 class="text-2xl text-base-100 font-sans font-medium">Chatbots</h3>
+    <button class="text-primary font-serif text-xl">See More</button>
+  </div>
+  <div
+    class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
+  >
+    @for(chatbots of chatbots; track $index){
+    <wagademy-card
+      [img]="chatbots.images"
+      [name]="chatbots.name"
+      [description]="chatbots.description"
+      [button]="'Chat With Chatboot'"
+    ></wagademy-card>
+    }
+  </div>
+  } }
 </div>

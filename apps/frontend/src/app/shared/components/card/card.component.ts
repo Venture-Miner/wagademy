@@ -1,11 +1,11 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'wagademy-card',
   standalone: true,
-  imports: [NgIf, NgClass],
+  imports: [NgClass, NgOptimizedImage],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })

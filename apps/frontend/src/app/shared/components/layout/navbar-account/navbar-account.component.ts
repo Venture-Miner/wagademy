@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -6,6 +7,6 @@ import { RouterModule } from '@angular/router';
   selector: 'wagademy-navbar-account',
   templateUrl: './navbar-account.component.html',
   styleUrls: ['./navbar-account.component.scss'],
-  imports: [RouterModule],
+  imports: [RouterModule, NgOptimizedImage],
 })
 export class NavbarAccountComponent {}

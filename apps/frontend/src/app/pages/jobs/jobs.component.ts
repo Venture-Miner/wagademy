@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { FilterJobs, JobUserView, Pagination } from '@wagademy/types';
 import { JobService } from '../../services/job/job.service';
 import { ToastService } from '../../services/toast/toast.service';
+import { InputSearchComponent } from '../../shared/components/input-search/input-search.component';
 
 interface Filter {
   name: string;
@@ -16,7 +17,13 @@ interface Filter {
 @Component({
   selector: 'wagademy-jobs',
   standalone: true,
-  imports: [CardComponent, PaginationComponent, FormsModule, NgClass],
+  imports: [
+    CardComponent,
+    PaginationComponent,
+    FormsModule,
+    NgClass,
+    InputSearchComponent,
+  ],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.scss',
 })
@@ -45,7 +52,7 @@ export class JobsComponent implements OnInit {
   }
 
   jobDetails(id: string) {
-    this.router.navigate(['/pages/jobs-details'], {
+    this.router.navigate(['/pages/job-details'], {
       queryParams: { id },
     });
   }

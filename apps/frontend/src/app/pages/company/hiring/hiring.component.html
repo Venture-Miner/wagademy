@@ -2,16 +2,13 @@
   <div class="pb-7 pt-6 flex flex-wrap justify-between gap-6">
     <h2 class="font-sans font-medium text-4xl text-base-100">Hiring</h2>
     <div class="gap-8 flex flex-wrap">
-      <label class="input flex items-center gap-2 bg-transparent text-base-200">
-        <i class="bi bi-search"></i>
-        <input
-          type="text"
-          [(ngModel)]="searchJob"
-          class="grow text-base-200 lg:w-[408px] w-full"
+      <div class="lg:w-[408px] w-full">
+        <wagademy-input-search
           placeholder="Search"
-          (ngModelChange)="getJobs()"
-        />
-      </label>
+          [value]="searchJob"
+          (valueChange)="searchJob = $event; getJobs()"
+        ></wagademy-input-search>
+      </div>
       <button
         class="btn btn-primary btn-outline w-[200px]"
         (click)="verifyUser()"
@@ -69,7 +66,6 @@
     </div>
   </div>
   }
-
   <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination
       [page]="page"
@@ -87,7 +83,10 @@
         <h2 class="font-sans font-medium sm:text-4xl text-2xl text-base-100">
           Create Job
         </h2>
-        <button class="absolute right-2 top-2 text-base-100 sm:pt-6 pt-5 pr-4">
+        <button
+          class="absolute right-2 top-2 text-base-100 sm:pt-6 pt-5 pr-4"
+          onclick="create_job.close()"
+        >
           ✕
         </button>
       </div>
