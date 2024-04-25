@@ -17,9 +17,9 @@ export type UserProfile = {
 
 export type Education = {
   id: string;
+  degree: string;
   institution: string;
   course: string;
-  degree: string;
   description: string | null;
   stillStudying: boolean;
   startDate: Date;
