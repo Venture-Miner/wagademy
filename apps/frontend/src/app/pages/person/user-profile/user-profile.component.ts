@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, Location } from '@angular/common';
 import {
   FormArray,
   FormBuilder,
@@ -28,6 +28,7 @@ import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../../../services/toast/toast.service';
 import { UserService } from '../../../services/user/user.service';
 import { CreateProfile } from '@wagademy/types';
+import { Router } from '@angular/router';
 
 interface Country {
   iso2: string;
@@ -102,7 +103,9 @@ export class UserProfileComponent {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastService: ToastService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private location: Location,
+    private router: Router
   ) {
     this.educationForm = this.fb.group({
       items: this.fb.array([this.createEducationItem()]),
@@ -286,6 +289,7 @@ export class UserProfileComponent {
   }
 
   createUserProfile() {
+    this.isCreating = true;
     const createUserProfileDto: CreateProfile = this.createUserData();
     this.userService.createUserProfile(createUserProfileDto).subscribe({
       next: () => {
@@ -293,8 +297,15 @@ export class UserProfileComponent {
           message: 'Profile successfully created.',
           type: 'success',
         });
+        this.isCreating = false;
+        if (this.location.getState() !== null) {
+          this.location.back();
+        } else {
+          this.router.navigate(['/pages/home']);
+        }
       },
       error: () => {
+        this.isCreating = false;
         this.toastService.showToast({
           message: 'Error while creating profile.',
           type: 'error',

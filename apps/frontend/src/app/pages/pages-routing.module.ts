@@ -141,7 +141,7 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeUserGuard],
-        path: 'user-profile',
+        path: 'create-profile',
         loadComponent: () =>
           import('./person/user-profile/user-profile.component').then(
             (c) => c.UserProfileComponent
