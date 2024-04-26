@@ -27,7 +27,7 @@ export class ExpertiseComponent {
 
   addExpertise(): void {
     if (this.expertises.length < 10 && this.expertiseForm.valid) {
-      const newExpertise = this.expertiseForm.get('newExpertise')?.value;
+      const newExpertise = this.expertiseForm.get('areasOfExpertise')?.value;
       if (newExpertise && newExpertise.trim() !== '') {
         this.expertises.push(newExpertise.trim());
         this.expertiseForm.reset();

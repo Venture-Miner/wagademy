@@ -27,7 +27,7 @@ export class SkillsComponent {
 
   addSkill(): void {
     if (this.skills.length < 10 && this.skillsForm.valid) {
-      const newSkill = this.skillsForm.get('newSkill')?.value;
+      const newSkill = this.skillsForm.get('skillsAndCompetencies')?.value;
       if (newSkill && newSkill.trim() !== '') {
         this.skills.push(newSkill.trim());
         this.skillsForm.reset();

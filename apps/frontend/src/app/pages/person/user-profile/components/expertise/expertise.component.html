@@ -2,13 +2,13 @@
   <div class="w-full sm:h-[500px] relative px-8 xl:pl-[336px]">
     <form [formGroup]="expertiseForm">
       <wagademy-form-field
-        [control]="expertiseForm.controls['newExpertise']"
+        [control]="expertiseForm.controls['areasOfExpertise']"
         label="You need to fill up to 10 words to describe your areas of expertise"
       >
         <wagademy-input
           placeholder="Expertise Example"
           type="text"
-          formControlName="newExpertise"
+          formControlName="areasOfExpertise"
           (keydown.enter)="addExpertise()"
           [disabledInput]="isMaxValue"
         >

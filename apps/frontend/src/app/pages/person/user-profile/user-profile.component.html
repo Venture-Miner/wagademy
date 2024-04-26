@@ -77,21 +77,21 @@
     <div class="flex flex-col md:flex-row md:gap-10">
       <div class="md:w-1/2">
         <wagademy-form-field
-          [control]="userData.controls['birth']"
+          [control]="userData.controls['dateOfBirth']"
           [isInputMandatory]="true"
         >
-          <wagademy-input type="date" formControlName="birth"> </wagademy-input>
+          <wagademy-input type="date" formControlName="dateOfBirth"> </wagademy-input>
         </wagademy-form-field>
       </div>
       <div class="md:w-1/2">
         <wagademy-form-field
-          [control]="userData.controls['cellphone']"
+          [control]="userData.controls['contactNumber']"
           [isInputMandatory]="true"
         >
           <wagademy-input
             placeholder="+55 11 91234-5678"
             type="text"
-            formControlName="cellphone"
+            formControlName="contactNumber"
           >
           </wagademy-input>
         </wagademy-form-field>
@@ -137,7 +137,7 @@
       </div>
       <div class="flex items-center gap-2">
         <img src="./assets/icons/icon-cake.svg" alt="cake icon" />
-        {{ userData.get('birth')?.value }}
+        {{ userData.get('dateOfBirth')?.value }}
       </div>
       <div class="flex items-center gap-2">
         <img src="./assets/icons/icon-envelope.svg" alt="envelope icon" />
@@ -483,13 +483,13 @@
   @if(editMode) {
   <form [formGroup]="expertiseForm">
     <wagademy-form-field
-      [control]="expertiseForm.controls['newExpertise']"
+      [control]="expertiseForm.controls['areasOfExpertise']"
       label="You need to fill up to 10 words to describe your areas of expertise"
     >
       <wagademy-input
         placeholder="Expertise Example"
         type="text"
-        formControlName="newExpertise"
+        formControlName="areasOfExpertise"
         (keydown.enter)="addExpertise()"
       >
       </wagademy-input>
@@ -543,13 +543,13 @@
   @if (editMode) {
   <form [formGroup]="skillsForm">
     <wagademy-form-field
-      [control]="skillsForm.controls['newSkill']"
+      [control]="skillsForm.controls['skillsAndCompetencies']"
       label="You need to fill up to 10 words to describe your skills and competencies"
     >
       <wagademy-input
         placeholder="Skill Example"
         type="text"
-        formControlName="newSkill"
+        formControlName="skillsAndCompetencies"
         (keydown.enter)="addSkill()"
       >
       </wagademy-input>

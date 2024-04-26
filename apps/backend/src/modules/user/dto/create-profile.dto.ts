@@ -9,8 +9,8 @@ import {
   IsNotEmpty,
   IsObject,
   IsOptional,
-  IsPhoneNumber,
   IsString,
+  Matches,
   ValidateNested,
 } from 'class-validator';
 import { CreateUserEducationDto } from './create-user-education.dto';
@@ -29,7 +29,7 @@ export class CreateProfileDto implements CreateProfile {
     description: 'user cellphone number',
     example: faker.phone.number(),
   })
-  @IsPhoneNumber()
+  @Matches(/^(00|\+|\*|#|[0-9])([0-9]+ ?)*[0-9]+$/)
   contactNumber: string;
 
   @ApiProperty({

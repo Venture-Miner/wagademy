@@ -73,8 +73,8 @@ export class UserProfileComponent {
   userData = this.fb.group({
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    birth: ['', Validators.required],
-    cellphone: [
+    dateOfBirth: ['', Validators.required],
+    contactNumber: [
       '',
       [
         Validators.required,
@@ -113,11 +113,17 @@ export class UserProfileComponent {
     });
 
     this.expertiseForm = this.fb.group({
-      newExpertise: ['', [Validators.maxLength(30), Validators.minLength(2)]],
+      areasOfExpertise: [
+        '',
+        [Validators.maxLength(30), Validators.minLength(2)],
+      ],
     });
 
     this.skillsForm = this.fb.group({
-      newSkill: ['', [Validators.maxLength(30), Validators.minLength(2)]],
+      skillsAndCompetencies: [
+        '',
+        [Validators.maxLength(30), Validators.minLength(2)],
+      ],
     });
 
     this.getCountries();
@@ -180,7 +186,7 @@ export class UserProfileComponent {
 
   addExpertise(): void {
     if (this.expertises.length < 10 && this.expertiseForm.valid) {
-      const newExpertise = this.expertiseForm.get('newExpertise')?.value;
+      const newExpertise = this.expertiseForm.get('areasOfExpertise')?.value;
       if (newExpertise && newExpertise.trim() !== '') {
         this.expertises.push(newExpertise.trim());
         this.expertiseForm.reset();
@@ -196,7 +202,7 @@ export class UserProfileComponent {
 
   addSkill(): void {
     if (this.skills.length < 10 && this.skillsForm.valid) {
-      const newSkill = this.skillsForm.get('newSkill')?.value;
+      const newSkill = this.skillsForm.get('skillsAndCompetencies')?.value;
       if (newSkill && newSkill.trim() !== '') {
         this.skills.push(newSkill.trim());
         this.skillsForm.reset();
@@ -264,9 +270,9 @@ export class UserProfileComponent {
       ...this.userData.value,
       education: this.educationForm.value.items,
       professionalExperience: this.professionalExperienceForm.value.items,
-      ...this.expertiseForm.value,
-      ...this.skillsForm.value,
-    } as CreateProfile;
+      areasOfExpertise: [...this.expertises],
+      skillsAndCompetencies: [...this.skills],
+    } as unknown as CreateProfile;
   }
 
   get areAllFormsValid() {
