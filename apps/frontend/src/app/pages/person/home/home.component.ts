@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { CardComponent } from '../../../shared/components/card/card.component';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'wagademy-home',
   standalone: true,
-  imports: [InputComponent, CardComponent],
+  imports: [InputComponent, CardComponent, LoadingComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

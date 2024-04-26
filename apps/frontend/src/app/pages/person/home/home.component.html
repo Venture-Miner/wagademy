@@ -8,6 +8,8 @@
   >
     <p>There is no content available</p>
   </div>
+  } @if(isLoading){
+  <wagademy-loading></wagademy-loading>
   } @if(!isLoading){ @if(courses.length){
   <div class="flex justify-between pb-2">
     <h3 class="text-2xl text-base-100 font-sans font-medium">Courses</h3>

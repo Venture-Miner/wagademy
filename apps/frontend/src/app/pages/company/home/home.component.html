@@ -8,6 +8,8 @@
   >
     <p>There are no content available</p>
   </div>
+  } @if(isLoading){
+  <wagademy-loading></wagademy-loading>
   } @if(!isLoading){
   <div class="pb-6">
     @if(jobs.length){

@@ -8,6 +8,7 @@ import { FilterJobs, JobUserView, Pagination } from '@wagademy/types';
 import { JobService } from '../../services/job/job.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { InputSearchComponent } from '../../shared/components/input-search/input-search.component';
+import { LoadingComponent } from '../../shared/components/loading/loading.component';
 
 interface Filter {
   name: string;
@@ -23,6 +24,7 @@ interface Filter {
     FormsModule,
     NgClass,
     InputSearchComponent,
+    LoadingComponent,
   ],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.scss',
