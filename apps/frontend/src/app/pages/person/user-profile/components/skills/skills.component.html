@@ -2,7 +2,7 @@
   <div class="w-full sm:h-[500px] relative px-8 xl:pl-[336px]">
     <form [formGroup]="skillsForm">
       <wagademy-form-field
-        [control]="skillsForm.controls['newExpertise']"
+        [control]="skillsForm.controls['newSkill']"
         label="You need to fill up to 10 words to describe your skills and competencies"
       >
         <wagademy-input
@@ -10,6 +10,7 @@
           type="text"
           formControlName="newSkill"
           (keydown.enter)="addSkill()"
+          [disabledInput]="isMaxValue"
         >
         </wagademy-input>
       </wagademy-form-field>
