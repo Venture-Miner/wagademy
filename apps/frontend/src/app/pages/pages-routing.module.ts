@@ -147,6 +147,14 @@ const routes: Routes = [
             (c) => c.UserProfileComponent
           ),
       },
+      {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
+        path: 'profile-view-and-edit',
+        loadComponent: () =>
+          import(
+            './person/profile-view-and-edit/profile-view-and-edit.component'
+          ).then((c) => c.ProfileViewAndEditComponent),
+      },
     ],
   },
 ];
