@@ -237,7 +237,7 @@ export class GptChatComponent implements OnInit {
 
   private createChatCompletion(message: string) {
     this.chatBotService
-      .createChatCompletion({
+      .createChatCompletion(this.chatTypeObject.chatBot.id, {
         message,
         chatBotId: this.chatBotId,
       })

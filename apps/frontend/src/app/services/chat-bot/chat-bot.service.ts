@@ -128,10 +128,11 @@ export class ChatBotService extends BaseHttpService {
   }
 
   createChatCompletion(
+    id: string,
     createChatBotCompletion: CreateChatBotCompletion
   ): Observable<CreateChatCompletionResponse> {
-    return this.http.post<CreateChatCompletionResponse>(
-      `${this.URL}/chat-bot/chat-completion`,
+    return this.http.patch<CreateChatCompletionResponse>(
+      `${this.URL}/chat-bot/chat-completion/${id}`,
       createChatBotCompletion
     );
   }
