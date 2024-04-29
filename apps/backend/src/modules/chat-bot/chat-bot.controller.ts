@@ -6,6 +6,7 @@ import {
   Get,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Query,
   Res,
@@ -357,7 +358,7 @@ export class ChatBotController {
     return this.chatBotService.removeInvitation(invitationId, userId);
   }
 
-  @Post('chat-completion')
+  @Patch('chat-completion/:id')
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
@@ -370,6 +371,7 @@ export class ChatBotController {
     type: ChatCompletionMessageEntity,
   })
   createChatCompletion(
+    @Param() { id }: MongoIdDto,
     @Body() createChatCompletionDto: CreateChatBotCompletionDto,
     @DBUser() { id: userId, accountType }: User
   ) {
@@ -378,6 +380,7 @@ export class ChatBotController {
         'Only physical person accounts are allowed to use the chatbot.'
       );
     return this.chatBotService.createChatCompletion(
+      id,
       createChatCompletionDto,
       userId
     );

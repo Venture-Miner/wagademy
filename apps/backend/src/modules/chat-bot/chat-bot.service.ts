@@ -355,6 +355,7 @@ export class ChatBotService {
   }
 
   async createChatCompletion(
+    id: string,
     { chatBotId, message }: CreateChatBotCompletion,
     userId: string
   ): Promise<CreateChatCompletionResponse> {
@@ -393,15 +394,15 @@ export class ChatBotService {
     const assistantMessage = response.choices[0].message;
     messages = [...messages, assistantMessage];
     await this.prismaService.chatBotHistory.update({
-      where: { id: chatBotId },
+      where: { id },
       data: { history: messages as unknown as Prisma.InputJsonValue },
     });
     return assistantMessage;
   }
 
   async getChatHistory(
-    userId: string,
-    chatBotId: string
+    chatBotId: string,
+    userId: string
   ): Promise<GetChatBotHistoryResponse> {
     const chatBotHistory = await this.prismaService.chatBotHistory.findFirst({
       where: { chatBotId, userId },
