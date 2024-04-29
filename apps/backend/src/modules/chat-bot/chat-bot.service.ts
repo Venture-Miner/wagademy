@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   Logger,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from '@wagademy/prisma';
@@ -306,6 +307,7 @@ export class ChatBotService {
             },
           ],
         },
+        include: { chatBot: { select: { title: true } } },
       }),
       this.prismaService.chatBot.update({
         where: { id: chatBotId },
@@ -360,7 +362,7 @@ export class ChatBotService {
       where: { id: chatBotId },
     });
     if (!chatBot) {
-      throw new BadRequestException('Chatbot not found.');
+      throw new NotFoundException('Chatbot not found.');
     }
     const model = chatBot.model;
     if (!model) {
@@ -403,6 +405,7 @@ export class ChatBotService {
   ): Promise<GetChatBotHistoryResponse> {
     const chatBotHistory = await this.prismaService.chatBotHistory.findFirst({
       where: { chatBotId, userId },
+      include: { chatBot: { select: { title: true } } },
     });
     if (!chatBotHistory) {
       throw new BadRequestException('Chatbot not initialized.');

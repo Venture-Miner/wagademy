@@ -3,11 +3,14 @@ import { BaseHttpService } from '../base-http/base-http.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
+  CreateChatBotCompletion,
+  CreateChatCompletionResponse,
   CreateFineTuningJobResponse,
   FilterChatbots,
   FilterCompanyChatbots,
   FindManyChatBotsResponse,
   FindManyTrainingDataResponse,
+  GetChatBotHistoryResponse,
   GetTrainingDataContentResponse,
   InitChatBotResponse,
   Pagination,
@@ -115,6 +118,21 @@ export class ChatBotService extends BaseHttpService {
     return this.http.post<CreateFineTuningJobResponse>(
       `${this.URL}/chat-bot`,
       ObjToFormData(createFineTuningJob)
+    );
+  }
+
+  getChatHistory(id: string): Observable<GetChatBotHistoryResponse> {
+    return this.http.get<GetChatBotHistoryResponse>(
+      `${this.URL}/chat-bot/history/${id}`
+    );
+  }
+
+  createChatCompletion(
+    createChatBotCompletion: CreateChatBotCompletion
+  ): Observable<CreateChatCompletionResponse> {
+    return this.http.post<CreateChatCompletionResponse>(
+      `${this.URL}/chat-bot/chat-completion`,
+      createChatBotCompletion
     );
   }
 }

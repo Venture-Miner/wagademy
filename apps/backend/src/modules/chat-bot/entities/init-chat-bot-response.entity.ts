@@ -16,4 +16,7 @@ export class InitChatBotResponseEntity implements InitChatBotResponse {
 
   @ApiProperty({ example: faker.database.mongodbObjectId() })
   chatBotId: string;
+
+  @ApiProperty({ example: { title: faker.lorem.text() } })
+  chatBot: { title: string };
 }

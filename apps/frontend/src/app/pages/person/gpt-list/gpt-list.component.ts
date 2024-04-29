@@ -101,29 +101,8 @@ export class GptListComponent implements OnInit {
   }
 
   initChat(id: string) {
-    this.chatBotService.initChat(id).subscribe({
-      next: () => {
-        this.router.navigate(['/pages/gptchat'], {
-          queryParams: { chatBotId: id },
-        });
-      },
-      error: (error) => {
-        const chatBotAlreadyInit = 'Chatbot already initialized.';
-        const notInvitedAndNoCredits = 'User is not invited nor has credits.';
-
-        if (error.error.message === notInvitedAndNoCredits) {
-          window.modal['showModal']();
-        } else if (error.error.message === chatBotAlreadyInit) {
-          this.router.navigate(['/pages/gptchat'], {
-            queryParams: { chatBotId: id },
-          });
-        } else {
-          this.toastService.showToast({
-            message: error.error.message,
-            type: 'error',
-          });
-        }
-      },
+    this.router.navigate(['/pages/gptchat'], {
+      queryParams: { chatBotId: id },
     });
   }
 
