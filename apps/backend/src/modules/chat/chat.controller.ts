@@ -55,7 +55,7 @@ export class ChatController {
   ) {
     if (accountType !== 'PHYSICAL_PERSON')
       throw new UnauthorizedException(
-        'Only accounts where the type is physical person can create a job.'
+        'Only accounts where the type is physical person can create a chat interview.'
       );
     return this.chatService.startJobInterview(createInterviewChatDto, userId);
   }
@@ -80,7 +80,7 @@ export class ChatController {
   ) {
     if (accountType !== 'PHYSICAL_PERSON')
       throw new UnauthorizedException(
-        'Only accounts where the type is physical person can create a job.'
+        'Only accounts where the type is physical person can create chat in the interview.'
       );
     return this.chatService.interviewCreateChatCompletion(id, userId, message);
   }

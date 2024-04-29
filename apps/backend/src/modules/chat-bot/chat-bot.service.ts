@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from '@wagademy/prisma';
 import {
   CreateChatBotCompletion,
@@ -266,7 +271,7 @@ export class ChatBotService {
     //TODO: check if user has credits
     const userHasCredits = false;
     if (!userIsInvited && !userHasCredits) {
-      throw new BadRequestException('User is not invited nor has credits.');
+      throw new UnauthorizedException('User is not invited nor has credits.');
     }
     const history = await this.prismaService.chatBotHistory.findFirst({
       where: { chatBotId, userId },
