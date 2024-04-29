@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
@@ -36,7 +36,7 @@ interface ChatBots {
   templateUrl: './gpt-list.component.html',
   styleUrl: './gpt-list.component.scss',
 })
-export class GptListComponent {
+export class GptListComponent implements OnInit {
   chats: ChatBots[] = [
     {
       images: './assets/img/images/img-card-lens.svg',
@@ -74,8 +74,12 @@ export class GptListComponent {
 
   constructor(public router: Router) {}
 
+  ngOnInit(): void {
+    this.getChatBots();
+  }
+
   getChatBots() {
-    /* TODO document why this method 'getChatBots' is empty */
+    this.isLoading = true;
   }
 
   exploreOption() {

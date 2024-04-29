@@ -1,4 +1,7 @@
 <div class="container mx-auto min-h-screen px-3">
+  @if(isLoading){
+  <wagademy-loading></wagademy-loading>
+  }@else {
   <div class="pb-4 pt-6 flex justify-between flex-wrap gap-4">
     <wagademy-back-button [routerLink]="'/pages/hiring'"></wagademy-back-button>
     <wagademy-input-search
@@ -76,4 +79,5 @@
       (pageChange)="page = $event"
     ></wagademy-pagination>
   </div>
+  }
 </div>

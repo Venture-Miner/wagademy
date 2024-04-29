@@ -1,4 +1,7 @@
 <div class="container mx-auto min-h-screen px-3">
+  @if(isLoading){
+  <wagademy-loading></wagademy-loading>
+  }@else{
   <div class="md:flex gap-8">
     <div>
       <wagademy-back-button></wagademy-back-button>
@@ -21,7 +24,7 @@
       </div>
       <div class="pb-10">
         <p class="font-mono font-bold text-base-100 pb-2">Description</p>
-        <p class="font-mono text-base-200">{{ job?.description }}</p>
+        <p class="font-mono text-base-200" [innerHTML]="job?.description"></p>
       </div>
       <div class="max-[768px]:flex justify-center">
         <button
@@ -61,6 +64,7 @@
       </div>
     </div>
   </div>
+  }
 </div>
 <wagademy-modal
   title="Incomplete profile "

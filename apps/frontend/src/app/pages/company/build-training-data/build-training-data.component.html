@@ -1,4 +1,7 @@
 <div class="container mx-auto min-h-screen px-3 sm:px-0" [formGroup]="form">
+  @if(isLoading){
+  <wagademy-loading></wagademy-loading>
+  }@else{
   <div class="pb-6 pt-8 flex gap-2 items-center">
     <h2 class="font-sans font-medium text-4xl text-base-100">GPTs</h2>
     <p class="text-primary text-sm font-bold">| BUILD TRAINING DATA</p>
@@ -54,4 +57,5 @@
       Save
     </button>
   </div>
+  }
 </div>

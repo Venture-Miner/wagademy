@@ -71,13 +71,16 @@ export class JobsComponent implements OnInit {
       take: this.take,
       skip: (this.page - 1) * this.take,
     };
+    this.isLoading = true;
     const filters = this.getFilter();
     this.jobService.findManyJobsUserView(filters, pagination).subscribe({
       next: ({ count, jobs }) => {
         this.jobs = jobs;
         this.count = count;
+        this.isLoading = false;
       },
       error: () => {
+        this.isLoading = false;
         this.toastService.showToast({
           message: 'Error while retrieving jobs',
           type: 'error',

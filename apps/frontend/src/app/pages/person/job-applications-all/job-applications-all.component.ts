@@ -8,6 +8,7 @@ import { Pagination, UserJobApplication } from '@wagademy/types';
 import { JobService } from '../../../services/job/job.service';
 import { ToastService } from '../../../services/toast/toast.service';
 import { Subject, debounceTime } from 'rxjs';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'wagademy-job-applications-all',
@@ -18,6 +19,7 @@ import { Subject, debounceTime } from 'rxjs';
     PaginationComponent,
     NgClass,
     ApplicationsCardsComponent,
+    LoadingComponent,
   ],
   templateUrl: './job-applications-all.component.html',
   styleUrl: './job-applications-all.component.scss',
@@ -56,6 +58,7 @@ export class JobApplicationsAllComponent implements OnInit, OnDestroy {
       take: this.take,
       skip: (this.page[this.applicationsType] - 1) * this.take,
     };
+    this.isLoading = true;
     const filter = this.applicationsType === 'all' ? {} : { invited: true };
     const oppositeApplicationType =
       this.applicationsType === 'all' ? 'interviewInvites' : 'all';
@@ -66,8 +69,10 @@ export class JobApplicationsAllComponent implements OnInit, OnDestroy {
           this.count[this.applicationsType] = count;
           this.jobApplications[this.applicationsType] = jobApplications;
           this.count[oppositeApplicationType] = countWithFilter;
+          this.isLoading = false;
         },
         error: () => {
+          this.isLoading = false;
           this.toastService.showToast({
             message: 'Error while retrieving job applications.',
             type: 'error',

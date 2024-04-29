@@ -13,6 +13,7 @@ import { FormFieldComponent } from '../../../shared/components/form-field/form-f
 import { CompanyProfile, UpdateCompanyProfile } from '@wagademy/types';
 import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
 import { NgOptimizedImage } from '@angular/common';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'wagademy-profile',
@@ -27,6 +28,7 @@ import { NgOptimizedImage } from '@angular/common';
     FormFieldComponent,
     ReactiveFormsModule,
     BackButtonComponent,
+    LoadingComponent,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
@@ -61,6 +63,7 @@ export class ProfileComponent implements OnInit {
     profilePhoto: ['', [Validators.required]],
     backgroundPhoto: ['', [Validators.required]],
   });
+  isLoading = false;
 
   constructor(
     private readonly userService: UserService,
@@ -74,14 +77,17 @@ export class ProfileComponent implements OnInit {
   }
 
   getUserData() {
+    this.isLoading = true;
     this.userService.self().subscribe({
       next: (user) => {
         if (!user?.companyProfile?.id)
           this.router.navigate(['/pages/home-company']);
         else this.companyProfileId = user.companyProfile?.id;
         this.getCompanyProfile();
+        this.isLoading = false;
       },
       error: () => {
+        this.isLoading = false;
         this.toastService.showToast({
           message: 'Error while getting user data',
           type: 'error',
@@ -91,12 +97,15 @@ export class ProfileComponent implements OnInit {
   }
 
   getCompanyProfile() {
+    this.isLoading = true;
     this.userService.findCompanyProfile(this.companyProfileId).subscribe({
       next: (profile) => {
         this.setInitialValues(profile);
+        this.isLoading = false;
       },
       error: (error) => {
-        if(error.status === 404) {
+        this.isLoading = false;
+        if (error.status === 404) {
           this.router.navigate(['/pages/create-company-profile']);
           return;
         }
