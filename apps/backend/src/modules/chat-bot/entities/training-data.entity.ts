@@ -11,4 +11,7 @@ export class TrainingDataEntity implements TrainingData {
 
   @ApiProperty({ example: faker.database.mongodbObjectId() })
   userId: string;
+
+  @ApiProperty({ example: faker.lorem.text() })
+  title: string;
 }

@@ -1,5 +1,5 @@
 <select
-  class="select bg-neutral w-full text-base-100"
+  class="select bg-neutral w-full text-base-100 focus:border-primary"
   [ngClass]="hasError() ? 'select-error' : 'select'"
   #select
   (change)="onInputChange()"

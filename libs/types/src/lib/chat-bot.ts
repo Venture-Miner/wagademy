@@ -29,6 +29,7 @@ export type CreateFineTuningJob = {
 
 export type UploadTrainingData = {
   trainingData: Express.Multer.File;
+  title: string;
 };
 
 export type FindOneChatBotResponse = {
@@ -41,6 +42,7 @@ export type FindOneChatBotResponse = {
   views: number;
   thumbnailId: string;
   thumbnail: File;
+  disabled: boolean;
   createdAt: Date;
 };
 
@@ -54,6 +56,7 @@ export type ChatBot = {
   views: number;
   thumbnailId: string;
   thumbnail: File;
+  disabled: boolean;
   createdAt: Date;
 };
 
@@ -66,12 +69,14 @@ export type UploadTrainingDataResponse = {
   id: string;
   fileId: string;
   userId: string;
+  title: string;
 };
 
 export type TrainingData = {
   id: string;
   fileId: string;
   userId: string;
+  title: string;
 };
 
 export type CreateFineTuningJobResponse = {
@@ -84,6 +89,7 @@ export type CreateFineTuningJobResponse = {
   views: number;
   thumbnailId: string;
   thumbnail: File;
+  disabled: boolean;
   createdAt: Date;
 };
 

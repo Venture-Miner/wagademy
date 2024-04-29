@@ -19,6 +19,7 @@ import {
   ApiOperation,
   ApiResponse,
   ApiTags,
+  PickType,
 } from '@nestjs/swagger';
 import { MongoIdDto, PaginationDto } from '../../shared/dtos';
 import { User } from '@wagademy/types';
@@ -33,6 +34,7 @@ import {
   InviteToChatBotResponseEntity,
   InitChatBotResponseEntity,
   GetChatBotHistoryResponseEntity,
+  TrainingDataEntity,
 } from './entities';
 import {
   CreateFineTuningJobDto,
@@ -125,7 +127,27 @@ export class ChatBotController {
     );
   }
 
-  @Post('upload-training-data')
+  @Get('training-data-dropdown-options')
+  @ApiBearerAuth()
+  @UseGuards(CognitoUserGuard)
+  @ApiOperation({
+    summary: 'Retrieve dropdown options for training data',
+    description:
+      'Returns a list of training data IDs and titles suitable for dropdowns',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Dropdown options successfully retrieved.',
+    type: [PickType<TrainingDataEntity, 'id' | 'title'>],
+  })
+  getTrainingDataDropdownOptions(
+    @DBUser()
+    { id: userId }: User
+  ) {
+    return this.chatBotService.getTrainingDataDropdownOptions(userId);
+  }
+
+  @Post('training-data')
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
@@ -143,19 +165,23 @@ export class ChatBotController {
     { id: userId, accountType }: User,
     @UploadedFiles()
     { trainingData }: { trainingData: Express.Multer.File[] },
-    @Body() _uploadTrainingDataDto: UploadTrainingDataDto
+    @Body() uploadTrainingDataDto: UploadTrainingDataDto
   ) {
     const trainingDataFile = trainingData[0];
     try {
       validateTrainingData(trainingDataFile);
     } catch (error) {
-      return new BadRequestException(error.message);
+      throw new BadRequestException(error.message);
     }
-    if (accountType !== 'PHYSICAL_PERSON')
+    if (accountType !== 'COMPANY')
       throw new UnauthorizedException(
-        'Only individual accounts are allowed to upload training data.'
+        'Only company accounts are allowed to upload training data.'
       );
-    return this.chatBotService.uploadTrainingData(trainingDataFile, userId);
+    return this.chatBotService.uploadTrainingData(
+      trainingDataFile,
+      uploadTrainingDataDto,
+      userId
+    );
   }
 
   @Post()

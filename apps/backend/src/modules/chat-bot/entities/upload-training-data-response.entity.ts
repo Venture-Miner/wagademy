@@ -13,4 +13,7 @@ export class UploadTrainingDataResponseEntity
 
   @ApiProperty({ example: faker.database.mongodbObjectId() })
   userId: string;
+
+  @ApiProperty({ example: faker.lorem.text() })
+  title: string;
 }

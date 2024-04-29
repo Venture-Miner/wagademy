@@ -55,7 +55,7 @@
           ? 'bg-secondary text-base-100 border-none'
           : 'text-base-100'
       ]"
-      (click)="selectedFilter = filter.name"
+      (click)="selectedFilter = filter.name; findManyCompanyChatbots()"
     >
       {{ filter.name }}
     </button>
@@ -76,14 +76,14 @@
           </tr>
         </thead>
         <tbody>
-          @for (gpt of gpts; track gpts) {
+          @for (chat of chatBots; track chat.id) {
           <tr class="text-base-100 font-mono text-lg">
             <td class="py-4 px-3">
               <div class="flex gap-8 pl-8">
-                @if(gpt.image){
+                @if(chat.thumbnail.url){
                 <img
                   class="w-12 h-12 rounded-2xl"
-                  [src]="gpt.image"
+                  [src]="chat.thumbnail.url"
                   alt="thumbnail"
                 />
                 }@else(){
@@ -93,25 +93,29 @@
             </td>
             <td class="py-4 px-6 md:px-0 md:pl-6 md:pr-[500px]">
               <div>
-                <p class="font-bold">{{ gpt.title }}</p>
-                <p>{{ gpt.description }}</p>
+                <p class="font-bold">{{ chat.title }}</p>
+                <p>{{ chat.description }}</p>
               </div>
             </td>
             <td class="py-4 px-6">
               <p
-                class="px-4 py-3 rounded-full w-32 text-center"
+                class="px-4 py-3 rounded-full w-40 text-center"
                 [ngClass]="{
-                  'bg-success text-success-content': gpt.status === 'Success',
+                  'bg-success text-success-content': chat.status === 'SUCCESS',
                   'bg-warning text-warning-content':
-                    gpt.status === 'Processing',
-                  'bg-error text-base-100': gpt.status === 'Fail'
+                    chat.status === 'PROCESSING',
+                  'bg-error text-base-100': chat.status === 'FAIL'
                 }"
               >
-                {{ gpt.status }}
+                {{ chat.status }}
               </p>
             </td>
             <td class="py-4">
-              <button onclick="modal.showModal()" aria-label="remove item">
+              <button
+                onclick="modal.showModal()"
+                (click)="chatBotToDelete = chat.id"
+                aria-label="remove item"
+              >
                 <i class="bi bi-trash3 pl-8 text-base-200 cursor-pointer"></i>
               </button>
             </td>
@@ -123,10 +127,10 @@
   </div>
   <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination
-      [page]="page"
-      [take]="take"
-      [count]="count"
-      (pageChange)="page = $event"
+      [page]="pageFineTuning"
+      [take]="takeFineTuning"
+      [count]="countFineTuning"
+      (pageChange)="pageFineTuning = $event"
     ></wagademy-pagination>
   </div>
   } @if (gptType === 'TRAININGDATA') {
@@ -146,21 +150,25 @@
             </tr>
           </thead>
           <tbody>
-            @for (gpt of gptsTraining; track gptsTraining) {
+            @for (data of trainingData; track data.id) {
             <tr class="text-base-100 font-mono text-lg">
               <td class="py-4 px-6 md:px-0 md:pl-6 md:pr-40">
-                <p class="text-sm">{{ gpt.title }}</p>
+                <p class="text-sm">{{ data.title }}</p>
               </td>
               <td class="py-4 px-6 flex justify-end gap-4">
                 <i
                   class="bi bi-download text-base-200 cursor-pointer"
-                  (click)="download()"
+                  (click)="download(data.id, data.title)"
                 ></i>
                 <i
                   class="bi bi-eye text-base-200 cursor-pointer"
-                  (click)="view()"
+                  (click)="view(data.id)"
                 ></i>
-                <button onclick="modal.showModal()" aria-label="remove item">
+                <button
+                  onclick="modal.showModal()"
+                  (click)="trainingDataToDelete = data.id"
+                  aria-label="remove item"
+                >
                   <i class="bi bi-trash3 text-base-200 cursor-pointer"></i>
                 </button>
               </td>
@@ -173,10 +181,10 @@
   </div>
   <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination
-      [page]="page"
-      [take]="take"
-      [count]="count"
-      (pageChange)="page = $event"
+      [page]="pageTrainingData"
+      [take]="takeTrainingData"
+      [count]="countTrainingData"
+      (pageChange)="pageTrainingData = $event"
     ></wagademy-pagination>
   </div>
   }
@@ -187,71 +195,70 @@
       <h2
         class="text-base-100 mx-auto font-sans md:text-4xl text-2xl font-medium"
       >
-        Create Training data
+        Create Fine Tuning
       </h2>
       <button onclick="create_fine_turning_modal.close()">
         <i class="bi bi-x-lg text-base-100 cursor-pointer"></i>
       </button>
     </div>
-    <form method="dialog" [formGroup]="form">
+    <form method="dialog" [formGroup]="fineTuningForm">
       <div class="pb-6">
         <p class="font-mono text-sm text-base-100 pb-2">Thumbnail</p>
+        @if(thumbnail){
+        <div class="relative">
+          <img
+            [src]="getImageSrc(thumbnail)"
+            class="w-full h-44 rounded-lg object-cover relative"
+            alt="Uploaded"
+          />
+          <div class="absolute right-2 top-2">
+            <button
+              class="rounded-full px-2 bg-neutral shadow py-1 ml-2"
+              id="remove"
+              (click)="myFile.value = ''; removeThumbnail()"
+            >
+              <i class="bi bi-trash3 text-error"></i>
+            </button>
+          </div>
+        </div>
+        } @else {
         <div
-          [class]="
-            isDragging
-              ? 'md:p-10 p-5 border border-dashed border-base-300 bg-secondary rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
-              : 'md:p-10 p-5 border border-dashed border-base-300 rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
-          "
+          class="md:p-10 p-5 border border-dashed border-base-300 w-full h-44 flex items-center justify-center cursor-pointer text-primary rounded-lg"
+          [ngClass]="{ 'bg-secondary': isDragging }"
           (dragover)="onDragOver($event)"
           (dragleave)="onDragLeave()"
-          (drop)="onDrop($event)"
+          (drop)="onDropThumbnail($event)"
           (click)="myFile.click()"
         >
           <div class="flex-col flex items-center">
-            @if(files.length > 0){
-            <img
-              [src]="getImageSrc(files[0])"
-              class="w-full h-44 rounded-lg object-cover relative"
-              alt="Uploaded"
-            />
-            @for (file of files; track files; let i = $index) {
-            <div class="absolute right-0 pr-12 pt-4">
-              <button
-                class="rounded-full px-2 bg-neutral shadow py-1 ml-2"
-                id="remove"
-                (click)="removeFile(i)"
-              >
-                <i class="bi bi-trash3 text-error"></i>
-              </button>
-            </div>
-            } } @if(files.length === 0){
             <i class="bi bi-cloud-arrow-up text-[40px] text-primary"></i>
             <p class="text-center md:text-xl text-xs">
               <span class="text-primary">Click to upload</span>
               <span class="text-base-100"> or drag and drop</span>
             </p>
-            }
-            <input
-              #myFile
-              type="file"
-              id="file"
-              name="filename"
-              accept=".jpg, .jpeg"
-              class="hidden"
-              (change)="onFileChange($event)"
-            />
-            @if(files.length === 0){
             <p class="text-center text-base-200 md:text-sm text-[10px] mt-2">
               Maximum file size 50MB
             </p>
-            }
           </div>
         </div>
+        }
+        <input
+          #myFile
+          type="file"
+          id="file"
+          name="filename"
+          accept=".jpg, .jpeg"
+          class="hidden"
+          (change)="onThumbnailChange($event)"
+        />
       </div>
       <div class="pb-6">
-        <wagademy-form-field [control]="form.controls.title" label="Title">
+        <wagademy-form-field
+          [control]="fineTuningForm.controls.title"
+          label="Title"
+        >
           <wagademy-input
-            [placeholder]="'title example'"
+            placeholder="title example"
             formControlName="title"
             type="text"
           ></wagademy-input>
@@ -259,12 +266,18 @@
       </div>
       <div class="pb-6">
         <wagademy-form-field
-          [control]="form.controls.description"
+          [control]="fineTuningForm.controls.description"
           label="Description"
         >
           <textarea
+            [ngClass]="
+              fineTuningForm.controls.description.invalid &&
+              fineTuningForm.controls.description.touched
+                ? 'textarea-error'
+                : 'focus:border-primary'
+            "
             placeholder="Type your description here..."
-            class="w-full h-[168px] bg-neutral p-4 outline-none"
+            class="w-full h-[168px] bg-neutral p-4 textarea textarea-bordered text-base-100"
             formControlName="description"
           ></textarea>
         </wagademy-form-field>
@@ -272,10 +285,13 @@
       <div class="pb-6">
         <p class="font-mono text-sm text-base-100 pb-2"></p>
         <wagademy-form-field
-          [control]="form.controls.trainingData"
+          [control]="fineTuningForm.controls.trainingDataId"
           label="Training data"
         >
-          <wagademy-select></wagademy-select>
+          <wagademy-select
+            [items]="trainingDataDropdownOptions"
+            formControlName="trainingDataId"
+          ></wagademy-select>
         </wagademy-form-field>
       </div>
       <div class="sm:flex justify-center gap-4">
@@ -285,15 +301,13 @@
         >
           Cancel
         </button>
-        <div class="pt-4 md:pt-0">
+        <div class="pt-4 sm:pt-0">
           <button
             class="btn btn-primary sm:w-[210px] w-full"
-            [disabled]="form.invalid || isLoading"
-            (click)="createFineTurning()"
+            [disabled]="fineTuningForm.invalid || !thumbnail"
+            (click)="createFineTuning()"
           >
-            @if (isLoading) {
-            <span class="loading loading-dots"></span>
-            } @else { Create }
+            Create
           </button>
         </div>
       </div>
@@ -306,72 +320,73 @@
       <h2
         class="text-base-100 mx-auto font-sans md:text-4xl text-2xl font-medium"
       >
-        Create Fine Tuning
+        Upload Training Data
       </h2>
       <button onclick="create_training_data_modal.close()">
         <i class="bi bi-x-lg text-base-100 cursor-pointer"></i>
       </button>
     </div>
-    <form method="dialog">
+    <form method="dialog" [formGroup]="trainingDataForm">
       <div class="pb-6">
         <p class="font-mono text-sm text-base-100 pb-8">Upload file</p>
+        @if(trainingDataFile){
+        <span>{{ trainingDataFile.name }}</span>
+        <button
+          class="rounded-full px-2 bg-neutral shadow py-1 ml-2"
+          id="remove"
+          (click)="myFile.value = ''; removeTrainingDataFile()"
+        >
+          <i class="bi bi-trash3 text-error"></i>
+        </button>
+        } @else {
         <div
-          [class]="
-            isDragging
-              ? 'md:p-10 p-5 border border-dashed border-base-300 bg-secondary rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
-              : 'md:p-10 p-5 border border-dashed border-base-300 rounded-lg w-full h-44 flex items-center justify-center cursor-pointer text-primary'
-          "
+          class="md:p-10 p-5 border border-dashed border-base-300 w-full h-44 flex items-center justify-center cursor-pointer text-primary rounded-lg"
+          [ngClass]="{ 'bg-secondary': isDragging }"
           (dragover)="onDragOver($event)"
           (dragleave)="onDragLeave()"
-          (drop)="onDrop($event)"
-          (click)="myFile.click()"
+          (drop)="onDropTrainingData($event)"
+          (click)="!trainingDataFile && myFile.click()"
         >
           <div class="flex-col flex items-center">
-            @if(files.length > 0){
-            <img
-              [src]="getImageSrc(files[0])"
-              class="w-full h-44 rounded-lg object-cover relative"
-              alt="Uploaded"
-            />
-            @for (file of files; track files; let i = $index) {
-            <div class="absolute right-0 pr-12 pt-4">
-              <button
-                class="rounded-full px-2 bg-neutral shadow py-1 ml-2"
-                id="remove"
-                (click)="
-                  files.length === 1 && (myFile.value = ''); removeFile(i)
-                "
-              >
-                <i class="bi bi-trash3 text-error"></i>
-              </button>
-            </div>
-            } } @if(files.length === 0){
             <i class="bi bi-cloud-arrow-up text-[40px] text-primary"></i>
             <p class="text-center md:text-xl text-xs">
               <span class="text-primary">Click to upload</span>
               <span class="text-base-100"> or drag and drop</span>
             </p>
-            }
+            <p class="text-center text-base-200 md:text-sm text-[10px] mt-2">
+              json files
+            </p>
+
             <input
               #myFile
               type="file"
               id="file"
               name="filename"
-              accept=".jason"
+              accept=".json"
               class="hidden"
-              (change)="onFileChange($event)"
+              (change)="onTrainingDataChange($event)"
             />
-            @if(files.length === 0){
-            <p class="text-center text-base-200 md:text-sm text-[10px] mt-2">
-              json files
-            </p>
-            }
           </div>
         </div>
+        }
+      </div>
+      <div class="pb-6">
+        <wagademy-form-field
+          [control]="trainingDataForm.controls.title"
+          label="Title"
+        >
+          <wagademy-input
+            placeholder="title example"
+            formControlName="title"
+            type="text"
+          ></wagademy-input>
+        </wagademy-form-field>
       </div>
       <div class="sm:flex gap-2 pb-14">
         <p class="text-base-100">Don't have a file?</p>
-        <a class="font-medium text-primary cursor-pointer" [routerLink]="['/']"
+        <a
+          class="font-medium text-primary cursor-pointer"
+          [routerLink]="['/pages/build-training-data']"
           ><u>Build one now</u>
         </a>
       </div>
@@ -382,9 +397,10 @@
         >
           Cancel
         </button>
-        <div class="pt-4 md:pt-0">
+        <div class="pt-4 sm:pt-0">
           <button
             class="btn btn-primary sm:w-[210px] w-full"
+            [disabled]="trainingDataForm.invalid || !trainingDataFile"
             (click)="createTrainingData()"
           >
             Create
@@ -399,8 +415,8 @@
   title="Are you sure you want to remove this fine tuning?"
   actionButtonLabel="Remove"
   message="This action cannot be reversed."
-  (actionButtonClick)="removeFineTurning()"
-  [typeModal]="'cancel'"
+  (actionButtonClick)="removeFineTuning()"
+  typeModal="cancel"
 >
 </wagademy-modal>
 } @if(gptType === 'TRAININGDATA'){
@@ -408,8 +424,8 @@
   title="Are you sure you want to remove this training data?"
   actionButtonLabel="Remove"
   message="This action cannot be reversed."
-  (actionButtonClick)="removeDataTraining()"
-  [typeModal]="'cancel'"
+  (actionButtonClick)="removeTrainingData()"
+  typeModal="cancel"
 >
 </wagademy-modal>
 }

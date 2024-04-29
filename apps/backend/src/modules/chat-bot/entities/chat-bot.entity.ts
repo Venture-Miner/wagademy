@@ -32,6 +32,9 @@ export class ChatbotEntity implements ChatBot {
   @ApiProperty({ type: FileEntity })
   thumbnail: File;
 
+  @ApiProperty({ example: faker.datatype.boolean() })
+  disabled: boolean;
+
   @ApiProperty({ example: faker.date.recent() })
   createdAt: Date;
 }

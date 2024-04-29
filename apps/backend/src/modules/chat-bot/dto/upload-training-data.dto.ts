@@ -1,6 +1,7 @@
+import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { UploadTrainingData } from '@wagademy/types';
-import { IsOptional } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class UploadTrainingDataDto implements UploadTrainingData {
   @ApiProperty({
@@ -10,4 +11,11 @@ export class UploadTrainingDataDto implements UploadTrainingData {
   })
   @IsOptional()
   trainingData: Express.Multer.File;
+
+  @ApiProperty({
+    description: 'title of training data',
+    example: faker.database.mongodbObjectId(),
+  })
+  @IsString()
+  title: string;
 }
