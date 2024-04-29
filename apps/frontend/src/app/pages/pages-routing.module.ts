@@ -141,19 +141,19 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeUserGuard],
+        path: 'create-user-profile',
+        loadComponent: () =>
+          import(
+            './person/create-user-profile/create-user-profile.component'
+          ).then((c) => c.CreateUserProfileComponent),
+      },
+      {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
         path: 'user-profile',
         loadComponent: () =>
           import('./person/user-profile/user-profile.component').then(
             (c) => c.UserProfileComponent
           ),
-      },
-      {
-        canActivate: [AuthGuard, AccountTypeUserGuard],
-        path: 'profile-view-and-edit',
-        loadComponent: () =>
-          import(
-            './person/profile-view-and-edit/profile-view-and-edit.component'
-          ).then((c) => c.ProfileViewAndEditComponent),
       },
     ],
   },

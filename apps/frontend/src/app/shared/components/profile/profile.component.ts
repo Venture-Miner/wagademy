@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PhotoUploadComponent } from '../../../pages/person/user-profile/components/photo-upload/photo-upload.component';
+import { PhotoUploadComponent } from '../../../pages/person/create-user-profile/components/photo-upload/photo-upload.component';
 import {
   FormArray,
   FormBuilder,
@@ -11,8 +11,8 @@ import { FormFieldComponent } from '../form-field/form-field.component';
 import { InputComponent } from '../input/input.component';
 import { SelectComponent, SelectItem } from '../select/select.component';
 import { NgClass } from '@angular/common';
-import { UserData } from '../../../pages/person/user-profile/components/user-data/user-data.component';
-import { State } from '../../../pages/person/user-profile/user-profile.component';
+import { UserData } from '../../../pages/person/create-user-profile/components/user-data/user-data.component';
+import { State } from '../../../pages/person/create-user-profile/create-user-profile.component';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../../../services/toast/toast.service';
 import { dateValidator } from '../../utils/date-comparison-validator';

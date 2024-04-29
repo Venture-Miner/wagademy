@@ -10,7 +10,7 @@ import { TextAreaComponent } from '../../../../../shared/components/text-area/te
 import { InputComponent } from '../../../../../shared/components/input/input.component';
 import { ToastService } from '../../../../../services/toast/toast.service';
 import { HttpClient } from '@angular/common/http';
-import { State } from '../../user-profile.component';
+import { State } from '../../create-user-profile.component';
 
 export type UserData = {
   name: FormControl<string | null>;

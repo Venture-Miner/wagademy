@@ -1,7 +1,7 @@
 <div class="md:flex container mx-auto px-5">
   <wagademy-back-button></wagademy-back-button>
   <div class="pt-8 min-h-screen container mx-auto px-5 lg:px-40">
-    @if(router.url === '/pages/user-profile'){
+    @if(router.url === '/pages/create-user-profile'){
     <p class="text-4xl text-neutral-950 mb-8 text-center font-bold">
       Confirm your details
     </p>
@@ -548,21 +548,13 @@
       }
     </div>
     <div class="w-full flex justify-center pb-10">
-      @if(router.url === '/pages/user-profile'){
       <button
         class="btn btn-primary text-base-100 text-xl w-52"
         (click)="editMode = false"
       >
-        Save And Confirm
+        @if(router.url === '/pages/user-profile'){ Save And Confirm }@else {
+        Save }
       </button>
-      }@else {
-      <button
-        class="btn btn-primary text-base-100 text-xl w-52"
-        (click)="editMode = false"
-      >
-        Save
-      </button>
-      }
     </div>
   </div>
 </div>
