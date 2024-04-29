@@ -1,40 +1,31 @@
-import { NgClass, NgFor } from '@angular/common';
 import {
   Component,
   ElementRef,
-  EventEmitter,
   Input,
   Optional,
-  Output,
   Renderer2,
   Self,
   ViewChild,
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
-
-export interface SelectItem<T> {
-  value: T;
-  label: string;
-}
+import { NgClass } from '@angular/common';
+import { NgControl } from '@angular/forms';
 
 @Component({
+  selector: 'wagademy-text-area',
   standalone: true,
-  imports: [NgClass, NgFor],
-  selector: 'wagademy-select',
-  templateUrl: './select.component.html',
-  styleUrl: './select.component.scss',
+  imports: [NgClass],
+  templateUrl: './text-area.component.html',
+  styleUrl: './text-area.component.scss',
 })
-export class SelectComponent implements ControlValueAccessor {
-  @Input() items: SelectItem<string | number | boolean>[] = [];
-  @Output() selectionChange: EventEmitter<string> = new EventEmitter<string>();
-  @Input() placeholder = 'Select';
+export class TextAreaComponent {
+  @Input() placeholder = '';
 
-  @ViewChild('select', { static: true, read: ElementRef })
+  @ViewChild('textarea', { static: true, read: ElementRef })
   elementRef!: ElementRef;
 
   constructor(
-    private renderer2: Renderer2,
-    @Self() @Optional() private control?: NgControl
+    private readonly renderer2: Renderer2,
+    @Self() @Optional() private readonly control?: NgControl
   ) {
     if (this.control) this.control.valueAccessor = this;
   }
@@ -70,7 +61,6 @@ export class SelectComponent implements ControlValueAccessor {
   onInputChange() {
     const value = this.elementRef.nativeElement.value;
     this.onChange(value);
-    this.selectionChange.emit(value);
   }
 
   onBlur() {

@@ -30,6 +30,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() disabledInput = false;
   @Input() isRightButtonDisabled = false;
   @Input() value = '';
+  @Input() pattern = '';
 
   @Output() rightButtonClick = new EventEmitter<void>();
 
@@ -79,7 +80,10 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   writeValue(value: string) {
-    this.renderer2.setProperty(this.elementRef.nativeElement, 'value', value);
+    this.value = value;
+    if (this.elementRef.nativeElement) {
+      this.renderer2.setProperty(this.elementRef.nativeElement, 'value', value);
+    }
   }
 
   setDisabledState(isDisabled: boolean) {

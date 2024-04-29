@@ -1,0 +1,152 @@
+<div class="flex flex-col md:flex-row min-h-screen pt-8">
+  <div class="md:pl-12 lg:pl-24 flex justify-center md:justify-start">
+    <button
+      (click)="addEducationItem()"
+      class="btn btn-accent text-neutral-50 text-xl lg:w-48 md:w-32 w-48 mb-4 md:mb-0"
+    >
+      Add +
+    </button>
+  </div>
+  <div class="md:w-1/2 px-8">
+    <form [formGroup]="educationForm">
+      <div formArrayName="items">
+        @for (educationItem of educationItems.controls; track educationItem;let
+        i =$index,last =$last ) {
+        <div
+          [formGroupName]="i"
+          [ngClass]="{
+            'border-t-2 border-neutral-300/20 mt-8 pt-8': i > 0
+          }"
+        >
+          <div class="mb-4">
+            <wagademy-form-field
+              [control]="educationItem.get('degree')!"
+              label="Degree"
+            >
+              <wagademy-input
+                placeholder="email@email.com"
+                type="text"
+                formControlName="degree"
+              >
+              </wagademy-input>
+            </wagademy-form-field>
+          </div>
+          <div class="mb-4">
+            <wagademy-form-field
+              [control]="educationItem.get('institution')!"
+              label="Institution"
+            >
+              <wagademy-input
+                placeholder="Education example"
+                type="text"
+                formControlName="institution"
+              >
+              </wagademy-input>
+            </wagademy-form-field>
+          </div>
+          <div class="mb-4">
+            <wagademy-form-field
+              [control]="educationItem.get('course')!"
+              label="Course"
+            >
+              <wagademy-input
+                placeholder="Course name"
+                type="text"
+                formControlName="course"
+              >
+              </wagademy-input>
+            </wagademy-form-field>
+          </div>
+          <div class="form-control mb-4 w-40">
+            <label class="label cursor-pointer">
+              <input type="checkbox" class="checkbox checkbox-primary" />
+              <span class="label-text text-neutral-950"
+                >I'm still studying</span
+              >
+            </label>
+          </div>
+          <div class="flex flex-col lg:flex-row lg:gap-10">
+            <div class="lg:w-1/2 mb-4">
+              <wagademy-form-field
+                [control]="educationItem.get('startDate')!"
+                label="Start"
+              >
+                <wagademy-input
+                  placeholder="MM / DD / YYYY"
+                  type="date"
+                  formControlName="startDate"
+                >
+                </wagademy-input>
+              </wagademy-form-field>
+            </div>
+            <div class="lg:w-1/2 mb-4">
+              <wagademy-form-field
+                [control]="educationItem.get('endDate')!"
+                label="End"
+              >
+                <wagademy-input
+                  placeholder="MM / DD / YYYY"
+                  type="date"
+                  formControlName="endDate"
+                >
+                </wagademy-input>
+              </wagademy-form-field>
+            </div>
+          </div>
+          <div>
+            <wagademy-form-field
+              label="About"
+              [control]="educationItem.get('description')!"
+            >
+              <wagademy-text-area
+                placeholder="Tell your description"
+                formControlName="description"
+              ></wagademy-text-area>
+            </wagademy-form-field>
+          </div>
+          @if (i > 0) {
+          <button
+            class="text-neutral-950 font-bold flex items-center gap-1 disabled:text-neutral-300"
+            (click)="removeEducationItem(i)"
+          >
+            Remove
+            <img
+              src="./assets/icons/icon-trash.svg"
+              width="14px"
+              height="14px"
+              alt="trash icon"
+              fetchpriority="auto"
+            /></button
+          >}
+        </div>
+        }
+      </div>
+    </form>
+    <div
+      class="flex flex-col sm:flex-row sm:justify-end items-center mt-14 mb-8 gap-4"
+    >
+      <button
+        class="btn btn-primary btn-outline text-base-100 text-xl w-48"
+        (click)="previousStep.emit()"
+      >
+        Previous
+      </button>
+      <button
+        class="btn btn-primary text-base-100 text-xl w-48"
+        (click)="nextStep.emit()"
+        [disabled]="educationForm.invalid"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+  <div class="w-1/2 justify-center max-h-[375px] hidden md:flex">
+    <ul class="steps steps-vertical">
+      <li class="step step-primary text-neutral-950">Profile</li>
+      <li class="step step-primary text-neutral-950">Education</li>
+      <li class="step">Area of expertise</li>
+      <li class="step">Professional experience</li>
+      <li class="step">Skills and competences</li>
+    </ul>
+  </div>
+</div>
