@@ -278,10 +278,11 @@ export class JobService {
   }
 
   findOneJobApplicationCompanyView(
-    id: string
+    id: string,
+    companyId: string
   ): Promise<FindOneJobApplicationCompanyView | null> {
-    return this.prismaService.jobApplication.findUnique({
-      where: { id },
+    return this.prismaService.jobApplication.findFirst({
+      where: { id, job: { companyId } },
       include: {
         user: {
           include: {

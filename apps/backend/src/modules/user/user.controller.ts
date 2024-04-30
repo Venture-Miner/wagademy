@@ -8,7 +8,6 @@ import {
   UseGuards,
   UploadedFiles,
   Param,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import {
@@ -18,7 +17,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CognitoUserAttributes, User } from '@wagademy/types';
+import { AccountTypeEnum, CognitoUserAttributes, User } from '@wagademy/types';
 import { CognitoUserGuard } from '../../infra';
 import { ApiFiles, CognitoUser, DBUser } from '../../shared/decorators';
 import {
@@ -41,6 +40,8 @@ import {
 } from './dto';
 import { MongoIdDto } from '../../shared/dtos';
 import { FindOneCompanyProfileEntity } from './entities/find-one-company-profile-response.entity';
+import { AccountTypeGuard } from '../../infra/auth/guards/account-type.guard';
+import { AccountType } from '../../shared/decorators/account-type.decorator';
 
 @ApiTags('User')
 @Controller('user')
@@ -69,7 +70,8 @@ export class UserController {
 
   @Post('create-profile')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Create a new profile',
     description: 'Creates a new user profile with provided details.',
@@ -82,7 +84,7 @@ export class UserController {
   @ApiFiles(['profilePhoto'])
   async createUserProfile(
     @DBUser()
-    { id: userId, accountType }: User,
+    { id: userId }: User,
     @UploadedFiles()
     {
       profilePhoto,
@@ -91,10 +93,6 @@ export class UserController {
     },
     @Body() createProfileDto: CreateProfileDto
   ) {
-    if (accountType !== 'PHYSICAL_PERSON')
-      throw new UnauthorizedException(
-        'Only individual accounts are allowed to create a user profile.'
-      );
     return this.userService.createUserProfile(
       { ...createProfileDto, profilePhoto },
       userId
@@ -103,7 +101,8 @@ export class UserController {
 
   @Post('create-company-profile')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Create a new company profile',
     description: 'Creates a new company profile with provided details.',
@@ -116,7 +115,7 @@ export class UserController {
   @ApiFiles(['companyPhoto'])
   async createCompanyProfile(
     @DBUser()
-    { id: userId, accountType }: User,
+    { id: userId }: User,
     @UploadedFiles()
     {
       companyPhoto,
@@ -125,10 +124,6 @@ export class UserController {
     },
     @Body() createCompanyProfileDto: CreateCompanyProfileDto
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to create a company profile.'
-      );
     return this.userService.createCompanyProfile(
       { ...createCompanyProfileDto, companyPhoto },
       userId
@@ -213,7 +208,8 @@ export class UserController {
 
   @Patch('profile')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Update a profile',
     description: 'Updates a profile with provided details.',
@@ -241,7 +237,8 @@ export class UserController {
 
   @Patch('company-profile')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Update a company profile',
     description: 'Updates a company profile with provided details.',
