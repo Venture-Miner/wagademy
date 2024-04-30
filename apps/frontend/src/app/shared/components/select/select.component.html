@@ -1,7 +1,7 @@
 <select
-  class="select bg-neutral w-full text-base-100"
-  [ngClass]="hasError() ? 'select-error' : 'select'"
+  [ngClass]="hasError() ? 'select-error' : 'focus:border-primary'"
   #select
+  class="select w-full textarea bg-neutral text-base-100 px-9"
   (change)="onInputChange()"
   (blur)="onBlur()"
 >

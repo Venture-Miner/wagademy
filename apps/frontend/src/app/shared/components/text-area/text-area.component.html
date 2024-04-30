@@ -1,0 +1,8 @@
+<textarea
+  #textarea
+  [ngClass]="hasError() ? 'textarea-error' : 'focus:border-primary'"
+  (blur)="onBlur()"
+  (input)="onInputChange()"
+  [placeholder]="placeholder"
+  class="w-full textarea bg-neutral text-base-100 px-9"
+></textarea>
