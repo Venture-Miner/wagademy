@@ -1,7 +1,7 @@
 import {
+  ForbiddenException,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import {
   CreateJob,
@@ -46,7 +46,7 @@ export class JobService {
       where: { userId: companyId },
     });
     if (!profile)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You can not create a job before completing your profile.'
       );
     return this.prismaService.job.create({
@@ -72,7 +72,7 @@ export class JobService {
       where: { userId },
     });
     if (!profile)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'Only users with complete profile can apply to a job.'
       );
     const job = await this.prismaService.job.findUnique({
@@ -360,7 +360,7 @@ export class JobService {
       throw new NotFoundException('Job with the provided ID does not exist.');
     }
     if (userId !== job.companyId)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You are not able to update this job since you do not own it.'
       );
     return this.prismaService.job.update({
@@ -393,11 +393,11 @@ export class JobService {
       );
     }
     if (jobApplication.job.companyId !== userId)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You are not able to invite the user since you do not own this job position.'
       );
     if (jobApplication.applicationStatus !== 'SUBSCRIBED')
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You are not able to invite the user since the user is invited or already did the interview .'
       );
     return this.prismaService.jobApplication.update({
@@ -437,7 +437,7 @@ export class JobService {
       throw new NotFoundException('Job with the provided ID does not exist.');
     }
     if (userId !== job.companyId)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You are not able to update this job since you do not own it.'
       );
     return this.prismaService.job.update({

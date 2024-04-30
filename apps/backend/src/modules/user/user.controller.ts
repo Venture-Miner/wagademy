@@ -152,7 +152,8 @@ export class UserController {
 
   @Get('company-profile/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Find a company profile',
     description: 'Find a company profile based on its unique ID.',
@@ -165,9 +166,9 @@ export class UserController {
   async findCompanyProfile(
     @Param() { id }: MongoIdDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    return this.userService.findCompanyProfile(id, userId, accountType);
+    return this.userService.findCompanyProfile(id, userId);
   }
 
   @Get('self')

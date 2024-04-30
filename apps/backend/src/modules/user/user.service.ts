@@ -1,7 +1,7 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from '@wagademy/prisma';
 import {
@@ -300,7 +300,7 @@ export class UserService {
       },
     });
     if (userId !== userProfile?.userId && accountType !== 'COMPANY')
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'Only the owner or companies can access this data.'
       );
     return userProfile;
@@ -308,8 +308,7 @@ export class UserService {
 
   async findCompanyProfile(
     id: string,
-    userId: string,
-    accountType: AccountTypeEnum
+    userId: string
   ): Promise<FindOneCompanyProfileResponse | null> {
     const companyProfile = await this.prismaService.companyProfile.findUnique({
       where: { id },
@@ -318,8 +317,8 @@ export class UserService {
         backgroundPhoto: { select: { url: true } },
       },
     });
-    if (userId !== companyProfile?.userId || accountType !== 'COMPANY')
-      throw new UnauthorizedException('Only the owner can access the profile.');
+    if (userId !== companyProfile?.userId)
+      throw new ForbiddenException('Only the owner can access the profile.');
     return companyProfile;
   }
 
