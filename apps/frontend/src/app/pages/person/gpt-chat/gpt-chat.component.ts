@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  AfterViewChecked,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { ChatService } from '../../../services/chat/chat.service';
@@ -6,7 +12,6 @@ import {
   GetChatBotHistoryResponse,
   JobApplicationStatusEnum,
   JobInterviewChat,
-  OpenAIChatModel,
 } from '@wagademy/types';
 import { ToastService } from '../../../services/toast/toast.service';
 import { HttpError } from '../../../shared/types/http-error';
@@ -21,9 +26,11 @@ import { ChatBotService } from '../../../services/chat-bot/chat-bot.service';
   templateUrl: './gpt-chat.component.html',
   styleUrl: './gpt-chat.component.scss',
 })
-export class GptChatComponent implements OnInit {
+export class GptChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('input', { static: true, read: ElementRef })
   myInput!: ElementRef;
+  @ViewChild('chatScroll', { static: false, read: ElementRef })
+  chatScroll!: ElementRef;
   selectedChat = 'Bot GPT';
   jobApplicationId = '';
   chatBotId = '';
@@ -94,6 +101,19 @@ export class GptChatComponent implements OnInit {
         this.getChatHistory();
       }
     });
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.chatScroll.nativeElement.scrollTop =
+        this.chatScroll.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   get getChatType() {
@@ -243,10 +263,12 @@ export class GptChatComponent implements OnInit {
       })
       .subscribe({
         next: ({ content, role }) => {
-          this.chatTypeObject.jobInterViewChat.history.push({
+          console.log(content);
+          this.chatTypeObject.chatBot.history.push({
             content: content ?? '',
             role,
           });
+          console.log(this.chatTypeObject);
           this.isCreatingChatCompletion = false;
         },
         error: ({ error }: { error: HttpError }) => {
@@ -288,7 +310,7 @@ export class GptChatComponent implements OnInit {
     const message = this.userMessage;
     this.userMessage = '';
     this.count = 0;
-    this.chatTypeObject.jobInterViewChat.history.push({
+    this.chatTypeObject[this.chatType].history.push({
       content: message,
       role: 'user',
     });
