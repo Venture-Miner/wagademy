@@ -41,6 +41,14 @@ export class InterviewGptComponent implements OnInit {
     this.getAiQuestions();
   }
 
+  get minimumOfQuestions() {
+    return this.minimumNumberOfQuestions;
+  }
+
+  get maxOfQuestions() {
+    return this.maxNumberOfQuestions;
+  }
+
   getAiQuestions() {
     this.jobService.findOneJobCompanyView(this.jobId).subscribe({
       next: (job) => {
