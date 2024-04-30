@@ -104,7 +104,7 @@
           @if(openMenu){
           <div
             #dropdown
-            class="mt-2 rounded-lg absolute w-36 bg-white z-10 xl:right-1/2 xl:transform shadow-lg"
+            class="rounded-lg absolute w-36 bg-white z-10 xl:right-1 xl:transform shadow-lg"
           >
             <div
               class="p-4"
@@ -162,9 +162,9 @@
               </div> -->
               <div class="py-2">
                 <div
-                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                  class="hover:bg-primary text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
                 >
-                  <button (click)="logout()">Logout</button>
+                  <div (click)="logout()">Logout</div>
                 </div>
               </div>
             </div>
@@ -243,7 +243,7 @@
           @if(openMenu === true){
           <div
             #dropdown
-            class="mt-2 rounded-lg absolute w-36 bg-white z-10 xl:right-1/2 xl:transform shadow-lg"
+            class="rounded-lg absolute w-36 bg-white z-10 xl:right-1 xl:transform shadow-lg"
           >
             <div
               class="p-4"
@@ -293,7 +293,7 @@
               </div> -->
               <div>
                 <button
-                  class="hover:bg-primary text-left w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                  class="hover:bg-primary text-left text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
                   (click)="logout()"
                 >
                   Logout
