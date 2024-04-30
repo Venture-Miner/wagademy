@@ -12,12 +12,22 @@ import { InputComponent } from '../input/input.component';
 import { SelectComponent, SelectItem } from '../select/select.component';
 import { NgClass } from '@angular/common';
 import { UserData } from '../../../pages/person/create-user-profile/components/user-data/user-data.component';
-import { State } from '../../../pages/person/create-user-profile/create-user-profile.component';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../../../services/toast/toast.service';
 import { dateValidator } from '../../utils/date-comparison-validator';
 import { Router } from '@angular/router';
 import { BackButtonComponent } from '../back-button/back-button.component';
+
+interface Country {
+  iso2: string;
+  name: string;
+}
+
+export interface State {
+  country_code: string;
+  state_code: string;
+  name: string;
+}
 
 @Component({
   standalone: true,
@@ -40,6 +50,7 @@ export class ProfileComponent {
   selectedCountry: string | null = '';
   profilePhoto: string | undefined;
   editMode = false;
+  step = 1;
 
   userData = this.fb.group({
     name: ['Jacob Jones', Validators.required],
@@ -77,42 +88,24 @@ export class ProfileComponent {
     private http: HttpClient,
     private toastService: ToastService,
     public router: Router
-  ) {}
-
-  onCountrySelect(event: string) {
-    this.selectedCountry = event;
-    this.states = [];
-    if (this.selectedCountry) {
-      this.getStates(this.selectedCountry);
-    }
-  }
-
-  getStates(countryIso2: string) {
-    this.http.get<State[]>('./assets/countries/states.json').subscribe({
-      next: (data: State[]) => {
-        const filteredStates = data.filter(
-          (state) => state.country_code === countryIso2
-        );
-        this.states = filteredStates.map((state) => ({
-          value: state.name,
-          label: state.name,
-        }));
-      },
-      error: () => {
-        this.toastService.showToast({
-          message: 'Failed fetching states.',
-          type: 'error',
-        });
-      },
+  ) {
+    this.educationForm = this.fb.group({
+      items: this.fb.array([this.createEducationItem()]),
     });
-  }
 
-  addEducationItem(): void {
-    this.educationItems.push(this.createEducationItem());
-  }
+    this.professionalExperienceForm = this.fb.group({
+      items: this.fb.array([this.createProfessionalExperienceItem()]),
+    });
 
-  get educationItems(): FormArray {
-    return this.educationForm.get('items') as FormArray;
+    this.expertiseForm = this.fb.group({
+      newExpertise: [''],
+    });
+
+    this.skillsForm = this.fb.group({
+      newSkill: [''],
+    });
+
+    this.getCountries();
   }
 
   createEducationItem(): FormGroup {
@@ -132,6 +125,29 @@ export class ProfileComponent {
       },
       { validators: dateValidator() }
     );
+  }
+
+  createProfessionalExperienceItem(): FormGroup {
+    return this.fb.group(
+      {
+        company: ['Company', Validators.required],
+        jobTitle: ['Job title', Validators.required],
+        startDate: ['2024-04-03', Validators.required],
+        endDate: ['02024-04-03', Validators.required],
+        description: [
+          'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
+        ],
+      },
+      { validators: dateValidator() }
+    );
+  }
+
+  addEducationItem(): void {
+    this.educationItems.push(this.createEducationItem());
+  }
+
+  get educationItems(): FormArray {
+    return this.educationForm.get('items') as FormArray;
   }
 
   removeEducationItem(index: number): void {
@@ -168,12 +184,6 @@ export class ProfileComponent {
     }
   }
 
-  removeSkill(index: number): void {
-    if (index >= 0 && index < this.skills.length) {
-      this.skills.splice(index, 1);
-    }
-  }
-
   addSkill(): void {
     if (this.skills.length < 10 && this.skillsForm.valid) {
       const newSkill = this.skillsForm.get('newSkill')?.value;
@@ -184,18 +194,58 @@ export class ProfileComponent {
     }
   }
 
-  createProfessionalExperienceItem(): FormGroup {
-    return this.fb.group(
-      {
-        company: ['Company', Validators.required],
-        jobTitle: ['Job title', Validators.required],
-        startDate: ['2024-04-03', Validators.required],
-        endDate: ['02024-04-03', Validators.required],
-        description: [
-          'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
-        ],
+  removeSkill(index: number): void {
+    if (index >= 0 && index < this.skills.length) {
+      this.skills.splice(index, 1);
+    }
+  }
+
+  onImageUploaded(imageUrl: string) {
+    this.profilePhoto = imageUrl;
+  }
+
+  getCountries() {
+    this.http.get<Country[]>('./assets/countries/countries.json').subscribe({
+      next: (data: Country[]) => {
+        this.countries = data.map((country) => ({
+          value: country.iso2,
+          label: country.name,
+        }));
       },
-      { validators: dateValidator() }
-    );
+      error: () => {
+        this.toastService.showToast({
+          message: 'Failed fetching countries.',
+          type: 'error',
+        });
+      },
+    });
+  }
+
+  onCountrySelect(event: string) {
+    this.selectedCountry = event;
+    this.states = [];
+    if (this.selectedCountry) {
+      this.getStates(this.selectedCountry);
+    }
+  }
+
+  getStates(countryIso2: string) {
+    this.http.get<State[]>('./assets/countries/states.json').subscribe({
+      next: (data: State[]) => {
+        const filteredStates = data.filter(
+          (state) => state.country_code === countryIso2
+        );
+        this.states = filteredStates.map((state) => ({
+          value: state.name,
+          label: state.name,
+        }));
+      },
+      error: () => {
+        this.toastService.showToast({
+          message: 'Failed fetching states.',
+          type: 'error',
+        });
+      },
+    });
   }
 }

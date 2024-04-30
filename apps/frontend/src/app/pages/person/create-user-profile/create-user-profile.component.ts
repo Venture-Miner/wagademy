@@ -61,7 +61,10 @@ export interface State {
 })
 export class CreateUserProfileComponent {
   countries: SelectItem<string>[] = [];
+  states: SelectItem<string>[] = [];
+  selectedCountry: string | null = '';
   profilePhoto: string | undefined;
+  editMode = false;
   step = 1;
 
   userData = this.fb.group({
@@ -119,22 +122,6 @@ export class CreateUserProfileComponent {
     this.getCountries();
   }
 
-  onImageUploaded(imageUrl: string) {
-    this.profilePhoto = imageUrl;
-  }
-
-  get educationItems(): FormArray {
-    return this.educationForm.get('items') as FormArray;
-  }
-
-  removeEducationItem(index: number): void {
-    this.educationItems.removeAt(index);
-  }
-
-  addEducationItem(): void {
-    this.educationItems.push(this.createEducationItem());
-  }
-
   createEducationItem(): FormGroup {
     return this.fb.group(
       {
@@ -169,6 +156,68 @@ export class CreateUserProfileComponent {
     );
   }
 
+  addEducationItem(): void {
+    this.educationItems.push(this.createEducationItem());
+  }
+
+  get educationItems(): FormArray {
+    return this.educationForm.get('items') as FormArray;
+  }
+
+  removeEducationItem(index: number): void {
+    this.educationItems.removeAt(index);
+  }
+
+  get professionalExperienceItems(): FormArray {
+    return this.professionalExperienceForm.get('items') as FormArray;
+  }
+
+  addProfessionalExperienceItem(): void {
+    this.professionalExperienceItems.push(
+      this.createProfessionalExperienceItem()
+    );
+  }
+
+  removeProfessionalExperienceItem(index: number): void {
+    this.professionalExperienceItems.removeAt(index);
+  }
+
+  addExpertise(): void {
+    if (this.expertises.length < 10 && this.expertiseForm.valid) {
+      const newExpertise = this.expertiseForm.get('newExpertise')?.value;
+      if (newExpertise && newExpertise.trim() !== '') {
+        this.expertises.push(newExpertise.trim());
+        this.expertiseForm.reset();
+      }
+    }
+  }
+
+  removeExpertise(index: number): void {
+    if (index >= 0 && index < this.expertises.length) {
+      this.expertises.splice(index, 1);
+    }
+  }
+
+  addSkill(): void {
+    if (this.skills.length < 10 && this.skillsForm.valid) {
+      const newSkill = this.skillsForm.get('newSkill')?.value;
+      if (newSkill && newSkill.trim() !== '') {
+        this.skills.push(newSkill.trim());
+        this.skillsForm.reset();
+      }
+    }
+  }
+
+  removeSkill(index: number): void {
+    if (index >= 0 && index < this.skills.length) {
+      this.skills.splice(index, 1);
+    }
+  }
+
+  onImageUploaded(imageUrl: string) {
+    this.profilePhoto = imageUrl;
+  }
+
   getCountries() {
     this.http.get<Country[]>('./assets/countries/countries.json').subscribe({
       next: (data: Country[]) => {
@@ -180,6 +229,34 @@ export class CreateUserProfileComponent {
       error: () => {
         this.toastService.showToast({
           message: 'Failed fetching countries.',
+          type: 'error',
+        });
+      },
+    });
+  }
+
+  onCountrySelect(event: string) {
+    this.selectedCountry = event;
+    this.states = [];
+    if (this.selectedCountry) {
+      this.getStates(this.selectedCountry);
+    }
+  }
+
+  getStates(countryIso2: string) {
+    this.http.get<State[]>('./assets/countries/states.json').subscribe({
+      next: (data: State[]) => {
+        const filteredStates = data.filter(
+          (state) => state.country_code === countryIso2
+        );
+        this.states = filteredStates.map((state) => ({
+          value: state.name,
+          label: state.name,
+        }));
+      },
+      error: () => {
+        this.toastService.showToast({
+          message: 'Failed fetching states.',
           type: 'error',
         });
       },

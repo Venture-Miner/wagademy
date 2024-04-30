@@ -158,7 +158,7 @@
     </div>
     <form [formGroup]="educationForm">
       <div formArrayName="items">
-        @for(educationItem of educationItems.controls; track educationItems; let
+        @for(educationItem of educationItems.controls; track educationItem; let
         i = $index; let last = $last){
         <div
           [formGroupName]="i"
@@ -250,8 +250,7 @@
     >
       Education
     </p>
-    @for(item of educationForm.get('items')?.value; track educationForm; let i =
-    $index){
+    @for(item of educationForm.get('items')?.value; track item; let i = $index){
     <div class="mb-3">
       <p class="text-neutral-950 font-bold">{{ item.course }}</p>
       <div class="flex flex-col sm:flex-row gap-2 text-base-200">
@@ -300,7 +299,7 @@
     <form [formGroup]="professionalExperienceForm">
       <div formArrayName="items">
         @for(professionalExperienceItem of professionalExperienceItems.controls;
-        track professionalExperienceItems; let i = $index; let last = $last){
+        track professionalExperienceItem; let i = $index; let last = $last){
         <div
           [formGroupName]="i"
           [ngClass]="{
@@ -393,8 +392,8 @@
     >
       Professional experience
     </p>
-    @for(item of professionalExperienceForm.get('items')?.value; track
-    professionalExperienceForm; let i = $index){
+    @for(item of professionalExperienceForm.get('items')?.value; track item; let
+    i = $index){
     <div class="mb-3">
       <p class="text-neutral-950 font-bold">{{ item.jobTitle }}</p>
       <p class="flex flex-col sm:flex-row gap-2 text-base-200">
@@ -448,7 +447,7 @@
       </wagademy-form-field>
     </form>
     <ul class="flex gap-4 mt-6 flex-wrap">
-      @for(expertise of expertises; track expertises; let i = $index){
+      @for(expertise of expertises; track expertise; let i = $index){
       <li
         class="bg-neutral text-neutral-950 p-1 rounded-md flex justify-between"
       >
@@ -508,7 +507,7 @@
       </wagademy-form-field>
     </form>
     <ul class="flex gap-4 mt-6 flex-wrap">
-      @for(skill of skills; track skills; let i = $index){
+      @for(skill of skills; track skill; let i = $index){
       <li
         class="bg-neutral text-neutral-950 p-1 rounded-md flex justify-between"
       >
