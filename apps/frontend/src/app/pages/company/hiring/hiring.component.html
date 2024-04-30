@@ -60,6 +60,7 @@
           (updateJobStatus)="updateJobStatus(job.id, $index)"
           (removeJob)="openRemoveJobModal()"
           (copyLinkJob)="copyLink(job.id)"
+          (interviewGPTJob)="redirectToJobInterviewSettingsPage(job.id)"
         ></wagademy-card-job>
         }
       </div>

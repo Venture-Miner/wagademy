@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { BackButtonComponent } from '../../../shared/components/back-button/back-button.component';
 import { UserService } from '../../../services/user/user.service';
@@ -38,13 +38,16 @@ export class ApplicationsProfileComponent implements OnInit {
   jobApplicationStatus: JobApplicationStatusEnum =
     JobApplicationStatusEnum.SUBSCRIBED;
   isLoading = false;
+  companyNeedToAddAiQuestions = false;
+  jobId = '';
 
   constructor(
     private readonly userService: UserService,
     private activatedRoute: ActivatedRoute,
     private toastService: ToastService,
     private readonly jobService: JobService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -84,7 +87,12 @@ export class ApplicationsProfileComponent implements OnInit {
               type: 'error',
             });
             this.location.back();
-          } else this.jobApplicationStatus = jobApplication?.applicationStatus;
+          } else {
+            this.jobApplicationStatus = jobApplication?.applicationStatus;
+            this.companyNeedToAddAiQuestions =
+              !jobApplication.job.aiInterviewQuestions.length;
+            this.jobId = jobApplication.job.id;
+          }
         },
         error: () => {
           this.toastService.showToast({
@@ -93,6 +101,12 @@ export class ApplicationsProfileComponent implements OnInit {
           });
         },
       });
+  }
+
+  addInterviewQuestions() {
+    this.router.navigate(['/pages/interview-questions'], {
+      queryParams: { jobId: this.jobId },
+    });
   }
 
   sendInvite() {
