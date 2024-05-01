@@ -4,6 +4,14 @@
       {{ title }}
     </h3>
     <p class="mt-4 text-sm font-mono text-base-200">{{ message }}</p>
+    @if (externalForm) {
+    <div class="pt-4">
+      <wagademy-form-field [control]="externalForm" [label]="inputLabel">
+        <wagademy-input [formControl]="externalForm" type="text">
+        </wagademy-input>
+      </wagademy-form-field>
+    </div>
+    }
     <form
       class="flex flex-col sm:flex-row gap-4 justify-end mt-6"
       method="dialog"
@@ -20,7 +28,7 @@
         [ngClass]="[typeModal === 'success' ? 'btn-primary' : 'btn-error']"
         type="button"
         (click)="this.actionButtonClick.emit()"
-        [disabled]="isLoading"
+        [disabled]="isLoading || externalForm?.invalid"
       >
         @if (isLoading) {
         <span class="loading loading-dots"></span>
