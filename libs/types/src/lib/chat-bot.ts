@@ -1,6 +1,7 @@
 import { ChatBotStatusEnum } from '@prisma/client';
 import OpenAI from 'openai';
 import { File } from './shared';
+import { OpenAIChatModel } from './chat';
 
 export type FilterChatbots = {
   invited?: boolean;
@@ -95,9 +96,10 @@ export type CreateFineTuningJobResponse = {
 
 export type InitChatBotResponse = {
   id: string;
-  history: any;
+  history: OpenAIChatModel[] | any;
   userId: string;
   chatBotId: string;
+  chatBot: { title: string };
 };
 
 export type InviteToChatBot = {
@@ -121,7 +123,8 @@ export type CreateChatCompletionResponse =
 
 export type GetChatBotHistoryResponse = {
   id: string;
-  history: any;
+  history: OpenAIChatModel[] | any;
   userId: string;
   chatBotId: string;
+  chatBot: { title: string };
 };

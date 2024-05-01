@@ -6,6 +6,7 @@ import {
   Get,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Query,
   Res,
@@ -69,8 +70,12 @@ export class ChatBotController {
   findManyCompanyChatBots(
     @Query() filterCompanyChatbotsDto: FilterCompanyChatBotsDto,
     @Query() paginationDto: PaginationDto,
-    @DBUser() { id: userId }: User
+    @DBUser() { id: userId, accountType }: User
   ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only company accounts are allowed to list the chatbots.'
+      );
     return this.chatBotService.findManyCompanyChatBots(
       filterCompanyChatbotsDto,
       paginationDto,
@@ -92,8 +97,12 @@ export class ChatBotController {
   async getTrainingDataContent(
     @Res() res: Response,
     @Param() { id }: MongoIdDto,
-    @DBUser() { id: userId }: User
+    @DBUser() { id: userId, accountType }: User
   ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only company accounts are allowed to get training data.'
+      );
     const fileStream = await this.chatBotService.getTrainingDataContent(
       id,
       userId
@@ -225,7 +234,14 @@ export class ChatBotController {
     status: HttpStatus.NO_CONTENT,
     description: 'Chatbot successfully deleted.',
   })
-  deleteChatBot(@Param() { id }: MongoIdDto, @DBUser() { id: userId }: User) {
+  deleteChatBot(
+    @Param() { id }: MongoIdDto,
+    @DBUser() { id: userId, accountType }: User
+  ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only company accounts are allowed to delete a chatbot.'
+      );
     return this.chatBotService.delete(id, userId);
   }
 
@@ -243,8 +259,12 @@ export class ChatBotController {
   })
   findManyTrainingData(
     @Query() paginationDto: PaginationDto,
-    @DBUser() { id: userId }: User
+    @DBUser() { id: userId, accountType }: User
   ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only company accounts are allowed to access the training data.'
+      );
     return this.chatBotService.findManyTrainingData(paginationDto, userId);
   }
 
@@ -262,8 +282,12 @@ export class ChatBotController {
   })
   initChat(
     @Param() { id: chatBotId }: MongoIdDto,
-    @DBUser() { id: userId }: User
+    @DBUser() { id: userId, accountType }: User
   ) {
+    if (accountType !== 'PHYSICAL_PERSON')
+      throw new UnauthorizedException(
+        'Only physical person accounts are allowed to initiate a chat.'
+      );
     return this.chatBotService.initChatBot(userId, chatBotId);
   }
 
@@ -281,8 +305,12 @@ export class ChatBotController {
   })
   inviteUser(
     @Body() inviteToChatBotDto: InviteToChatBotDto,
-    @DBUser() { id: companyId }: User
+    @DBUser() { id: companyId, accountType }: User
   ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only company accounts are allowed to send invites.'
+      );
     return this.chatBotService.inviteUser(inviteToChatBotDto, companyId);
   }
 
@@ -299,8 +327,12 @@ export class ChatBotController {
   })
   deleteTrainingData(
     @Param() { id }: MongoIdDto,
-    @DBUser() { id: userId }: User
+    @DBUser() { id: userId, accountType }: User
   ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only company accounts are allowed to remove the training data.'
+      );
     return this.chatBotService.deleteTrainingData(id, userId);
   }
 
@@ -317,12 +349,16 @@ export class ChatBotController {
   })
   removeInvitation(
     @Param() { id: invitationId }: MongoIdDto,
-    @DBUser() { id: userId }: User
+    @DBUser() { id: userId, accountType }: User
   ) {
+    if (accountType !== 'COMPANY')
+      throw new UnauthorizedException(
+        'Only company accounts are allowed to remove the invitation.'
+      );
     return this.chatBotService.removeInvitation(invitationId, userId);
   }
 
-  @Post('chat-completion')
+  @Patch('chat-completion/:id')
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
@@ -335,10 +371,16 @@ export class ChatBotController {
     type: ChatCompletionMessageEntity,
   })
   createChatCompletion(
+    @Param() { id }: MongoIdDto,
     @Body() createChatCompletionDto: CreateChatBotCompletionDto,
-    @DBUser() { id: userId }: User
+    @DBUser() { id: userId, accountType }: User
   ) {
+    if (accountType !== 'PHYSICAL_PERSON')
+      throw new UnauthorizedException(
+        'Only physical person accounts are allowed to use the chatbot.'
+      );
     return this.chatBotService.createChatCompletion(
+      id,
       createChatCompletionDto,
       userId
     );
@@ -356,7 +398,14 @@ export class ChatBotController {
     description: 'Chatbot history successfully retrieved.',
     type: GetChatBotHistoryResponseEntity,
   })
-  getChatHistory(@Param() { id }: MongoIdDto, @DBUser() { id: userId }: User) {
+  getChatHistory(
+    @Param() { id }: MongoIdDto,
+    @DBUser() { id: userId, accountType }: User
+  ) {
+    if (accountType !== 'PHYSICAL_PERSON')
+      throw new UnauthorizedException(
+        'Only physical person accounts are allowed to access the chatbot history.'
+      );
     return this.chatBotService.getChatHistory(id, userId);
   }
 }

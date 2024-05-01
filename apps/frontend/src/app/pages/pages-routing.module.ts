@@ -139,6 +139,14 @@ const routes: Routes = [
             (c) => c.CreateProfileComponent
           ),
       },
+      {
+        canActivate: [AuthGuard, AccountTypeUserGuard],
+        path: 'user-profile',
+        loadComponent: () =>
+          import('./person/user-profile/user-profile.component').then(
+            (c) => c.UserProfileComponent
+          ),
+      },
     ],
   },
 ];

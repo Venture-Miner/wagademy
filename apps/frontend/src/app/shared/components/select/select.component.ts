@@ -1,14 +1,16 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 import {
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   Optional,
+  Output,
   Renderer2,
   Self,
   ViewChild,
 } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 export interface SelectItem<T> {
   value: T;
@@ -17,13 +19,14 @@ export interface SelectItem<T> {
 
 @Component({
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, NgFor],
   selector: 'wagademy-select',
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss',
 })
-export class SelectComponent {
+export class SelectComponent implements ControlValueAccessor {
   @Input() items: SelectItem<string | number | boolean>[] = [];
+  @Output() selectionChange: EventEmitter<string> = new EventEmitter<string>();
   @Input() placeholder = 'Select';
 
   @ViewChild('select', { static: true, read: ElementRef })
@@ -67,6 +70,7 @@ export class SelectComponent {
   onInputChange() {
     const value = this.elementRef.nativeElement.value;
     this.onChange(value);
+    this.selectionChange.emit(value);
   }
 
   onBlur() {

@@ -1,4 +1,10 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from '@wagademy/prisma';
 import {
   CreateChatBotCompletion,
@@ -266,7 +272,7 @@ export class ChatBotService {
     //TODO: check if user has credits
     const userHasCredits = false;
     if (!userIsInvited && !userHasCredits) {
-      throw new BadRequestException('User is not invited nor has credits.');
+      throw new UnauthorizedException('User is not invited nor has credits.');
     }
     const history = await this.prismaService.chatBotHistory.findFirst({
       where: { chatBotId, userId },
@@ -301,6 +307,7 @@ export class ChatBotService {
             },
           ],
         },
+        include: { chatBot: { select: { title: true } } },
       }),
       this.prismaService.chatBot.update({
         where: { id: chatBotId },
@@ -348,6 +355,7 @@ export class ChatBotService {
   }
 
   async createChatCompletion(
+    id: string,
     { chatBotId, message }: CreateChatBotCompletion,
     userId: string
   ): Promise<CreateChatCompletionResponse> {
@@ -355,7 +363,7 @@ export class ChatBotService {
       where: { id: chatBotId },
     });
     if (!chatBot) {
-      throw new BadRequestException('Chatbot not found.');
+      throw new NotFoundException('Chatbot not found.');
     }
     const model = chatBot.model;
     if (!model) {
@@ -386,18 +394,19 @@ export class ChatBotService {
     const assistantMessage = response.choices[0].message;
     messages = [...messages, assistantMessage];
     await this.prismaService.chatBotHistory.update({
-      where: { id: chatBotId },
+      where: { id },
       data: { history: messages as unknown as Prisma.InputJsonValue },
     });
     return assistantMessage;
   }
 
   async getChatHistory(
-    userId: string,
-    chatBotId: string
+    chatBotId: string,
+    userId: string
   ): Promise<GetChatBotHistoryResponse> {
     const chatBotHistory = await this.prismaService.chatBotHistory.findFirst({
       where: { chatBotId, userId },
+      include: { chatBot: { select: { title: true } } },
     });
     if (!chatBotHistory) {
       throw new BadRequestException('Chatbot not initialized.');
