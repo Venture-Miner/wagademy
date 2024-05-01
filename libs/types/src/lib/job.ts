@@ -1,5 +1,4 @@
 import { OpenAIChatModel } from './chat';
-import { UserProfile } from './user-profile';
 
 export const EmploymentClassificationEnum = {
   FULL_TIME: 'FULL_TIME',
