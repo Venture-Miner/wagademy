@@ -36,6 +36,9 @@
           [applications]="job._count.jobApplications"
           [button]="'View More'"
           [menu]="'jobs'"
+          route="job-applications"
+          queryParam="jobId"
+          [selectId]="job.id"
           [isOpen]="selectedCardIndex === $index"
           (click)="onCardClick($index)"
         ></wagademy-card>

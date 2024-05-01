@@ -28,15 +28,21 @@ export class CardComponent {
   @Input() isOpen = false;
   @Input() isOpenCourses = false;
   @Input() details: 'more' | 'main' = 'main';
+  @Input() route = '';
+  @Input() queryParam = '';
 
   constructor(private router: Router) {}
 
   onViewMoreClick() {
-    const route = this.menu === 'jobs' ? 'hiring' : '';
-    this.router.navigate([`/pages/${route}`], {
-      queryParams: {
-        selectId: this.selectId,
-      },
-    });
+    this.router.navigate(
+      [`/pages/${this.route}`],
+      this.queryParam.length
+        ? {
+            queryParams: {
+              [this.queryParam]: this.selectId,
+            },
+          }
+        : {}
+    );
   }
 }
