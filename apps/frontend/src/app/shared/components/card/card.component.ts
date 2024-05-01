@@ -32,7 +32,8 @@ export class CardComponent {
   constructor(private router: Router) {}
 
   onViewMoreClick() {
-    this.router.navigate(['/'], {
+    const route = this.menu === 'jobs' ? 'hiring' : '';
+    this.router.navigate([`/pages/${route}`], {
       queryParams: {
         selectId: this.selectId,
       },
