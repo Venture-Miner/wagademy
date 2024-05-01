@@ -28,14 +28,25 @@ export class CardComponent {
   @Input() isOpen = false;
   @Input() isOpenCourses = false;
   @Input() details: 'more' | 'main' = 'main';
+  @Input() route = '';
+  @Input() queryParam = '';
 
   constructor(private router: Router) {}
 
   onViewMoreClick() {
-    this.router.navigate(['/'], {
-      queryParams: {
-        selectId: this.selectId,
-      },
-    });
+    const queryParams = {
+      [this.queryParam]: this.selectId,
+    };
+    console.log(queryParams);
+    this.router.navigate(
+      [`/pages/${this.route}`],
+      this.queryParam.length
+        ? {
+            queryParams: {
+              [this.queryParam]: this.selectId,
+            },
+          }
+        : {}
+    );
   }
 }

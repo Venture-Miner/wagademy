@@ -8,17 +8,19 @@ import {
 } from '@wagademy/types';
 import { JobService } from '../../../services/job/job.service';
 import { forkJoin } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'wagademy-home',
   standalone: true,
-  imports: [InputComponent, CardComponent],
+  imports: [InputComponent, CardComponent, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
   jobs: JobUserView[] = [];
   chatbots: {
+    id: string;
     images: string;
     name: string;
     description: string;

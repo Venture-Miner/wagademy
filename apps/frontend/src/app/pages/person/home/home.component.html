@@ -15,6 +15,7 @@
     <h3 class="text-2xl text-base-100 font-sans font-medium">Jobs</h3>
     <button
       class="text-primary font-serif text-xl 2xl:pr-24 xl:pr-2 lg:pr-11 md:pr-14 sm:pr-7"
+      [routerLink]="['/pages/jobs']"
     >
       See More
     </button>
@@ -22,12 +23,15 @@
   <div
     class="flex flex-wrap max-[657px]:justify-center justify-start 2xl:gap-12 xl:gap-5 lg:gap-5 md:gap-x-12 sm:gap-5 pt-6 xl:pt-0"
   >
-    @for(jobs of jobs; track $index){
+    @for(job of jobs; track $index){
     <wagademy-card
-      [img]="jobs.company.companyProfile?.companyPhoto?.url"
-      [name]="jobs.title"
-      [description]="jobs.description"
+      [img]="job.company.companyProfile?.companyPhoto?.url"
+      [name]="job.title"
+      [description]="job.description"
       [button]="'View More'"
+      route="job-details"
+      queryParam="id"
+      [selectId]="job.id"
     ></wagademy-card>
     }
   </div>
@@ -36,6 +40,7 @@
     <h3 class="text-2xl text-base-100 font-sans font-medium">Chatbots</h3>
     <button
       class="text-primary font-serif text-xl 2xl:pr-24 xl:pr-2 lg:pr-11 md:pr-14 sm:pr-7"
+      [routerLink]="['/pages/chatbot']"
     >
       See More
     </button>
@@ -43,12 +48,15 @@
   <div
     class="flex flex-wrap max-[657px]:justify-center justify-start 2xl:gap-12 xl:gap-5 lg:gap-5 md:gap-x-12 sm:gap-5 pt-6 xl:pt-0"
   >
-    @for(chatbots of chatbots; track $index){
+    @for(chatbot of chatbots; track $index){
     <wagademy-card
-      [img]="chatbots.images"
-      [name]="chatbots.name"
-      [description]="chatbots.description"
-      [button]="'Chat With Chatboot'"
+      [img]="chatbot.images"
+      [name]="chatbot.name"
+      [description]="chatbot.description"
+      [button]="'Chat With Chatbot'"
+      route="gptchat"
+      [selectId]="chatbot.id"
+      queryParam="chatBotId"
     ></wagademy-card>
     }
   </div>
