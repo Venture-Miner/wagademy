@@ -1,4 +1,6 @@
-<div class="container mx-auto min-h-screen px-3 sm:px-0">
+<div
+  class="container mx-auto min-h-screen px-4 2xl:pl-16 xl:px-0 lg:pl-7 md:pl-10 sm:px-0"
+>
   <div class="pb-8 pt-6">
     <h2 class="font-sans font-medium text-4xl text-base-100">Home</h2>
   </div>
@@ -8,35 +10,22 @@
   >
     <p>There is no content available</p>
   </div>
-  } @if(!isLoading){ @if(courses.length){
-  <div class="flex justify-between pb-2">
-    <h3 class="text-2xl text-base-100 font-sans font-medium">Courses</h3>
-    <button class="text-primary font-serif text-xl">See More</button>
-  </div>
-  <div
-    class="flex flex-wrap max-[657px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
-  >
-    @for(courses of courses; track $index){
-    <wagademy-card
-      [img]="courses.images"
-      [name]="courses.name"
-      [description]="courses.description"
-      [button]="'View More'"
-    ></wagademy-card>
-    }
-  </div>
-  } @if(jobs.length){
+  } @if(!isLoading){ @if(jobs.length){
   <div class="flex justify-between pb-2 pt-6">
     <h3 class="text-2xl text-base-100 font-sans font-medium">Jobs</h3>
-    <button class="text-primary font-serif text-xl">See More</button>
+    <button
+      class="text-primary font-serif text-xl 2xl:pr-24 xl:pr-2 lg:pr-11 md:pr-14 sm:pr-7"
+    >
+      See More
+    </button>
   </div>
   <div
-    class="flex flex-wrap max-[657px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
+    class="flex flex-wrap max-[657px]:justify-center justify-start 2xl:gap-12 xl:gap-5 lg:gap-5 md:gap-x-12 sm:gap-5 pt-6 xl:pt-0"
   >
     @for(jobs of jobs; track $index){
     <wagademy-card
-      [img]="jobs.images"
-      [name]="jobs.name"
+      [img]="jobs.company.companyProfile?.companyPhoto?.url"
+      [name]="jobs.title"
       [description]="jobs.description"
       [button]="'View More'"
     ></wagademy-card>
@@ -45,10 +34,14 @@
   } @if(chatbots.length){
   <div class="flex justify-between pt-6 pb-2">
     <h3 class="text-2xl text-base-100 font-sans font-medium">Chatbots</h3>
-    <button class="text-primary font-serif text-xl">See More</button>
+    <button
+      class="text-primary font-serif text-xl 2xl:pr-24 xl:pr-2 lg:pr-11 md:pr-14 sm:pr-7"
+    >
+      See More
+    </button>
   </div>
   <div
-    class="flex flex-wrap max-[513px]:justify-center justify-between gap-8 pt-6 xl:pt-0"
+    class="flex flex-wrap max-[657px]:justify-center justify-start 2xl:gap-12 xl:gap-5 lg:gap-5 md:gap-x-12 sm:gap-5 pt-6 xl:pt-0"
   >
     @for(chatbots of chatbots; track $index){
     <wagademy-card
@@ -56,6 +49,27 @@
       [name]="chatbots.name"
       [description]="chatbots.description"
       [button]="'Chat With Chatboot'"
+    ></wagademy-card>
+    }
+  </div>
+  } @if(courses.length){
+  <div class="flex justify-between pb-2">
+    <h3 class="text-2xl text-base-100 font-sans font-medium">Courses</h3>
+    <button
+      class="text-primary font-serif text-xl 2xl:pr-24 xl:pr-2 lg:pr-11 md:pr-14 sm:pr-7"
+    >
+      See More
+    </button>
+  </div>
+  <div
+    class="flex flex-wrap max-[657px]:justify-center justify-start 2xl:gap-12 xl:gap-5 lg:gap-5 md:gap-x-12 sm:gap-5 pt-6 xl:pt-0"
+  >
+    @for(courses of courses; track $index){
+    <wagademy-card
+      [img]="courses.images"
+      [name]="courses.name"
+      [description]="courses.description"
+      [button]="'View More'"
     ></wagademy-card>
     }
   </div>
