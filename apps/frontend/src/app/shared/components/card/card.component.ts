@@ -34,10 +34,6 @@ export class CardComponent {
   constructor(private router: Router) {}
 
   onViewMoreClick() {
-    const queryParams = {
-      [this.queryParam]: this.selectId,
-    };
-    console.log(queryParams);
     this.router.navigate(
       [`/pages/${this.route}`],
       this.queryParam.length
