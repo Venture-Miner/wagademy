@@ -3,7 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
-import { NgClass } from '@angular/common';
+import { Location, NgClass } from '@angular/common';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { FormsModule } from '@angular/forms';
 import { InputSearchComponent } from '../../../shared/components/input-search/input-search.component';
@@ -50,7 +50,8 @@ export class GptListComponent implements OnInit {
   constructor(
     public router: Router,
     private chatBotService: ChatBotService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -108,5 +109,9 @@ export class GptListComponent implements OnInit {
 
   exploreOption() {
     //TODO: redirect to somewhere
+  }
+
+  cancel() {
+    this.location.back();
   }
 }

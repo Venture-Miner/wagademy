@@ -20,6 +20,7 @@
         class="btn btn-outline sm:w-24 w-full"
         [ngClass]="[typeModal === 'success' ? 'btn-primary' : 'btn-error']"
         [disabled]="isLoading"
+        (click)="cancelButtonClick.emit()"
       >
         Cancel
       </button>
@@ -27,7 +28,7 @@
         class="btn whitespace-nowrap"
         [ngClass]="[typeModal === 'success' ? 'btn-primary' : 'btn-error']"
         type="button"
-        (click)="this.actionButtonClick.emit()"
+        (click)="actionButtonClick.emit()"
         [disabled]="isLoading || externalForm?.invalid"
       >
         @if (isLoading) {

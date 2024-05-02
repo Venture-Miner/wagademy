@@ -21,4 +21,5 @@ export class ModalComponent {
   @Input() inputLabel = '';
 
   @Output() actionButtonClick = new EventEmitter<void>();
+  @Output() cancelButtonClick = new EventEmitter<void>();
 }
