@@ -22,9 +22,10 @@
             <wagademy-form-field
               [control]="educationItem.get('degree')!"
               label="Degree"
+              [isInputMandatory]="true"
             >
               <wagademy-input
-                placeholder="email@email.com"
+                placeholder="Bachelor"
                 type="text"
                 formControlName="degree"
               >
@@ -35,9 +36,10 @@
             <wagademy-form-field
               [control]="educationItem.get('institution')!"
               label="Institution"
+              [isInputMandatory]="true"
             >
               <wagademy-input
-                placeholder="Education example"
+                placeholder="MIT"
                 type="text"
                 formControlName="institution"
               >
@@ -48,9 +50,10 @@
             <wagademy-form-field
               [control]="educationItem.get('course')!"
               label="Course"
+              [isInputMandatory]="true"
             >
               <wagademy-input
-                placeholder="Course name"
+                placeholder="Software Engineering"
                 type="text"
                 formControlName="course"
               >
@@ -59,7 +62,12 @@
           </div>
           <div class="form-control mb-4 w-40">
             <label class="label cursor-pointer">
-              <input type="checkbox" class="checkbox checkbox-primary" />
+              <input
+                type="checkbox"
+                class="checkbox checkbox-primary"
+                [checked]="educationItem.get('stillStudying')?.value"
+                (change)="onCheckboxChange($event, i)"
+              />
               <span class="label-text text-neutral-950"
                 >I'm still studying</span
               >
@@ -70,6 +78,7 @@
               <wagademy-form-field
                 [control]="educationItem.get('startDate')!"
                 label="Start"
+                [isInputMandatory]="true"
               >
                 <wagademy-input
                   placeholder="MM / DD / YYYY"
@@ -95,7 +104,7 @@
           </div>
           <div>
             <wagademy-form-field
-              label="About"
+              label="Description"
               [control]="educationItem.get('description')!"
             >
               <wagademy-text-area

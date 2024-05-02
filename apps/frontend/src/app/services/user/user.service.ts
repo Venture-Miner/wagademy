@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import {
   CreateCompanyProfile,
   CreateCompanyProfileResponse,
+  CreateProfile,
+  CreateProfileResponse,
   CreateUserFrontendDto,
   CreateUserResponse,
   FindOneCompanyProfileResponse,
@@ -45,6 +47,36 @@ export class UserService extends BaseHttpService {
     });
     return this.http.post<CreateCompanyProfileResponse>(
       `${this.URL}/user/create-company-profile`,
+      formData
+    );
+  }
+
+  createUserProfile(
+    createProfileDto: CreateProfile
+  ): Observable<CreateProfileResponse> {
+    const formData: FormData = new FormData();
+    if (createProfileDto.profilePhoto)
+      formData.append('profilePhoto', createProfileDto.profilePhoto as File);
+    Object.keys(createProfileDto).forEach((key) => {
+      if (
+        key !== 'profilePhoto' &&
+        key !== 'education' &&
+        key !== 'professionalExperience'
+      ) {
+        formData.append(key, (createProfileDto as any)[key]);
+      }
+      if (key === 'education' || key === 'professionalExperience') {
+        createProfileDto[key].forEach((item: any, index: number) => {
+          Object.keys(item).forEach((subKey) => {
+            if (item[subKey]) {
+              formData.append(`${key}[${index}][${subKey}]`, item[subKey]);
+            }
+          });
+        });
+      }
+    });
+    return this.http.post<CreateProfileResponse>(
+      `${this.URL}/user/create-profile`,
       formData
     );
   }
