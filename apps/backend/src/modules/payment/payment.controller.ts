@@ -163,7 +163,10 @@ export class PaymentController {
       'All available subscription plans have been successfully retrieved.',
     type: FindManyPlansResponseEntity,
   })
-  findManyPlans() {
-    return this.paymentService.findManyPlans();
+  findManyPlans(
+    @DBUser()
+    { accountType }: User
+  ) {
+    return this.paymentService.findManyPlans(accountType);
   }
 }

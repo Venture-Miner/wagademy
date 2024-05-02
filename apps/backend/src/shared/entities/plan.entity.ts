@@ -1,4 +1,4 @@
-import { Plan } from '@wagademy/types';
+import { Plan, PlanTypeEnum } from '@wagademy/types';
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -28,4 +28,7 @@ export class PlanEntity implements Plan {
 
   @ApiProperty({ example: faker.string.uuid() })
   priceId: string;
+
+  @ApiProperty({ example: PlanTypeEnum.PHYSICAL_PERSON })
+  planType: PlanTypeEnum;
 }

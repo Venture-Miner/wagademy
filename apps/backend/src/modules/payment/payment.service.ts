@@ -9,6 +9,7 @@ import {
   FindManyPlansResponse,
   GetUserCurrentCreditsResponse,
   UpdateSubscription,
+  PlanTypeEnum,
 } from '@wagademy/types';
 import { StripeService } from '../../services/stripe/stripe.service';
 import { Prisma } from '@prisma/client';
@@ -127,9 +128,12 @@ export class PaymentService {
     return { userPlanCredits, userOnDemandCredits: { total, totalUsed } };
   }
 
-  async findManyPlans(): Promise<FindManyPlansResponse> {
+  async findManyPlans(planType: PlanTypeEnum): Promise<FindManyPlansResponse> {
     const where: Prisma.PlanWhereInput = {
-      name: { not: { contains: 'Free' }, mode: 'insensitive' },
+      AND: [
+        { name: { not: { contains: 'Free' }, mode: 'insensitive' } },
+        { planType },
+      ],
     };
     const [count, plans] = await Promise.all([
       this.prismaService.plan.count({
@@ -137,6 +141,7 @@ export class PaymentService {
       }),
       this.prismaService.plan.findMany({
         where,
+        orderBy: { price: 'asc' },
       }),
     ]);
     return { count, plans };

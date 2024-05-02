@@ -1,10 +1,17 @@
+export const PlanTypeEnum = {
+  COMPANY: 'COMPANY',
+  PHYSICAL_PERSON: 'PHYSICAL_PERSON',
+} as const;
+
+export type PlanTypeEnum = (typeof PlanTypeEnum)[keyof typeof PlanTypeEnum];
+
 export type CreatePlan = {
   name: string;
   currency: string;
   price: number;
   metadata: string[];
   credits: number;
-  quantityOfMailboxes: number;
+  planType: PlanTypeEnum;
 };
 
 export type Plan = {
@@ -14,8 +21,8 @@ export type Plan = {
   price: number;
   metadata: string[];
   credits: number;
-  quantityOfMailboxes: number;
   priceId: string | null;
+  planType: PlanTypeEnum;
 };
 
 export type FindManyPlansResponse = {

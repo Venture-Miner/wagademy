@@ -6,7 +6,8 @@
     "backend": "prisma generate && nx run backend:serve",
     "frontend": "nx run frontend:serve",
     "ci:lighthouse": "lhci autorun",
-    "build:frontend": "nx run frontend:build"
+    "build:frontend": "nx run frontend:build",
+    "seed": "ts-node scripts/seed/seed.ts"
   },
   "private": true,
   "dependencies": {

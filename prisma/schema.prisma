@@ -194,14 +194,14 @@ model Credit {
 }
 
 model Plan {
-  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
-  name                String
-  currency            String
-  price               Float
-  metadata            String[]
-  credits             Int
-  quantityOfMailboxes Int
-  priceId             String?
+  id       String       @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  currency String
+  price    Float
+  metadata String[]
+  credits  Int
+  priceId  String?
+  planType PlanTypeEnum
 }
 
 model CreditTransaction {
@@ -265,4 +265,9 @@ enum CreditTransactionStatusEnum {
   FAILED
   REFUNDED
   COMPLETED
+}
+
+enum PlanTypeEnum {
+  COMPANY
+  PHYSICAL_PERSON
 }
