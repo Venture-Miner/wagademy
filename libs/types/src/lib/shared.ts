@@ -20,9 +20,8 @@ export type DeepPartial<T> = T extends object
 
 export type UploadFileOutput = { key: string; url: string };
 
-export type ImageFile = {
+export type File = {
   id: string;
-  fileId: string;
   url: string;
   key: string;
   createdAt: Date;
