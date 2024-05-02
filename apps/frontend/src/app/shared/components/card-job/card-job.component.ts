@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { JobStatusEnum } from '@wagademy/types';
@@ -6,7 +6,7 @@ import { JobStatusEnum } from '@wagademy/types';
 @Component({
   selector: 'wagademy-card-job',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, NgOptimizedImage],
   templateUrl: './card-job.component.html',
   styleUrls: ['./card-job.component.scss'],
 })

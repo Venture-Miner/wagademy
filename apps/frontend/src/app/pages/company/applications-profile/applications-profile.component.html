@@ -149,6 +149,16 @@
     </div>
   </div>
 </div>
+
+@if(companyNeedToAddAiQuestions){<wagademy-modal
+  title="Configure AI Interview Questions"
+  actionButtonLabel="Add AI Interview Questions "
+  message="Before inviting candidates, please configure the AI interview questions."
+  (actionButtonClick)="addInterviewQuestions()"
+  [isLoading]="isLoading"
+>
+</wagademy-modal
+>}@else{
 <wagademy-modal
   title="Invite"
   actionButtonLabel="Yes, send invite"
@@ -157,3 +167,4 @@
   [isLoading]="isLoading"
 >
 </wagademy-modal>
+}

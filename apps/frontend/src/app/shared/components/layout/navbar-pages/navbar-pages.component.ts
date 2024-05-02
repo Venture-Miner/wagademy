@@ -29,6 +29,7 @@ export class NavbarPagesComponent implements OnInit {
   @ViewChild('toggleNavbarButton') toggleNavbarButton!: ElementRef;
   @ViewChild('list') list!: ElementRef;
   profilePhoto!: any;
+  isActive = false;
 
   readonly PHYSICAL_PERSON = AccountTypeEnum.PHYSICAL_PERSON;
   readonly COMPANY = AccountTypeEnum.COMPANY;

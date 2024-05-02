@@ -1,21 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
-import { NgClass } from '@angular/common';
+import { Location, NgClass } from '@angular/common';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { FormsModule } from '@angular/forms';
 import { InputSearchComponent } from '../../../shared/components/input-search/input-search.component';
+import { ChatBot, FilterChatbots } from '@wagademy/types';
+import { ChatBotService } from '../../../services/chat-bot/chat-bot.service';
+import { BehaviorSubject, debounceTime, skip } from 'rxjs';
+import { ToastService } from '../../../services/toast/toast.service';
 
 interface Filter {
   name: string;
-}
-
-interface ChatBots {
-  images: string;
-  name: string;
-  description: string;
 }
 
 @Component({
@@ -34,29 +32,8 @@ interface ChatBots {
   templateUrl: './gpt-list.component.html',
   styleUrl: './gpt-list.component.scss',
 })
-export class GptListComponent {
-  chats: ChatBots[] = [
-    {
-      images: './assets/img/images/img-card-lens.svg',
-      name: 'Lens GPT',
-      description: 'Talk about Lens Protocol.',
-    },
-    {
-      images: './assets/img/images/img-card-VM.svg',
-      name: 'Venture Miner GPT',
-      description: 'Talk about Venture Miner, AI and WEB3 technologies.',
-    },
-    {
-      images: './assets/img/images/img-card-lens.svg',
-      name: 'Lens GPT',
-      description: 'Talk about Lens Protocol.',
-    },
-    {
-      images: './assets/img/images/img-card-VM.svg',
-      name: 'Venture Miner GPT',
-      description: 'Talk about Venture Miner, AI and WEB3 technologies.',
-    },
-  ];
+export class GptListComponent implements OnInit {
+  chats: ChatBot[] = [];
   isLoading = false;
   filters: Filter[] = [
     { name: 'All' },
@@ -65,28 +42,76 @@ export class GptListComponent {
     { name: 'Invited' },
   ];
   page = 1;
-  take = 1;
+  take = 10;
   count = 5;
-  searchChat = '';
+  searchChat$ = new BehaviorSubject('');
   selectedFilter = 'All';
 
-  constructor(public router: Router) {}
+  constructor(
+    public router: Router,
+    private chatBotService: ChatBotService,
+    private toastService: ToastService,
+    private location: Location
+  ) {}
+
+  ngOnInit() {
+    this.getChatBots();
+    this.searchChat$.pipe(skip(1), debounceTime(600)).subscribe(() => {
+      this.getChatBots();
+    });
+  }
 
   getChatBots() {
-    /* TODO document why this method 'getChatBots' is empty */
+    this.isLoading = true;
+    const filterChatbots: FilterChatbots = {
+      search: this.searchChat$.value,
+    };
+
+    switch (this.selectedFilter) {
+      case 'Featured':
+        filterChatbots.featured = true;
+        break;
+      case 'Most recent':
+        filterChatbots.mostRecent = true;
+        break;
+      case 'Invited':
+        filterChatbots.invited = true;
+        break;
+      case 'All':
+        break;
+    }
+
+    this.chatBotService
+      .findManyChatBots(filterChatbots, {
+        take: this.take,
+        skip: (this.page - 1) * this.take,
+      })
+      .subscribe({
+        next: ({ count, chatBots }) => {
+          this.count = count;
+          this.chats = chatBots;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.toastService.showToast({
+            message: 'Error while loading chatbots',
+            type: 'error',
+          });
+        },
+      });
+  }
+
+  initChat(id: string) {
+    this.router.navigate(['/pages/gptchat'], {
+      queryParams: { chatBotId: id },
+    });
   }
 
   exploreOption() {
-    /* TODO document why this method 'exploreOption' is empty */
+    //TODO: redirect to somewhere
   }
 
-  get filteredChatBots() {
-    if (this.searchChat) {
-      return this.chats.filter((course: ChatBots) =>
-        course.name.toLowerCase().includes(this.searchChat.toLowerCase())
-      );
-    } else {
-      return this.chats;
-    }
+  cancel() {
+    this.location.back();
   }
 }

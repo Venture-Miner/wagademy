@@ -45,7 +45,7 @@ export class HomeCompanyComponent implements OnInit {
   selectedCardIndex: number | null = null;
   selectedCardCourseIndex: number | null = null;
   skip = 0;
-  take = 4;
+  take = 8;
 
   constructor(
     private readonly jobService: JobService,

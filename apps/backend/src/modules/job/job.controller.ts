@@ -9,7 +9,6 @@ import {
   UseGuards,
   Query,
   HttpStatus,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { JobService } from './job.service';
 import {
@@ -31,7 +30,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CognitoUserGuard } from '../../infra';
-import { User } from '@wagademy/types';
+import { AccountTypeEnum, User } from '@wagademy/types';
 import { DBUser } from '../../shared/decorators';
 import {
   CreateJobApplicationResponseEntity,
@@ -47,6 +46,8 @@ import {
   JobUserViewUpdateEntity,
   UpdateJobResponseEntity,
 } from './entities';
+import { AccountType } from '../../shared/decorators/account-type.decorator';
+import { AccountTypeGuard } from '../../infra/auth/guards/account-type.guard';
 
 @ApiTags('Job')
 @Controller('job')
@@ -55,7 +56,8 @@ export class JobController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Create a new job',
     description: 'Creates a new job with provided details.',
@@ -68,18 +70,15 @@ export class JobController {
   create(
     @Body() createJobDto: CreateJobDto,
     @DBUser()
-    { id: companyId, accountType }: User
+    { id: companyId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to create jobs.'
-      );
     return this.jobService.create(createJobDto, companyId);
   }
 
   @Post('job-application')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Create a job application',
     description: 'Creates a job application with the given user data.',
@@ -91,13 +90,9 @@ export class JobController {
   })
   createJobApplication(
     @DBUser()
-    { id: userId, accountType }: User,
+    { id: userId }: User,
     @Body() createJobApplicationDto: CreateJobApplicationDto
   ) {
-    if (accountType !== 'PHYSICAL_PERSON')
-      throw new UnauthorizedException(
-        'Only individual accounts are allowed to apply for jobs.'
-      );
     return this.jobService.createJobApplication(
       createJobApplicationDto,
       userId
@@ -106,7 +101,8 @@ export class JobController {
 
   @Get()
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Retrieve a list of jobs belonging to a company.',
     description:
@@ -121,10 +117,8 @@ export class JobController {
     @Query() filterCompanyJobsDto: FilterCompanyJobsDto,
     @Query() paginationDto: PaginationDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException('You are not able to access this.');
     return this.jobService.findManyJobsCompanyView(
       filterCompanyJobsDto,
       paginationDto,
@@ -134,7 +128,8 @@ export class JobController {
 
   @Get('job-applications')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Retrieve a list of job applications submitted to the company.',
     description:
@@ -149,10 +144,8 @@ export class JobController {
     @Query() filterCompanyJobApplicationsDto: FilterCompanyJobApplicationsDto,
     @Query() paginationDto: PaginationDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException('You are not able to access this.');
     return this.jobService.findManyJobApplicationsCompanyView(
       filterCompanyJobApplicationsDto,
       paginationDto,
@@ -162,7 +155,8 @@ export class JobController {
 
   @Get('user-job-applications')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Retrieve a list of job applications submitted by the user.',
     description:
@@ -177,10 +171,8 @@ export class JobController {
     @Query() filterUserJobApplicationsDto: FilterUserJobApplicationsDto,
     @Query() paginationDto: PaginationDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'PHYSICAL_PERSON')
-      throw new UnauthorizedException('You are not able to access this.');
     return this.jobService.findManyJobApplicationsUserView(
       filterUserJobApplicationsDto,
       paginationDto,
@@ -190,7 +182,8 @@ export class JobController {
 
   @Get('jobs-user-view')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Retrieve a list of available jobs',
     description: 'Fetches a list of available jobs with optional filters.',
@@ -204,10 +197,8 @@ export class JobController {
     @Query() filterJobsDto: FilterJobsDto,
     @Query() paginationDto: PaginationDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'PHYSICAL_PERSON')
-      throw new UnauthorizedException('You are not able to access this.');
     return this.jobService.findManyJobsUserView(
       filterJobsDto,
       paginationDto,
@@ -217,7 +208,8 @@ export class JobController {
 
   @Get('job-company-view/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Retrieve a job',
     description: 'Fetches a job based on its unique ID.',
@@ -230,16 +222,15 @@ export class JobController {
   findOneJobCompanyView(
     @Param() { id }: MongoIdDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException('You are not able to access this.');
     return this.jobService.findOneJobCompanyView(id, userId);
   }
 
   @Get('job-interview-result/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Get a job interview result.',
     description: 'Get a job interview result by it own ID.',
@@ -252,16 +243,15 @@ export class JobController {
   getJobInterviewResult(
     @Param() { id }: MongoIdDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException('You are not able to access this.');
     return this.jobService.getJobInterviewResult(id, userId);
   }
 
   @Get('job-application/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Get a job application.',
     description: 'Get a job application by its own ID.',
@@ -274,11 +264,9 @@ export class JobController {
   findOneJobApplicationCompanyView(
     @Param() { id }: MongoIdDto,
     @DBUser()
-    { accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException('You are not able to access this.');
-    return this.jobService.findOneJobApplicationCompanyView(id);
+    return this.jobService.findOneJobApplicationCompanyView(id, userId);
   }
 
   @Get('job-user-view/:id')
@@ -303,7 +291,8 @@ export class JobController {
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Update a new job',
     description: 'Updates a new job with provided details.',
@@ -317,12 +306,8 @@ export class JobController {
     @Param() { id }: MongoIdDto,
     @Body() updateJobDto: UpdateJobDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are permitted to update a job.'
-      );
     return this.jobService.update(id, updateJobDto, userId);
   }
 
@@ -342,7 +327,8 @@ export class JobController {
 
   @Patch('invite-to-interview/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Invite a user to interview',
     description:
@@ -356,18 +342,15 @@ export class JobController {
   inviteToInterview(
     @Param() { id }: MongoIdDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are permitted to send interview invitations.'
-      );
     return this.jobService.inviteToInterview(id, userId);
   }
 
   @Patch('configure-ai-questions/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Configure AI questions for a job',
     description:
@@ -382,12 +365,8 @@ export class JobController {
     @Param() { id }: MongoIdDto,
     @Body() configureAIQuestionsDto: ConfigureAIQuestionsDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are permitted to configure AI questions for a job.'
-      );
     return this.jobService.configureAIQuestions(
       id,
       userId,
