@@ -9,11 +9,38 @@ import {
   CreateCheckoutResponse,
   CreditTypeEnum,
   GetStripeCustomerPortalResponse,
+  User,
 } from '@wagademy/types';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { PrismaService } from '@wagademy/prisma';
 
 @Injectable()
 export class StripeService {
-  constructor(private readonly Stripe: Stripe) {}
+  constructor(
+    private readonly Stripe: Stripe,
+    private readonly prismaService: PrismaService,
+    private readonly eventEmitter: EventEmitter2
+  ) {}
+
+  @OnEvent('userCreated')
+  async assignFreePlanToNewUser(newUser: User) {
+    const plan = await this.prismaService.plan.findFirst({
+      where: { name: 'Free', planType: newUser.accountType },
+    });
+    const customer = await this.Stripe.customers.create({
+      email: newUser.email,
+      name: newUser.name,
+    });
+    const { id } = await this.Stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{ price: plan?.priceId as string }],
+      metadata: { userId: newUser.id },
+    });
+    this.eventEmitter.emit('subscriptionCreated', {
+      userId: newUser.id,
+      subscriptionId: id,
+    });
+  }
 
   async createSubscription(
     userId: string,

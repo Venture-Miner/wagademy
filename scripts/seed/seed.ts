@@ -5,12 +5,12 @@ const prisma = new PrismaClient();
 
 async function main() {
   try {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error('Environment variable STRIPE_SECRET_KEY is not set.');
+    }
     const createdPlan: Plan[] = [];
     for (const plan of plans) {
       createdPlan.push(await prisma.plan.create({ data: plan }));
-    }
-    if (!process.env.STRIPE_SECRET_KEY) {
-      throw new Error('Environment variable STRIPE_SECRET_KEY is not set.');
     }
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     createdPlan.map(async ({ id, name, currency, price, credits }) => {

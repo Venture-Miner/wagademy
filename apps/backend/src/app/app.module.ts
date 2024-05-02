@@ -12,12 +12,14 @@ import { JobModule } from '../modules/job/job.module';
 import { ChatBotModule } from '../modules/chat-bot/chat-bot.module';
 import { ChatModule } from '../modules/chat/chat.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
     ChatBotModule,
     ChatModule,
     ConfigModule.forRoot(),
+    EventEmitterModule.forRoot(),
     FileModule,
     JobModule,
     PaymentModule,
