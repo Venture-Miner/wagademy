@@ -405,7 +405,7 @@ export class JobService {
         'You are not able to invite the user since the user is invited or already did the interview .'
       );
     if (!jobApplication.job.aiInterviewQuestions.length)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You are not able to invite the user before adding interview questions in the job position.'
       );
     return this.prismaService.jobApplication.update({
