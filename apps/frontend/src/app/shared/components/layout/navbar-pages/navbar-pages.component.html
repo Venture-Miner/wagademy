@@ -1,0 +1,310 @@
+<nav class="bg-neutral">
+  <div
+    class="flex flex-wrap items-center justify-between container mx-auto py-4 px-5"
+  >
+    <div class="w-full flex justify-between xl:w-auto">
+      <a [routerLink]="'/'">
+        <img
+          width="212"
+          height="40"
+          ngSrc="./assets/img/images/img-logo-navbar.webp"
+          alt="wagademy logo"
+        />
+      </a>
+      <button
+        #toggleNavbarButton
+        aria-label="menu"
+        class="cursor-pointer text-xl xl:hidden"
+        type="button"
+        (click)="toggleNavbar()"
+      >
+        <i
+          class="bi bi-three-dots-vertical text-base-100"
+          title="menu"
+          aria-hidden="true"
+        ></i>
+      </button>
+    </div>
+    @if(accountType === PHYSICAL_PERSON){
+    <div #list>
+      <ul
+        [ngClass]="{ hidden: !showMenu }"
+        class="xl:flex grid items-center justify-end xl:gap-4 gap-2"
+      >
+        <li
+          class="hover:text-primary text-base-100 text-sm font-mono pt-2 xl:pt-0"
+        >
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/home']"
+            (click)="showMenu = false"
+          >
+            Home
+          </a>
+        </li>
+        <!-- <li class="hover:text-primary text-base-100 text-sm font-mono">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/my-courses']"
+            (click)="showMenu = false"
+          >
+            My courses
+          </a>
+        </li> -->
+        <!-- <li class="hover:text-primary text-base-100 text-sm font-mono">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['pages/certificates']"
+            (click)="showMenu = false"
+          >
+            My certificates
+          </a>
+        </li> -->
+        <li class="hover:text-primary text-base-100 text-sm font-mono">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/jobs']"
+            (click)="showMenu = false"
+          >
+            Jobs
+          </a>
+        </li>
+        <li class="hover:text-primary text-base-100 text-sm font-mono">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/chatbot']"
+            (click)="showMenu = false"
+          >
+            GPTs
+          </a>
+        </li>
+        <!-- <li class="xl:px-4 cursor-pointer pl-3">
+          <i
+            class="bi bi-bell-fill hover:text-primary text-base-200 hover:font-bold"
+          ></i>
+        </li> -->
+        <li class="relative">
+          <button
+            #toggleButton
+            aria-haspopup="true"
+            aria-expanded="true"
+            id="menu"
+            (click)="toggleDropdown()"
+          >
+            <img
+              [ngSrc]="
+                profilePhoto || './assets/img/images/img-default-profile.svg'
+              "
+              class="rounded-full h-10 border border-primary"
+              width="40"
+              height="40"
+              alt="profile"
+            />
+          </button>
+          @if(openMenu){
+          <div
+            #dropdown
+            class="rounded-lg absolute w-36 bg-white z-10 xl:right-1 xl:transform shadow-lg"
+          >
+            <div
+              class="p-4"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="menu"
+            >
+              <div class="py-3">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/profile']"
+                    (click)="showMenu = false; openMenu = false"
+                    >Profile</a
+                  >
+                </div>
+              </div>
+              <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/job-applications-all']"
+                    (click)="showMenu = false; openMenu = false"
+                    >Applications</a
+                  >
+                </div>
+              </div>
+              <!-- <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/credits']"
+                    (click)="showMenu = false; openMenu = false"
+                    >Credits</a
+                  >
+                </div>
+              </div> -->
+              <!-- <div class="py-2">
+                <div
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <a
+                    routerLinkActive="active-link"
+                    [routerLink]="['/pages/settings']"
+                    (click)="showMenu = false; openMenu = false"
+                    >Settings</a
+                  >
+                </div>
+              </div> -->
+              <div class="py-2">
+                <div
+                  class="hover:bg-primary text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                >
+                  <div (click)="logout()">Logout</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </li>
+      </ul>
+    </div>
+    } @if(accountType === COMPANY){
+    <div #list>
+      <ul
+        [ngClass]="{ hidden: !showMenu }"
+        class="xl:flex grid items-center justify-end xl:gap-4 gap-2"
+      >
+        <li
+          class="hover:text-primary text-base-100 text-sm font-mono pt-2 xl:pt-0"
+        >
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/home-company']"
+            (click)="showMenu = false"
+          >
+            Home
+          </a>
+        </li>
+        <!-- <li class="hover:text-primary text-base-200 text-sm font-mono">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/courses']"
+            (click)="showMenu = false"
+          >
+            Courses
+          </a>
+        </li> -->
+        <li class="hover:text-primary text-base-200 text-sm font-mono">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/hiring']"
+            (click)="showMenu = false"
+          >
+            Hiring
+          </a>
+        </li>
+        <li class="hover:text-primary text-base-200 text-sm font-mono">
+          <a
+            routerLinkActive="active-link"
+            [routerLink]="['/pages/gpts']"
+            (click)="showMenu = false"
+          >
+            GPTs
+          </a>
+        </li>
+        <!-- <li class="xl:px-4 cursor-pointer pl-3">
+          <i
+            class="bi bi-bell-fill hover:text-primary text-base-200 hover:font-bold"
+          ></i>
+        </li> -->
+        <li class="relative">
+          <button
+            #toggleButton
+            aria-haspopup="true"
+            aria-expanded="true"
+            id="menu"
+            (click)="toggleDropdown()"
+          >
+            <img
+              [ngSrc]="
+                profilePhoto || './assets/img/images/img-default-profile.svg'
+              "
+              class="rounded-full h-10 border border-primary"
+              alt="profile"
+              width="40"
+              height="40"
+            />
+          </button>
+          @if(openMenu === true){
+          <div
+            #dropdown
+            class="rounded-lg absolute w-36 bg-white z-10 xl:right-1 xl:transform shadow-lg"
+          >
+            <div
+              class="p-4"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="menu"
+            >
+              <div class="py-2">
+                <a
+                  class="w-28 text-base-200 p-2 hover:bg-primary hover:text-base-100 hover:rounded-lg"
+                  [ngClass]="{
+                    'hover:bg-primary hover:text-base-100 hover:rounded-lg w-28':
+                      !isActive
+                  }"
+                  routerLinkActive="active-link"
+                  [routerLink]="['/pages/company-profile']"
+                  (click)="showMenu = false; openMenu = false"
+                >
+                  Profile
+                </a>
+              </div>
+              <!-- <div class="py-2">
+                <a
+                  class="w-full text-base-200 p-2 hover:bg-primary hover:text-base-100 hover:rounded-lg"
+                  [ngClass]="{
+                    'hover:bg-primary hover:text-base-100 hover:rounded-lg w-full':
+                      !isActive
+                  }"
+                  routerLinkActive="active-link"
+                  [routerLink]="['/pages/credits']"
+                  (click)="showMenu = false; openMenu = false"
+                  >Credits</a
+                >
+              </div> -->
+              <!-- <div class="py-2">
+                <a
+                  class="w-full text-base-200 p-2 hover:bg-primary hover:text-base-100 hover:rounded-lg"
+                  [ngClass]="{
+                    'hover:bg-primary hover:text-base-100 hover:rounded-lg w-full':
+                      !isActive
+                  }"
+                  routerLinkActive="active-link"
+                  [routerLink]="['/pages/settings']"
+                  (click)="showMenu = false; openMenu = false"
+                  >Settings</a
+                >
+              </div> -->
+              <div>
+                <button
+                  class="hover:bg-primary text-left text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                  (click)="logout()"
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+          }
+        </li>
+      </ul>
+    </div>
+    }
+  </div>
+</nav>

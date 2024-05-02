@@ -1,0 +1,73 @@
+<div class="container mx-auto min-h-screen px-3">
+  <div class="md:flex gap-8">
+    <div class="w-full">
+      <wagademy-back-button></wagademy-back-button>
+      <div class="pt-6 flex gap-6 pb-8">
+        <div class="flex gap-2">
+          <i class="bi bi-clock text-primary"></i>
+          <p class="font-mono text-base-200">
+            {{ employmentClassification }}
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <i class="bi bi-laptop text-primary"></i>
+          <p class="font-mono text-base-200">{{ allocation }}</p>
+        </div>
+      </div>
+      <div class="pb-8">
+        <h3 class="font-sans font-medium text-2xl text-base-100 pb-2">
+          {{ job?.title }}
+        </h3>
+      </div>
+      <div class="pb-10">
+        <p class="font-mono font-bold text-base-100 pb-2">Description</p>
+        <p class="font-mono text-base-200">{{ job?.description }}</p>
+      </div>
+      <div class="max-[768px]:flex justify-center">
+        <button
+          class="btn btn-primary w-[200px]"
+          [disabled]="applied"
+          (click)="validateIfUserIsAbleToApply()"
+        >
+          @if(!applied){ @if (isVerifying) {
+          <span class="loading loading-dots"></span>
+          } @else { Apply} }@else{ Applied }
+        </button>
+      </div>
+    </div>
+    <div class="pt-20 md:w-[420px]">
+      <div
+        class="bg-neutral md:w-[416px] md:h-[336px] w-full h-full rounded-lg p-8"
+      >
+        <div class="flex gap-2 items-center pb-6">
+          <img
+            [ngSrc]="
+              job?.company?.companyProfile?.companyPhoto?.url ||
+              './assets/img/images/img-card-content.png'
+            "
+            class="rounded-2xl"
+            alt="logo company"
+            width="96"
+            height="96"
+          />
+          <h3 class="font-sans font-medium text-2xl text-base-100">
+            {{ job?.company?.companyProfile?.name }}
+          </h3>
+        </div>
+        <p class="font-mono font-bold text-base-100 pb-2">Info</p>
+        <p
+          class="font-mono text-base-200 h-[120px] overflow-hidden line-clamp-5"
+        >
+          {{ job?.company?.companyProfile?.about }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<wagademy-modal
+  title="Incomplete profile "
+  actionButtonLabel="Complete now"
+  message="You need to complete your profile to apply to the job position. Would you like to complete it now?"
+  (actionButtonClick)="completeProfile()"
+>
+</wagademy-modal>

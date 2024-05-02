@@ -1,0 +1,35 @@
+<div
+  class="container flex justify-end bg-neutral border-2 rounded-3xl border-base-300"
+  [ngClass]="{ 'w-48 h-48': size === 'big', 'w-24 h-24': size === 'small' }"
+>
+  @if(profilePhoto){
+  <img
+    class="rounded-3xl object-cover"
+    [src]="profilePhoto"
+    [ngClass]="{
+      'w-full h-full': size === 'big',
+      'w-24 h-24': size === 'small'
+    }"
+    alt="user profile"
+  />
+  }
+
+  <label
+    for="fileInput"
+    class="absolute rounded-3xl pr-3 w-7 h-7 flex items-center justify-center cursor-pointer"
+    [ngClass]="{ 'pt-[75px]': size === 'small', 'pt-40': size === 'big' }"
+  >
+    <input
+      #fileInput
+      id="fileInput"
+      class="hidden"
+      type="file"
+      accept="image/*"
+      (change)="handleFileInput($event)"
+    />
+    <i
+      class="bi bi-pencil text-sm text-primary shadow bg-neutral py-2 px-3 rounded-full"
+      aria-hidden="true"
+    ></i>
+  </label>
+</div>

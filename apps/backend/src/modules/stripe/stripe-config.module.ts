@@ -9,7 +9,7 @@ export class StripeConfigModule {
       provide: Stripe,
       useFactory: async (configService: ConfigService) => {
         const apiKey = configService.get<string>('STRIPE_SECRET_KEY') as string;
-        return new Stripe(apiKey, { apiVersion: '2023-10-16' });
+        return new Stripe(apiKey, { apiVersion: '2024-04-10' });
       },
       inject: [ConfigService],
     };

@@ -8,13 +8,176 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  email          String   @unique
-  name           String
-  idRefAuth      String   @unique
-  subscriptionId String?
-  credit         Credit[]
-  hasChangedPlan Boolean  @default(false)
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String           @unique
+  idRefAuth       String           @unique
+  walletAddress   String?
+  subscriptionId  String?
+  hasChangedPlan  Boolean          @default(false)
+  accountType     AccountTypeEnum
+  userProfile     UserProfile?
+  job             Job[]
+  jobApplication  JobApplication[]
+  companyProfile  CompanyProfile?
+  chatBots        ChatBot[]
+  invitations     Invitation[]
+  trainingData    TrainingData[]
+  chatBotsHistory ChatBotHistory[]
+  credit          Credit[]
+}
+
+model CompanyProfile {
+  id                         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name                       String
+  about                      String
+  companyPhoto               File?    @relation(name: "companyPhoto", fields: [companyPhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  companyPhotoId             String?  @db.ObjectId
+  backgroundPhoto            File?    @relation(name: "backgroundPhoto", fields: [backgroundPhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  backgroundPhotoId          String?  @db.ObjectId
+  areaOfExpertise            String
+  whatIsTheCompanyLookingFor String[]
+  user                       User     @relation(fields: [userId], references: [id])
+  userId                     String   @unique @db.ObjectId
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+}
+
+model UserProfile {
+  id                     String                   @id @default(auto()) @map("_id") @db.ObjectId
+  name                   String
+  email                  String                   @unique
+  dateOfBirth            DateTime
+  contactNumber          String
+  country                String
+  state                  String
+  about                  String
+  education              Education[]
+  professionalExperience ProfessionalExperience[]
+  areasOfExpertise       String[]
+  skillsAndCompetencies  String[]
+  user                   User                     @relation(fields: [userId], references: [id])
+  userId                 String                   @unique @db.ObjectId
+  profilePhoto           File?                    @relation(name: "profilePhoto", fields: [profilePhotoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  profilePhotoId         String?                  @db.ObjectId
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+}
+
+model Education {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  institution   String
+  course        String
+  degree        String
+  description   String?
+  stillStudying Boolean
+  startDate     DateTime
+  endDate       DateTime?
+  userProfile   UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId String?      @db.ObjectId
+}
+
+model TrainingData {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  fileId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+  title  String
+}
+
+model ProfessionalExperience {
+  id                   String       @id @default(auto()) @map("_id") @db.ObjectId
+  company              String
+  jobTitle             String
+  currentlyWorkingHere Boolean
+  startDate            DateTime
+  endDate              DateTime?
+  description          String?
+  userProfile          UserProfile? @relation(fields: [userProfileId], references: [id])
+  userProfileId        String?      @db.ObjectId
+}
+
+model File {
+  id                       String           @id @default(auto()) @map("_id") @db.ObjectId
+  url                      String
+  key                      String           @unique
+  userProfile              UserProfile[]    @relation(name: "profilePhoto")
+  companyProfile           CompanyProfile[] @relation(name: "companyPhoto")
+  companyProfileBackground CompanyProfile[] @relation(name: "backgroundPhoto")
+  chatBot                  ChatBot[]
+  createdAt                DateTime         @default(now())
+  updatedAt                DateTime         @updatedAt
+}
+
+model Job {
+  id                       String                       @id @default(auto()) @map("_id") @db.ObjectId
+  title                    String
+  description              String
+  employmentClassification EmploymentClassificationEnum
+  allocation               AllocationEnum
+  aiInterviewQuestions     String[]
+  views                    Int                          @default(0)
+  company                  User                         @relation(fields: [companyId], references: [id])
+  companyId                String                       @db.ObjectId
+  jobApplications          JobApplication[]
+  jobStatus                JobStatusEnum
+  createdAt                DateTime                     @default(now())
+  updatedAt                DateTime                     @updatedAt
+}
+
+model JobApplication {
+  id                String                   @id @default(auto()) @map("_id") @db.ObjectId
+  job               Job                      @relation(fields: [jobId], references: [id])
+  jobId             String                   @db.ObjectId
+  user              User                     @relation(fields: [userId], references: [id])
+  userId            String                   @db.ObjectId
+  applicationStatus JobApplicationStatusEnum
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+  jobInterviewChat  JobInterviewChat[]
+}
+
+model JobInterviewChat {
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  history          Json
+  jobApplication   JobApplication @relation(fields: [jobApplicationId], references: [id])
+  jobApplicationId String         @db.ObjectId
+  maxPrompts       Int
+}
+
+model ChatBot {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  fineTuningJobId String            @unique
+  title           String
+  description     String
+  user            User              @relation(fields: [userId], references: [id])
+  userId          String            @db.ObjectId
+  status          ChatBotStatusEnum @default(PROCESSING)
+  model           String?
+  views           Int               @default(0)
+  invitations     Invitation[]
+  thumbnail       File              @relation(fields: [thumbnailId], references: [id])
+  thumbnailId     String            @db.ObjectId
+  createdAt       DateTime          @default(now())
+  disabled        Boolean           @default(false)
+  chatBotsHistory ChatBotHistory[]
+}
+
+model ChatBotHistory {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  history   Json
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @db.ObjectId
+  chatBot   ChatBot @relation(fields: [chatBotId], references: [id])
+  chatBotId String  @db.ObjectId
+}
+
+model Invitation {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  chatBot   ChatBot @relation(fields: [chatBotId], references: [id])
+  chatBotId String  @db.ObjectId
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @db.ObjectId
 }
 
 model Credit {
@@ -48,6 +211,43 @@ model CreditTransaction {
   status    CreditTransactionStatusEnum @default(ONGOING)
   createdAt DateTime                    @default(now())
   updatedAt DateTime                    @updatedAt
+}
+
+enum ChatBotStatusEnum {
+  PROCESSING
+  SUCCESS
+  FAIL
+}
+
+enum AccountTypeEnum {
+  COMPANY
+  PHYSICAL_PERSON
+}
+
+enum AllocationEnum {
+  REMOTE
+  HYBRID
+  ON_SITE
+}
+
+enum EmploymentClassificationEnum {
+  FULL_TIME
+  CONTRACT
+  PART_TIME
+  TEMPORARY
+  INTERNSHIP
+  OTHER
+}
+
+enum JobStatusEnum {
+  PUBLISHED
+  UNPUBLISHED
+}
+
+enum JobApplicationStatusEnum {
+  SUBSCRIBED
+  INVITED
+  INTERVIEWED
 }
 
 enum StatusEnum {

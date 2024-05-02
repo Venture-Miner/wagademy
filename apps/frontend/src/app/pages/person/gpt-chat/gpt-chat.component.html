@@ -1,0 +1,76 @@
+<div class="container mx-auto px-5 pb-6">
+  <wagademy-back-button></wagademy-back-button>
+  <div
+    class="w-full bg-base-100 sm:rounded-tr-lg sm:rounded-tl-lg px-5 text-neutral"
+  >
+    <p class="py-4 text-sm md:text-base mr-2 font-bold font-mono">
+      {{ selectedChat }}
+    </p>
+  </div>
+  <div class="flex flex-col relative h-[60vh]">
+    <div class="overflow-y-scroll mb-16 p-6 grid gap-12" #chatScroll>
+      @for (message of chatTypeObject[getChatType].history; track $index) { @if
+      (message.role==='assistant') {
+      <p
+        class="p-4 bg-secondary text-base-100 rounded-2xl rounded-bl-none sm:w-1/2 w-3/4 bg-dark-02 font-mono"
+      >
+        {{ message.content }}
+      </p>
+      } @if(message.role==='user'){
+      <div class="flex justify-end">
+        <p
+          class="p-4 rounded-2xl rounded-br-none bg-neutral sm:w-1/2 w-3/4 text-base-100 float-right font-mono"
+        >
+          {{ message.content }}
+        </p>
+      </div>
+      } }
+    </div>
+  </div>
+  <div
+    class="relative h-32 border-base-300 border rounded-lg bg-neutral cursor-text overflow-hidden"
+    (click)="focusInput()"
+  >
+    <div class="h-[55%]">
+      <textarea
+        class="pt-4 w-[95%] resize-none h-full pl-3 placeholder:text-base-200 text-base-100 l font-mono outline-none text-pretty bg-neutral break-words"
+        #input
+        placeholder="Type your message"
+        (ngModelChange)="updateCount($event)"
+        [(ngModel)]="userMessage"
+        [maxlength]="maxCharacters"
+        (keydown.enter)="
+          userMessage.length && !isCreatingChatCompletion && chatCompletion()
+        "
+      ></textarea>
+    </div>
+    <div class="h-[45%]">
+      <div
+        class="flex absolute inset-y-0 right-0 items-center pr-4 pt-16 bottom-0"
+      >
+        <span class="text-neutral-500 pr-2 pt-8"
+          >{{ count }}/{{ maxCharacters }}</span
+        >
+        <button
+          class="btn btn-primary cursor-pointer"
+          type="submit"
+          [disabled]="
+            isCreatingChatCompletion || isStartingTheChat || !userMessage.length
+          "
+          (click)="chatCompletion()"
+        >
+          @if( isStartingTheChat || isCreatingChatCompletion ){
+          <span class="loading loading-dots"></span>
+          }@else{ Send }
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<wagademy-modal
+  title="You do not currently have access to the GPT model"
+  actionButtonLabel="Explore"
+  message="You need to be invited by the company that created the GPT model or purchase credits to access it. Explore our options to get started!"
+  (actionButtonClick)="exploreOption()"
+>
+</wagademy-modal>

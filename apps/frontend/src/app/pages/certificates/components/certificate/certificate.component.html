@@ -1,0 +1,40 @@
+<div
+  class="absolute top-20 inset-0 backdrop-blur-sm bg-neutral-50 w-full max-w-[840px] h-[600px] left-1/2 transform translate-x-[-50%]"
+>
+  <div
+    class="flex flex-col items-center bg-base-100 text-neutral-50 font-serif py-10 relative"
+  >
+    <img
+      class="absolute right-3/4 w-1/5 top-28 md:top-20"
+      ngSrc="./assets/icons/icon-seal.svg"
+      width="120"
+      height="162"
+      alt="signature"
+    />
+    <p class="text-sm font-bold mb-4">COURSE</p>
+    <p class="text-5xl font-bold">Certificate</p>
+  </div>
+  <div class="sm:px-20 px-10">
+    <div class="flex flex-col items-center mt-20 text-base-100 mb-10">
+      <p class="text-4xl font-bold mb-4">{{ name }}</p>
+      <p class="text-base-200">
+        has successfully completed
+        <span class="text-neutral-950 font-bold">{{ courseName }}</span>
+      </p>
+    </div>
+    <div class="flex justify-between sm:flex-row flex-col items-center">
+      <img
+        ngSrc="./assets/img/images/img-certificate-signature.svg"
+        alt="signature"
+        width="196"
+        height="69"
+      />
+      <img
+        ngSrc="./assets/icons/icon-wagademy.svg"
+        width="130"
+        height="130"
+        alt="signature"
+      />
+    </div>
+  </div>
+</div>

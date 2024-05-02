@@ -1,0 +1,78 @@
+<label class="form-control w-full">
+  <div class="label flex justify-between">
+    <span class="label-text text-base-100"
+      >{{ label }}
+      @if(isInputMandatory){
+      <span class="text-error ml-1">*</span>
+      }
+    </span>
+  </div>
+  <div>
+    <ng-content></ng-content>
+    <div class="text-error mt-2">
+      @if(hasError()){
+      <ng-container [ngSwitch]="errorKey">
+        <span *ngSwitchCase="'min'">Minimum {{ getError(errorKey!).min }}</span>
+        <span *ngSwitchCase="'email'">Invalid email</span>
+        <span *ngSwitchCase="'max'">Maximum {{ getError(errorKey!).max }}</span>
+        <span *ngSwitchCase="'required'">This field is required</span>
+        <span *ngSwitchCase="'minlength'"
+          >At least
+          {{ getError(errorKey!).requiredLength }}
+          characters</span
+        >
+        <span *ngSwitchCase="'maxlength'"
+          >No more than
+          {{ errorKey && getError(errorKey).requiredLength }}
+          characters</span
+        >
+        <span *ngSwitchCase="'startDateGreaterThanEndDate'"
+          >Start date cannot be greater than end date</span
+        >
+        <span *ngSwitchCase="'datesAreEqual'"
+          >Start and end dates cannot be equal</span
+        >
+        <ng-container *ngSwitchCase="'customvalidator'">
+          <ul
+            *ngIf="
+              isErrorOfTypePasswordComplexity(getError(errorKey!));
+              else default
+            "
+          >
+            @for(error of getError(errorKey!); track $index){
+            <li class="flex gap-2 items-center">
+              <div
+                class="rounded-full w-2 h-2"
+                [ngClass]="{
+                  'bg-error': !error.isValid,
+                  'bg-success': error.isValid
+                }"
+              ></div>
+              <span
+                [ngClass]="{
+                  'text-error': !error.isValid,
+                  'text-success': error.isValid
+                }"
+                >{{ error.message }}</span
+              >
+            </li>
+            }
+          </ul>
+          <ng-template #default>
+            <span>
+              {{ getError(errorKey!) }}
+            </span></ng-template
+          >
+        </ng-container>
+        <span *ngSwitchCase="'pattern'">
+          @if(patternError){
+          <span>{{ patternError }}</span>
+          } @else{
+          <span>Pattern does not match</span>
+          }
+        </span>
+      </ng-container>
+      }
+    </div>
+  </div>
+</label>

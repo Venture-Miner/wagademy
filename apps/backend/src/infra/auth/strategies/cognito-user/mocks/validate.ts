@@ -1,4 +1,8 @@
-import { CognitoUserAttributes, FindOneUserResponse } from '@wagademy/types';
+import {
+  AccountTypeEnum,
+  CognitoUserAttributes,
+  FindOneUserResponse,
+} from '@wagademy/types';
 import { faker } from '@faker-js/faker';
 
 export const payload: CognitoUserAttributes = {
@@ -13,6 +17,9 @@ export const dbUser: FindOneUserResponse = {
   email: faker.internet.email(),
   idRefAuth: faker.string.uuid(),
   subscriptionId: faker.string.uuid(),
-  planId: faker.database.mongodbObjectId(),
   hasChangedPlan: false,
+  accountType: AccountTypeEnum.COMPANY,
+  walletAddress: null,
+  companyProfile: null,
+  userProfile: null,
 };

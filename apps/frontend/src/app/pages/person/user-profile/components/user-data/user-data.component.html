@@ -1,0 +1,124 @@
+<div class="flex flex-col md:flex-row min-h-screen pt-8">
+  <div class="pl-8 lg:pl-20">
+    <wagademy-photo-upload
+      [profilePhoto]="profilePhoto"
+      (onImageUploaded)="onImageUploaded($event)"
+      [size]="'big'"
+    ></wagademy-photo-upload>
+  </div>
+  <div class="md:w-1/2 px-8">
+    <form [formGroup]="userData">
+      <div class="mb-4">
+        <wagademy-form-field
+          [control]="userData.controls['name']"
+          label="Name"
+          [isInputMandatory]="true"
+        >
+          <wagademy-input
+            placeholder="Name example"
+            type="text"
+            formControlName="name"
+          >
+          </wagademy-input>
+        </wagademy-form-field>
+      </div>
+      <div class="mb-4">
+        <wagademy-form-field
+          [control]="userData.controls['email']"
+          label="Email"
+          [isInputMandatory]="true"
+        >
+          <wagademy-input
+            placeholder="email@email.com"
+            type="text"
+            formControlName="email"
+          >
+          </wagademy-input>
+        </wagademy-form-field>
+      </div>
+      <div class="flex flex-col md:flex-row md:gap-10">
+        <div class="md:w-1/2 mb-4">
+          <wagademy-form-field
+            [control]="userData.controls['dateOfBirth']"
+            label="Date of birth"
+            [isInputMandatory]="true"
+          >
+            <wagademy-input type="date" formControlName="dateOfBirth">
+            </wagademy-input>
+          </wagademy-form-field>
+        </div>
+        <div class="md:w-1/2 mb-4">
+          <wagademy-form-field
+            [control]="userData.controls['contactNumber']"
+            label="Contact number"
+            [isInputMandatory]="true"
+          >
+            <wagademy-input
+              placeholder="+55 11 91234-5678"
+              type="text"
+              formControlName="contactNumber"
+              pattern="^[0-9\+\*\# ]*$"
+            >
+            </wagademy-input>
+          </wagademy-form-field>
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row md:gap-10">
+        <div class="md:w-1/2 mb-4">
+          <wagademy-form-field
+            [control]="userData.controls['country']"
+            label="Country"
+            class="w-full"
+            [isInputMandatory]="true"
+          >
+            <wagademy-select
+              (selectionChange)="onCountrySelect($event)"
+              [items]="countries"
+              [formControl]="userData.controls['country']"
+            ></wagademy-select>
+          </wagademy-form-field>
+        </div>
+        <div class="md:w-1/2 mb-4">
+          <wagademy-form-field
+            label="State"
+            [control]="userData.controls['state']"
+            class="w-full"
+            [isInputMandatory]="true"
+          >
+            <wagademy-select
+              [items]="states"
+              [formControl]="userData.controls['state']"
+            ></wagademy-select>
+          </wagademy-form-field>
+        </div>
+      </div>
+      <div>
+        <wagademy-form-field
+          label="About"
+          [control]="userData.controls.about"
+          [isInputMandatory]="true"
+        >
+          <wagademy-text-area formControlName="about"></wagademy-text-area>
+        </wagademy-form-field>
+      </div>
+    </form>
+    <div class="flex justify-end mt-14">
+      <button
+        class="btn btn-primary text-base-100 text-xl w-48"
+        (click)="nextStep.emit()"
+        [disabled]="userData.invalid"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+  <div class="w-1/2 justify-center max-h-[375px] hidden md:flex">
+    <ul class="steps steps-vertical">
+      <li class="step step-primary text-neutral-950">Profile</li>
+      <li class="step">Education</li>
+      <li class="step">Area of expertise</li>
+      <li class="step">Professional experience</li>
+      <li class="step">Skills and competences</li>
+    </ul>
+  </div>
+</div>
