@@ -96,7 +96,7 @@ export class ProfileComponent implements OnInit {
         this.setInitialValues(profile);
       },
       error: (error) => {
-        if(error.status === 404) {
+        if (error.status === 404) {
           this.router.navigate(['/pages/create-company-profile']);
           return;
         }
