@@ -74,7 +74,11 @@
         </p>
         <p class="text-base-100 text-sm pb-4">
           {{ education.startDate | date : 'dd/MM/yyyy' }} -
-          {{ education.endDate | date : 'dd/MM/yyyy' }}
+          {{
+            education.stillStudying
+              ? "I'm still studying"
+              : (education.endDate | date : 'dd/MM/yyyy')
+          }}
         </p>
         <p class="text-base-100 pb-12">{{ education.description }}</p>
         }
@@ -90,17 +94,14 @@
           <p class="text-base-100">
             {{ professionalExperience.company }}
           </p>
-          @if(professionalExperience.currentlyWorkingHere){
           <p class="text-base-100 text-sm pb-4">
             {{ professionalExperience.startDate | date : 'dd/MM/yyyy' }} -
-            {{ professionalExperience.currentlyWorkingHere }}
+            {{
+              professionalExperience.currentlyWorkingHere
+                ? 'I currently work here'
+                : (professionalExperience.endDate | date : 'dd/MM/yyyy')
+            }}
           </p>
-          }@else {
-          <p class="text-base-100 text-sm pb-4">
-            {{ professionalExperience.startDate | date : 'dd/MM/yyyy' }} -
-            {{ professionalExperience.endDate | date : 'dd/MM/yyyy' }}
-          </p>
-          }
           <p class="text-base-100 pb-12">
             {{ professionalExperience.description }}
           </p>

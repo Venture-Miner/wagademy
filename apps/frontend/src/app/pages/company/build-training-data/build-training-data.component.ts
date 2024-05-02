@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectComponent } from '../../../shared/components/select/select.component';
+import {
+  SelectComponent,
+  SelectItem,
+} from '../../../shared/components/select/select.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { FormFieldComponent } from '../../../shared/components/form-field/form-field.component';
 import {
@@ -53,6 +56,27 @@ export class BuildTrainingDataComponent implements OnInit {
     }>
   >;
   id = '';
+  item = [
+    {
+      value: '',
+      label: 'All',
+    },
+    {
+      value: 'system',
+      label: 'System',
+    },
+    {
+      value: 'user',
+      label: 'User',
+    },
+    {
+      value: 'assistant',
+      label: 'Assistant',
+    },
+  ];
+  itemOmittingAllOption = this.item.filter(function (item) {
+    return item.label !== 'All';
+  });
   title = new FormControl<string>('', Validators.required);
 
   constructor(

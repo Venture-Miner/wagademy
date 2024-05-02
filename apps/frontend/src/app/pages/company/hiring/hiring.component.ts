@@ -233,7 +233,7 @@ export class HiringComponent implements OnInit {
   }
 
   deleteJob() {
-    //
+    //TODO
   }
 
   openRemoveJobModal() {
