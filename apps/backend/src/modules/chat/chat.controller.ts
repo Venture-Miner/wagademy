@@ -27,12 +27,12 @@ import {
 } from './dto';
 import { MongoIdDto } from '../../shared/dtos';
 import {
-  ChatCompletionMessageEntity,
   FindOneChatHistoryEntity,
   StartJobInterviewEntity,
 } from './entities';
 import { AccountType } from '../../shared/decorators/account-type.decorator';
 import { AccountTypeGuard } from '../../infra/auth/guards/account-type.guard';
+import { ChatCompletionMessageEntity } from '../../shared/entities';
 
 @ApiTags('Chat')
 @Controller('chat')

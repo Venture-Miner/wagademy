@@ -10,7 +10,6 @@ import {
   Post,
   Query,
   Res,
-  UnauthorizedException,
   UploadedFiles,
   UseGuards,
 } from '@nestjs/common';
@@ -23,7 +22,7 @@ import {
   PickType,
 } from '@nestjs/swagger';
 import { MongoIdDto, PaginationDto } from '../../shared/dtos';
-import { User } from '@wagademy/types';
+import { AccountTypeEnum, User } from '@wagademy/types';
 import { ApiFiles, DBUser } from '../../shared/decorators';
 import { ChatBotService } from './chat-bot.service';
 import { validateTrainingData } from './utils/validate-training-data';
@@ -47,6 +46,8 @@ import {
 } from './dto';
 import { CognitoUserGuard } from '../../infra';
 import { ChatCompletionMessageEntity } from '../../shared/entities';
+import { AccountTypeGuard } from '../../infra/auth/guards/account-type.guard';
+import { AccountType } from '../../shared/decorators/account-type.decorator';
 
 @ApiTags('Chat Bot')
 @Controller('chat-bot')
@@ -55,7 +56,8 @@ export class ChatBotController {
 
   @Get('company')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary:
       'Retrieve a list of chatbots belonging to the company with optional filters.',
@@ -70,12 +72,8 @@ export class ChatBotController {
   findManyCompanyChatBots(
     @Query() filterCompanyChatbotsDto: FilterCompanyChatBotsDto,
     @Query() paginationDto: PaginationDto,
-    @DBUser() { id: userId, accountType }: User
+    @DBUser() { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to list the chatbots.'
-      );
     return this.chatBotService.findManyCompanyChatBots(
       filterCompanyChatbotsDto,
       paginationDto,
@@ -85,7 +83,8 @@ export class ChatBotController {
 
   @Get('training-data/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Retrieve training data content by id.',
     description: 'Fetches training data content by id.',
@@ -97,12 +96,8 @@ export class ChatBotController {
   async getTrainingDataContent(
     @Res() res: Response,
     @Param() { id }: MongoIdDto,
-    @DBUser() { id: userId, accountType }: User
+    @DBUser() { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to get training data.'
-      );
     const fileStream = await this.chatBotService.getTrainingDataContent(
       id,
       userId
@@ -158,7 +153,8 @@ export class ChatBotController {
 
   @Post('training-data')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Upload training data for a chatbot.',
     description: 'Uploads training data for a chatbot.',
@@ -171,7 +167,7 @@ export class ChatBotController {
   @ApiFiles(['trainingData'])
   async uploadTrainingData(
     @DBUser()
-    { id: userId, accountType }: User,
+    { id: userId }: User,
     @UploadedFiles()
     { trainingData }: { trainingData: Express.Multer.File[] },
     @Body() uploadTrainingDataDto: UploadTrainingDataDto
@@ -182,10 +178,6 @@ export class ChatBotController {
     } catch (error) {
       throw new BadRequestException(error.message);
     }
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to upload training data.'
-      );
     return this.chatBotService.uploadTrainingData(
       trainingDataFile,
       uploadTrainingDataDto,
@@ -195,7 +187,8 @@ export class ChatBotController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Create a new fine tuning job.',
     description: 'Creates a new fine tuning job for the chatbot.',
@@ -210,12 +203,8 @@ export class ChatBotController {
     @Body() createFineTuningJobDto: CreateFineTuningJobDto,
     @UploadedFiles()
     { thumbnail }: { thumbnail: Express.Multer.File[] },
-    @DBUser() { id: companyId, accountType }: User
+    @DBUser() { id: companyId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to create fine tuning jobs.'
-      );
     return this.chatBotService.createFineTuningJob(
       { ...createFineTuningJobDto, thumbnail: thumbnail[0] },
       companyId
@@ -224,7 +213,8 @@ export class ChatBotController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Delete a chatbot.',
     description:
@@ -234,20 +224,14 @@ export class ChatBotController {
     status: HttpStatus.NO_CONTENT,
     description: 'Chatbot successfully deleted.',
   })
-  deleteChatBot(
-    @Param() { id }: MongoIdDto,
-    @DBUser() { id: userId, accountType }: User
-  ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to delete a chatbot.'
-      );
+  deleteChatBot(@Param() { id }: MongoIdDto, @DBUser() { id: userId }: User) {
     return this.chatBotService.delete(id, userId);
   }
 
   @Get('training-data')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Retrieve a list of training data.',
     description: 'Fetches a list of training data.',
@@ -259,18 +243,15 @@ export class ChatBotController {
   })
   findManyTrainingData(
     @Query() paginationDto: PaginationDto,
-    @DBUser() { id: userId, accountType }: User
+    @DBUser() { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to access the training data.'
-      );
     return this.chatBotService.findManyTrainingData(paginationDto, userId);
   }
 
   @Post('init-chat-bot/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Init chat.',
     description: 'Init chat.',
@@ -282,18 +263,15 @@ export class ChatBotController {
   })
   initChat(
     @Param() { id: chatBotId }: MongoIdDto,
-    @DBUser() { id: userId, accountType }: User
+    @DBUser() { id: userId }: User
   ) {
-    if (accountType !== 'PHYSICAL_PERSON')
-      throw new UnauthorizedException(
-        'Only physical person accounts are allowed to initiate a chat.'
-      );
     return this.chatBotService.initChatBot(userId, chatBotId);
   }
 
   @Post('invite')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Invite user to use chatbot.',
     description: 'Invite user to use chatbot.',
@@ -305,18 +283,15 @@ export class ChatBotController {
   })
   inviteUser(
     @Body() inviteToChatBotDto: InviteToChatBotDto,
-    @DBUser() { id: companyId, accountType }: User
+    @DBUser() { id: companyId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to send invites.'
-      );
     return this.chatBotService.inviteUser(inviteToChatBotDto, companyId);
   }
 
   @Delete('training-data/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Delete training data.',
     description: 'Deletes training data.',
@@ -327,18 +302,15 @@ export class ChatBotController {
   })
   deleteTrainingData(
     @Param() { id }: MongoIdDto,
-    @DBUser() { id: userId, accountType }: User
+    @DBUser() { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to remove the training data.'
-      );
     return this.chatBotService.deleteTrainingData(id, userId);
   }
 
   @Delete('invite/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Remove invitation.',
     description: 'Remove invitation.',
@@ -349,18 +321,15 @@ export class ChatBotController {
   })
   removeInvitation(
     @Param() { id: invitationId }: MongoIdDto,
-    @DBUser() { id: userId, accountType }: User
+    @DBUser() { id: userId }: User
   ) {
-    if (accountType !== 'COMPANY')
-      throw new UnauthorizedException(
-        'Only company accounts are allowed to remove the invitation.'
-      );
     return this.chatBotService.removeInvitation(invitationId, userId);
   }
 
   @Patch('chat-completion/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Create chat completion.',
     description: 'Create chat completion.',
@@ -373,12 +342,8 @@ export class ChatBotController {
   createChatCompletion(
     @Param() { id }: MongoIdDto,
     @Body() createChatCompletionDto: CreateChatBotCompletionDto,
-    @DBUser() { id: userId, accountType }: User
+    @DBUser() { id: userId }: User
   ) {
-    if (accountType !== 'PHYSICAL_PERSON')
-      throw new UnauthorizedException(
-        'Only physical person accounts are allowed to use the chatbot.'
-      );
     return this.chatBotService.createChatCompletion(
       id,
       createChatCompletionDto,
@@ -388,7 +353,8 @@ export class ChatBotController {
 
   @Get('history/:id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Retrieve chatbot history.',
     description: 'Retrieve chatbot history.',
@@ -398,14 +364,7 @@ export class ChatBotController {
     description: 'Chatbot history successfully retrieved.',
     type: GetChatBotHistoryResponseEntity,
   })
-  getChatHistory(
-    @Param() { id }: MongoIdDto,
-    @DBUser() { id: userId, accountType }: User
-  ) {
-    if (accountType !== 'PHYSICAL_PERSON')
-      throw new UnauthorizedException(
-        'Only physical person accounts are allowed to access the chatbot history.'
-      );
+  getChatHistory(@Param() { id }: MongoIdDto, @DBUser() { id: userId }: User) {
     return this.chatBotService.getChatHistory(id, userId);
   }
 }
