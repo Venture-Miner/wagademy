@@ -1,7 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
-import { ChatBotStatusEnum } from '@prisma/client';
-import { CreateFineTuningJobResponse, File } from '@wagademy/types';
+import {
+  ChatBotStatusEnum,
+  CreateFineTuningJobResponse,
+  File,
+} from '@wagademy/types';
 import { FileEntity } from '../../../shared/entities/file.entity';
 
 export class CreateFineTuningJobResponseEntity

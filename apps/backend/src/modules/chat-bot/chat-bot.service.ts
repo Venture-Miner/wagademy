@@ -23,8 +23,10 @@ import {
   Pagination,
   UploadTrainingData,
   UploadTrainingDataResponse,
+  ChatBotStatusEnum,
+  TrainingData,
 } from '@wagademy/types';
-import { ChatBotStatusEnum, Prisma, TrainingData } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import OpenAI from 'openai';
 import { toFile } from 'openai/uploads';
 import { FileService } from '../../infra';

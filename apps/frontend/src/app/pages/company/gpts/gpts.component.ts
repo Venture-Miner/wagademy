@@ -15,8 +15,12 @@ import {
   ChatBotService,
   CreateFineTuningJob,
 } from '../../../services/chat-bot/chat-bot.service';
-import { ChatBot, FilterCompanyChatbots, TrainingData } from '@wagademy/types';
-import { ChatBotStatusEnum } from '@prisma/client';
+import {
+  ChatBot,
+  ChatBotStatusEnum,
+  FilterCompanyChatbots,
+  TrainingData,
+} from '@wagademy/types';
 
 interface Filter {
   name: string;

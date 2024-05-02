@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ChatBotStatusEnum } from '@prisma/client';
-import { FilterCompanyChatbots } from '@wagademy/types';
+import { ChatBotStatusEnum, FilterCompanyChatbots } from '@wagademy/types';
 import { IsEnum, IsOptional } from 'class-validator';
 
 export class FilterCompanyChatBotsDto implements FilterCompanyChatbots {

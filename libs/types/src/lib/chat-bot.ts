@@ -1,7 +1,15 @@
-import { ChatBotStatusEnum } from '@prisma/client';
 import OpenAI from 'openai';
 import { File } from './shared';
 import { OpenAIChatModel } from './chat';
+
+export const ChatBotStatusEnum = {
+  PROCESSING: 'PROCESSING',
+  SUCCESS: 'SUCCESS',
+  FAIL: 'FAIL',
+} as const;
+
+export type ChatBotStatusEnum =
+  (typeof ChatBotStatusEnum)[keyof typeof ChatBotStatusEnum];
 
 export type FilterChatbots = {
   invited?: boolean;

@@ -7,7 +7,6 @@ import {
   Patch,
   Post,
   Query,
-  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { ChatService } from './chat.service';
@@ -18,7 +17,7 @@ import {
   ApiTags,
   ApiResponse,
 } from '@nestjs/swagger';
-import { User } from '@wagademy/types';
+import { AccountTypeEnum, User } from '@wagademy/types';
 import { DBUser } from '../../shared/decorators';
 import { CognitoUserGuard } from '../../infra';
 import {
@@ -27,8 +26,13 @@ import {
   GetChatHistoryDto,
 } from './dto';
 import { MongoIdDto } from '../../shared/dtos';
-import { FindOneChatHistoryEntity, StartJobInterviewEntity } from './entities';
-import { ChatCompletionMessageEntity } from '../../shared/entities';
+import {
+  ChatCompletionMessageEntity,
+  FindOneChatHistoryEntity,
+  StartJobInterviewEntity,
+} from './entities';
+import { AccountType } from '../../shared/decorators/account-type.decorator';
+import { AccountTypeGuard } from '../../infra/auth/guards/account-type.guard';
 
 @ApiTags('Chat')
 @Controller('chat')
@@ -37,7 +41,8 @@ export class ChatController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Start a interview chat',
     description:
@@ -51,18 +56,15 @@ export class ChatController {
   startJobInterview(
     @Body() createInterviewChatDto: CreateInterviewChatDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'PHYSICAL_PERSON')
-      throw new UnauthorizedException(
-        'Only accounts where the type is physical person can create a chat interview.'
-      );
     return this.chatService.startJobInterview(createInterviewChatDto, userId);
   }
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Creates a chat completion',
     description: 'Creates a chat completion with provided details.',
@@ -76,18 +78,15 @@ export class ChatController {
     @Param() { id }: MongoIdDto,
     @Body() { message }: CreateChatCompletionDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'PHYSICAL_PERSON')
-      throw new UnauthorizedException(
-        'Only accounts where the type is physical person can create chat in the interview.'
-      );
     return this.chatService.interviewCreateChatCompletion(id, userId, message);
   }
 
   @Get('history')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Get a chat history',
     description: 'Get a chat history with provided details.',
@@ -100,12 +99,8 @@ export class ChatController {
   getChatsHistory(
     @Query() { jobApplicationId }: GetChatHistoryDto,
     @DBUser()
-    { id: userId, accountType }: User
+    { id: userId }: User
   ) {
-    if (accountType !== 'PHYSICAL_PERSON')
-      throw new UnauthorizedException(
-        'Only accounts where the type is physical person can get the chat history.'
-      );
     return this.chatService.getChatHistory(jobApplicationId, userId);
   }
 }

@@ -145,10 +145,10 @@ export class GptChatComponent implements OnInit, AfterViewChecked {
         },
         error: ({ error }: { error: HttpError }) => {
           const messageError =
-            error.statusCode === 401
+            error.statusCode === 403
               ? error.message
               : this.RETRIEVE_CHAT_HISTORY_MESSAGE;
-          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
+          this.handleErrorAndRedirectIfForbidden(error, messageError);
           this.isStartingTheChat = false;
         },
       });
@@ -171,10 +171,10 @@ export class GptChatComponent implements OnInit, AfterViewChecked {
         } else {
           this.isStartingTheChat = false;
           const messageError =
-            error.statusCode === 401
+            error.statusCode === 403
               ? error.message
               : this.RETRIEVE_CHAT_HISTORY_MESSAGE;
-          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
+          this.handleErrorAndRedirectIfForbidden(error, messageError);
           this.toastService.showToast({
             message: messageError,
             type: 'error',
@@ -198,14 +198,14 @@ export class GptChatComponent implements OnInit, AfterViewChecked {
         if (error.message === this.NOT_INVITED_AND_NO_CREDITS) {
           window.modal['showModal']();
         } else {
-          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
+          this.handleErrorAndRedirectIfForbidden(error, messageError);
           this.isStartingTheChat = false;
         }
       },
     });
   }
 
-  companyAccessingUnauthorizedRoute(message: string) {
+  companyAccessingForbiddenRoute(message: string) {
     if (message === this.NOT_AUTHORIZED_MESSAGE)
       this.router.navigate([this.HOME_COMPANY_URL]);
   }
@@ -221,27 +221,27 @@ export class GptChatComponent implements OnInit, AfterViewChecked {
           this.isStartingTheChat = false;
         },
         error: ({ error }: { error: HttpError }) => {
-          const codes = [401, 404];
+          const codes = [403, 404];
           const messageError = codes.includes(error.statusCode)
             ? error.message
             : this.RETRIEVE_CHAT_HISTORY_MESSAGE;
-          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
+          this.handleErrorAndRedirectIfForbidden(error, messageError);
           this.isStartingTheChat = false;
         },
       });
   }
 
-  private handleErrorAndRedirectIfUnauthorized(
+  private handleErrorAndRedirectIfForbidden(
     error: HttpError,
     messageError: string
   ) {
-    const toastType = error.statusCode === 401 ? 'warning' : 'error';
+    const toastType = error.statusCode === 403 ? 'warning' : 'error';
     this.toastService.showToast({
       message: messageError,
       type: toastType,
     });
     if (toastType === 'warning')
-      this.companyAccessingUnauthorizedRoute(error.message);
+      this.companyAccessingForbiddenRoute(error.message);
     else if (this.chatType === 'jobInterViewChat')
       this.router.navigate([this.APPLICATIONS_URL]);
     else this.router.navigate([this.CHATBOT_PAGE]);
@@ -276,7 +276,7 @@ export class GptChatComponent implements OnInit, AfterViewChecked {
           const messageError = codes.includes(error.statusCode)
             ? error.message
             : this.CHAT_COMPLETION_MESSAGE;
-          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
+          this.handleErrorAndRedirectIfForbidden(error, messageError);
           this.isCreatingChatCompletion = false;
         },
       });
@@ -296,11 +296,11 @@ export class GptChatComponent implements OnInit, AfterViewChecked {
           this.isCreatingChatCompletion = false;
         },
         error: ({ error }: { error: HttpError }) => {
-          const codes = [400, 401, 404];
+          const codes = [400, 403, 404];
           const messageError = codes.includes(error.statusCode)
             ? error.message
             : this.CHAT_COMPLETION_MESSAGE;
-          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
+          this.handleErrorAndRedirectIfForbidden(error, messageError);
           this.isCreatingChatCompletion = false;
         },
       });
