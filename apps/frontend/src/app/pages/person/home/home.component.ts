@@ -4,11 +4,13 @@ import { CardComponent } from '../../../shared/components/card/card.component';
 import {
   FindManyJobsUserView,
   JobUserView,
-  /*FindManyChatBotsResponse*/
+  FindManyChatBotsResponse,
+  ChatBot,
 } from '@wagademy/types';
 import { JobService } from '../../../services/job/job.service';
 import { forkJoin } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import { ChatBotService } from '../../../services/chat-bot/chat-bot.service';
 
 @Component({
   selector: 'wagademy-home',
@@ -19,12 +21,7 @@ import { RouterModule } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   jobs: JobUserView[] = [];
-  chatbots: {
-    id: string;
-    images: string;
-    name: string;
-    description: string;
-  }[] /*FindManyChatBotsResponse*/ = [];
+  chatbots: ChatBot[] = [];
   courses: {
     images: string;
     name: string;
@@ -32,10 +29,9 @@ export class HomeComponent implements OnInit {
   }[] = [];
   isLoading = false;
 
-  //TODO: remove comments when chatbot pr is approved
-
   constructor(
-    private readonly jobService: JobService /*, private readonly chatbotService: ChatbotService*/
+    private readonly jobService: JobService,
+    private readonly chatbotService: ChatBotService
   ) {}
 
   ngOnInit(): void {
@@ -48,21 +44,21 @@ export class HomeComponent implements OnInit {
       { mostRecent: true },
       { skip: 0, take: 4 }
     );
-    // const chatbots = this.chatbotService.findManyChatBots(
-    //   { mostRecent: true },
-    //   { skip: 0, take: 4 }
-    // );
+    const chatbots = this.chatbotService.findManyChatBots(
+      { mostRecent: true },
+      { skip: 0, take: 4 }
+    );
     const combinedRequests = {
       jobs,
-      // chatbots
+      chatbots,
     };
     forkJoin(combinedRequests).subscribe({
       next: (response: {
         jobs: FindManyJobsUserView;
-        // chatbots: FindManyChatBotsResponse
+        chatbots: FindManyChatBotsResponse;
       }) => {
         this.jobs = response.jobs.jobs;
-        // this.chatbots = response.chatbots.chatbots
+        this.chatbots = response.chatbots.chatBots;
         this.isLoading = false;
       },
     });

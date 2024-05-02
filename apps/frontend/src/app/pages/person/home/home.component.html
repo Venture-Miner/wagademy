@@ -50,8 +50,8 @@
   >
     @for(chatbot of chatbots; track $index){
     <wagademy-card
-      [img]="chatbot.images"
-      [name]="chatbot.name"
+      [img]="chatbot.thumbnail.url"
+      [name]="chatbot.title"
       [description]="chatbot.description"
       [button]="'Chat With Chatbot'"
       route="gptchat"
