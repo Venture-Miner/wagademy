@@ -43,13 +43,16 @@ export class GptChatComponent implements OnInit {
   userMessage = '';
   count = 0;
   maxCharacters = 1200;
-  private readonly RETRIEVE_CHAT_HISTORY_MESSAGE = 'Error while retrieving chat';
-  private readonly NOT_INVITED_MESSAGE = 'You are not authorized to access the chat because you were not invited';
-  private readonly NOT_AUTHORIZED_MESSAGE = 'Only accounts where the type is physical person can get the chat history';
-  private readonly CHAT_COMPLETION_MESSAGE = 'Error while generating chat completion';
+  private readonly RETRIEVE_CHAT_HISTORY_MESSAGE =
+    'Error while retrieving chat';
+  private readonly NOT_INVITED_MESSAGE =
+    'You are not authorized to access the chat because you were not invited';
+  private readonly NOT_AUTHORIZED_MESSAGE =
+    'Only accounts where the type is physical person can get the chat history';
+  private readonly CHAT_COMPLETION_MESSAGE =
+    'Error while generating chat completion';
   private readonly APPLICATIONS_URL = '/pages/job-applications-all';
   private readonly HOME_COMPANY_URL = '/pages/home-company';
-
 
   constructor(
     private readonly chatService: ChatService,
@@ -99,16 +102,16 @@ export class GptChatComponent implements OnInit {
         },
         error: ({ error }: { error: HttpError }) => {
           const messageError =
-            error.statusCode === 401
+            error.statusCode === 403
               ? error.message
               : this.RETRIEVE_CHAT_HISTORY_MESSAGE;
-          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
+          this.handleErrorAndRedirectIfForbidden(error, messageError);
           this.isStartingTheChat = false;
         },
       });
   }
 
-  companyAccessingUnauthorizedRoute(message: string) {
+  companyAccessingForbiddenRoute(message: string) {
     if (message === this.NOT_AUTHORIZED_MESSAGE)
       this.router.navigate([this.HOME_COMPANY_URL]);
   }
@@ -124,27 +127,27 @@ export class GptChatComponent implements OnInit {
           this.isStartingTheChat = false;
         },
         error: ({ error }: { error: HttpError }) => {
-          const codes = [401, 404];
+          const codes = [403, 404];
           const messageError = codes.includes(error.statusCode)
             ? error.message
             : this.RETRIEVE_CHAT_HISTORY_MESSAGE;
-          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
+          this.handleErrorAndRedirectIfForbidden(error, messageError);
           this.isStartingTheChat = false;
         },
       });
   }
 
-  private handleErrorAndRedirectIfUnauthorized(
+  private handleErrorAndRedirectIfForbidden(
     error: HttpError,
     messageError: string
   ) {
-    const toastType = error.statusCode === 401 ? 'warning' : 'error';
+    const toastType = error.statusCode === 403 ? 'warning' : 'error';
     this.toastService.showToast({
       message: messageError,
       type: toastType,
     });
     if (toastType === 'warning')
-      this.companyAccessingUnauthorizedRoute(error.message);
+      this.companyAccessingForbiddenRoute(error.message);
     else this.router.navigate([this.APPLICATIONS_URL]);
   }
 
@@ -164,11 +167,11 @@ export class GptChatComponent implements OnInit {
           this.isCreatingChatCompletion = false;
         },
         error: ({ error }: { error: HttpError }) => {
-          const codes = [400, 401, 404];
+          const codes = [400, 403, 404];
           const messageError = codes.includes(error.statusCode)
             ? error.message
             : this.CHAT_COMPLETION_MESSAGE;
-          this.handleErrorAndRedirectIfUnauthorized(error, messageError);
+          this.handleErrorAndRedirectIfForbidden(error, messageError);
           this.isCreatingChatCompletion = false;
         },
       });
