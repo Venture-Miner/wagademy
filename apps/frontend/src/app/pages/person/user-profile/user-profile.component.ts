@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import {
   FormArray,
@@ -70,7 +70,8 @@ export class UserProfileComponent {
   editMode = false;
   isCreating = false;
   step = 1;
-
+  private isMax = false;
+  private isMaxExpertises = false;
   userData = this.fb.group({
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
@@ -105,7 +106,8 @@ export class UserProfileComponent {
     private toastService: ToastService,
     private readonly userService: UserService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     this.educationForm = this.fb.group({
       items: this.fb.array([this.createEducationItem()]),
@@ -193,6 +195,10 @@ export class UserProfileComponent {
       if (newExpertise && newExpertise.trim() !== '') {
         this.expertises.push(newExpertise.trim());
         this.expertiseForm.reset();
+        if (this.expertises.length === 10) {
+          this.isMaxExpertises = true;
+          this.cdr.detectChanges();
+        }
       }
     }
   }
@@ -200,7 +206,15 @@ export class UserProfileComponent {
   removeExpertise(index: number): void {
     if (index >= 0 && index < this.expertises.length) {
       this.expertises.splice(index, 1);
+      if (this.expertises.length < 10) {
+        this.isMaxExpertises = false;
+        this.cdr.detectChanges();
+      }
     }
+  }
+
+  get isMaxValueOfExpertises() {
+    return this.isMaxExpertises;
   }
 
   addSkill(): void {
@@ -209,6 +223,10 @@ export class UserProfileComponent {
       if (newSkill && newSkill.trim() !== '') {
         this.skills.push(newSkill.trim());
         this.skillsForm.reset();
+        if (this.skills.length === 10) {
+          this.isMax = true;
+          this.cdr.detectChanges();
+        }
       }
     }
   }
@@ -216,7 +234,15 @@ export class UserProfileComponent {
   removeSkill(index: number): void {
     if (index >= 0 && index < this.skills.length) {
       this.skills.splice(index, 1);
+      if (this.skills.length < 10) {
+        this.isMax = false;
+        this.cdr.detectChanges();
+      }
     }
+  }
+
+  get isMaxValue() {
+    return this.isMax;
   }
 
   onImageUploaded(imageUrl: string) {
@@ -266,6 +292,17 @@ export class UserProfileComponent {
         });
       },
     });
+  }
+
+  onCheckboxChange(
+    event: Event,
+    index: number,
+    controlName: 'educationItems' | 'professionalExperienceItems',
+    fieldName: 'stillStudying' | 'currentlyWorkingHere'
+  ) {
+    this[controlName].controls[index]
+      .get(fieldName)
+      ?.setValue((event.target as HTMLInputElement).checked);
   }
 
   createUserData() {

@@ -80,7 +80,8 @@
           [control]="userData.controls['dateOfBirth']"
           [isInputMandatory]="true"
         >
-          <wagademy-input type="date" formControlName="dateOfBirth"> </wagademy-input>
+          <wagademy-input type="date" formControlName="dateOfBirth">
+          </wagademy-input>
         </wagademy-form-field>
       </div>
       <div class="md:w-1/2">
@@ -145,7 +146,7 @@
       </div>
       <div class="flex items-center gap-2">
         <img src="./assets/icons/icon-telephone.svg" alt="telephone icon" />
-        {{ userData.get('cellphone')?.value }}
+        {{ userData.get('contactNumber')?.value }}
       </div>
       <div class="flex items-center gap-2">
         <img src="./assets/icons/icon-pin-map.svg" alt="pin icon" />
@@ -227,7 +228,14 @@
         <div class="flex flex-col lg:flex-row lg:gap-10 lg:items-center">
           <div class="form-control lg:w-96 w-40">
             <label class="label cursor-pointer">
-              <input type="checkbox" class="checkbox checkbox-primary" />
+              <input
+                type="checkbox"
+                class="checkbox checkbox-primary"
+                [checked]="educationItem.get('stillStudying')?.value"
+                (change)="
+                  onCheckboxChange($event, i, 'educationItems', 'stillStudying')
+                "
+              />
               <span class="label-text text-neutral-950"
                 >I'm still studying</span
               >
@@ -371,7 +379,21 @@
         <div class="flex flex-col lg:flex-row lg:gap-10 lg:items-center">
           <div class="form-control w-44 lg:w-[500px]">
             <label class="label cursor-pointer">
-              <input type="checkbox" class="checkbox checkbox-primary" />
+              <input
+                type="checkbox"
+                class="checkbox checkbox-primary"
+                [checked]="
+                  professionalExperienceItem.get('currentlyWorkingHere')?.value
+                "
+                (change)="
+                  onCheckboxChange(
+                    $event,
+                    i,
+                    'professionalExperienceItems',
+                    'currentlyWorkingHere'
+                  )
+                "
+              />
               <span class="label-text text-neutral-950"
                 >I currently work here
               </span>
@@ -491,6 +513,7 @@
         type="text"
         formControlName="areasOfExpertise"
         (keydown.enter)="addExpertise()"
+        [disabledInput]="isMaxValueOfExpertises"
       >
       </wagademy-input>
     </wagademy-form-field>
@@ -551,6 +574,7 @@
         type="text"
         formControlName="skillsAndCompetencies"
         (keydown.enter)="addSkill()"
+        [disabledInput]="isMaxValue"
       >
       </wagademy-input>
     </wagademy-form-field>
