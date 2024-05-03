@@ -6,24 +6,7 @@
   <div class="flex gap-2 pb-8">
     <div class="w-32">
       <wagademy-select
-        [items]="[
-          {
-            value: '',
-            label: 'all'
-          },
-          {
-            value: 'system',
-            label: 'system'
-          },
-          {
-            value: 'user',
-            label: 'user'
-          },
-          {
-            value: 'assistant',
-            label: 'assistant'
-          }
-        ]"
+        [items]="item"
         [formControl]="search.controls.role"
       ></wagademy-select>
     </div>
@@ -44,20 +27,7 @@
           </div>
           <div class="w-full">
             <wagademy-select
-              [items]="[
-                {
-                  value: 'system',
-                  label: 'system'
-                },
-                {
-                  value: 'user',
-                  label: 'user'
-                },
-                {
-                  value: 'assistant',
-                  label: 'assistant'
-                }
-              ]"
+              [items]="itemOmittingAllOption"
               [(ngModel)]="message.role"
               (input)="onChangeRoleText(idxMsgSet, idxMsg, $event)"
             ></wagademy-select>
@@ -97,20 +67,7 @@
           </div>
           <div class="w-full">
             <wagademy-select
-              [items]="[
-                {
-                  value: 'system',
-                  label: 'system'
-                },
-                {
-                  value: 'user',
-                  label: 'user'
-                },
-                {
-                  value: 'assistant',
-                  label: 'assistant'
-                }
-              ]"
+              [items]="itemOmittingAllOption"
               [formControl]="getMessageFormItem(idxMsgSet).controls.role"
             ></wagademy-select>
           </div>
