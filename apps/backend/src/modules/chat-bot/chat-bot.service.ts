@@ -114,7 +114,6 @@ export class ChatBotService {
     if (status) {
       AND.push({ status });
     }
-    console.log(AND);
     const [count, chatBots] = await Promise.all([
       this.prismaService.chatBot.count({ where: { AND } }),
       this.prismaService.chatBot.findMany({
@@ -124,7 +123,6 @@ export class ChatBotService {
         include: { thumbnail: true },
       }),
     ]);
-    console.log(chatBots);
     return { count, chatBots };
   }
 
