@@ -10,4 +10,6 @@ export const user: User = {
   walletAddress: null,
   companyProfile: null,
   userProfile: null,
+  subscriptionId: faker.string.uuid(),
+  hasChangedPlan: false,
 };

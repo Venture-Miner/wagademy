@@ -15,6 +15,8 @@ export type User = {
   accountType: AccountTypeEnum;
   companyProfile: { id: string } | null;
   userProfile: { id: string } | null;
+  subscriptionId: string | null;
+  hasChangedPlan: boolean;
 };
 
 export type CreateUserResponse = {
@@ -26,6 +28,8 @@ export type CreateUserResponse = {
   accountType: AccountTypeEnum;
   companyProfile: { id: string } | null;
   userProfile: { id: string } | null;
+  subscriptionId: string | null;
+  hasChangedPlan: boolean;
 };
 
 export type FindOneUserResponse = {
@@ -37,6 +41,8 @@ export type FindOneUserResponse = {
   accountType: AccountTypeEnum;
   companyProfile: { id: string } | null;
   userProfile: { id: string } | null;
+  subscriptionId: string | null;
+  hasChangedPlan: boolean;
 };
 
 export type UpdateUserResponse = {
@@ -48,6 +54,8 @@ export type UpdateUserResponse = {
   accountType: AccountTypeEnum;
   companyProfile: { id: string } | null;
   userProfile: { id: string } | null;
+  subscriptionId: string | null;
+  hasChangedPlan: boolean;
 };
 
 export type RetrieveSelfResponse = {
@@ -59,6 +67,8 @@ export type RetrieveSelfResponse = {
   accountType: AccountTypeEnum;
   companyProfile: { id: string } | null;
   userProfile: { id: string } | null;
+  subscriptionId: string | null;
+  hasChangedPlan: boolean;
 };
 
 export type CreateUser = {
