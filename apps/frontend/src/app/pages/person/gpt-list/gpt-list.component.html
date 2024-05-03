@@ -28,14 +28,14 @@
     spend <span class="text-primary font-bold">credits</span> to use any trained
     model.
   </p>
-  @if(!chats.length){
+  @if(isLoading){
+  <wagademy-loading></wagademy-loading>
+  } @if(!chats.length){
   <div
     class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
   >
     <p>There are no content available</p>
   </div>
-  } @if(isLoading){
-  <wagademy-loading></wagademy-loading>
   } @if(!isLoading){ @if(chats.length){
   <div class="flex flex-wrap max-[767px]:justify-center gap-8">
     @for(chat of chats; track $index){
