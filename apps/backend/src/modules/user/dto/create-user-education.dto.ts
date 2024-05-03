@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateEducation } from '@wagademy/types';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsDate,
@@ -59,6 +59,11 @@ export class CreateUserEducationDto implements CreateEducation {
     example: faker.datatype.boolean(),
   })
   @IsBoolean()
+  @Transform(({ value }) => {
+    if (value === 'true') value = true;
+    if (value === 'false') value = false;
+    return value;
+  })
   stillStudying: boolean;
 
   @ApiProperty({

@@ -90,6 +90,7 @@ const routes: Routes = [
           ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
         path: 'job-applications',
         loadComponent: () =>
           import('./company/applications-job/applications-job.component').then(
@@ -97,6 +98,7 @@ const routes: Routes = [
           ),
       },
       {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
         path: 'applicant-profile',
         loadComponent: () =>
           import(
@@ -104,6 +106,7 @@ const routes: Routes = [
           ).then((c) => c.ApplicationsProfileComponent),
       },
       {
+        canActivate: [AuthGuard, AccountTypeCompanyGuard],
         path: 'result-of-application',
         loadComponent: () =>
           import(
@@ -112,7 +115,7 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeCompanyGuard],
-        path: 'interview-gpt',
+        path: 'interview-questions',
         loadComponent: () =>
           import('./company/interview-gpt/interview-gpt.component').then(
             (c) => c.InterviewGptComponent
@@ -141,7 +144,7 @@ const routes: Routes = [
       },
       {
         canActivate: [AuthGuard, AccountTypeUserGuard],
-        path: 'user-profile',
+        path: 'create-profile',
         loadComponent: () =>
           import('./person/user-profile/user-profile.component').then(
             (c) => c.UserProfileComponent

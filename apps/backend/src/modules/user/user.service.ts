@@ -1,7 +1,7 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from '@wagademy/prisma';
 import {
@@ -29,23 +29,27 @@ import {
   ImageType,
 } from '@wagademy/types';
 import { FileService } from '../../infra';
-import { Prisma } from '@prisma/client';
+import { CreditTypeEnum, Prisma } from '@prisma/client';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly fileService: FileService
+    private readonly fileService: FileService,
+    private readonly eventEmitter: EventEmitter2
   ) {}
 
   async create(createUser: CreateUser): Promise<CreateUserResponse> {
-    return this.prismaService.user.create({
+    const user = await this.prismaService.user.create({
       data: { ...createUser },
       include: {
         companyProfile: { select: { id: true } },
         userProfile: { select: { id: true } },
       },
     });
+    this.eventEmitter.emit('userCreated', user);
+    return user;
   }
 
   async createCompanyProfile(
@@ -96,6 +100,7 @@ export class UserService {
         professionalExperience,
         ...profileData
       } = createProfile;
+
       const createUserProfileData: Prisma.UserProfileCreateInput = {
         ...profileData,
         education: { createMany: { data: education } },
@@ -128,6 +133,22 @@ export class UserService {
       if (pictureKey.length) await this.fileService.removeFile(pictureKey);
       throw new BadRequestException(error, 'Error creating profile:');
     }
+  }
+
+  @OnEvent('subscriptionCreated')
+  async updateUserSubscription(eventData: {
+    userId: string;
+    subscriptionId: string;
+  }) {
+    await this.prismaService.user.update({
+      where: { id: eventData.userId },
+      data: {
+        subscriptionId: eventData.subscriptionId,
+        credit: {
+          create: { creditType: CreditTypeEnum.PLAN_CREDIT, total: 10 },
+        },
+      },
+    });
   }
 
   async update(
@@ -300,7 +321,7 @@ export class UserService {
       },
     });
     if (userId !== userProfile?.userId && accountType !== 'COMPANY')
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'Only the owner or companies can access this data.'
       );
     return userProfile;
@@ -308,8 +329,7 @@ export class UserService {
 
   async findCompanyProfile(
     id: string,
-    userId: string,
-    accountType: AccountTypeEnum
+    userId: string
   ): Promise<FindOneCompanyProfileResponse | null> {
     const companyProfile = await this.prismaService.companyProfile.findUnique({
       where: { id },
@@ -318,8 +338,8 @@ export class UserService {
         backgroundPhoto: { select: { url: true } },
       },
     });
-    if (userId !== companyProfile?.userId || accountType !== 'COMPANY')
-      throw new UnauthorizedException('Only the owner can access the profile.');
+    if (userId !== companyProfile?.userId)
+      throw new ForbiddenException('Only the owner can access the profile.');
     return companyProfile;
   }
 

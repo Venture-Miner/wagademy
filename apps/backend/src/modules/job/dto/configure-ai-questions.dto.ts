@@ -2,7 +2,13 @@ import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { ConfigureAIQuestions } from '@wagademy/types';
 import { Transform } from 'class-transformer';
-import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  ArrayNotEmpty,
+  IsString,
+} from 'class-validator';
 
 export class ConfigureAIQuestionsDto implements ConfigureAIQuestions {
   @ApiProperty({
@@ -17,8 +23,10 @@ export class ConfigureAIQuestionsDto implements ConfigureAIQuestions {
     if (!Array.isArray(value)) value = [value];
     return value;
   })
-  @IsNotEmpty()
   @IsArray()
+  @ArrayNotEmpty()
+  @ArrayMinSize(5)
+  @ArrayMaxSize(20)
   @IsString({ each: true })
   aiInterviewQuestions: string[];
 }

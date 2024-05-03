@@ -1,7 +1,7 @@
 import {
+  ForbiddenException,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import {
   CreateJob,
@@ -46,7 +46,7 @@ export class JobService {
       where: { userId: companyId },
     });
     if (!profile)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You can not create a job before completing your profile.'
       );
     return this.prismaService.job.create({
@@ -72,7 +72,7 @@ export class JobService {
       where: { userId },
     });
     if (!profile)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'Only users with complete profile can apply to a job.'
       );
     const job = await this.prismaService.job.findUnique({
@@ -217,7 +217,9 @@ export class JobService {
               },
             },
           },
-          job: { select: { id: true, title: true } },
+          job: {
+            select: { id: true, title: true, aiInterviewQuestions: true },
+          },
           jobInterviewChat: { select: { id: true } },
         },
       }),
@@ -278,10 +280,11 @@ export class JobService {
   }
 
   findOneJobApplicationCompanyView(
-    id: string
+    id: string,
+    companyId: string
   ): Promise<FindOneJobApplicationCompanyView | null> {
-    return this.prismaService.jobApplication.findUnique({
-      where: { id },
+    return this.prismaService.jobApplication.findFirst({
+      where: { id, job: { companyId } },
       include: {
         user: {
           include: {
@@ -295,7 +298,7 @@ export class JobService {
             },
           },
         },
-        job: { select: { id: true, title: true } },
+        job: { select: { id: true, title: true, aiInterviewQuestions: true } },
         jobInterviewChat: { select: { id: true } },
       },
     });
@@ -359,7 +362,7 @@ export class JobService {
       throw new NotFoundException('Job with the provided ID does not exist.');
     }
     if (userId !== job.companyId)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You are not able to update this job since you do not own it.'
       );
     return this.prismaService.job.update({
@@ -384,7 +387,9 @@ export class JobService {
   ): Promise<UpdateJobApplicationCompanyView> {
     const jobApplication = await this.prismaService.jobApplication.findUnique({
       where: { id },
-      include: { job: { select: { companyId: true } } },
+      include: {
+        job: { select: { companyId: true, aiInterviewQuestions: true } },
+      },
     });
     if (!jobApplication) {
       throw new NotFoundException(
@@ -392,12 +397,16 @@ export class JobService {
       );
     }
     if (jobApplication.job.companyId !== userId)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You are not able to invite the user since you do not own this job position.'
       );
     if (jobApplication.applicationStatus !== 'SUBSCRIBED')
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You are not able to invite the user since the user is invited or already did the interview .'
+      );
+    if (!jobApplication.job.aiInterviewQuestions.length)
+      throw new ForbiddenException(
+        'You are not able to invite the user before adding interview questions in the job position.'
       );
     return this.prismaService.jobApplication.update({
       where: { id },
@@ -419,6 +428,7 @@ export class JobService {
           select: {
             id: true,
             title: true,
+            aiInterviewQuestions: true,
           },
         },
         jobInterviewChat: { select: { id: true } },
@@ -436,7 +446,7 @@ export class JobService {
       throw new NotFoundException('Job with the provided ID does not exist.');
     }
     if (userId !== job.companyId)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You are not able to update this job since you do not own it.'
       );
     return this.prismaService.job.update({

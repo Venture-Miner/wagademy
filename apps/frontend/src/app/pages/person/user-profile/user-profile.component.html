@@ -48,7 +48,10 @@
   <form [formGroup]="userData">
     <div class="flex flex-col md:flex-row md:gap-10">
       <div class="md:w-1/2">
-        <wagademy-form-field [control]="userData.controls['name']">
+        <wagademy-form-field
+          [control]="userData.controls['name']"
+          [isInputMandatory]="true"
+        >
           <wagademy-input
             placeholder="Name example"
             type="text"
@@ -58,7 +61,10 @@
         </wagademy-form-field>
       </div>
       <div class="md:w-1/2">
-        <wagademy-form-field [control]="userData.controls['email']">
+        <wagademy-form-field
+          [control]="userData.controls['email']"
+          [isInputMandatory]="true"
+        >
           <wagademy-input
             placeholder="email@email.com"
             type="text"
@@ -70,16 +76,23 @@
     </div>
     <div class="flex flex-col md:flex-row md:gap-10">
       <div class="md:w-1/2">
-        <wagademy-form-field [control]="userData.controls['birth']">
-          <wagademy-input type="date" formControlName="birth"> </wagademy-input>
+        <wagademy-form-field
+          [control]="userData.controls['dateOfBirth']"
+          [isInputMandatory]="true"
+        >
+          <wagademy-input type="date" formControlName="dateOfBirth">
+          </wagademy-input>
         </wagademy-form-field>
       </div>
       <div class="md:w-1/2">
-        <wagademy-form-field [control]="userData.controls['cellphone']">
+        <wagademy-form-field
+          [control]="userData.controls['contactNumber']"
+          [isInputMandatory]="true"
+        >
           <wagademy-input
             placeholder="+55 11 91234-5678"
             type="text"
-            formControlName="cellphone"
+            formControlName="contactNumber"
           >
           </wagademy-input>
         </wagademy-form-field>
@@ -90,6 +103,7 @@
         <wagademy-form-field
           [control]="userData.controls['country']"
           class="w-full"
+          [isInputMandatory]="true"
         >
           <wagademy-select
             [items]="countries"
@@ -102,6 +116,7 @@
         <wagademy-form-field
           [control]="userData.controls['state']"
           class="w-full"
+          [isInputMandatory]="true"
         >
           <wagademy-select
             [items]="states"
@@ -123,7 +138,7 @@
       </div>
       <div class="flex items-center gap-2">
         <img src="./assets/icons/icon-cake.svg" alt="cake icon" />
-        {{ userData.get('birth')?.value }}
+        {{ userData.get('dateOfBirth')?.value }}
       </div>
       <div class="flex items-center gap-2">
         <img src="./assets/icons/icon-envelope.svg" alt="envelope icon" />
@@ -131,7 +146,7 @@
       </div>
       <div class="flex items-center gap-2">
         <img src="./assets/icons/icon-telephone.svg" alt="telephone icon" />
-        {{ userData.get('cellphone')?.value }}
+        {{ userData.get('contactNumber')?.value }}
       </div>
       <div class="flex items-center gap-2">
         <img src="./assets/icons/icon-pin-map.svg" alt="pin icon" />
@@ -151,6 +166,7 @@
     <button
       class="mt-7 mb-6 text-neutral-950 font-bold flex gap-2 items-center"
       (click)="editMode = !editMode"
+      [disabled]="areAllFormsValid"
     >
       Update
       <img src="./assets/icons/icon-check.svg" alt="check icon" />
@@ -159,6 +175,7 @@
     <button
       class="mt-7 mb-6 text-neutral-950 font-bold flex gap-2 items-center"
       (click)="editMode = !editMode"
+      [disabled]="isCreating"
     >
       Edit
       <img src="./assets/icons/icon-pencil.svg" alt="pencil icon" />
@@ -176,12 +193,9 @@
   </div>
   <form [formGroup]="educationForm">
     <div formArrayName="items">
+      @for (educationItem of educationItems.controls; track educationItem;let i
+      =$index,last = $last) {
       <div
-        *ngFor="
-          let educationItem of educationItems.controls;
-          let i = index;
-          let last = last
-        "
         [formGroupName]="i"
         [ngClass]="{
           'border-t-2 border-neutral-300/20 mt-8 pt-8': i > 0
@@ -214,7 +228,14 @@
         <div class="flex flex-col lg:flex-row lg:gap-10 lg:items-center">
           <div class="form-control lg:w-96 w-40">
             <label class="label cursor-pointer">
-              <input type="checkbox" class="checkbox checkbox-primary" />
+              <input
+                type="checkbox"
+                class="checkbox checkbox-primary"
+                [checked]="educationItem.get('stillStudying')?.value"
+                (change)="
+                  onCheckboxChange($event, i, 'educationItems', 'stillStudying')
+                "
+              />
               <span class="label-text text-neutral-950"
                 >I'm still studying</span
               >
@@ -262,6 +283,7 @@
           /></button
         >}
       </div>
+      }
     </div>
   </form>
   } @else {
@@ -270,28 +292,33 @@
   >
     Education
   </p>
-  <div
-    *ngFor="let item of educationForm.get('items')?.value; let i = index"
-    class="mb-3"
-  >
+  @for (item of educationForm.get('items')?.value; track $index) {
+  <div class="mb-3">
     <p class="text-neutral-950 font-bold">{{ item.course }}</p>
     <div class="flex flex-col sm:flex-row gap-2 text-base-200">
       <p class="font-bold">{{ item.degree }}</p>
       <p>{{ item.institution }}</p>
     </div>
     <div class="flex gap-2 items-center mb-4 text-base-200 text-sm">
-      <p>{{ item.startDate }}</p>
+      <p>{{ item.startDate | date : 'dd/MM/yyyy' }}</p>
       <span class="bg-base-200 w-1 h-1 rounded-full"></span>
-      <p>{{ item.endDate }}</p>
+      <p>
+        {{
+          item.stillStudying
+            ? "I'm still studying"
+            : (item.endDate | date : 'dd/MM/yyyy')
+        }}
+      </p>
     </div>
     <p class="text-neutral-950">{{ item.description }}</p>
   </div>
-  }
+  } }
   <div class="flex justify-end">
     @if (editMode) {
     <button
       class="mt-7 mb-6 text-neutral-950 font-bold flex gap-2 items-center"
       (click)="editMode = !editMode"
+      [disabled]="areAllFormsValid"
     >
       Update
       <img src="./assets/icons/icon-check.svg" alt="check icon" />
@@ -300,6 +327,7 @@
     <button
       class="mt-7 mb-6 text-neutral-950 font-bold flex gap-2 items-center"
       (click)="editMode = !editMode"
+      [disabled]="isCreating"
     >
       Edit
       <img src="./assets/icons/icon-pencil.svg" alt="pencil icon" />
@@ -320,12 +348,9 @@
   </div>
   <form [formGroup]="professionalExperienceForm">
     <div formArrayName="items">
+      @for (professionalExperienceItem of professionalExperienceItems.controls;
+      track professionalExperienceForm;let i =$index, last =$last) {
       <div
-        *ngFor="
-          let professionalExperienceItem of professionalExperienceItems.controls;
-          let i = index;
-          let last = last
-        "
         [formGroupName]="i"
         [ngClass]="{
           'border-t-2 border-neutral-300/20 mt-8 pt-8': i > 0
@@ -354,7 +379,21 @@
         <div class="flex flex-col lg:flex-row lg:gap-10 lg:items-center">
           <div class="form-control w-44 lg:w-[500px]">
             <label class="label cursor-pointer">
-              <input type="checkbox" class="checkbox checkbox-primary" />
+              <input
+                type="checkbox"
+                class="checkbox checkbox-primary"
+                [checked]="
+                  professionalExperienceItem.get('currentlyWorkingHere')?.value
+                "
+                (change)="
+                  onCheckboxChange(
+                    $event,
+                    i,
+                    'professionalExperienceItems',
+                    'currentlyWorkingHere'
+                  )
+                "
+              />
               <span class="label-text text-neutral-950"
                 >I currently work here
               </span>
@@ -408,6 +447,7 @@
           /></button
         >}
       </div>
+      }
     </div>
   </form>
   } @else {
@@ -416,30 +456,32 @@
   >
     Professional experience
   </p>
-  <div
-    *ngFor="
-      let item of professionalExperienceForm.get('items')?.value;
-      let i = index
-    "
-    class="mb-3"
-  >
+  @for (item of professionalExperienceForm.get('items')?.value; track $index) {
+  <div class="mb-3">
     <p class="text-neutral-950 font-bold">{{ item.jobTitle }}</p>
     <p class="flex flex-col sm:flex-row gap-2 text-base-200">
       {{ item.company }}
     </p>
     <div class="flex gap-2 items-center mb-4 text-base-200 text-sm">
-      <p>{{ item.startDate }}</p>
+      <p>{{ item.startDate | date : 'dd/MM/yyyy' }}</p>
       <span class="bg-base-200 w-1 h-1 rounded-full"></span>
-      <p>{{ item.endDate }}</p>
+      <p>
+        {{
+          item.currentlyWorkingHere
+            ? 'I currently work here'
+            : (item.endDate | date : 'dd/MM/yyyy')
+        }}
+      </p>
     </div>
     <p class="text-neutral-950">{{ item.description }}</p>
   </div>
-  }
+  } }
   <div class="flex justify-end">
     @if (editMode) {
     <button
       class="mt-7 mb-6 text-neutral-950 font-bold flex gap-2 items-center"
       (click)="editMode = !editMode"
+      [disabled]="areAllFormsValid"
     >
       Update
       <img src="./assets/icons/icon-check.svg" alt="check icon" />
@@ -448,6 +490,7 @@
     <button
       class="mt-7 mb-6 text-neutral-950 font-bold flex gap-2 items-center"
       (click)="editMode = !editMode"
+      [disabled]="isCreating"
     >
       Edit
       <img src="./assets/icons/icon-pencil.svg" alt="pencil icon" />
@@ -462,37 +505,36 @@
   @if(editMode) {
   <form [formGroup]="expertiseForm">
     <wagademy-form-field
-      [control]="expertiseForm.controls['newExpertise']"
+      [control]="expertiseForm.controls['areasOfExpertise']"
       label="You need to fill up to 10 words to describe your areas of expertise"
     >
       <wagademy-input
         placeholder="Expertise Example"
         type="text"
-        formControlName="newExpertise"
+        formControlName="areasOfExpertise"
         (keydown.enter)="addExpertise()"
+        [disabledInput]="isMaxValueOfExpertises"
       >
       </wagademy-input>
     </wagademy-form-field>
   </form>
   <ul class="flex gap-4 mt-6 flex-wrap">
-    <li
-      class="bg-neutral text-neutral-950 p-1 rounded-md flex justify-between"
-      *ngFor="let expertise of expertises; let i = index"
-    >
+    @for (expertise of expertises; track $index) {
+    <li class="bg-neutral text-neutral-950 p-1 rounded-md flex justify-between">
       <p>{{ expertise }}</p>
-      <button (click)="removeExpertise(i)">
-        <img src="./assets/icons/icon-close.svg" />
+      <button (click)="removeExpertise($index)">
+        <img src="./assets/icons/icon-close.svg" alt="close icon" />
       </button>
     </li>
+    }
   </ul>
   } @else {
   <ul class="flex flex-wrap gap-4">
-    <li
-      class="bg-neutral text-neutral-950 p-1 rounded-full"
-      *ngFor="let expertise of expertises"
-    >
+    @for (expertise of expertises; track $index) {
+    <li class="bg-neutral text-neutral-950 p-1 rounded-full">
       {{ expertise }}
     </li>
+    }
   </ul>
   }
   <div class="flex justify-end">
@@ -500,6 +542,7 @@
     <button
       class="mt-7 mb-6 text-neutral-950 font-bold flex gap-2 items-center"
       (click)="editMode = !editMode"
+      [disabled]="areAllFormsValid"
     >
       Update
       <img src="./assets/icons/icon-check.svg" alt="check icon" />
@@ -508,6 +551,7 @@
     <button
       class="mt-7 mb-6 text-neutral-950 font-bold flex gap-2 items-center"
       (click)="editMode = !editMode"
+      [disabled]="isCreating"
     >
       Edit
       <img src="./assets/icons/icon-pencil.svg" alt="pencil icon" />
@@ -522,37 +566,36 @@
   @if (editMode) {
   <form [formGroup]="skillsForm">
     <wagademy-form-field
-      [control]="skillsForm.controls['newSkill']"
+      [control]="skillsForm.controls['skillsAndCompetencies']"
       label="You need to fill up to 10 words to describe your skills and competencies"
     >
       <wagademy-input
         placeholder="Skill Example"
         type="text"
-        formControlName="newSkill"
+        formControlName="skillsAndCompetencies"
         (keydown.enter)="addSkill()"
+        [disabledInput]="isMaxValue"
       >
       </wagademy-input>
     </wagademy-form-field>
   </form>
   <ul class="flex gap-4 mt-6 flex-wrap">
-    <li
-      class="bg-neutral text-neutral-950 p-1 rounded-md flex justify-between"
-      *ngFor="let skill of skills; let i = index"
-    >
+    @for (skill of skills; track $index) {
+    <li class="bg-neutral text-neutral-950 p-1 rounded-md flex justify-between">
       <p>{{ skill }}</p>
-      <button (click)="removeSkill(i)">
-        <img src="./assets/icons/icon-close.svg" />
+      <button (click)="removeSkill($index)">
+        <img src="./assets/icons/icon-close.svg" alt="close icon" />
       </button>
     </li>
+    }
   </ul>
   } @else {
   <ul class="flex gap-4 flex-wrap">
-    <li
-      class="bg-neutral text-neutral-950 p-1 rounded-full"
-      *ngFor="let skill of skills"
-    >
+    @for (skill of skills; track $index) {
+    <li class="bg-neutral text-neutral-950 p-1 rounded-full">
       {{ skill }}
     </li>
+    }
   </ul>
   }
   <div class="flex justify-end">
@@ -560,6 +603,7 @@
     <button
       class="mt-7 mb-6 text-neutral-950 font-bold flex gap-2 items-center"
       (click)="editMode = !editMode"
+      [disabled]="areAllFormsValid"
     >
       Update
       <img src="./assets/icons/icon-check.svg" alt="check icon" />
@@ -568,6 +612,7 @@
     <button
       class="mt-7 mb-6 text-neutral-950 font-bold flex gap-2 items-center"
       (click)="editMode = !editMode"
+      [disabled]="isCreating"
     >
       Edit
       <img src="./assets/icons/icon-pencil.svg" alt="pencil icon" />
@@ -577,9 +622,12 @@
   <div class="w-full flex justify-center pb-10">
     <button
       class="btn btn-primary text-base-100 text-xl w-52"
-      (click)="editMode = false"
+      (click)="createUserProfile()"
+      [disabled]="editMode || isCreating || areAllFormsValid"
     >
-      Save And Confirm
+      @if(isCreating){
+      <span class="loading loading-dots"></span>
+      } @else{ Save And Confirm }
     </button>
   </div>
 </div>

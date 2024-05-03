@@ -4,8 +4,7 @@
     <div>
       <wagademy-input-search
         placeholder="Search"
-        [value]="searchChat"
-        (valueChange)="searchChat = $event; getChatBots()"
+        (valueChange)="searchChat$.next($event)"
       ></wagademy-input-search>
     </div>
     <div class="flex flex-wrap gap-2">
@@ -17,7 +16,7 @@
             ? 'bg-primary text-base-100 border-none'
             : 'text-base-200 hover:text-base-100'
         ]"
-        (click)="selectedFilter = filter.name"
+        (click)="selectedFilter = filter.name; getChatBots()"
       >
         {{ filter.name }}
       </button>
@@ -39,13 +38,15 @@
   <wagademy-loading></wagademy-loading>
   } @if(!isLoading){ @if(chats.length){
   <div class="flex flex-wrap max-[767px]:justify-center gap-8">
-    @for(chat of filteredChatBots; track $index){
-    <wagademy-card
-      [img]="chat.images"
-      [name]="chat.name"
-      [description]="chat.description"
-      [details]="'more'"
-    ></wagademy-card>
+    @for(chat of chats; track $index){
+    <div (click)="initChat(chat.id)">
+      <wagademy-card
+        [img]="chat.thumbnail.url"
+        [name]="chat.title"
+        [description]="chat.description"
+        [details]="'more'"
+      ></wagademy-card>
+    </div>
     }
   </div>
   }
@@ -64,5 +65,6 @@
   actionButtonLabel="Explore"
   message="You need to be invited by the company that created the GPT model or purchase credits to access it. Explore our options to get started!"
   (actionButtonClick)="exploreOption()"
+  (cancelButtonClick)="cancel()"
 >
 </wagademy-modal>

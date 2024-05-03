@@ -1,6 +1,7 @@
 import { NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { JobStatusEnum } from '@wagademy/types';
 
 @Component({
   selector: 'wagademy-card',
@@ -17,7 +18,7 @@ export class CardComponent {
   @Input() button: string | undefined;
   @Input() applications: number | undefined;
   @Input() menu: 'courses' | 'jobs' | '' = '';
-  @Output() unpublishJob: EventEmitter<void> = new EventEmitter<void>();
+  @Output() updateJobStatus: EventEmitter<void> = new EventEmitter<void>();
   @Output() updateJob: EventEmitter<void> = new EventEmitter<void>();
   @Output() removeJob: EventEmitter<void> = new EventEmitter<void>();
   @Output() interviewGPTJob: EventEmitter<void> = new EventEmitter<void>();
@@ -28,14 +29,23 @@ export class CardComponent {
   @Input() isOpen = false;
   @Input() isOpenCourses = false;
   @Input() details: 'more' | 'main' = 'main';
+  @Input() route = '';
+  @Input() queryParam = '';
+  @Input() disableButton = false;
+  @Input() jobStatus: JobStatusEnum = JobStatusEnum.PUBLISHED;
 
   constructor(private router: Router) {}
 
   onViewMoreClick() {
-    this.router.navigate(['/'], {
-      queryParams: {
-        selectId: this.selectId,
-      },
-    });
+    this.router.navigate(
+      [`/pages/${this.route}`],
+      this.queryParam.length
+        ? {
+            queryParams: {
+              [this.queryParam]: this.selectId,
+            },
+          }
+        : {}
+    );
   }
 }

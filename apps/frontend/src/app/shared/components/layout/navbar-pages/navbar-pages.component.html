@@ -3,7 +3,7 @@
     class="flex flex-wrap items-center justify-between container mx-auto py-4 px-5"
   >
     <div class="w-full flex justify-between xl:w-auto">
-      <a [routerLink]="'/'">
+      <a [routerLink]="['/pages/home']">
         <img
           width="212"
           height="40"
@@ -42,7 +42,7 @@
             Home
           </a>
         </li>
-        <li class="hover:text-primary text-base-100 text-sm font-mono">
+        <!-- <li class="hover:text-primary text-base-100 text-sm font-mono">
           <a
             routerLinkActive="active-link"
             [routerLink]="['/my-courses']"
@@ -50,8 +50,8 @@
           >
             My courses
           </a>
-        </li>
-        <li class="hover:text-primary text-base-100 text-sm font-mono">
+        </li> -->
+        <!-- <li class="hover:text-primary text-base-100 text-sm font-mono">
           <a
             routerLinkActive="active-link"
             [routerLink]="['pages/certificates']"
@@ -59,7 +59,7 @@
           >
             My certificates
           </a>
-        </li>
+        </li> -->
         <li class="hover:text-primary text-base-100 text-sm font-mono">
           <a
             routerLinkActive="active-link"
@@ -78,11 +78,11 @@
             GPTs
           </a>
         </li>
-        <li class="xl:px-4 cursor-pointer pl-3">
+        <!-- <li class="xl:px-4 cursor-pointer pl-3">
           <i
             class="bi bi-bell-fill hover:text-primary text-base-200 hover:font-bold"
           ></i>
-        </li>
+        </li> -->
         <li class="relative">
           <button
             #toggleButton
@@ -104,7 +104,7 @@
           @if(openMenu){
           <div
             #dropdown
-            class="mt-2 rounded-lg absolute w-36 bg-white z-10 xl:right-1/2 xl:transform shadow-lg"
+            class="rounded-lg absolute w-36 bg-white z-10 xl:right-1 xl:transform shadow-lg"
           >
             <div
               class="p-4"
@@ -136,7 +136,7 @@
                   >
                 </div>
               </div>
-              <div class="py-2">
+              <!-- <div class="py-2">
                 <div
                   class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
                 >
@@ -147,8 +147,8 @@
                     >Credits</a
                   >
                 </div>
-              </div>
-              <div class="py-2">
+              </div> -->
+              <!-- <div class="py-2">
                 <div
                   class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
                 >
@@ -159,12 +159,12 @@
                     >Settings</a
                   >
                 </div>
-              </div>
+              </div> -->
               <div class="py-2">
                 <div
-                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                  class="hover:bg-primary text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
                 >
-                  <button (click)="logout()">Logout</button>
+                  <div (click)="logout()">Logout</div>
                 </div>
               </div>
             </div>
@@ -190,7 +190,7 @@
             Home
           </a>
         </li>
-        <li class="hover:text-primary text-base-200 text-sm font-mono">
+        <!-- <li class="hover:text-primary text-base-200 text-sm font-mono">
           <a
             routerLinkActive="active-link"
             [routerLink]="['/pages/courses']"
@@ -198,7 +198,7 @@
           >
             Courses
           </a>
-        </li>
+        </li> -->
         <li class="hover:text-primary text-base-200 text-sm font-mono">
           <a
             routerLinkActive="active-link"
@@ -211,17 +211,17 @@
         <li class="hover:text-primary text-base-200 text-sm font-mono">
           <a
             routerLinkActive="active-link"
-            [routerLink]="['/pages/chatbot']"
+            [routerLink]="['/pages/gpts']"
             (click)="showMenu = false"
           >
             GPTs
           </a>
         </li>
-        <li class="xl:px-4 cursor-pointer pl-3">
+        <!-- <li class="xl:px-4 cursor-pointer pl-3">
           <i
             class="bi bi-bell-fill hover:text-primary text-base-200 hover:font-bold"
           ></i>
-        </li>
+        </li> -->
         <li class="relative">
           <button
             #toggleButton
@@ -243,7 +243,7 @@
           @if(openMenu === true){
           <div
             #dropdown
-            class="mt-2 rounded-lg absolute w-36 bg-white z-10 xl:right-1/2 xl:transform shadow-lg"
+            class="rounded-lg absolute w-36 bg-white z-10 xl:right-1 xl:transform shadow-lg"
           >
             <div
               class="p-4"
@@ -252,47 +252,52 @@
               aria-labelledby="menu"
             >
               <div class="py-2">
-                <div
-                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                <a
+                  class="w-28 text-base-200 p-2 hover:bg-primary hover:text-base-100 hover:rounded-lg"
+                  [ngClass]="{
+                    'hover:bg-primary hover:text-base-100 hover:rounded-lg w-28':
+                      !isActive
+                  }"
+                  routerLinkActive="active-link"
+                  [routerLink]="['/pages/company-profile']"
+                  (click)="showMenu = false; openMenu = false"
                 >
-                  <a
-                    routerLinkActive="active-link"
-                    [routerLink]="['/pages/company-profile']"
-                    (click)="showMenu = false; openMenu = false"
-                    >Profile</a
-                  >
-                </div>
+                  Profile
+                </a>
               </div>
-              <div class="py-2">
-                <div
-                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+              <!-- <div class="py-2">
+                <a
+                  class="w-full text-base-200 p-2 hover:bg-primary hover:text-base-100 hover:rounded-lg"
+                  [ngClass]="{
+                    'hover:bg-primary hover:text-base-100 hover:rounded-lg w-full':
+                      !isActive
+                  }"
+                  routerLinkActive="active-link"
+                  [routerLink]="['/pages/credits']"
+                  (click)="showMenu = false; openMenu = false"
+                  >Credits</a
                 >
-                  <a
-                    routerLinkActive="active-link"
-                    [routerLink]="['/pages/credits']"
-                    (click)="showMenu = false; openMenu = false"
-                    >Credits</a
-                  >
-                </div>
-              </div>
-              <div class="py-2">
-                <div
-                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+              </div> -->
+              <!-- <div class="py-2">
+                <a
+                  class="w-full text-base-200 p-2 hover:bg-primary hover:text-base-100 hover:rounded-lg"
+                  [ngClass]="{
+                    'hover:bg-primary hover:text-base-100 hover:rounded-lg w-full':
+                      !isActive
+                  }"
+                  routerLinkActive="active-link"
+                  [routerLink]="['/pages/settings']"
+                  (click)="showMenu = false; openMenu = false"
+                  >Settings</a
                 >
-                  <a
-                    routerLinkActive="active-link"
-                    [routerLink]="['/pages/settings']"
-                    (click)="showMenu = false; openMenu = false"
-                    >Settings</a
-                  >
-                </div>
-              </div>
-              <div class="py-2">
-                <div
-                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+              </div> -->
+              <div>
+                <button
+                  class="hover:bg-primary text-left text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                  (click)="logout()"
                 >
-                  <button (click)="logout()">Logout</button>
-                </div>
+                  Logout
+                </button>
               </div>
             </div>
           </div>

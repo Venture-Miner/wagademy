@@ -1,46 +1,58 @@
-<div class="container mx-auto min-h-screen px-3 sm:px-0" [formGroup]="form">
-  @if(isLoading){
+@if(isLoading){
   <wagademy-loading></wagademy-loading>
   }@else{
+<div class="container mx-auto min-h-screen px-3 sm:px-0">
   <div class="pb-6 pt-8 flex gap-2 items-center">
     <h2 class="font-sans font-medium text-4xl text-base-100">GPTs</h2>
     <p class="text-primary text-sm font-bold">| BUILD TRAINING DATA</p>
   </div>
   <div class="flex gap-2 pb-8">
     <div class="w-32">
-      <wagademy-form-field [control]="form.controls.chatOption">
-        <wagademy-select formControlName="chatOption"></wagademy-select>
-      </wagademy-form-field>
+      <wagademy-select
+        [items]="item"
+        [formControl]="search.controls.role"
+      ></wagademy-select>
     </div>
     <div class="w-full">
-      <wagademy-form-field [control]="form.controls.chatTheme">
-        <wagademy-input formControlName="chatTheme"></wagademy-input>
-      </wagademy-form-field>
+      <wagademy-input [formControl]="search.controls.content"></wagademy-input>
     </div>
   </div>
-  @for (item of items; track items; let i = $index) {
+  @for (messageSet of filteredMessageSets; track idxMsgSet; let idxMsgSet =
+  $index) {
+  <span class="text-base-100">Example {{ idxMsgSet + 1 }}</span>
+  @for(message of messageSet.messages; track idxMsg; let idxMsg = $index) {
   <div class="gap-8 sm:flex">
     <div class="w-full">
-      <wagademy-form-field [control]="form.controls.userQuestion">
+      <wagademy-form-field>
         <div class="flex gap-2 pb-2">
           <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
-            <p class="text-primary font-bold font-mono">User</p>
+            <p class="text-primary font-bold font-mono">Role</p>
           </div>
           <div class="w-full">
-            <wagademy-input formControlName="userQuestion"></wagademy-input>
+            <wagademy-select
+              [items]="itemOmittingAllOption"
+              [(ngModel)]="message.role"
+              (input)="onChangeRoleText(idxMsgSet, idxMsg, $event)"
+            ></wagademy-select>
           </div>
         </div>
       </wagademy-form-field>
     </div>
     <div class="w-full">
-      <wagademy-form-field [control]="form.controls.answerQuestion">
+      <wagademy-form-field>
         <div class="flex gap-2 pb-2">
           <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
-            <p class="text-accent font-bold font-mono">Chatbot</p>
+            <p class="text-accent font-bold font-mono">Content</p>
           </div>
           <div class="w-full flex gap-2">
-            <wagademy-input formControlName="answerQuestion"></wagademy-input>
-            <button class="text-error lg:pl-8" (click)="removeItem(i)">
+            <wagademy-input
+              [value]="message.content"
+              (input)="onChangeContentText(idxMsgSet, idxMsg, $event)"
+            ></wagademy-input>
+            <button
+              class="text-error lg:pl-8"
+              (click)="removeItem(idxMsgSet, idxMsg)"
+            >
               Remove
             </button>
           </div>
@@ -49,13 +61,64 @@
     </div>
   </div>
   }
-  <div class="flex justify-end pt-8" (click)="addNewItem()">
-    <button class="btn btn-primary w-[129px] btn-outline">Add New Item</button>
+  <div class="gap-8 sm:flex">
+    <div class="w-full">
+      <wagademy-form-field>
+        <div class="flex gap-2 pb-2">
+          <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+            <p class="text-primary font-bold font-mono">Role</p>
+          </div>
+          <div class="w-full">
+            <wagademy-select
+              [items]="itemOmittingAllOption"
+              [formControl]="getMessageFormItem(idxMsgSet).controls.role"
+            ></wagademy-select>
+          </div>
+        </div>
+      </wagademy-form-field>
+    </div>
+    <div class="w-full">
+      <wagademy-form-field>
+        <div class="flex gap-2 pb-2">
+          <div class="bg-neutral flex items-center px-4 w-32 rounded-lg">
+            <p class="text-accent font-bold font-mono">Content</p>
+          </div>
+          <div class="w-full flex gap-2">
+            <wagademy-input
+              [formControl]="getMessageFormItem(idxMsgSet).controls.content"
+            ></wagademy-input>
+          </div>
+        </div>
+      </wagademy-form-field>
+    </div>
   </div>
-  <div class="flex justify-center pb-6 pt-14">
-    <button class="btn btn-primary w-[200px]" (click)="saveItems()">
-      Save
+  <div class="flex justify-end pt-8" (click)="addMessage(idxMsgSet)">
+    <button
+      class="btn btn-primary w-[129px] btn-outline"
+      [disabled]="getMessageFormItem(idxMsgSet).invalid"
+    >
+      Add New Item
     </button>
   </div>
   }
+  <div class="flex justify-end pt-8" (click)="addNewExampleSet()">
+    <button class="btn btn-primary w-[149px] btn-outline">
+      Add New Example
+    </button>
+  </div>
+  <div class="flex justify-center pb-6 pt-14">
+    <button class="btn btn-primary w-[200px]" onclick="modal.showModal()">
+      Create Training Data
+    </button>
+  </div>
 </div>
+  }
+<wagademy-modal
+  title="Create Training Data"
+  actionButtonLabel="Create"
+  message="A new training data will be created. Provide a title"
+  (actionButtonClick)="saveItems()"
+  [externalForm]="title"
+  inputLabel="Title"
+>
+</wagademy-modal>

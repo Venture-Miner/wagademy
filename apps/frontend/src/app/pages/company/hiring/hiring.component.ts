@@ -135,6 +135,12 @@ export class HiringComponent implements OnInit {
     return filter;
   }
 
+  redirectToJobInterviewSettingsPage(id: string) {
+    this.router.navigate(['/pages/interview-questions'], {
+      queryParams: { jobId: id },
+    });
+  }
+
   getJobs() {
     const pagination: Pagination = {
       take: this.take,
@@ -229,7 +235,7 @@ export class HiringComponent implements OnInit {
   }
 
   deleteJob() {
-    //
+    //TODO
   }
 
   openRemoveJobModal() {

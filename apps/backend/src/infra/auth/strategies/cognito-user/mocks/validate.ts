@@ -16,6 +16,8 @@ export const dbUser: FindOneUserResponse = {
   name: faker.internet.userName(),
   email: faker.internet.email(),
   idRefAuth: faker.string.uuid(),
+  subscriptionId: faker.string.uuid(),
+  hasChangedPlan: false,
   accountType: AccountTypeEnum.COMPANY,
   walletAddress: null,
   companyProfile: null,

@@ -1,8 +1,8 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
@@ -71,13 +71,13 @@ export class ChatService {
   ) {
     const chatInterview = await this.getChatHistory(jobApplicationId, userId);
     const statusErrorMessage = {
-        SUBSCRIBED: "You can't start the interview",
-        INTERVIEWED: "You've already been interviewed!",
-        INVITED: "You've started the interview already",
-      };
-    
+      SUBSCRIBED: "You can't start the interview",
+      INTERVIEWED: "You've already been interviewed!",
+      INVITED: "You've started the interview already",
+    };
+
     if (chatInterview) {
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         statusErrorMessage[chatInterview.jobApplication.applicationStatus]
       );
     }
@@ -100,9 +100,9 @@ export class ChatService {
         'Job application with the provided ID does not exist'
       );
     }
-    
-    if (jobApplication.applicationStatus!=='INVITED')
-         throw new UnauthorizedException(
+
+    if (jobApplication.applicationStatus !== 'INVITED')
+      throw new ForbiddenException(
         statusErrorMessage[jobApplication.applicationStatus]
       );
 
@@ -173,13 +173,13 @@ export class ChatService {
     if (!chat)
       throw new NotFoundException('Chat with the provided ID does not exist');
     if (chat.jobApplication.userId !== userId)
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         'You can not modify this chat, it does not belong to you'
       );
     if (
       chat.jobApplication.applicationStatus !== JobApplicationStatusEnum.INVITED
     )
-      throw new UnauthorizedException('You can not use the chat');
+      throw new ForbiddenException('You can not use the chat');
     return chat;
   }
 

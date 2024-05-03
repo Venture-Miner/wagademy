@@ -1,5 +1,4 @@
 import { OpenAIChatModel } from './chat';
-import { UserProfile } from './user-profile';
 
 export const EmploymentClassificationEnum = {
   FULL_TIME: 'FULL_TIME',
@@ -187,6 +186,7 @@ export type JobApplicationCompanyView = {
   job: {
     id: string;
     title: string;
+    aiInterviewQuestions: string[];
   };
   applicationStatus: JobApplicationStatusEnum;
   jobInterviewChat: { id: string }[];
@@ -207,6 +207,7 @@ export type FindOneJobApplicationCompanyView = {
   job: {
     id: string;
     title: string;
+    aiInterviewQuestions: string[];
   };
   applicationStatus: JobApplicationStatusEnum;
   jobInterviewChat: { id: string }[];
@@ -227,6 +228,7 @@ export type UpdateJobApplicationCompanyView = {
   job: {
     id: string;
     title: string;
+    aiInterviewQuestions: string[];
   };
   applicationStatus: JobApplicationStatusEnum;
   jobInterviewChat: { id: string }[];

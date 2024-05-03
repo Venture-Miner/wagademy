@@ -34,9 +34,14 @@ export class JobApplicationCompanyViewEntity
     example: {
       id: faker.database.mongodbObjectId(),
       title: faker.lorem.word(),
+      aiInterviewQuestions: [],
     },
   })
-  job: { id: string; title: string };
+  job: {
+    id: string;
+    title: string;
+    aiInterviewQuestions: string[];
+  };
 
   @ApiProperty({ example: JobApplicationStatusEnum.SUBSCRIBED })
   applicationStatus: JobApplicationStatusEnum;
