@@ -68,7 +68,7 @@ export class UserService extends BaseHttpService {
       if (key === 'education' || key === 'professionalExperience') {
         createProfileDto[key].forEach((item: any, index: number) => {
           Object.keys(item).forEach((subKey) => {
-            if (item[subKey]) {
+            if (item[subKey] || item[subKey] === false) {
               formData.append(`${key}[${index}][${subKey}]`, item[subKey]);
             }
           });
