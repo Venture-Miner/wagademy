@@ -21,6 +21,8 @@ import {
   FilterCompanyChatbots,
   TrainingData,
 } from '@wagademy/types';
+import { forkJoin } from 'rxjs';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 interface Filter {
   name: string;
@@ -38,6 +40,7 @@ interface Filter {
     RouterModule,
     FormFieldComponent,
     ReactiveFormsModule,
+    LoadingComponent,
   ],
   templateUrl: './gpts.component.html',
   styleUrl: './gpts.component.scss',
@@ -73,6 +76,8 @@ export class GptsComponent implements OnInit {
   chatBotToDelete = '';
   trainingDataToDelete = '';
   trainingDataDropdownOptions: SelectItem<string>[] = [];
+  isLoading = false;
+  filterChatbots: FilterCompanyChatbots = {};
 
   constructor(
     private readonly toastService: ToastService,
@@ -82,9 +87,52 @@ export class GptsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.findManyTrainingData();
-    this.findManyCompanyChatbots();
-    this.getTrainingDataDropdownOptions();
+    this.isLoading = true;
+
+    const trainingData = this.chatbotService.findManyTrainingData({
+      take: this.takeTrainingData,
+      skip: (this.pageTrainingData - 1) * this.takeTrainingData,
+    });
+    const dropdownOptions =
+      this.chatbotService.getTrainingDataDropdownOptions();
+    this.handleStatusChange();
+    const chatbots = this.chatbotService.findManyCompanyChatBots(
+      this.filterChatbots,
+      {
+        take: this.takeFineTuning,
+        skip: (this.pageFineTuning - 1) * this.takeFineTuning,
+      }
+    );
+
+    const combinedRequests = {
+      trainingData,
+      chatbots,
+      dropdownOptions,
+    };
+    forkJoin(combinedRequests).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        const { trainingData, chatbots, dropdownOptions } = response;
+
+        this.trainingDataDropdownOptions = [
+          ...Object.values(dropdownOptions).map(({ id, title }) => {
+            return { value: id, label: title };
+          }),
+        ];
+
+        this.countFineTuning = chatbots.count;
+        this.chatBots = chatbots.chatBots;
+        this.countTrainingData = trainingData.count;
+        this.trainingData = trainingData.trainingData;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.toastService.showToast({
+          message: 'Error while retrieving data.',
+          type: 'error',
+        });
+      },
+    });
   }
 
   getTrainingDataDropdownOptions() {
@@ -105,25 +153,28 @@ export class GptsComponent implements OnInit {
     });
   }
 
-  findManyCompanyChatbots() {
-    const filterChatbots: FilterCompanyChatbots = {};
-
+  handleStatusChange() {
     switch (this.selectedFilter) {
-      case 'all':
+      case 'All':
+        this.filterChatbots = {};
         break;
       case 'Processing':
-        filterChatbots.status = ChatBotStatusEnum.PROCESSING;
+        this.filterChatbots.status = ChatBotStatusEnum.PROCESSING;
         break;
       case 'Success':
-        filterChatbots.status = ChatBotStatusEnum.SUCCESS;
+        this.filterChatbots.status = ChatBotStatusEnum.SUCCESS;
         break;
       case 'Fail':
-        filterChatbots.status = ChatBotStatusEnum.FAIL;
+        this.filterChatbots.status = ChatBotStatusEnum.FAIL;
         break;
     }
+  }
 
+  findManyCompanyChatbots() {
+    this.isLoading = true;
+    this.handleStatusChange();
     this.chatbotService
-      .findManyCompanyChatBots(filterChatbots, {
+      .findManyCompanyChatBots(this.filterChatbots, {
         take: this.takeFineTuning,
         skip: (this.pageFineTuning - 1) * this.takeFineTuning,
       })
@@ -131,12 +182,14 @@ export class GptsComponent implements OnInit {
         next: ({ chatBots, count }) => {
           this.countFineTuning = count;
           this.chatBots = chatBots;
+          this.isLoading = false;
         },
         error: () => {
           this.toastService.showToast({
             message: 'Error while retrieving fine tunings',
             type: 'error',
           });
+          this.isLoading = false;
         },
       });
   }
@@ -319,6 +372,7 @@ export class GptsComponent implements OnInit {
     const title = this.trainingDataForm.value.title;
     const trainingData = this.trainingDataFile;
     if (!title || !trainingData) return;
+    this.isLoading = true;
     this.chatbotService
       .uploadTrainingData({
         title,
@@ -335,12 +389,14 @@ export class GptsComponent implements OnInit {
           this.findManyTrainingData();
           this.getTrainingDataDropdownOptions();
           window.modal['close']();
+          this.isLoading = false;
         },
         error: ({ error }) => {
           this.toastService.showToast({
             message: error.message,
             type: 'error',
           });
+          this.isLoading = false;
         },
       });
   }

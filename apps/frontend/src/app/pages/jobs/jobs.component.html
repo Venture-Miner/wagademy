@@ -22,17 +22,17 @@
       }
     </div>
   </div>
-  @if(isLoading){
+
+  @if(isLoading) {
   <wagademy-loading></wagademy-loading>
-  } @if(!jobs.length){
+  } @else { @if(!jobs.length) {
   <div
     class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
   >
     <p>There are no content available</p>
   </div>
-  } @if(!isLoading){
+  } @else {
   <div>
-    @if(jobs.length){
     <div>
       <div
         class="flex flex-wrap max-[767px]:justify-center justify-start gap-8 pt-6 xl:pt-0"
@@ -48,7 +48,7 @@
         }
       </div>
     </div>
-    }
+
     <div class="flex justify-center lg:justify-end pt-6 pb-3">
       <wagademy-pagination
         [page]="page"
@@ -58,5 +58,5 @@
       ></wagademy-pagination>
     </div>
   </div>
-  }
+  } }
 </div>
