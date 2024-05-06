@@ -27,7 +27,11 @@ import { dateValidator } from '../../../shared/utils/date-comparison-validator';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../../../services/toast/toast.service';
 import { UserService } from '../../../services/user/user.service';
-import { CreateProfile } from '@wagademy/types';
+import {
+  CreateEducation,
+  CreateProfessionalExperience,
+  CreateProfile,
+} from '@wagademy/types';
 import { Router } from '@angular/router';
 
 interface Country {
@@ -308,11 +312,35 @@ export class UserProfileComponent {
   createUserData() {
     return {
       ...this.userData.value,
-      education: this.educationForm.value.items,
-      professionalExperience: this.professionalExperienceForm.value.items,
+      dateOfBirth: this.createLocalDate(
+        this.userData.value.dateOfBirth as string
+      ),
+      education: this.educationForm.value.items.map(
+        (item: CreateEducation) => ({
+          ...item,
+          startDate: this.createLocalDate(String(item.startDate)),
+          endDate: item.endDate
+            ? this.createLocalDate(String(item.endDate))
+            : null,
+        })
+      ),
+      professionalExperience: this.professionalExperienceForm.value.items.map(
+        (item: CreateProfessionalExperience) => ({
+          ...item,
+          startDate: this.createLocalDate(String(item.startDate)),
+          endDate: item.endDate
+            ? this.createLocalDate(String(item.endDate))
+            : null,
+        })
+      ),
       areasOfExpertise: [...this.expertises],
       skillsAndCompetencies: [...this.skills],
     } as unknown as CreateProfile;
+  }
+
+  createLocalDate(dateString: string) {
+    const [year, month, day] = dateString.split('-');
+    return new Date(+year, +month - 1, +day);
   }
 
   get areAllFormsValid() {
