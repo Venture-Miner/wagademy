@@ -2,10 +2,10 @@
   class="container flex justify-end bg-neutral border-2 rounded-3xl border-base-300"
   [ngClass]="{ 'w-48 h-48': size === 'big', 'w-24 h-24': size === 'small' }"
 >
-  @if(profilePhoto){
+  @if(profilePhotoUrl){
   <img
     class="rounded-3xl object-cover"
-    [src]="profilePhoto"
+    [src]="profilePhotoUrl"
     [ngClass]="{
       'w-full h-full': size === 'big',
       'w-24 h-24': size === 'small'

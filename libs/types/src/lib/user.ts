@@ -1,3 +1,5 @@
+import { UserProfile } from './user-profile';
+
 export const AccountTypeEnum = {
   COMPANY: 'COMPANY',
   PHYSICAL_PERSON: 'PHYSICAL_PERSON',
@@ -36,7 +38,7 @@ export type FindOneUserResponse = {
   idRefAuth: string;
   accountType: AccountTypeEnum;
   companyProfile: { id: string } | null;
-  userProfile: { id: string } | null;
+  userProfile: UserProfile | null;
 };
 
 export type UpdateUserResponse = {

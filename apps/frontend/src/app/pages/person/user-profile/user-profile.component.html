@@ -1,7 +1,7 @@
 @if(step === 1) {
 <wagademy-user-data
   [countries]="countries"
-  [profilePhoto]="profilePhoto"
+  [profilePhoto]="profilePhotoUrl"
   (imageUploaded)="onImageUploaded($event)"
   [userData]="userData"
   (nextStep)="step = 2"
@@ -39,7 +39,8 @@
   </p>
   <div class="mb-4">
     <wagademy-photo-upload
-      [profilePhoto]="profilePhoto"
+      (onImageUploaded)="onImageUploaded($event)"
+      [profilePhotoUrl]="profilePhotoUrl"
       [size]="'small'"
     ></wagademy-photo-upload>
   </div>
@@ -622,10 +623,10 @@
   <div class="w-full flex justify-center pb-10">
     <button
       class="btn btn-primary text-base-100 text-xl w-52"
-      (click)="createUserProfile()"
-      [disabled]="editMode || isCreating || areAllFormsValid"
+      (click)="isUpdateMode ? updateUserProfile() : createUserProfile()"
+      [disabled]="editMode || isCreating || areAllFormsValid || isUpdating"
     >
-      @if(isCreating){
+      @if(isCreating || isUpdating){
       <span class="loading loading-dots"></span>
       } @else{ Save And Confirm }
     </button>

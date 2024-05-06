@@ -27,8 +27,14 @@ import { dateValidator } from '../../../shared/utils/date-comparison-validator';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../../../services/toast/toast.service';
 import { UserService } from '../../../services/user/user.service';
-import { CreateProfile } from '@wagademy/types';
+import {
+  CreateProfile,
+  UpdateProfile,
+  User,
+  UserProfile,
+} from '@wagademy/types';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth/auth.service';
 
 interface Country {
   iso2: string;
@@ -66,9 +72,11 @@ export class UserProfileComponent {
   countries: SelectItem<string>[] = [];
   states: SelectItem<string>[] = [];
   selectedCountry: string | null = '';
-  profilePhoto: string | undefined;
+  profilePhotoUrl!: string | undefined;
+  profilePhotoFile!: File;
   editMode = false;
   isCreating = false;
+  isUpdating = false;
   step = 1;
   private isMax = false;
   private isMaxExpertises = false;
@@ -87,6 +95,7 @@ export class UserProfileComponent {
     state: ['', Validators.required],
     about: ['', Validators.required],
   }) as FormGroup<UserData>;
+  isUpdateMode = false;
 
   educationForm!: FormGroup;
 
@@ -107,7 +116,8 @@ export class UserProfileComponent {
     private readonly userService: UserService,
     private location: Location,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {
     this.educationForm = this.fb.group({
       items: this.fb.array([this.createEducationItem()]),
@@ -132,6 +142,49 @@ export class UserProfileComponent {
     });
 
     this.getCountries();
+  }
+
+  ngOnInit() {
+    const user = this.authService.user.value;
+    if (user) {
+      this.initializeUserData(user);
+    }
+  }
+
+  initializeUserData(user: User): void {
+    if (user?.userProfile) {
+      const userProfile = user.userProfile as UserProfile;
+      this.step = 6;
+      this.isUpdateMode = true;
+      this.userData.patchValue({
+        name: userProfile.name,
+        email: userProfile.email,
+        dateOfBirth: new Date(userProfile.dateOfBirth).toLocaleDateString(
+          'en-GB'
+        ),
+        country: userProfile.country as unknown as SelectItem<string>,
+        state: userProfile.state as unknown as SelectItem<string>,
+        about: userProfile.about,
+        contactNumber: userProfile.contactNumber,
+      });
+      (this.educationForm.get('items') as FormArray).clear();
+      userProfile.education.forEach((educationItem) => {
+        (this.educationForm.get('items') as FormArray).push(
+          this.fb.group(educationItem)
+        );
+      });
+      (this.professionalExperienceForm.get('items') as FormArray).clear();
+      userProfile.professionalExperience.forEach(
+        (professionalExperienceItem) => {
+          (this.professionalExperienceForm.get('items') as FormArray).push(
+            this.fb.group(professionalExperienceItem)
+          );
+        }
+      );
+      this.expertises = userProfile.areasOfExpertise;
+      this.skills = userProfile.skillsAndCompetencies;
+      this.profilePhotoUrl = userProfile.profilePhoto?.url;
+    }
   }
 
   createEducationItem(): FormGroup {
@@ -245,8 +298,9 @@ export class UserProfileComponent {
     return this.isMax;
   }
 
-  onImageUploaded(imageUrl: string) {
-    this.profilePhoto = imageUrl;
+  onImageUploaded(imageData: { url: string; file: File }) {
+    this.profilePhotoUrl = imageData.url;
+    this.profilePhotoFile = imageData.file;
   }
 
   getCountries() {
@@ -305,16 +359,6 @@ export class UserProfileComponent {
       ?.setValue((event.target as HTMLInputElement).checked);
   }
 
-  createUserData() {
-    return {
-      ...this.userData.value,
-      education: this.educationForm.value.items,
-      professionalExperience: this.professionalExperienceForm.value.items,
-      areasOfExpertise: [...this.expertises],
-      skillsAndCompetencies: [...this.skills],
-    } as unknown as CreateProfile;
-  }
-
   get areAllFormsValid() {
     return (
       this.userData.invalid ||
@@ -323,6 +367,45 @@ export class UserProfileComponent {
       this.expertiseForm.invalid ||
       this.skillsForm.invalid
     );
+  }
+
+  createUserData() {
+    return {
+      ...this.userData.value,
+      education: this.educationForm.value.items,
+      professionalExperience: this.professionalExperienceForm.value.items,
+      areasOfExpertise: [...this.expertises],
+      skillsAndCompetencies: [...this.skills],
+      profilePhoto: this.profilePhotoFile,
+    } as unknown as CreateProfile;
+  }
+
+  updateUserProfile() {
+    this.isUpdating = true;
+    const updateUserProfileDto: UpdateProfile = this.createUserData();
+    console.log(updateUserProfileDto);
+    this.userService.updateUserProfile(updateUserProfileDto).subscribe({
+      next: () => {
+        this.toastService.showToast({
+          message: 'Profile successfully updated.',
+          type: 'success',
+        });
+        this.isUpdating = false;
+        this.authService.loadUserData();
+        if (this.location.getState() !== null) {
+          this.location.back();
+        } else {
+          this.router.navigate(['/pages/home']);
+        }
+      },
+      error: () => {
+        this.isUpdating = false;
+        this.toastService.showToast({
+          message: 'Error while updating profile.',
+          type: 'error',
+        });
+      },
+    });
   }
 
   createUserProfile() {
@@ -335,6 +418,7 @@ export class UserProfileComponent {
           type: 'success',
         });
         this.isCreating = false;
+        this.authService.loadUserData();
         if (this.location.getState() !== null) {
           this.location.back();
         } else {
