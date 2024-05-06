@@ -1,4 +1,5 @@
 export * from './count.entity';
+export * from './plan.entity';
 export * from './profile.entity';
 export * from './company-profile.entity';
 export * from './user-education.entity';

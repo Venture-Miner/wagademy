@@ -26,4 +26,10 @@ export class UpdateUserResponseEntity implements UpdateUserResponse {
 
   @ApiProperty({ example: null })
   userProfile: { id: string } | null;
+
+  @ApiProperty({ example: null })
+  subscriptionId: string | null;
+
+  @ApiProperty({ example: false })
+  hasChangedPlan: boolean;
 }

@@ -13,6 +13,8 @@ model User {
   email           String           @unique
   idRefAuth       String           @unique
   walletAddress   String?
+  subscriptionId  String?
+  hasChangedPlan  Boolean          @default(false)
   accountType     AccountTypeEnum
   userProfile     UserProfile?
   job             Job[]
@@ -22,6 +24,7 @@ model User {
   invitations     Invitation[]
   trainingData    TrainingData[]
   chatBotsHistory ChatBotHistory[]
+  credit          Credit[]
 }
 
 model CompanyProfile {
@@ -177,6 +180,39 @@ model Invitation {
   userId    String  @db.ObjectId
 }
 
+model Credit {
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  total             Int
+  totalUsed         Int                 @default(0)
+  expireOn          DateTime?
+  creditType        CreditTypeEnum
+  user              User                @relation(fields: [userId], references: [id])
+  userId            String              @db.ObjectId
+  creditTransaction CreditTransaction[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+}
+
+model Plan {
+  id       String       @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  currency String
+  price    Float
+  metadata String[]
+  credits  Int
+  priceId  String?
+  planType PlanTypeEnum
+}
+
+model CreditTransaction {
+  id        String                      @id @default(auto()) @map("_id") @db.ObjectId
+  credit    Credit?                     @relation(fields: [creditId], references: [id])
+  creditId  String?                     @db.ObjectId
+  status    CreditTransactionStatusEnum @default(ONGOING)
+  createdAt DateTime                    @default(now())
+  updatedAt DateTime                    @updatedAt
+}
+
 enum ChatBotStatusEnum {
   PROCESSING
   SUCCESS
@@ -212,4 +248,26 @@ enum JobApplicationStatusEnum {
   SUBSCRIBED
   INVITED
   INTERVIEWED
+}
+
+enum StatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
+enum CreditTypeEnum {
+  PLAN_CREDIT
+  ON_DEMAND_CREDIT
+}
+
+enum CreditTransactionStatusEnum {
+  ONGOING
+  FAILED
+  REFUNDED
+  COMPLETED
+}
+
+enum PlanTypeEnum {
+  COMPANY
+  PHYSICAL_PERSON
 }

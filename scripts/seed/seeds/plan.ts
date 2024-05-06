@@ -1,0 +1,68 @@
+import { CreatePlan, PlanTypeEnum } from '../../../libs/types/src';
+
+export const plans: CreatePlan[] = [
+  {
+    name: 'Free',
+    currency: 'USD',
+    metadata: [],
+    price: 0,
+    credits: 0,
+    planType: PlanTypeEnum.PHYSICAL_PERSON,
+  },
+  {
+    name: 'Free',
+    currency: 'USD',
+    metadata: [],
+    price: 0,
+    credits: 0,
+    planType: PlanTypeEnum.COMPANY,
+  },
+  {
+    name: 'Basic',
+    currency: 'USD',
+    metadata: [],
+    price: 15,
+    credits: 1000,
+    planType: PlanTypeEnum.PHYSICAL_PERSON,
+  },
+  {
+    name: 'Basic',
+    currency: 'USD',
+    metadata: [],
+    price: 15,
+    credits: 1000,
+    planType: PlanTypeEnum.COMPANY,
+  },
+  {
+    name: 'Mid',
+    currency: 'USD',
+    metadata: [],
+    price: 30,
+    credits: 2000,
+    planType: PlanTypeEnum.PHYSICAL_PERSON,
+  },
+  {
+    name: 'Mid',
+    currency: 'USD',
+    metadata: [],
+    price: 30,
+    credits: 2000,
+    planType: PlanTypeEnum.COMPANY,
+  },
+  {
+    name: 'Professional',
+    currency: 'USD',
+    metadata: [],
+    price: 50,
+    credits: 4000,
+    planType: PlanTypeEnum.PHYSICAL_PERSON,
+  },
+  {
+    name: 'Enterprise',
+    currency: 'USD',
+    metadata: [],
+    price: 80,
+    credits: 4000,
+    planType: PlanTypeEnum.COMPANY,
+  },
+];

@@ -31,4 +31,10 @@ export class RetrieveSelfResponseEntity implements RetrieveSelfResponse {
 
   @ApiProperty({ type: ProfileEntity })
   userProfile: UserProfile | null;
+
+  @ApiProperty({ example: null })
+  subscriptionId: string | null;
+
+  @ApiProperty({ example: false })
+  hasChangedPlan: boolean;
 }
