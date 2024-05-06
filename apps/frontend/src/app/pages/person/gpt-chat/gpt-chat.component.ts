@@ -263,12 +263,10 @@ export class GptChatComponent implements OnInit, AfterViewChecked {
       })
       .subscribe({
         next: ({ content, role }) => {
-          console.log(content);
           this.chatTypeObject.chatBot.history.push({
             content: content ?? '',
             role,
           });
-          console.log(this.chatTypeObject);
           this.isCreatingChatCompletion = false;
         },
         error: ({ error }: { error: HttpError }) => {
