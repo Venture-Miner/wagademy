@@ -402,6 +402,7 @@ export class UserProfileComponent {
       ),
       areasOfExpertise: [...this.expertises],
       skillsAndCompetencies: [...this.skills],
+      profilePhoto: this.profilePhotoFile,
     } as unknown as CreateProfile;
   }
 
