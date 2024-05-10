@@ -15,7 +15,7 @@ import { State } from '../../user-profile.component';
 export type UserData = {
   name: FormControl<string | null>;
   email: FormControl<string | null>;
-  dateOfBirth: FormControl<string | null>;
+  dateOfBirth: FormControl<Date | null>;
   contactNumber: FormControl<string | null>;
   country: FormControl<SelectItem<string> | null>;
   state: FormControl<SelectItem<string> | null>;
