@@ -444,6 +444,7 @@
   title="Are you sure you want to remove this training data?"
   actionButtonLabel="Remove"
   message="This action cannot be reversed."
+  [isLoading]="isRemovingTrainingData"
   (actionButtonClick)="removeTrainingData()"
   typeModal="cancel"
 >

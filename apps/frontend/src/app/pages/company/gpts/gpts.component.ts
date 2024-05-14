@@ -78,6 +78,7 @@ export class GptsComponent implements OnInit {
   trainingDataDropdownOptions: SelectItem<string>[] = [];
   isLoading = false;
   filterChatbots: FilterCompanyChatbots = {};
+  isRemovingTrainingData = false;
 
   constructor(
     private readonly toastService: ToastService,
@@ -347,6 +348,7 @@ export class GptsComponent implements OnInit {
   }
 
   removeTrainingData() {
+    this.isRemovingTrainingData = true;
     this.chatbotService
       .deleteTrainingData(this.trainingDataToDelete)
       .subscribe({
@@ -357,9 +359,11 @@ export class GptsComponent implements OnInit {
           });
           this.findManyTrainingData();
           this.getTrainingDataDropdownOptions();
+          this.isRemovingTrainingData = false;
           window.modal['close']();
         },
         error: () => {
+          this.isRemovingTrainingData = false;
           this.toastService.showToast({
             message: 'Error while removing training data.',
             type: 'error',
