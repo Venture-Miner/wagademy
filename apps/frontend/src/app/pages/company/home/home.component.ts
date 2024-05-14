@@ -183,7 +183,6 @@ export class HomeCompanyComponent implements OnInit {
   }
 
   updateJobStatus(id: string, index: number) {
-    console.log('hello');
     this.isUpdating = true;
     this.toggleStatus();
     this.jobService.update(id, { jobStatus: this.status }).subscribe({

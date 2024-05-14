@@ -82,6 +82,11 @@ export class JobsDetailsComponent implements OnInit {
     });
   }
 
+  handleImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = './assets/img/images/img-fallback.webp';
+  }
+
   findOneJob() {
     this.isLoading = true;
     this.jobService.findOneJobUserView(this.id).subscribe({

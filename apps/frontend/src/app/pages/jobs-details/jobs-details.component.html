@@ -46,8 +46,9 @@
           <img
             [ngSrc]="
               job?.company?.companyProfile?.companyPhoto?.url ||
-              './assets/img/images/img-card-content.png'
+              './assets/img/images/img-fallback.webp'
             "
+            (error)="handleImageError($event)"
             class="rounded-2xl"
             alt="logo company"
             width="96"

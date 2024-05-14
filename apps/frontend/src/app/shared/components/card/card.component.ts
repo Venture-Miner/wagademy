@@ -48,4 +48,9 @@ export class CardComponent {
         : {}
     );
   }
+
+  handleImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = './assets/img/images/img-fallback.webp';
+  }
 }
