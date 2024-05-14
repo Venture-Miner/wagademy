@@ -97,6 +97,7 @@
                   placeholder="MM / DD / YYYY"
                   type="date"
                   formControlName="endDate"
+                  [disabledInput]="educationItem.get('stillStudying')?.value"
                 >
                 </wagademy-input>
               </wagademy-form-field>
