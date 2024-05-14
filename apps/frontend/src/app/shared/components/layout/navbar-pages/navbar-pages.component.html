@@ -114,26 +114,20 @@
             >
               <div class="py-3">
                 <div
-                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg cursor-pointer"
+                  [routerLink]="['/pages/profile']"
+                  (click)="showMenu = false; openMenu = false"
                 >
-                  <a
-                    routerLinkActive="active-link"
-                    [routerLink]="['/pages/create-profile']"
-                    (click)="showMenu = false; openMenu = false"
-                    >Profile</a
-                  >
+                  <a routerLinkActive="active-link">Profile</a>
                 </div>
               </div>
               <div class="py-2">
                 <div
-                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                  class="hover:bg-primary w-full text-base-200 hover:text-base-100 p-2 hover:rounded-lg cursor-pointer"
+                  [routerLink]="['/pages/job-applications-all']"
+                  (click)="showMenu = false; openMenu = false"
                 >
-                  <a
-                    routerLinkActive="active-link"
-                    [routerLink]="['/pages/job-applications-all']"
-                    (click)="showMenu = false; openMenu = false"
-                    >Applications</a
-                  >
+                  <a routerLinkActive="active-link">Applications</a>
                 </div>
               </div>
               <!-- <div class="py-2">
@@ -162,9 +156,10 @@
               </div> -->
               <div class="py-2">
                 <div
-                  class="hover:bg-primary text-base-200 hover:text-base-100 p-2 hover:rounded-lg"
+                  class="hover:bg-primary text-base-200 hover:text-base-100 p-2 hover:rounded-lg cursor-pointer"
+                  (click)="logout()"
                 >
-                  <div (click)="logout()">Logout</div>
+                  <div>Logout</div>
                 </div>
               </div>
             </div>

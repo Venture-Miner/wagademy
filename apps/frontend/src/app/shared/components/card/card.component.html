@@ -1,5 +1,5 @@
 <div
-  class="sm:w-[304px] w-[280px] bg-neutral hover:shadow-lg mx-auto flex relative rounded-lg"
+  class="sm:w-[304px] min-w-[230px] bg-neutral hover:shadow-lg mx-auto flex relative rounded-lg"
   [ngClass]="[
     details === 'more'
       ? 'h-[280px] cursor-pointer'
@@ -11,9 +11,8 @@
   }
   <div
     class="font-mono"
-    [ngClass]="[details === 'more' ? 'w-[80px]' : 'sm:w-[304px] w-[230px]']"
+    [ngClass]="[details === 'more' ? 'w-[80px]' : 'sm:w-[304px]']"
   >
-    @if(img){
     <img
       [src]="img"
       class="object-cover"
@@ -23,19 +22,9 @@
           : 'h-40 w-full rounded-t-lg'
       ]"
       alt="card"
+      (error)="handleImageError($event)"
     />
-    }@else{
-    <img
-      [src]="'./assets/img/images/img-card-fallback.webp'"
-      class="object-cover"
-      [ngClass]="[
-        details === 'more'
-          ? ' h-[80px] w-[80px] pl-4 pt-4 rounded'
-          : 'h-40 w-full rounded-t-lg'
-      ]"
-      alt="fallback"
-    />
-    } @if(menu === 'jobs'){
+    @if(menu === 'jobs'){
     <div class="absolute top-0 right-0 p-2">
       <div
         (click)="isOpen = true"
@@ -141,7 +130,7 @@
     </div>
     }
     <div
-      class="px-4 bottom-4 bg-neutral w-full"
+      class="px-4 bottom-4 bg-neutral w-full left-0"
       [ngClass]="[
         isOpenCourses === true || isOpen === true
           ? ''
@@ -163,17 +152,14 @@
       >
         {{ name }}
       </h3>
-      <div class="pb-6">
-        <p
-          [ngClass]="[applications ? 'h-[76px]' : 'h-[108px]']"
-          class="text-base-200 font-mono h-24 overflow-hidden line-clamp-3"
-        >
+      <div class="mb-6 h-[76px]">
+        <p class="text-base-200 font-mono line-clamp-3">
           {{ description }}
         </p>
       </div>
     </div>
     @if(details === 'main'){
-    <div class="absolute bottom-0 w-full p-4">
+    <div class="absolute bottom-0 w-full left-0 p-4">
       <div
         class="opacity-0 w-full duration-300"
         [ngClass]="[
