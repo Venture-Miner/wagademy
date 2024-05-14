@@ -15,7 +15,7 @@ import { State } from '../../user-profile.component';
 export type UserData = {
   name: FormControl<string | null>;
   email: FormControl<string | null>;
-  dateOfBirth: FormControl<string | null>;
+  dateOfBirth: FormControl<Date | null>;
   contactNumber: FormControl<string | null>;
   country: FormControl<SelectItem<string> | null>;
   state: FormControl<SelectItem<string> | null>;
@@ -41,16 +41,15 @@ export class UserDataComponent {
   @Input() userData!: FormGroup<UserData>;
   @Input() profilePhoto!: string | undefined;
   @Output() nextStep = new EventEmitter<void>();
-  @Output() imageUploaded = new EventEmitter<string>();
-
+  @Output() imageUploaded = new EventEmitter<{ url: string; file: File }>();
   states: SelectItem<string>[] = [];
 
   selectedCountry: string | null = '';
 
   constructor(private toastService: ToastService, private http: HttpClient) {}
 
-  onImageUploaded(imageUrl: string) {
-    this.imageUploaded.emit(imageUrl);
+  onImageUploaded(imageData: { url: string; file: File }) {
+    this.imageUploaded.emit(imageData);
   }
 
   onCountrySelect(event: any) {

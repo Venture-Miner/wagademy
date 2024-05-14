@@ -40,7 +40,7 @@
         <button
           class="btn btn-primary text-base-100 text-xl w-48"
           (click)="nextStep.emit()"
-          [disabled]="skills.length < 1"
+          [disabled]="hasError() || skills.length < 1"
         >
           Next
         </button>
