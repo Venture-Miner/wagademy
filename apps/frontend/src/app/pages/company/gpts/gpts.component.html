@@ -174,10 +174,14 @@
                 <p class="text-sm">{{ data.title }}</p>
               </td>
               <td class="py-4 px-6 flex justify-end gap-4">
+                @if(isDownloading) {
+                <span class="loading loading-dots text-base-200"></span>} @else
+                {
                 <i
                   class="bi bi-download text-base-200 cursor-pointer"
                   (click)="download(data.id, data.title)"
                 ></i>
+                }
                 <i
                   class="bi bi-eye text-base-200 cursor-pointer"
                   (click)="view(data.id)"

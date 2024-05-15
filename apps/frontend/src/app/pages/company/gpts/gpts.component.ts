@@ -63,6 +63,7 @@ export class GptsComponent implements OnInit {
   takeTrainingData = 10;
   countTrainingData = 0;
   isDragging = false;
+  isDownloading = false;
   thumbnail: File | null = null;
   trainingDataFile: File | null = null;
   fineTuningForm = this.fb.group({
@@ -312,15 +313,18 @@ export class GptsComponent implements OnInit {
   }
 
   download(id: string, title: string) {
+    this.isDownloading = true;
     this.chatbotService.getTrainingDataContent(id).subscribe({
       next: (data) => {
         this.downloadTextAsJsonl(data, title);
+        this.isDownloading = false;
       },
       error: () => {
         this.toastService.showToast({
           message: 'Error while downloading training data.',
           type: 'error',
         });
+        this.isDownloading = false;
       },
     });
   }
