@@ -4,15 +4,18 @@
   <div class="pb-8 pt-6">
     <h2 class="font-sans font-medium text-4xl text-base-100">Home</h2>
   </div>
-  @if(!jobs.length && !courses.length){
+  @if(isLoading) {
+  <wagademy-loading></wagademy-loading>
+  } @else { @if(!jobs.length && !courses.length) {
   <div
     class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
   >
     <p>There is no content available</p>
   </div>
-  } @if(!isLoading){
+  }
+
   <div class="pb-6">
-    @if(jobs.length){
+    @if(jobs.length) {
     <div>
       <div class="flex justify-between pb-2">
         <h3 class="text-2xl text-base-100 font-sans font-medium">
@@ -54,31 +57,32 @@
     </div>
     }
     <!-- @if(courses.length){
-    <div>
-      <div class="flex justify-between pt-6 pb-2">
-        <h3 class="text-2xl text-base-100 font-sans font-medium">Courses</h3>
-        <button class="text-primary font-serif text-xl">See More</button>
+      <div>
+        <div class="flex justify-between pt-6 pb-2">
+          <h3 class="text-2xl text-base-100 font-sans font-medium">Courses</h3>
+          <button class="text-primary font-serif text-xl">See More</button>
+        </div>
+        <div
+          class="max-[657px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
+        >
+          @for (course of courses; track $index) {
+          <wagademy-card
+            [img]="course.images"
+            [name]="course.name"
+            [description]="course.description"
+            [button]="'Invite GPT+'"
+            [menu]="'courses'"
+            [isOpenCourses]="selectedCardCourseIndex === $index"
+            (click)="onCardCourseClick($index)"
+          ></wagademy-card>
+          }
+        </div>
       </div>
-      <div
-        class="max-[657px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
-      >
-        @for (course of courses; track $index) {
-        <wagademy-card
-          [img]="course.images"
-          [name]="course.name"
-          [description]="course.description"
-          [button]="'Invite GPT+'"
-          [menu]="'courses'"
-          [isOpenCourses]="selectedCardCourseIndex === $index"
-          (click)="onCardCourseClick($index)"
-        ></wagademy-card>
-        }
-      </div>
-    </div>
-    } -->
+      } -->
   </div>
   }
 </div>
+
 <dialog id="update_job" class="modal modal-middle">
   <div class="modal-box w-3/4 container">
     <form [formGroup]="form" method="dialog">

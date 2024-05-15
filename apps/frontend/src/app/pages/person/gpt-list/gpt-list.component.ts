@@ -7,6 +7,7 @@ import { Location, NgClass } from '@angular/common';
 import { CardComponent } from '../../../shared/components/card/card.component';
 import { FormsModule } from '@angular/forms';
 import { InputSearchComponent } from '../../../shared/components/input-search/input-search.component';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 import { ChatBot, FilterChatbots } from '@wagademy/types';
 import { ChatBotService } from '../../../services/chat-bot/chat-bot.service';
 import { BehaviorSubject, debounceTime, skip } from 'rxjs';
@@ -28,6 +29,7 @@ interface Filter {
     FormsModule,
     NgClass,
     InputSearchComponent,
+    LoadingComponent,
   ],
   templateUrl: './gpt-list.component.html',
   styleUrl: './gpt-list.component.scss',

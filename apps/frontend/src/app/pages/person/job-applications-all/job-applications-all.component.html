@@ -1,4 +1,7 @@
 <div class="container mx-auto min-h-screen px-3 sm:px-0">
+  @if(isLoading){
+  <wagademy-loading></wagademy-loading>
+  }@else {
   <div class="pb-6 pt-8">
     <h2 class="font-sans font-medium text-4xl text-base-100 pb-2">
       Applications
@@ -36,6 +39,7 @@
       >
     </li>
   </ul>
+
   @if(applicationsType === 'all'){
   <div class="flex flex-wrap max-[513px]:justify-center gap-8 pt-6 xl:pt-0">
     @for (application of jobApplications.all; track $index) {
@@ -78,7 +82,7 @@
       (pageChange)="page.interviewInvites = $event; getJobApplications()"
     ></wagademy-pagination>
   </div>
-  }
+  } }
 </div>
 <wagademy-modal
   [title]="'Warning'"

@@ -26,6 +26,7 @@ import {
 import { formatSelectItem } from '../../../shared/utils/functions/format-select-item';
 import { FormFieldComponent } from '../../../shared/components/form-field/form-field.component';
 import { ModalComponent } from '../../../shared/modal/modal.component';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'wagademy-home-company',
@@ -39,6 +40,7 @@ import { ModalComponent } from '../../../shared/modal/modal.component';
     ReactiveFormsModule,
     ModalComponent,
     SelectComponent,
+    LoadingComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

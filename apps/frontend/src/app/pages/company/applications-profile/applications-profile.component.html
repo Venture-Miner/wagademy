@@ -1,6 +1,9 @@
 <div class="container mx-auto min-h-screen px-3">
   <div class="md:flex items-start gap-40">
     <wagademy-back-button></wagademy-back-button>
+    @if(isLoading){
+    <wagademy-loading></wagademy-loading>
+    }@else {
     <div class="py-8">
       <div class="flex justify-between pb-4">
         <div class="sm:flex gap-4">
@@ -148,6 +151,7 @@
         </div>
       </div>
     </div>
+    }
   </div>
 </div>
 

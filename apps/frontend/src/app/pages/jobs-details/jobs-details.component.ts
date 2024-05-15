@@ -12,6 +12,7 @@ import { UserService } from '../../services/user/user.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { NgOptimizedImage } from '@angular/common';
 import { BackButtonComponent } from '../../shared/components/back-button/back-button.component';
+import { LoadingComponent } from '../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'wagademy-jobs-details',
@@ -21,6 +22,7 @@ import { BackButtonComponent } from '../../shared/components/back-button/back-bu
     ModalComponent,
     BackButtonComponent,
     NgOptimizedImage,
+    LoadingComponent,
   ],
   templateUrl: './jobs-details.component.html',
   styleUrl: './jobs-details.component.scss',
@@ -32,6 +34,7 @@ export class JobsDetailsComponent implements OnInit {
   isVerifying = false;
   employmentClassification = '';
   allocation = '';
+  isLoading = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -85,8 +88,12 @@ export class JobsDetailsComponent implements OnInit {
   }
 
   findOneJob() {
+    this.isLoading = true;
     this.jobService.findOneJobUserView(this.id).subscribe({
       next: (job) => {
+        if (job) {
+          job.description = job?.description.replace(/\n/g, '<br>');
+        }
         this.job = job;
         this.applied = job?.jobApplications?.length === 1;
         this.employmentClassification =
@@ -96,6 +103,7 @@ export class JobsDetailsComponent implements OnInit {
         this.allocation = formatEnumKeys<AllocationEnum>(
           job?.allocation as AllocationEnum
         ) as string;
+        this.isLoading = false;
       },
       error: () => {
         this.toastService.showToast({

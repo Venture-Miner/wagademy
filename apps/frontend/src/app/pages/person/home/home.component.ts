@@ -11,11 +11,12 @@ import { JobService } from '../../../services/job/job.service';
 import { forkJoin } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { ChatBotService } from '../../../services/chat-bot/chat-bot.service';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'wagademy-home',
   standalone: true,
-  imports: [InputComponent, CardComponent, RouterModule],
+  imports: [InputComponent, CardComponent, RouterModule, LoadingComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

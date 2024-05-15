@@ -9,11 +9,12 @@ import {
   OpenAIChatModel,
 } from '@wagademy/types';
 import { formatEnumKeys } from '../../../shared/utils/functions/format-enum';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'wagademy-applications-profile',
   standalone: true,
-  imports: [RouterModule, BackButtonComponent],
+  imports: [RouterModule, BackButtonComponent, LoadingComponent],
   templateUrl: './applications-results.component.html',
   styleUrl: './applications-results.component.scss',
 })
@@ -92,6 +93,7 @@ export class ApplicationsResultsComponent implements OnInit {
   jobApplicationId = '';
   employmentClassification = '';
   allocation = '';
+  isLoading = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -107,6 +109,7 @@ export class ApplicationsResultsComponent implements OnInit {
   }
 
   getApplicationResult() {
+    this.isLoading = true;
     this.jobService.getJobInterviewResult(this.jobApplicationId).subscribe({
       next: (interviewResult) => {
         if (interviewResult) {
@@ -123,6 +126,7 @@ export class ApplicationsResultsComponent implements OnInit {
             interviewResult.jobApplication.job?.allocation as AllocationEnum
           ) as string;
         }
+        this.isLoading = false;
       },
     });
   }

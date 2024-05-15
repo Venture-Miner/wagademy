@@ -17,6 +17,7 @@ import { ChatBotService } from '../../../services/chat-bot/chat-bot.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '../../../services/toast/toast.service';
 import { ModalComponent } from '../../../shared/modal/modal.component';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'wagademy-build-training-data',
@@ -26,6 +27,7 @@ import { ModalComponent } from '../../../shared/modal/modal.component';
     InputComponent,
     FormFieldComponent,
     ReactiveFormsModule,
+    LoadingComponent,
     FormsModule,
     ModalComponent,
   ],
@@ -78,6 +80,7 @@ export class BuildTrainingDataComponent implements OnInit {
     return item.label !== 'All';
   });
   title = new FormControl<string>('', Validators.required);
+  isLoading = false;
 
   constructor(
     private readonly chatbotService: ChatBotService,
@@ -107,6 +110,7 @@ export class BuildTrainingDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.activatedRoute.queryParamMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
@@ -120,12 +124,14 @@ export class BuildTrainingDataComponent implements OnInit {
               this.addNewMessageGroup();
             });
             this.syncFilteredMessageSets();
+            this.isLoading = false;
           },
           error: () => {
             this.toastService.showToast({
               message: 'Error while retrieving training data.',
               type: 'error',
             });
+            this.isLoading = false;
           },
         });
       } else {

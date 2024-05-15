@@ -8,6 +8,7 @@ import { FilterJobs, JobUserView, Pagination } from '@wagademy/types';
 import { JobService } from '../../services/job/job.service';
 import { ToastService } from '../../services/toast/toast.service';
 import { InputSearchComponent } from '../../shared/components/input-search/input-search.component';
+import { LoadingComponent } from '../../shared/components/loading/loading.component';
 
 interface Filter {
   name: string;
@@ -23,6 +24,7 @@ interface Filter {
     FormsModule,
     NgClass,
     InputSearchComponent,
+    LoadingComponent,
   ],
   templateUrl: './jobs.component.html',
   styleUrl: './jobs.component.scss',
@@ -69,13 +71,16 @@ export class JobsComponent implements OnInit {
       take: this.take,
       skip: (this.page - 1) * this.take,
     };
+    this.isLoading = true;
     const filters = this.getFilter();
     this.jobService.findManyJobsUserView(filters, pagination).subscribe({
       next: ({ count, jobs }) => {
         this.jobs = jobs;
         this.count = count;
+        this.isLoading = false;
       },
       error: () => {
+        this.isLoading = false;
         this.toastService.showToast({
           message: 'Error while retrieving jobs',
           type: 'error',

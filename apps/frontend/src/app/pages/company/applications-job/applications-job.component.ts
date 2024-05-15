@@ -14,6 +14,7 @@ import {
 } from '@wagademy/types';
 import { JobService } from '../../../services/job/job.service';
 import { ToastService } from '../../../services/toast/toast.service';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 interface Filter {
   name: string;
@@ -32,6 +33,7 @@ interface Filter {
     PaginationComponent,
     InputSearchComponent,
     BackButtonComponent,
+    LoadingComponent,
   ],
   templateUrl: './applications-job.component.html',
   styleUrl: './applications-job.component.scss',
@@ -51,6 +53,7 @@ export class ApplicationsJobComponent implements OnInit {
   take = 8;
   count = 0;
   searchJob = '';
+  isLoading = false;
 
   constructor(
     private readonly jobService: JobService,
@@ -79,6 +82,7 @@ export class ApplicationsJobComponent implements OnInit {
       take: this.take,
       skip: (this.page - 1) * this.take,
     };
+    this.isLoading = true;
     const filter = this.filterJobApplicationsDto();
     this.jobService
       .findManyJobApplicationsCompanyView(filter, pagination)
@@ -87,8 +91,10 @@ export class ApplicationsJobComponent implements OnInit {
           this.count = count;
           this.jobApplications = jobApplications;
           this.jobTitle = jobApplications[0].job.title;
+          this.isLoading = false;
         },
         error: () => {
+          this.isLoading = false;
           this.toastService.showToast({
             message: 'Error while retrieving job applications',
             type: 'error',

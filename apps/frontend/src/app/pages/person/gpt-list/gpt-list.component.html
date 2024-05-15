@@ -28,7 +28,16 @@
     spend <span class="text-primary font-bold">credits</span> to use any trained
     model.
   </p>
-  @if(!isLoading){ @if(chats.length){
+
+  @if(isLoading) {
+  <wagademy-loading></wagademy-loading>
+  } @else { @if(!chats.length) {
+  <div
+    class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
+  >
+    <p>There are no content available</p>
+  </div>
+  } @else {
   <div class="flex flex-wrap max-[767px]:justify-center gap-8">
     @for(chat of chats; track $index){
     <div (click)="initChat(chat.id)">
@@ -41,7 +50,6 @@
     </div>
     }
   </div>
-  }
   <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination
       [page]="page"
@@ -50,7 +58,7 @@
       (pageChange)="page = $event; getChatBots()"
     ></wagademy-pagination>
   </div>
-  }
+  } }
 </div>
 <wagademy-modal
   title="You do not currently have access to the GPT model"

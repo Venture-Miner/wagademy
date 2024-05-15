@@ -7,11 +7,18 @@ import { UserService } from '../../../services/user/user.service';
 import { ToastService } from '../../../services/toast/toast.service';
 import { JobApplicationStatusEnum, UserProfile } from '@wagademy/types';
 import { JobService } from '../../../services/job/job.service';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'wagademy-applications-profile',
   standalone: true,
-  imports: [RouterModule, ModalComponent, BackButtonComponent, DatePipe],
+  imports: [
+    RouterModule,
+    ModalComponent,
+    BackButtonComponent,
+    DatePipe,
+    LoadingComponent,
+  ],
   templateUrl: './applications-profile.component.html',
   styleUrl: './applications-profile.component.scss',
 })
@@ -62,12 +69,15 @@ export class ApplicationsProfileComponent implements OnInit {
   }
 
   getProfile() {
+    this.isLoading = true;
     this.userService.findUserProfile(this.userProfileId).subscribe({
       next: (userProfile) => {
         this.userProfile = userProfile as UserProfile;
         this.profilePhoto = this.userProfile.profilePhoto?.url ?? '';
+        this.isLoading = false;
       },
       error: () => {
+        this.isLoading = false;
         this.toastService.showToast({
           message: 'Error while retrieving profile',
           type: 'error',
@@ -77,6 +87,7 @@ export class ApplicationsProfileComponent implements OnInit {
   }
 
   getJobApplication() {
+    this.isLoading = true;
     this.jobService
       .findOneJobApplicationCompanyView(this.jobApplicationId)
       .subscribe({
@@ -93,8 +104,10 @@ export class ApplicationsProfileComponent implements OnInit {
               !jobApplication.job.aiInterviewQuestions.length;
             this.jobId = jobApplication.job.id;
           }
+          this.isLoading = false;
         },
         error: () => {
+          this.isLoading = false;
           this.toastService.showToast({
             message: 'Error while retrieving job application data',
             type: 'error',

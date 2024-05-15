@@ -1,4 +1,7 @@
 <div class="container px-5 mx-auto min-h-screen">
+  @if(isLoading){
+  <wagademy-loading></wagademy-loading>
+  }@else {
   <div>
     <form [formGroup]="form" class="content">
       <wagademy-back-button></wagademy-back-button>
@@ -200,4 +203,5 @@
       </div>
     </form>
   </div>
+  }
 </div>

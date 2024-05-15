@@ -31,6 +31,7 @@ import { formatSelectItem } from '../../../shared/utils/functions/format-select-
 import { UserService } from '../../../services/user/user.service';
 import { Router } from '@angular/router';
 import { InputSearchComponent } from '../../../shared/components/input-search/input-search.component';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 interface Filter {
   name: string;
@@ -51,6 +52,7 @@ interface Filter {
     SelectComponent,
     ModalComponent,
     InputSearchComponent,
+    LoadingComponent,
   ],
   templateUrl: './hiring.component.html',
   styleUrl: './hiring.component.scss',

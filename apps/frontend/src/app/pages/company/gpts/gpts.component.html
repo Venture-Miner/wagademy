@@ -1,7 +1,7 @@
 <div class="container mx-auto min-h-screen px-3 sm:px-0">
   <div class="pb-4 pt-6 flex flex-wrap justify-between gap-6">
     <h2 class="font-sans font-medium text-4xl text-base-100">GPTs</h2>
-    @if(gptType === 'FINETUNING'){
+    @if (gptType === 'FINETUNING') {
     <button
       class="btn btn-primary w-52"
       onclick="create_fine_turning_modal.showModal()"
@@ -9,7 +9,7 @@
     >
       Create Fine Tuning
     </button>
-    } @if(gptType === 'TRAININGDATA'){
+    } @else {
     <button
       class="btn btn-primary w-52"
       onclick="create_training_data_modal.showModal()"
@@ -45,7 +45,10 @@
       </li>
     </ul>
   </div>
-  @if(gptType === 'FINETUNING'){
+
+  @if (isLoading) {
+  <wagademy-loading></wagademy-loading>
+  } @else { @if (gptType === 'FINETUNING') {
   <div class="flex flex-wrap gap-2 pb-4 pt-8">
     @for (filter of filters; track filters) {
     <button
@@ -61,6 +64,15 @@
     </button>
     }
   </div>
+
+  @if (!chatBots.length) {
+  <div
+    class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
+  >
+    <p>There is no content available</p>
+  </div>
+
+  } @else {
   <div class="bg-neutral rounded-lg w-full">
     <div class="overflow-x-auto p-4">
       <table
@@ -133,7 +145,13 @@
       (pageChange)="pageFineTuning = $event"
     ></wagademy-pagination>
   </div>
-  } @if (gptType === 'TRAININGDATA') {
+  }} @else if (gptType === 'TRAININGDATA' && !trainingData.length) {
+  <div
+    class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
+  >
+    <p>There is no content available</p>
+  </div>
+  } @else {
   <div class="pt-8">
     <div class="bg-neutral rounded-lg w-full">
       <div class="overflow-x-auto p-4">
@@ -156,10 +174,14 @@
                 <p class="text-sm">{{ data.title }}</p>
               </td>
               <td class="py-4 px-6 flex justify-end gap-4">
+                @if(isDownloading) {
+                <span class="loading loading-dots text-base-200"></span>} @else
+                {
                 <i
                   class="bi bi-download text-base-200 cursor-pointer"
                   (click)="download(data.id, data.title)"
                 ></i>
+                }
                 <i
                   class="bi bi-eye text-base-200 cursor-pointer"
                   (click)="view(data.id)"
@@ -187,8 +209,10 @@
       (pageChange)="pageTrainingData = $event"
     ></wagademy-pagination>
   </div>
-  }
+
+  } }
 </div>
+
 <dialog id="create_fine_turning_modal" class="modal modal-middle">
   <div class="modal-box w-3/4 container">
     <div class="flex justify-between items-center pb-14">
@@ -410,7 +434,7 @@
     </form>
   </div>
 </dialog>
-@if(gptType === 'FINETUNING'){
+@if (gptType === 'FINETUNING') {
 <wagademy-modal
   title="Are you sure you want to remove this fine tuning?"
   actionButtonLabel="Remove"
@@ -419,11 +443,12 @@
   typeModal="cancel"
 >
 </wagademy-modal>
-} @if(gptType === 'TRAININGDATA'){
+} @if (gptType === 'TRAININGDATA') {
 <wagademy-modal
   title="Are you sure you want to remove this training data?"
   actionButtonLabel="Remove"
   message="This action cannot be reversed."
+  [isLoading]="isRemovingTrainingData"
   (actionButtonClick)="removeTrainingData()"
   typeModal="cancel"
 >
