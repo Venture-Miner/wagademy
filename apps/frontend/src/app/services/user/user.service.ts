@@ -14,6 +14,8 @@ import {
   RetrieveSelfResponse,
   UpdateCompanyProfile,
   UpdateCompanyProfileResponse,
+  UpdateProfile,
+  UpdateProfileResponse,
 } from '@wagademy/types';
 
 @Injectable({
@@ -111,6 +113,36 @@ export class UserService extends BaseHttpService {
     });
     return this.http.patch<UpdateCompanyProfileResponse>(
       `${this.URL}/user/company-profile`,
+      formData
+    );
+  }
+
+  updateUserProfile(
+    updateProfileDto: UpdateProfile
+  ): Observable<UpdateProfileResponse> {
+    const formData: FormData = new FormData();
+    if (updateProfileDto.profilePhoto)
+      formData.append('profilePhoto', updateProfileDto.profilePhoto as File);
+    Object.keys(updateProfileDto).forEach((key) => {
+      if (
+        key !== 'profilePhoto' &&
+        key !== 'education' &&
+        key !== 'professionalExperience'
+      ) {
+        formData.append(key, (updateProfileDto as any)[key]);
+      }
+      if (key === 'education' || key === 'professionalExperience') {
+        updateProfileDto[key]!.forEach((item: any, index: number) => {
+          Object.keys(item).forEach((subKey) => {
+            if (item[subKey]) {
+              formData.append(`${key}[${index}][${subKey}]`, item[subKey]);
+            }
+          });
+        });
+      }
+    });
+    return this.http.patch<UpdateProfileResponse>(
+      `${this.URL}/user/profile`,
       formData
     );
   }

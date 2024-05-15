@@ -1,6 +1,11 @@
-import { AccountTypeEnum, RetrieveSelfResponse } from '@wagademy/types';
+import {
+  AccountTypeEnum,
+  RetrieveSelfResponse,
+  UserProfile,
+} from '@wagademy/types';
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
+import { ProfileEntity } from 'apps/backend/src/shared/entities';
 
 export class RetrieveSelfResponseEntity implements RetrieveSelfResponse {
   @ApiProperty({ example: faker.database.mongodbObjectId() })
@@ -24,8 +29,8 @@ export class RetrieveSelfResponseEntity implements RetrieveSelfResponse {
   @ApiProperty({ example: null })
   companyProfile: { id: string } | null;
 
-  @ApiProperty({ example: null })
-  userProfile: { id: string } | null;
+  @ApiProperty({ type: ProfileEntity })
+  userProfile: UserProfile | null;
 
   @ApiProperty({ example: null })
   subscriptionId: string | null;

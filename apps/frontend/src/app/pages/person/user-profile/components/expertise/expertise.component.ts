@@ -39,6 +39,11 @@ export class ExpertiseComponent {
     }
   }
 
+  hasError(): boolean {
+    const control = this.expertiseForm.get('areasOfExpertise');
+    return control ? control.invalid : false;
+  }
+
   removeExpertise(index: number): void {
     if (index >= 0 && index < this.expertises.length) {
       this.expertises.splice(index, 1);

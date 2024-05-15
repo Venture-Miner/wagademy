@@ -63,7 +63,6 @@ export class UserService {
         ...profileData,
         user: { connect: { id: userId } },
       };
-
       if (companyPhoto) {
         const { key, url } = await this.fileService.uploadFile(
           companyPhoto[0],
@@ -74,7 +73,6 @@ export class UserService {
           create: { url, key: pictureKey },
         };
       }
-
       return this.prismaService.companyProfile.create({
         data: createCompanyProfileData,
         include: {
@@ -100,7 +98,6 @@ export class UserService {
         professionalExperience,
         ...profileData
       } = createProfile;
-
       const createUserProfileData: Prisma.UserProfileCreateInput = {
         ...profileData,
         education: { createMany: { data: education } },
@@ -109,7 +106,6 @@ export class UserService {
         },
         user: { connect: { id: userId } },
       };
-
       if (profilePhoto) {
         const { key, url } = await this.fileService.uploadFile(
           profilePhoto[0],
@@ -276,23 +272,25 @@ export class UserService {
       }
     });
 
-    return {
-      createMany: { data: createData },
-      updateMany: updateData,
-    };
+    const response: any = {};
+    if (createData.length) {
+      response.createMany = { data: createData };
+    }
+    if (updateData.length) {
+      response.updateMany = updateData;
+    }
+    return response;
   }
 
   private async handleProfessionalExperience(
     professionalExperience: UpdateProfessionalExperience[] | undefined
   ) {
     if (!professionalExperience) return {};
-
     const createData: CreateProfessionalExperience[] = [];
     const updateData: {
       where: { id: string };
       data: UpdateProfessionalExperience;
     }[] = [];
-
     professionalExperience.forEach(({ id, ...professionalExp }) => {
       if (id) {
         updateData.push({ where: { id }, data: professionalExp });
@@ -300,11 +298,14 @@ export class UserService {
         createData.push(professionalExp as CreateProfessionalExperience);
       }
     });
-
-    return {
-      createMany: { data: createData },
-      updateMany: updateData,
-    };
+    const response: any = {};
+    if (createData.length) {
+      response.createMany = { data: createData };
+    }
+    if (updateData.length) {
+      response.updateMany = updateData;
+    }
+    return response;
   }
 
   async findUserProfile(
@@ -342,13 +343,18 @@ export class UserService {
       throw new ForbiddenException('Only the owner can access the profile.');
     return companyProfile;
   }
-
   async findOne(id: string): Promise<FindOneUserResponse | null> {
     return this.prismaService.user.findUnique({
       where: { id },
       include: {
         companyProfile: { select: { id: true } },
-        userProfile: { select: { id: true } },
+        userProfile: {
+          include: {
+            education: true,
+            professionalExperience: true,
+            profilePhoto: true,
+          },
+        },
       },
     });
   }

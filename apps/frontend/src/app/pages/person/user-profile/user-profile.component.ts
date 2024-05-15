@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { CommonModule, DatePipe, Location } from '@angular/common';
+import { Component } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   FormArray,
   FormBuilder,
@@ -24,17 +24,13 @@ import { ProfessionalExperienceComponent } from './components/professional-exper
 import { SkillsComponent } from './components/skills/skills.component';
 import { PhotoUploadComponent } from './components/photo-upload/photo-upload.component';
 import { dateValidator } from '../../../shared/utils/date-comparison-validator';
-import { HttpClient } from '@angular/common/http';
+import { User, UserProfile } from '@wagademy/types';
+import { AuthService } from '../../../services/auth/auth.service';
+import { UserProfileDisplayComponent } from '../../../shared/components/user-profile-display/user-profile-display.component';
 import { ToastService } from '../../../services/toast/toast.service';
-import { UserService } from '../../../services/user/user.service';
-import {
-  CreateEducation,
-  CreateProfessionalExperience,
-  CreateProfile,
-} from '@wagademy/types';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
-interface Country {
+export interface Country {
   iso2: string;
   name: string;
 }
@@ -62,6 +58,7 @@ export interface State {
     SkillsComponent,
     PhotoUploadComponent,
     DatePipe,
+    UserProfileDisplayComponent,
   ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css',
@@ -70,12 +67,10 @@ export class UserProfileComponent {
   countries: SelectItem<string>[] = [];
   states: SelectItem<string>[] = [];
   selectedCountry: string | null = '';
-  profilePhoto: string | undefined;
-  editMode = false;
-  isCreating = false;
+  profilePhotoUrl!: string | undefined;
+  profilePhotoFile!: File;
+  isUpdateMode = false;
   step = 1;
-  private isMax = false;
-  private isMaxExpertises = false;
   userData = this.fb.group({
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
@@ -91,27 +86,18 @@ export class UserProfileComponent {
     state: ['', Validators.required],
     about: ['', Validators.required],
   }) as FormGroup<UserData>;
-
   educationForm!: FormGroup;
-
   professionalExperienceForm!: FormGroup;
-
   expertiseForm!: FormGroup;
-
   skillsForm!: FormGroup;
-
   expertises: string[] = [];
-
   skills: string[] = [];
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
     private http: HttpClient,
-    private toastService: ToastService,
-    private readonly userService: UserService,
-    private location: Location,
-    private router: Router,
-    private cdr: ChangeDetectorRef
+    private toastService: ToastService
   ) {
     this.educationForm = this.fb.group({
       items: this.fb.array([this.createEducationItem()]),
@@ -136,6 +122,47 @@ export class UserProfileComponent {
     });
 
     this.getCountries();
+  }
+
+  ngOnInit() {
+    const user = this.authService.user.value;
+    if (user) {
+      this.initializeUserData(user);
+    }
+  }
+
+  initializeUserData(user: User): void {
+    if (user?.userProfile) {
+      const userProfile = user.userProfile as UserProfile;
+      this.step = 6;
+      this.isUpdateMode = true;
+      this.userData.patchValue({
+        name: userProfile.name,
+        email: userProfile.email,
+        dateOfBirth: userProfile.dateOfBirth,
+        country: userProfile.country as unknown as SelectItem<string>,
+        state: userProfile.state as unknown as SelectItem<string>,
+        about: userProfile.about,
+        contactNumber: userProfile.contactNumber,
+      });
+      (this.educationForm.get('items') as FormArray).clear();
+      userProfile.education.forEach((educationItem) => {
+        (this.educationForm.get('items') as FormArray).push(
+          this.fb.group(educationItem)
+        );
+      });
+      (this.professionalExperienceForm.get('items') as FormArray).clear();
+      userProfile.professionalExperience.forEach(
+        (professionalExperienceItem) => {
+          (this.professionalExperienceForm.get('items') as FormArray).push(
+            this.fb.group(professionalExperienceItem)
+          );
+        }
+      );
+      this.expertises = userProfile.areasOfExpertise;
+      this.skills = userProfile.skillsAndCompetencies;
+      this.profilePhotoUrl = userProfile.profilePhoto?.url;
+    }
   }
 
   createEducationItem(): FormGroup {
@@ -167,90 +194,9 @@ export class UserProfileComponent {
     );
   }
 
-  addEducationItem(): void {
-    this.educationItems.push(this.createEducationItem());
-  }
-
-  get educationItems(): FormArray {
-    return this.educationForm.get('items') as FormArray;
-  }
-
-  removeEducationItem(index: number): void {
-    this.educationItems.removeAt(index);
-  }
-
-  get professionalExperienceItems(): FormArray {
-    return this.professionalExperienceForm.get('items') as FormArray;
-  }
-
-  addProfessionalExperienceItem(): void {
-    this.professionalExperienceItems.push(
-      this.createProfessionalExperienceItem()
-    );
-  }
-
-  removeProfessionalExperienceItem(index: number): void {
-    this.professionalExperienceItems.removeAt(index);
-  }
-
-  addExpertise(): void {
-    if (this.expertises.length < 10 && this.expertiseForm.valid) {
-      const newExpertise = this.expertiseForm.get('areasOfExpertise')?.value;
-      if (newExpertise && newExpertise.trim() !== '') {
-        this.expertises.push(newExpertise.trim());
-        this.expertiseForm.reset();
-        if (this.expertises.length === 10) {
-          this.isMaxExpertises = true;
-          this.cdr.detectChanges();
-        }
-      }
-    }
-  }
-
-  removeExpertise(index: number): void {
-    if (index >= 0 && index < this.expertises.length) {
-      this.expertises.splice(index, 1);
-      if (this.expertises.length < 10) {
-        this.isMaxExpertises = false;
-        this.cdr.detectChanges();
-      }
-    }
-  }
-
-  get isMaxValueOfExpertises() {
-    return this.isMaxExpertises;
-  }
-
-  addSkill(): void {
-    if (this.skills.length < 10 && this.skillsForm.valid) {
-      const newSkill = this.skillsForm.get('skillsAndCompetencies')?.value;
-      if (newSkill && newSkill.trim() !== '') {
-        this.skills.push(newSkill.trim());
-        this.skillsForm.reset();
-        if (this.skills.length === 10) {
-          this.isMax = true;
-          this.cdr.detectChanges();
-        }
-      }
-    }
-  }
-
-  removeSkill(index: number): void {
-    if (index >= 0 && index < this.skills.length) {
-      this.skills.splice(index, 1);
-      if (this.skills.length < 10) {
-        this.isMax = false;
-        this.cdr.detectChanges();
-      }
-    }
-  }
-
-  get isMaxValue() {
-    return this.isMax;
-  }
-
-  onImageUploaded(imageUrl: string) {
-    this.profilePhoto = imageUrl;
+  onImageUploaded(imageData: { url: string; file: File }) {
+    this.profilePhotoUrl = imageData.url;
+    this.profilePhotoFile = imageData.file;
   }
 
   getCountries() {
@@ -292,87 +238,6 @@ export class UserProfileComponent {
       error: () => {
         this.toastService.showToast({
           message: 'Failed fetching states.',
-          type: 'error',
-        });
-      },
-    });
-  }
-
-  onCheckboxChange(
-    event: Event,
-    index: number,
-    controlName: 'educationItems' | 'professionalExperienceItems',
-    fieldName: 'stillStudying' | 'currentlyWorkingHere'
-  ) {
-    this[controlName].controls[index]
-      .get(fieldName)
-      ?.setValue((event.target as HTMLInputElement).checked);
-  }
-
-  createUserData() {
-    return {
-      ...this.userData.value,
-      dateOfBirth: this.createLocalDate(
-        this.userData.value.dateOfBirth as string
-      ),
-      education: this.educationForm.value.items.map(
-        (item: CreateEducation) => ({
-          ...item,
-          startDate: this.createLocalDate(String(item.startDate)),
-          endDate: item.endDate
-            ? this.createLocalDate(String(item.endDate))
-            : null,
-        })
-      ),
-      professionalExperience: this.professionalExperienceForm.value.items.map(
-        (item: CreateProfessionalExperience) => ({
-          ...item,
-          startDate: this.createLocalDate(String(item.startDate)),
-          endDate: item.endDate
-            ? this.createLocalDate(String(item.endDate))
-            : null,
-        })
-      ),
-      areasOfExpertise: [...this.expertises],
-      skillsAndCompetencies: [...this.skills],
-    } as unknown as CreateProfile;
-  }
-
-  createLocalDate(dateString: string) {
-    const [year, month, day] = dateString.split('-');
-    return new Date(+year, +month - 1, +day);
-  }
-
-  get areAllFormsValid() {
-    return (
-      this.userData.invalid ||
-      this.educationForm.invalid ||
-      this.professionalExperienceForm.invalid ||
-      this.expertiseForm.invalid ||
-      this.skillsForm.invalid
-    );
-  }
-
-  createUserProfile() {
-    this.isCreating = true;
-    const createUserProfileDto: CreateProfile = this.createUserData();
-    this.userService.createUserProfile(createUserProfileDto).subscribe({
-      next: () => {
-        this.toastService.showToast({
-          message: 'Profile successfully created.',
-          type: 'success',
-        });
-        this.isCreating = false;
-        if (this.location.getState() !== null) {
-          this.location.back();
-        } else {
-          this.router.navigate(['/pages/home']);
-        }
-      },
-      error: () => {
-        this.isCreating = false;
-        this.toastService.showToast({
-          message: 'Error while creating profile.',
           type: 'error',
         });
       },

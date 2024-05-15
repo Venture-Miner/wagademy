@@ -39,6 +39,11 @@ export class SkillsComponent {
     }
   }
 
+  hasError(): boolean {
+    const control = this.skillsForm.get('skillsAndCompetencies');
+    return control ? control.invalid : false;
+  }
+
   removeSkill(index: number): void {
     if (index >= 0 && index < this.skills.length) {
       this.skills.splice(index, 1);
