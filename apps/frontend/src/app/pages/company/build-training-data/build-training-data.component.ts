@@ -110,6 +110,7 @@ export class BuildTrainingDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.activatedRoute.queryParamMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
@@ -123,12 +124,14 @@ export class BuildTrainingDataComponent implements OnInit {
               this.addNewMessageGroup();
             });
             this.syncFilteredMessageSets();
+            this.isLoading = false;
           },
           error: () => {
             this.toastService.showToast({
               message: 'Error while retrieving training data.',
               type: 'error',
             });
+            this.isLoading = false;
           },
         });
       } else {
