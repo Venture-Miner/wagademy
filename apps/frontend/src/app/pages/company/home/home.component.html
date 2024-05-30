@@ -1,0 +1,186 @@
+<div
+  class="container mx-auto min-h-screen px-3 2xl:pl-16 xl:px-0 lg:pl-7 md:pl-10 sm:px-0"
+>
+  <div class="pb-8 pt-6">
+    <h2 class="font-sans font-medium text-4xl text-base-100">Home</h2>
+  </div>
+  @if(isLoading) {
+  <wagademy-loading></wagademy-loading>
+  } @else { @if(!jobs.length && !courses.length) {
+  <div
+    class="flex w-full items-center font-bold text-2xl text-base-100 justify-center mt-[30vh]"
+  >
+    <p>There is no content available</p>
+  </div>
+  }
+
+  <div class="pb-6">
+    @if(jobs.length) {
+    <div>
+      <div class="flex justify-between pb-2">
+        <h3 class="text-2xl text-base-100 font-sans font-medium">
+          Applications
+        </h3>
+        <button
+          class="text-primary font-serif text-xl 2xl:pr-24 xl:pr-2 lg:pr-11 md:pr-14 sm:pr-7"
+          [routerLink]="['/pages/hiring']"
+        >
+          See More
+        </button>
+      </div>
+      <div
+        class="max-[657px]:justify-center flex-wrap justify-start flex gap-10 sm:gap-5 pt-6 xl:pt-0"
+      >
+        @for (job of jobs; track $index) {
+        <wagademy-card
+          [img]="job.company.companyProfile?.companyPhoto?.url"
+          [name]="job.title"
+          [description]="job.description"
+          [applications]="job._count.jobApplications"
+          [jobStatus]="job.jobStatus"
+          [button]="'View More'"
+          [menu]="'jobs'"
+          route="job-applications"
+          queryParam="jobId"
+          [selectId]="job.id"
+          [isOpen]="selectedCardIndex === $index"
+          (click)="onCardClick($index)"
+          (updateJob)="updateJobModal(job)"
+          (updateJobStatus)="updateJobStatus(job.id, $index)"
+          (removeJob)="openRemoveJobModal()"
+          (copyLinkJob)="copyLink(job.id)"
+          (interviewGPTJob)="redirectToJobInterviewSettingsPage(job.id)"
+          [disableButton]="!job._count.jobApplications"
+        ></wagademy-card>
+        }
+      </div>
+    </div>
+    }
+    <!-- @if(courses.length){
+      <div>
+        <div class="flex justify-between pt-6 pb-2">
+          <h3 class="text-2xl text-base-100 font-sans font-medium">Courses</h3>
+          <button class="text-primary font-serif text-xl">See More</button>
+        </div>
+        <div
+          class="max-[657px]:justify-center flex-wrap justify-between flex gap-8 pt-6 xl:pt-0"
+        >
+          @for (course of courses; track $index) {
+          <wagademy-card
+            [img]="course.images"
+            [name]="course.name"
+            [description]="course.description"
+            [button]="'Invite GPT+'"
+            [menu]="'courses'"
+            [isOpenCourses]="selectedCardCourseIndex === $index"
+            (click)="onCardCourseClick($index)"
+          ></wagademy-card>
+          }
+        </div>
+      </div>
+      } -->
+  </div>
+  }
+</div>
+
+<dialog id="update_job" class="modal modal-middle">
+  <div class="modal-box w-3/4 container">
+    <form [formGroup]="form" method="dialog">
+      <div class="flex justify-center items-baseline pb-14">
+        <h2 class="font-sans font-medium sm:text-4xl text-2xl text-base-100">
+          Update Job
+        </h2>
+        <button
+          class="absolute right-2 top-2 text-base-100 sm:pt-6 pt-5 pr-4"
+          (click)="resetForm()"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="pb-6">
+        <div class="flex gap-2 items-center">
+          <input
+            type="checkbox"
+            class="toggle toggle-primary"
+            (click)="toggleStatus()"
+            [checked]="status === 'PUBLISHED'"
+          />
+          <p class="text-base-100 font-mono text-sm font-bold">{{ status }}</p>
+        </div>
+      </div>
+      <div class="pb-6">
+        <wagademy-form-field [control]="form.controls.title" label="Job title">
+          <wagademy-input
+            placeholder="Job title"
+            type="text"
+            formControlName="title"
+          >
+          </wagademy-input>
+        </wagademy-form-field>
+      </div>
+      <div class="pb-6">
+        <wagademy-form-field
+          [control]="form.controls.description"
+          label="Description"
+        >
+          <textarea
+            placeholder="Description"
+            class="textarea textarea-bordered bg-neutral h-[168px] text-base-100 w-full"
+            [value]="form.controls.description.value"
+            formControlName="description"
+          ></textarea>
+        </wagademy-form-field>
+      </div>
+      <div class="pb-6">
+        <wagademy-form-field
+          [control]="form.controls.employmentClassification"
+          label="Employment Classification"
+        >
+          <wagademy-select
+            [items]="employmentClassification"
+            formControlName="employmentClassification"
+          >
+          </wagademy-select>
+        </wagademy-form-field>
+      </div>
+      <div class="pb-14">
+        <wagademy-form-field
+          [control]="form.controls.allocation"
+          label="Allocation"
+        >
+          <wagademy-select [items]="allocation" formControlName="allocation">
+          </wagademy-select>
+        </wagademy-form-field>
+      </div>
+      <div class="sm:flex justify-center gap-4">
+        <button
+          class="btn btn-outline btn-primary sm:w-[210px] w-full"
+          [disabled]="isLoading || isUpdating"
+          (click)="resetForm()"
+        >
+          Cancel
+        </button>
+        <div class="pt-4 sm:pt-0">
+          <button
+            class="btn btn-primary sm:w-[210px] w-full"
+            type="button"
+            [disabled]="isLoading || form.invalid || !form.dirty || isUpdating"
+            (click)="updateJob()"
+          >
+            @if (isUpdating) {
+            <span class="loading loading-dots"></span>
+            } @else { Update }
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</dialog>
+<wagademy-modal
+  title="Are you sure you want to remove this job?"
+  actionButtonLabel="Remove"
+  message="This action cannot be reversed."
+  (actionButtonClick)="deleteJob()"
+  [typeModal]="'cancel'"
+>
+</wagademy-modal>

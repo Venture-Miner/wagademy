@@ -1,0 +1,14 @@
+<select
+  class="select bg-neutral w-full text-base-100 focus:border-primary"
+  [ngClass]="hasError() ? 'select-error' : 'select'"
+  #select
+  (change)="onInputChange()"
+  (blur)="onBlur()"
+>
+  <option disabled selected value="">{{ placeholder }}</option>
+  @for (item of items; track $index) {
+  <option [value]="item.value">
+    {{ item.label }}
+  </option>
+  }
+</select>

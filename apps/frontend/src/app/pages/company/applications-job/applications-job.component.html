@@ -1,0 +1,83 @@
+<div class="container mx-auto min-h-screen px-3">
+  @if(isLoading){
+  <wagademy-loading></wagademy-loading>
+  }@else {
+  <div class="pb-4 pt-6 flex justify-between flex-wrap gap-4">
+    <wagademy-back-button [routerLink]="'/pages/hiring'"></wagademy-back-button>
+    <wagademy-input-search
+      placeholder="Search"
+      [value]="searchJob"
+      (valueChange)="searchJob = $event; listJobApplications()"
+    ></wagademy-input-search>
+    <div class="flex flex-wrap gap-2">
+      @for (filter of filters; track filters) {
+      <button
+        class="border border-base-200 hover:border-none font-mono rounded-full py-1 px-3 hover:bg-secondary h-9"
+        [ngClass]="[
+          filter.symbol === selectedFilter
+            ? 'bg-secondary text-base-100 border-none'
+            : 'text-base-100 hover:text-base-100'
+        ]"
+        (click)="selectedFilter = filter.symbol; listJobApplications()"
+      >
+        {{ filter.name }}
+      </button>
+      }
+    </div>
+  </div>
+  <div class="flex gap-3 font-sans items-center pb-4">
+    <h2 class="font-medium text-base-100 text-4xl">
+      {{ jobTitle }}
+    </h2>
+    <p class="text-sm text-base-100 font-bold">| {{ count }} APPLICATIONS</p>
+  </div>
+  <div
+    class="max-[767px]:justify-center flex-wrap justify-start flex gap-8 pt-6 xl:pt-0"
+  >
+    @for (job of jobApplications; track $index) {
+    <wagademy-applications-job-card
+      [img]="job.user.userProfile?.profilePhoto?.url"
+      [name]="job.user.userProfile?.name"
+      [description]="job.user.userProfile?.about"
+      [status]="job.applicationStatus"
+    >
+      @if(job.applicationStatus ==='INVITED'){
+      <div
+        class="tooltip tooltip-warning w-full"
+        data-tip="You can't see the results yet, as the candidate hasn't had an interview with the AI yet."
+      >
+        <button class="btn btn-primary w-full" disabled>See Results</button>
+      </div>
+      } @if(job.applicationStatus ==='INTERVIEWED'){
+      <button
+        class="btn btn-primary w-full"
+        [routerLink]="['/pages/result-of-application']"
+        [queryParams]="{ jobApplicationId: job.id }"
+      >
+        See Results
+      </button>
+      } @if(job.applicationStatus === 'SUBSCRIBED'){
+      <button
+        class="btn btn-neutral border-primary text-primary hover:btn-primary w-full"
+        [routerLink]="['/pages/applicant-profile']"
+        [queryParams]="{
+          userProfileId: job.user.userProfile?.id,
+          jobApplicationId: job.id
+        }"
+      >
+        See profile
+      </button>
+      }
+    </wagademy-applications-job-card>
+    }
+  </div>
+  <div class="flex justify-center lg:justify-end pt-6 pb-3">
+    <wagademy-pagination
+      [page]="page"
+      [take]="take"
+      [count]="count"
+      (pageChange)="page = $event"
+    ></wagademy-pagination>
+  </div>
+  }
+</div>

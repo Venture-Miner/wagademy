@@ -14,6 +14,7 @@
           'bg-primary': displayStyle === 'grid',
           'rounded-full px-2 py-1': true
         }"
+        aria-label="grid"
       >
         <i
           [ngClass]="{
@@ -28,6 +29,7 @@
           'bg-primary': displayStyle === 'list',
           'rounded-full px-2 py-1': true
         }"
+        aria-label="list"
       >
         <i
           [ngClass]="{
@@ -38,15 +40,11 @@
       </button>
     </div>
     <div>
-      <label class="input flex items-center gap-2 bg-transparent text-base-200">
-        <i class="bi bi-search"></i>
-        <input
-          type="text"
-          [(ngModel)]="searchTerm"
-          class="grow text-base-200"
-          placeholder="Search"
-        />
-      </label>
+      <wagademy-input-search
+        placeholder="Search"
+        [value]="searchTerm"
+        (valueChange)="searchTerm = $event; getCourses()"
+      ></wagademy-input-search>
     </div>
   </div>
   <div
@@ -58,8 +56,8 @@
         : 'sm:grid-cols-2 lg:grid-cols-4 justify-items-center'
     "
   >
+    @for(course of filteredCourses; track filteredCourses){
     <div
-      *ngFor="let course of filteredCourses"
       (click)="selectedCourse = course"
       class="p-4 bg-neutral-400/10 rounded-lg flex-shrink-0 flex hover:shadow-lg hover:ease-in-out hover:duration-150 cursor-pointer"
       [ngClass]="
@@ -72,13 +70,17 @@
         [ngClass]="{
             'mr-4': displayStyle === 'list',
           }"
-        [src]="course.img"
-        alt="Course image"
-        class="object-cover w-20 h-20 rounded mb-4"
+        [ngSrc]="course.img"
+        alt="course"
+        width="80"
+        height="80"
+        class="object-cover rounded mb-4"
       />
       <div class="flex-col w-full">
-        <h2 class="font-bold text-neutral-950 mb-2">{{ course.name }}</h2>
-        <p class="line-clamp-2 mb-4 text-base-200 mr-4">
+        <h2 class="font-bold text-neutral-950 mb-2 font-mono">
+          {{ course.name }}
+        </h2>
+        <p class="line-clamp-2 mb-4 text-base-200 mr-4 font-mono">
           {{ course.description }}
         </p>
         <div
@@ -88,18 +90,19 @@
           }"
           class="text-xl text-center mt-auto font-serif sm:hidden p-2"
         >
+          @if(course.status === 'claimed'){
           <button
-            *ngIf="course.status === 'claimed'"
             class="p-2 text-xl font-serif sm:hidden text-primary text-center"
           >
             View In Wallet
           </button>
+          } @else{
           <button
-            *ngIf="course.status !== 'claimed'"
             class="text-xl btn sm:hidden btn-primary bg-primary font-normal w-full"
           >
             Claim
           </button>
+          }
         </div>
       </div>
       <div
@@ -109,26 +112,25 @@
             : 'mt-auto w-full flex justify-center'
         "
       >
+        @if(course.status === 'claimed'){
         <button
-          *ngIf="course.status === 'claimed'"
           class="p-2 text-xl font-serif hidden sm:block text-primary text-center"
         >
           View In Wallet
         </button>
-
+        } @else{
         <button
-          *ngIf="course.status !== 'claimed'"
           class="text-xl btn hidden sm:block btn-primary bg-primary font-normal w-full"
         >
           Claim
         </button>
+        }
       </div>
     </div>
+    }
   </div>
-  <div
-    *ngIf="filteredCourses.length"
-    class="flex justify-center lg:justify-end pt-6 pb-3"
-  >
+  @if(filteredCourses.length){
+  <div class="flex justify-center lg:justify-end pt-6 pb-3">
     <wagademy-pagination
       [page]="page"
       [take]="take"
@@ -136,9 +138,10 @@
       (pageChange)="page = $event; getCourses()"
     ></wagademy-pagination>
   </div>
+  }
 </div>
+@if(selectedCourse){
 <wagademy-confirmation-modal
-  *ngIf="selectedCourse"
   (claimEvent)="showCertificate()"
   [courseImage]="selectedCourse.img"
   [courseName]="selectedCourse.name"
@@ -146,7 +149,6 @@
   [courseProgress]="selectedCourse.progress"
   [courseStatus]="selectedCourse.status"
 ></wagademy-confirmation-modal>
-<wagademy-certificate
-  *ngIf="selectedCourse && displayCertificate"
-  [courseName]="selectedCourse.name"
-></wagademy-certificate>
+} @if(selectedCourse && displayCertificate){
+<wagademy-certificate [courseName]="selectedCourse.name"></wagademy-certificate>
+}

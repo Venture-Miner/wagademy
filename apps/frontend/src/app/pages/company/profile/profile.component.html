@@ -1,0 +1,207 @@
+<div class="container px-5 mx-auto min-h-screen">
+  @if(isLoading){
+  <wagademy-loading></wagademy-loading>
+  }@else {
+  <div>
+    <form [formGroup]="form" class="content">
+      <wagademy-back-button></wagademy-back-button>
+      <div class="absolute max-[639px]:w-[100%]">
+        <div class="relative">
+          <div class="container max-[639px]:w-[90%]">
+            @if(!background){
+            <div
+              class="object-cover h-[200px] md:w-[37rem] xl:w-[72rem] lg:w-[55rem] 2xl:w-[85rem] w-full sm:w-[37rem] rounded-lg container bg-neutral"
+            ></div>
+            } @else{
+            <img
+              class="object-cover h-[200px] md:w-[37rem] xl:w-[72rem] lg:w-[55rem] 2xl:w-[85rem] sm:w-[37rem] rounded-lg container bg-neutral"
+              [ngSrc]="background"
+              alt="background profile"
+            />
+            }
+          </div>
+          @if(editProfile && !isUpdating){
+          <div class="container flex justify-end max-[639px]:pr-20 sm:pr-10">
+            <div
+              class="absolute top-1/4 rounded-full shadow z-50 w-9 h-9 flex items-center justify-center cursor-pointer"
+              (click)="background.click()"
+            >
+              <input
+                #background
+                class="hidden"
+                type="file"
+                accept="image/*"
+                (change)="onFileChange($event, true)"
+              />
+              <i
+                class="bi bi-pencil text-sm text-primary shadow bg-neutral py-2 px-3 rounded-full"
+                aria-hidden="true"
+              ></i>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      <div class="relative md:pt-24 pt-28">
+        <div class="md:pl-24 flex justify-center md:justify-start">
+          <div
+            class="container flex justify-end bg-neutral border-2 rounded-3xl border-base-300 w-48 h-48"
+          >
+            @if(!profilePhoto){
+            <div class="rounded-3xl bg-neutral object-cover w-48 h-46"></div>
+            }@else{
+            <img
+              class="rounded-3xl object-cover"
+              [ngSrc]="profilePhoto"
+              alt="profile"
+              width="192"
+              height="176"
+            />
+            } @if(editProfile && !isUpdating){
+            <div
+              class="absolute rounded-3xl pt-40 pr-3 w-9 h-9 flex items-center justify-center cursor-pointer"
+              (click)="profilePhoto.click()"
+            >
+              <input
+                #profilePhoto
+                class="hidden"
+                type="file"
+                accept="image/*"
+                (change)="onFileChange($event, false)"
+              />
+              <i
+                class="bi bi-pencil text-sm text-primary shadow bg-neutral py-2 px-3 rounded-full"
+                aria-hidden="true"
+              ></i>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="lg:pl-72 pt-10 lg:pt-0 md:pr-28 xl:pr-20 2xl:pr-32 pb-6">
+        <div class="pb-8 min-[400px]:flex justify-between gap-6">
+          <div class="w-full">
+            @if (editProfile) {
+            <wagademy-form-field [control]="form.controls.companyName">
+              <wagademy-input
+                [disabledInput]="!editProfile"
+                [value]="companyName"
+                formControlName="companyName"
+                (ngModelChange)="validateForm()"
+              ></wagademy-input>
+            </wagademy-form-field>
+            <wagademy-form-field [control]="form.controls.areaOfExpertise">
+              <wagademy-input
+                [disabledInput]="!editProfile"
+                [value]="areaOfExpertise"
+                formControlName="areaOfExpertise"
+                (ngModelChange)="validateForm()"
+              ></wagademy-input>
+            </wagademy-form-field>
+            }@else {
+            <h3 class="font-sans text-2xl font-medium text-base-100 pb-2">
+              {{ companyName }}
+            </h3>
+            <div class="flex gap-2">
+              <i class="bi bi-lightning-charge text-primary"></i>
+              <p class="text-base-200 font-mono">{{ areaOfExpertise }}</p>
+            </div>
+            }
+          </div>
+          @if (!editProfile) {
+          <div class="pt-2">
+            <button
+              class="btn btn-outline btn-primary w-[158px]"
+              (click)="toggleEditProfile()"
+            >
+              Edit Profile
+            </button>
+          </div>
+          }@else{
+          <div class="pt-2">
+            <button
+              type="button"
+              class="btn btn-outline btn-primary w-[158px]"
+              [disabled]="form.invalid || !validForm || isUpdating"
+              (click)="updateProfile()"
+            >
+              @if(isUpdating){
+              <span class="loading loading-dots"></span>
+              } @else{ Update Profile}
+            </button>
+          </div>
+          }
+        </div>
+        <div class="pb-6">
+          <p class="text-primary font-mono font-bold">About</p>
+          <wagademy-form-field [control]="form.controls.about">
+            @if(editProfile){
+            <textarea
+              class="h-28 w-full outline-none p-2 text-base-100 bg-neutral"
+              [value]="form.controls.about.value"
+              formControlName="about"
+              (ngModelChange)="validateForm()"
+            ></textarea>
+            }@else {
+            <textarea
+              class="h-28 w-full outline-none p-2 text-base-100 bg-neutral resize-none"
+              [value]="form.controls.about.value"
+              disabled
+            ></textarea>
+            }
+          </wagademy-form-field>
+        </div>
+        <div>
+          <p class="text-primary font-bold font-mono pb-4">
+            What you are looking for?
+          </p>
+          @if(editProfile){
+          <div>
+            <wagademy-form-field
+              [control]="form.controls.whatIsTheCompanyLookingFor"
+            >
+              <wagademy-input
+                [(ngModel)]="newWord"
+                (keyup.enter)="
+                  addWhatIsTheCompanyLookingFor(); $event.stopPropagation()
+                "
+                [ngModelOptions]="{ standalone: true }"
+              ></wagademy-input>
+            </wagademy-form-field>
+            <div class="flex flex-wrap gap-4 pt-6">
+              @for (word of whatIsTheCompanyLookingFor; track $index) {
+              <div>
+                <div
+                  class="bg-neutral flex gap-2 rounded-3xl font-sm font-mono py-1 px-2"
+                >
+                  <p class="text-base-100">{{ word }}</p>
+                  <i
+                    (click)="removeWhatIsTheCompanyLookingFor($index)"
+                    class="bi bi-x-lg text-error cursor-pointer"
+                  ></i>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+          } @if(!editProfile){
+          <div>
+            <div class="flex flex-wrap gap-4">
+              @for (word of whatIsTheCompanyLookingFor; track $index) {
+              <div>
+                <div
+                  class="bg-neutral rounded-3xl text-base-100 font-sm font-mono py-1 px-2"
+                >
+                  {{ word }}
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </form>
+  </div>
+  }
+</div>

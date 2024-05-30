@@ -11,10 +11,20 @@ import { Observable, of, scan, takeWhile, timer } from 'rxjs';
 import { ToastService } from '../../services/toast/toast.service';
 import { passwordComplexityValidator } from '../../shared/utils/password-complexity-validator';
 import { ToastComponent } from '../../shared/components/toast/toast.component';
-import { confirmSignUp, resendSignUpCode, signUp } from 'aws-amplify/auth';
+import {
+  autoSignIn,
+  confirmSignUp,
+  resendSignUpCode,
+  signUp,
+} from 'aws-amplify/auth';
 import { FormFieldComponent } from '../../shared/components/form-field/form-field.component';
 import { InputComponent } from '../../shared/components/input/input.component';
-import { passwordMatchValidator } from '../../shared/types/password-match-validator';
+import { passwordMatchValidator } from '../../shared/utils/password-match-validator';
+import { FilesUploadComponent } from '../../shared/components/files-upload/files-upload.component';
+import { FilesUploadDirective } from '../../shared/components/files-upload/directives/files-upload.directive';
+import { DropZoneDirective } from '../../shared/components/files-upload/directives/drop-zone.directive';
+import { Hub } from 'aws-amplify/utils';
+import { AccountTypeEnum } from '@wagademy/types';
 
 type UserType = 'Company' | 'Personal';
 
@@ -30,7 +40,11 @@ type UserType = 'Company' | 'Personal';
     NgClass,
     InputComponent,
     FormFieldComponent,
+    FilesUploadComponent,
+    FilesUploadDirective,
+    DropZoneDirective,
   ],
+  providers: [FilesUploadDirective],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
 })
@@ -75,16 +89,28 @@ export class SignUpComponent {
         userAttributes: {
           nickname: this.form.value.name,
           email: this.form.value.email,
-          'custom:user_type': this.userType,
         },
+        autoSignIn: true,
       },
     })
-      .then(() => {
-        this.router.navigate(['/account/sign-in']);
-        this.toastService.showToast({
-          message: 'Account created successfully',
-          type: 'success',
-        });
+      .then(async ({ nextStep }) => {
+        if (nextStep.signUpStep === 'COMPLETE_AUTO_SIGN_IN') {
+          await autoSignIn();
+          Hub.dispatch('custom', {
+            event: 'signedUp',
+            data: {
+              userType:
+                this.userType === 'Company'
+                  ? AccountTypeEnum.COMPANY
+                  : AccountTypeEnum.PHYSICAL_PERSON,
+              name: this.form.value.name,
+            },
+          });
+          this.toastService.showToast({
+            message: 'Account created successfully',
+            type: 'success',
+          });
+        }
         // this.step = 2;
       })
       .catch((error) => {

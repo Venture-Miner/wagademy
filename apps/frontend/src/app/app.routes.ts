@@ -1,15 +1,11 @@
 import { Routes } from '@angular/router';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
 export const appRoutes: Routes = [
   {
     path: '',
     loadChildren: () =>
       import('./landing/landing.module').then((m) => m.LandingModule),
-  },
-  {
-    path: '',
-    loadChildren: () =>
-      import('./pages/pages.module').then((m) => m.PagesModule),
   },
   {
     path: 'account',
@@ -21,4 +17,5 @@ export const appRoutes: Routes = [
     loadChildren: () =>
       import('./pages/pages.module').then((m) => m.PagesModule),
   },
+  { path: '**', component: NotFoundComponent },
 ];

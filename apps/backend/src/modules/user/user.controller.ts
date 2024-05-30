@@ -17,24 +17,31 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CognitoUserAttributes, User } from '@wagademy/types';
+import { AccountTypeEnum, CognitoUserAttributes, User } from '@wagademy/types';
 import { CognitoUserGuard } from '../../infra';
 import { ApiFiles, CognitoUser, DBUser } from '../../shared/decorators';
 import {
+  CreateCompanyProfileEntity,
   CreateProfileEntity,
   CreateUserResponseEntity,
   FindProfileEntity,
   RetrieveSelfResponseEntity,
+  UpdateCompanyProfileEntity,
   UpdateProfileEntity,
   UpdateUserResponseEntity,
 } from './entities';
 import {
+  CreateCompanyProfileDto,
   CreateProfileDto,
   CreateUserDto,
+  UpdateCompanyProfileDto,
   UpdateProfileDto,
   UpdateUserDto,
 } from './dto';
 import { MongoIdDto } from '../../shared/dtos';
+import { FindOneCompanyProfileEntity } from './entities/find-one-company-profile-response.entity';
+import { AccountTypeGuard } from '../../infra/auth/guards/account-type.guard';
+import { AccountType } from '../../shared/decorators/account-type.decorator';
 
 @ApiTags('User')
 @Controller('user')
@@ -63,7 +70,8 @@ export class UserController {
 
   @Post('create-profile')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Create a new profile',
     description: 'Creates a new user profile with provided details.',
@@ -91,20 +99,76 @@ export class UserController {
     );
   }
 
+  @Post('create-company-profile')
+  @ApiBearerAuth()
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
+  @ApiOperation({
+    summary: 'Create a new company profile',
+    description: 'Creates a new company profile with provided details.',
+  })
+  @ApiCreatedResponse({
+    type: CreateCompanyProfileEntity,
+    status: HttpStatus.CREATED,
+    description: 'Company profile successfully created.',
+  })
+  @ApiFiles(['companyPhoto'])
+  async createCompanyProfile(
+    @DBUser()
+    { id: userId }: User,
+    @UploadedFiles()
+    {
+      companyPhoto,
+    }: {
+      companyPhoto: Express.Multer.File[];
+    },
+    @Body() createCompanyProfileDto: CreateCompanyProfileDto
+  ) {
+    return this.userService.createCompanyProfile(
+      { ...createCompanyProfileDto, companyPhoto },
+      userId
+    );
+  }
+
   @Get('user-profile/:id')
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary: 'Find a user profile',
-    description: 'Find a profile with ID.',
+    summary: 'Find an user profile',
+    description: 'Find a profile based on its unique ID.',
   })
   @ApiResponse({
     type: FindProfileEntity,
     status: HttpStatus.OK,
     description: 'Profile retrieved successfully.',
   })
-  async findUserProfile(@Param() { id }: MongoIdDto) {
-    return this.userService.findUserProfile(id);
+  async findUserProfile(
+    @Param() { id }: MongoIdDto,
+    @DBUser()
+    { id: userId, accountType }: User
+  ) {
+    return this.userService.findUserProfile(id, userId, accountType);
+  }
+
+  @Get('company-profile/:id')
+  @ApiBearerAuth()
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
+  @ApiOperation({
+    summary: 'Find a company profile',
+    description: 'Find a company profile based on its unique ID.',
+  })
+  @ApiResponse({
+    type: FindOneCompanyProfileEntity,
+    status: HttpStatus.OK,
+    description: 'Company profile retrieved successfully.',
+  })
+  async findCompanyProfile(
+    @Param() { id }: MongoIdDto,
+    @DBUser()
+    { id: userId }: User
+  ) {
+    return this.userService.findCompanyProfile(id, userId);
   }
 
   @Get('self')
@@ -127,8 +191,8 @@ export class UserController {
   @ApiBearerAuth()
   @UseGuards(CognitoUserGuard)
   @ApiOperation({
-    summary: 'Update a user',
-    description: 'Updates a user with the provided data.',
+    summary: 'Update an user',
+    description: 'Updates an user with the provided data.',
   })
   @ApiResponse({
     type: UpdateUserResponseEntity,
@@ -145,7 +209,8 @@ export class UserController {
 
   @Patch('profile')
   @ApiBearerAuth()
-  @UseGuards(CognitoUserGuard)
+  @AccountType(AccountTypeEnum.PHYSICAL_PERSON)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
   @ApiOperation({
     summary: 'Update a profile',
     description: 'Updates a profile with provided details.',
@@ -160,16 +225,45 @@ export class UserController {
     @DBUser()
     { id: userId }: User,
     @UploadedFiles()
-    {
-      profilePhoto,
-    }: {
+    photo: {
       profilePhoto?: Express.Multer.File[];
     },
     @Body() updateProfileDto: UpdateProfileDto
   ) {
     return this.userService.updateUserProfile(userId, {
       ...updateProfileDto,
-      profilePhoto,
+      profilePhoto: photo?.profilePhoto,
+    });
+  }
+
+  @Patch('company-profile')
+  @ApiBearerAuth()
+  @AccountType(AccountTypeEnum.COMPANY)
+  @UseGuards(CognitoUserGuard, AccountTypeGuard)
+  @ApiOperation({
+    summary: 'Update a company profile',
+    description: 'Updates a company profile with provided details.',
+  })
+  @ApiResponse({
+    type: UpdateCompanyProfileEntity,
+    status: HttpStatus.OK,
+    description: 'Company profile successfully updated.',
+  })
+  @ApiFiles(['companyPhoto', 'backgroundPhoto'])
+  async updateCompanyProfile(
+    @DBUser()
+    { id: userId }: User,
+    @UploadedFiles()
+    photo: {
+      companyPhoto?: Express.Multer.File[];
+      backgroundPhoto?: Express.Multer.File[];
+    },
+    @Body() updateCompanyProfileDto: UpdateCompanyProfileDto
+  ) {
+    return this.userService.updateCompanyProfile(userId, {
+      ...updateCompanyProfileDto,
+      companyPhoto: photo?.companyPhoto,
+      backgroundPhoto: photo?.backgroundPhoto,
     });
   }
 }

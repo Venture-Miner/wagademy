@@ -8,4 +8,8 @@ export const user: User = {
   idRefAuth: faker.string.uuid(),
   accountType: AccountTypeEnum.PHYSICAL_PERSON,
   walletAddress: null,
+  companyProfile: null,
+  userProfile: null,
+  subscriptionId: faker.string.uuid(),
+  hasChangedPlan: false,
 };

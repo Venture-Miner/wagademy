@@ -1,0 +1,94 @@
+<div class="container mx-auto min-h-screen px-3">
+  <div class="pt-2 w-full">
+    <wagademy-back-button></wagademy-back-button>
+    <h2 class="font-sans font-medium text-4xl text-base-100 pb-8 pt-2">
+      Pre-screening interview training GPT
+    </h2>
+    <div class="flex gap-2 items-center pb-6">
+      <i class="bi bi-briefcase text-primary text-2xl"></i>
+      <h3 class="font-sans font-medium text-2xl text-base-100">
+        {{ name }}
+      </h3>
+    </div>
+  </div>
+  <p class="font-mono font-bold text-sm text-base-100 pb-1">
+    Set a minimum of {{ minimumOfQuestions }} questions or a max of
+    {{ maxOfQuestions }}
+  </p>
+  <wagademy-input
+    [placeholder]="'Question'"
+    [(ngModel)]="newQuestionText"
+    [disabled]="hasMaximumQuestions"
+  >
+    <button
+      class="text-base-100 py-1 px-4 rounded-lg font-semibold font-sans"
+      [ngClass]="[
+        hasMaximumQuestions || !newQuestionText.length || isSaving
+          ? 'bg-base-300 text-white'
+          : 'bg-secondary'
+      ]"
+      (click)="addQuestion()"
+      [disabled]="hasMaximumQuestions || !newQuestionText.length || isSaving"
+    >
+      Add Question
+    </button>
+  </wagademy-input>
+  <div>
+    @for(question of questions; track questions; let i = $index){
+    <ng-container>
+      <div class="py-2">
+        @if (editQuestion[i]) {
+        <div class="pt-8">
+          <wagademy-input
+            [(ngModel)]="questions[i]"
+            [placeholder]="'Question'"
+            (focus)="onFocus(i)"
+            (blur)="onBlur(i)"
+          >
+            <div class="flex gap-4">
+              <i
+                class="bi bi-check text-base-200 cursor-pointer"
+                (click)="confirmEdit(i)"
+              ></i>
+              <i
+                class="bi bi-trash text-error cursor-pointer"
+                aria-hidden="true"
+                (click)="removeQuestion($event, i)"
+              ></i>
+            </div>
+          </wagademy-input>
+        </div>
+        } @if (!editQuestion[i]) {
+        <div
+          class="flex justify-between items-end px-3 py-3 h-20 border-b border-b-neutral"
+        >
+          <p class="text-base-100 font-mono px-7">{{ question }}</p>
+          <div class="flex gap-4">
+            <i
+              class="bi bi-pencil text-base-200 cursor-pointer"
+              (click)="startEdit(i)"
+            ></i>
+            <i
+              class="bi bi-trash text-error cursor-pointer"
+              aria-hidden="true"
+              (click)="removeQuestion($event, i)"
+            ></i>
+          </div>
+        </div>
+        }
+      </div>
+    </ng-container>
+    }
+  </div>
+  <div class="flex justify-center md:pt-48 pt-24 pb-4">
+    <button
+      class="btn btn-primary w-[200px]"
+      (click)="saveQuestions()"
+      [disabled]="!hasMinimumQuestions || isSaving"
+    >
+      @if (isSaving) {
+      <span class="loading loading-dots"></span>
+      } @else {Save}
+    </button>
+  </div>
+</div>

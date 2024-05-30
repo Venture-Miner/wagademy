@@ -11,12 +11,12 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { HTMLInputTypeAttribute } from '../../types/html-input-type-attribute';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { InputRightButtonType } from '../../types/input-right-button-type';
 
 @Component({
   standalone: true,
-  imports: [NgClass, NgIf],
+  imports: [NgClass],
   selector: 'wagademy-input',
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
@@ -27,7 +27,10 @@ export class InputComponent implements ControlValueAccessor {
   @Input() rightButtonType: InputRightButtonType | undefined;
   @Input() type: HTMLInputTypeAttribute = 'text';
   @Input() readonly = false;
+  @Input() disabledInput = false;
   @Input() isRightButtonDisabled = false;
+  @Input() value = '';
+  @Input() pattern = '';
 
   @Output() rightButtonClick = new EventEmitter<void>();
 
@@ -62,8 +65,10 @@ export class InputComponent implements ControlValueAccessor {
     return !!(this.control?.invalid && this.control.touched);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onChange = (_: unknown) => {};
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onTouched = () => {};
 
   registerOnChange(fn: (_: unknown) => unknown) {
@@ -75,7 +80,10 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   writeValue(value: string) {
-    this.renderer2.setProperty(this.elementRef.nativeElement, 'value', value);
+    this.value = value;
+    if (this.elementRef.nativeElement) {
+      this.renderer2.setProperty(this.elementRef.nativeElement, 'value', value);
+    }
   }
 
   setDisabledState(isDisabled: boolean) {

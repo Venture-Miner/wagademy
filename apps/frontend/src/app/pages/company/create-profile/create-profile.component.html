@@ -1,0 +1,367 @@
+<form class="container px-5 mx-auto min-h-screen" [formGroup]="form">
+  <div class="md:flex xl:gap-36 gap-16 justify-center pt-8">
+    @if(step === 1){
+    <div class="w-full">
+      <div class="xl:flex w-full gap-8">
+        <div
+          class="container flex justify-end bg-neutral border-2 rounded-3xl border-base-300 w-48 h-48"
+        >
+          @if(!profilePhoto){
+          <div class="rounded-3xl bg-neutral object-cover w-48 h-46"></div>
+          } @else{
+          <img
+            class="rounded-3xl object-cover w-48 h-46"
+            [src]="profilePhoto"
+            alt="profile company"
+          />
+          }
+          <div
+            class="absolute rounded-3xl pt-40 pr-3 w-9 h-9 flex items-center justify-center cursor-pointer"
+            (click)="photo.click()"
+          >
+            <input
+              #photo
+              class="hidden"
+              type="file"
+              accept="image/*"
+              (change)="onFileChange($event)"
+            />
+            <i
+              class="bi bi-pencil text-sm text-primary shadow bg-neutral py-2 px-3 rounded-full"
+              aria-hidden="true"
+            ></i>
+          </div>
+        </div>
+        <div class="w-full lg:w-[640px]">
+          <div class="pt-4">
+            <wagademy-form-field
+              [control]="form.controls.name"
+              label="Company name"
+              [isInputMandatory]="true"
+            >
+              <wagademy-input
+                placeholder="Company name"
+                type="text"
+                [value]="form.controls.name.value ?? ''"
+                formControlName="name"
+                (ngModelChange)="validateFirstStep()"
+              ></wagademy-input>
+            </wagademy-form-field>
+            <div class="pt-4">
+              <wagademy-form-field
+                [control]="form.controls.areaOfExpertise"
+                label="Area of expertise"
+                [isInputMandatory]="true"
+              >
+                <wagademy-input
+                  placeholder="Area of expertise"
+                  type="text"
+                  [value]="form.controls.areaOfExpertise.value ?? ''"
+                  formControlName="areaOfExpertise"
+                  (ngModelChange)="validateFirstStep()"
+                ></wagademy-input>
+              </wagademy-form-field>
+            </div>
+            <div class="pb-6">
+              <wagademy-form-field
+                [control]="form.controls.about"
+                label="About"
+                [isInputMandatory]="true"
+              >
+                <textarea
+                  class="h-28 w-full outline-none p-2 text-base-100 bg-neutral rounded-lg"
+                  placeholder="Tell us more about yourself"
+                  formControlName="about"
+                  (ngModelChange)="validateFirstStep()"
+                ></textarea>
+              </wagademy-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex md:justify-end justify-center md:pt-36">
+        <button
+          class="btn btn-primary w-[200px]"
+          (click)="step = 2; changeStepIsValidValue = false"
+          [disabled]="!stepIsValidValue"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+    } @if(step === 2){
+    <div class="flex justify-center">
+      <div class="w-full lg:w-[640px]">
+        <div>
+          <wagademy-form-field
+            [control]="form.controls.whatIsTheCompanyLookingFor"
+            [isInputMandatory]="true"
+            label="You need to fill in up to 10 words to describe what you are looking for. "
+          >
+            <wagademy-input
+              [(ngModel)]="newWord"
+              (keyup.enter)="
+                addWhatIsTheCompanyLookingFor(); $event.stopPropagation()
+              "
+              [ngModelOptions]="{ standalone: true }"
+              [disabled]="isMaxValue"
+            ></wagademy-input>
+          </wagademy-form-field>
+          <div class="grid md:grid-cols-2 grid-cols-1 gap-4 pt-6">
+            @for(word of whatIsTheCompanyLookingFor; track word; let i =
+            $index){
+            <div
+              class="bg-neutral flex gap-2 rounded-sm justify-between font-sm font-mono py-1 px-2"
+            >
+              <p class="text-base-100">{{ word }}</p>
+              <i
+                (click)="removeWhatIsTheCompanyLookingFor(i)"
+                class="bi bi-x-lg text-error cursor-pointer"
+              ></i>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="md:flex justify-end md:pt-36 pt-10 gap-6">
+          <button
+            type="button"
+            class="btn btn-primary btn-outline md:w-[200px] w-full"
+            (click)="step = 1; validateFirstStep()"
+          >
+            Previous
+          </button>
+          <div class="pt-4 md:pt-0">
+            <button
+              type="button"
+              class="btn btn-primary md:w-[200px] w-full"
+              (click)="step = 3"
+              [disabled]="!whatIsTheCompanyLookingFor.length"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    } @if(step === 1 || step === 2){
+    <div class="w-[360px]">
+      <ul class="steps steps-vertical text-base-200">
+        <li class="step step-primary text-base-100">Profile</li>
+        <li
+          class="step"
+          [ngClass]="{
+            'step-primary text-base-100': step === 2
+          }"
+        >
+          What are you looking for?
+        </li>
+      </ul>
+    </div>
+    }
+  </div>
+  @if(step === 3){
+  <div class="md:flex">
+    <wagademy-back-button></wagademy-back-button>
+    <div class="flex justify-center w-full">
+      <div class="w-full">
+        <h2
+          class="font-sans font-medium md:text-4xl text-2xl text-base-100 text-center"
+        >
+          Confirm your details
+        </h2>
+        <h3
+          class="pb-6 font-sans text-primary font-medium text-2xl pt-8 md:pl-24"
+        >
+          Company
+        </h3>
+        <div class="relative">
+          <div
+            class="md:pl-24 md:flex justify-center gap-4 pb-4 md:justify-start"
+          >
+            <div
+              class="container flex justify-end bg-neutral border-2 rounded-3xl border-base-300 w-28 h-28"
+            >
+              <div
+                class="absolute rounded-3xl pt-20 pr-3 w-9 h-9 flex items-center justify-center cursor-pointer"
+                (click)="photo.click()"
+              >
+                <input
+                  #photo
+                  class="hidden"
+                  type="file"
+                  accept="image/*"
+                  (change)="onFileChange($event)"
+                />
+                <i
+                  class="bi bi-pencil text-sm text-primary shadow bg-neutral py-2 px-3 rounded-full"
+                  aria-hidden="true"
+                ></i>
+              </div>
+              @if(profilePhoto){
+              <img
+                class="rounded-3xl object-cover w-28 h-28"
+                [src]="profilePhoto"
+                alt="profile"
+              />
+              }
+            </div>
+            <div class="w-full">
+              <div>
+                <div class="w-full pt-2">
+                  @if (editProfileSectionOne) {
+                  <wagademy-form-field
+                    [control]="form.controls.name"
+                    [isInputMandatory]="true"
+                  >
+                    <wagademy-input
+                      formControlName="name"
+                      [disabledInput]="!editProfileSectionOne"
+                      [value]="form.controls.name.value ?? ''"
+                    ></wagademy-input>
+                  </wagademy-form-field>
+
+                  <div class="pt-2">
+                    <wagademy-form-field
+                      [control]="form.controls.areaOfExpertise"
+                      [isInputMandatory]="true"
+                    >
+                      <wagademy-input
+                        [disabledInput]="!editProfileSectionOne"
+                        [value]="form.controls.areaOfExpertise.value ?? ''"
+                        formControlName="areaOfExpertise"
+                      ></wagademy-input
+                    ></wagademy-form-field>
+                  </div>
+                  }@else {
+                  <h3
+                    class="font-sans text-2xl font-medium text-base-100 pb-2 pt-3"
+                  >
+                    {{ form.controls.name.value }}
+                  </h3>
+                  <div class="flex gap-2">
+                    <i class="bi bi-lightning-charge text-primary"></i>
+                    <p class="text-base-200 font-mono">
+                      {{ form.controls.areaOfExpertise.value }}
+                    </p>
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pb-6 md:pl-24">
+          <div class="pb-6">
+            <p class="text-primary font-mono font-bold pb-2">About</p>
+            <wagademy-form-field [control]="form.controls.about">
+              <textarea
+                class="h-44 w-full outline-none p-2 text-base-100 bg-neutral resize-none"
+                [value]="form.controls.about.value"
+                [disabled]="!editProfileSectionOne"
+              ></textarea>
+            </wagademy-form-field>
+          </div>
+          @if (!editProfileSectionOne) {
+          <div class="pt-6 pb-[50px] flex justify-end">
+            <button
+              class="text-base-100 font-bold font-mono"
+              (click)="toggleEditProfileSectionOne()"
+            >
+              Edit <i class="bi bi-pencil text-primary pl-2"></i>
+            </button>
+          </div>
+          <hr class="border-2 border-neutral mb-8" />
+          }@else{
+          <div class="pt-6 pb-[50px] flex justify-end">
+            <button
+              class="text-base-100 font-bold font-mono"
+              (click)="toggleEditProfileSectionOne()"
+            >
+              Update <i class="bi bi-check2 text-primary pl-2"></i>
+            </button>
+          </div>
+          }
+          <div>
+            <h3 class="text-primary font-bold font-mono pb-4">
+              What your are looking for?
+            </h3>
+            @if(editProfileSectionTwo){
+            <div>
+              <wagademy-form-field
+                [control]="form.controls.whatIsTheCompanyLookingFor"
+                [isInputMandatory]="true"
+              >
+                <wagademy-input
+                  [(ngModel)]="newWord"
+                  (keyup.enter)="
+                    addWhatIsTheCompanyLookingFor(); $event.stopPropagation()
+                  "
+                  [ngModelOptions]="{ standalone: true }"
+                ></wagademy-input>
+              </wagademy-form-field>
+              <div class="flex flex-wrap gap-4 pt-6">
+                @for(word of whatIsTheCompanyLookingFor; track $index){
+                <div
+                  class="bg-neutral flex gap-2 rounded-3xl font-sm font-mono py-1 px-2"
+                >
+                  <p class="text-base-100">{{ word }}</p>
+                  <i
+                    (click)="removeWhatIsTheCompanyLookingFor($index)"
+                    class="bi bi-x-lg text-error cursor-pointer"
+                  ></i>
+                </div>
+                }
+              </div>
+            </div>
+            } @if(!editProfileSectionTwo){
+            <div class="flex flex-wrap gap-4">
+              @for(word of whatIsTheCompanyLookingFor; track word){
+              <div
+                class="bg-neutral rounded-3xl text-base-100 font-sm font-mono py-1 px-2"
+              >
+                {{ word }}
+              </div>
+              }
+            </div>
+            } @if (!editProfileSectionTwo) {
+            <div class="pt-6 pb-[50px] flex justify-end">
+              <button
+                class="text-base-100 font-bold font-mono"
+                (click)="toggleEditProfileSectionTwo()"
+              >
+                Edit <i class="bi bi-pencil text-primary pl-2"></i>
+              </button>
+            </div>
+            }@else{
+            <div class="pt-6 pb-[50px] flex justify-end">
+              <button
+                class="text-base-100 font-bold font-mono"
+                (click)="toggleEditProfileSectionTwo()"
+                [disabled]="!whatIsTheCompanyLookingFor.length"
+              >
+                Update <i class="bi bi-check2 text-primary pl-2"></i>
+              </button>
+            </div>
+            }
+            <div class="flex justify-center">
+              <button
+                class="btn btn-primary w-[200px]"
+                (click)="saveAndConfirm()"
+                [disabled]="
+                  form.invalid ||
+                  !whatIsTheCompanyLookingFor.length ||
+                  isCreatingValue
+                "
+              >
+                @if(isCreatingValue){
+                <span class="loading loading-dots"></span>
+                } @else{Save And Confirm}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</form>

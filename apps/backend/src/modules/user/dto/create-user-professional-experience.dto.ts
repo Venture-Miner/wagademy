@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateProfessionalExperience } from '@wagademy/types';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsDate,
@@ -17,6 +17,7 @@ export class CreateUserProfessionalExperienceDto
   @ApiProperty({
     description: 'the professional experience id',
     example: faker.database.mongodbObjectId(),
+    required: false,
   })
   @IsOptional()
   @IsMongoId()
@@ -41,6 +42,7 @@ export class CreateUserProfessionalExperienceDto
   @ApiProperty({
     description: 'description about the job',
     example: faker.lorem.text(),
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -49,6 +51,11 @@ export class CreateUserProfessionalExperienceDto
   @ApiProperty({
     description: 'indicates whether the user is currently employed in the job',
     example: faker.datatype.boolean(),
+  })
+  @Transform(({ value }) => {
+    if (value === 'true') value = true;
+    if (value === 'false') value = false;
+    return value;
   })
   @IsBoolean()
   currentlyWorkingHere: boolean;

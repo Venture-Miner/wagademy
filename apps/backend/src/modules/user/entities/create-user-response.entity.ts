@@ -20,4 +20,16 @@ export class CreateUserResponseEntity implements CreateUserResponse {
 
   @ApiProperty({ example: AccountTypeEnum.COMPANY })
   accountType: AccountTypeEnum;
+
+  @ApiProperty({ example: null })
+  companyProfile: { id: string } | null;
+
+  @ApiProperty({ example: null })
+  userProfile: { id: string } | null;
+
+  @ApiProperty({ example: null })
+  subscriptionId: string | null;
+
+  @ApiProperty({ example: false })
+  hasChangedPlan: boolean;
 }

@@ -1,3 +1,5 @@
+import { UserProfile } from './user-profile';
+
 export const AccountTypeEnum = {
   COMPANY: 'COMPANY',
   PHYSICAL_PERSON: 'PHYSICAL_PERSON',
@@ -13,6 +15,10 @@ export type User = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+  companyProfile: { id: string } | null;
+  userProfile: { id: string } | null;
+  subscriptionId: string | null;
+  hasChangedPlan: boolean;
 };
 
 export type CreateUserResponse = {
@@ -22,6 +28,10 @@ export type CreateUserResponse = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+  companyProfile: { id: string } | null;
+  userProfile: { id: string } | null;
+  subscriptionId: string | null;
+  hasChangedPlan: boolean;
 };
 
 export type FindOneUserResponse = {
@@ -31,6 +41,10 @@ export type FindOneUserResponse = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+  companyProfile: { id: string } | null;
+  userProfile: UserProfile | null;
+  subscriptionId: string | null;
+  hasChangedPlan: boolean;
 };
 
 export type UpdateUserResponse = {
@@ -40,6 +54,10 @@ export type UpdateUserResponse = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+  companyProfile: { id: string } | null;
+  userProfile: { id: string } | null;
+  subscriptionId: string | null;
+  hasChangedPlan: boolean;
 };
 
 export type RetrieveSelfResponse = {
@@ -49,6 +67,10 @@ export type RetrieveSelfResponse = {
   email: string;
   idRefAuth: string;
   accountType: AccountTypeEnum;
+  companyProfile: { id: string } | null;
+  userProfile: { id: string } | null;
+  subscriptionId: string | null;
+  hasChangedPlan: boolean;
 };
 
 export type CreateUser = {
@@ -58,7 +80,22 @@ export type CreateUser = {
   accountType: AccountTypeEnum;
 };
 
+export type CreateUserFrontendDto = {
+  name: string;
+  accountType: AccountTypeEnum;
+};
+
 export type UpdateUser = {
   name?: string;
   walletAddress?: string;
 };
+
+export type ImageType = 'backgroundPhoto' | 'companyPhoto';
+
+export type UserProfileOnHandlingImage =
+  | {
+      [K in ImageType]?: {
+        key: string;
+      };
+    }
+  | null;
