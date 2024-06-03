@@ -40,7 +40,7 @@ import { LoadingComponent } from '../../../shared/components/loading/loading.com
     ReactiveFormsModule,
     ModalComponent,
     SelectComponent,
-    LoadingComponent
+    LoadingComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -73,32 +73,7 @@ export class HomeCompanyComponent implements OnInit {
   initialStatusValue: JobStatusEnum = JobStatusEnum.PUBLISHED;
   incompleteProfile = false;
   id = '';
-  courses = [
-    {
-      images: './assets/img/images/img-example-course.webp',
-      name: 'Courses name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-    },
-    {
-      images: './assets/img/images/img-example-course.webp',
-      name: 'Courses name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-    },
-    {
-      images: './assets/img/images/img-example-course.webp',
-      name: 'Courses name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-    },
-    {
-      images: './assets/img/images/img-example-course.webp',
-      name: 'Courses name',
-      description:
-        'Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Nam condimentum tempus diam, ultricies sollicitudin erat facilisis eget. Vestibulum rhoncus dui vel eros laoreet consectetur. Vivamus eget elementum ligula, vitae pharetra quam. Nullam at ligula sed metu',
-    },
-  ];
+  courses = [];
   selectedCardCourseIndex: number | null = null;
   skip = 0;
   take = 8;
@@ -110,7 +85,7 @@ export class HomeCompanyComponent implements OnInit {
     private readonly router: Router
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.findManyJobsCompanyView();
   }
 
