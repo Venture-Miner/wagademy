@@ -110,10 +110,10 @@ export class BuildTrainingDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading = true;
     this.activatedRoute.queryParamMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
+        this.isLoading = true;
         this.chatbotService.getTrainingDataContent(id).subscribe({
           next: (trainingDataContent) => {
             const dataObjects = trainingDataContent.trim().split('\n');
