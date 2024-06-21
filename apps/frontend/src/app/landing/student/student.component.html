@@ -1,9 +1,7 @@
 <section>
-  <div
-    class="container group mx-auto flex flex-col justify-between px-5 py-4 md:flex-row"
-  >
-    <div class="w-full md:w-1/2 md:pb-28">
-      <div class="pt-16">
+  <div class="container group mx-auto px-5 py-4">
+    <div class="flex flex-col lg:flex-row pt-16">
+      <div class="w-full">
         <img
           class="mx-auto block md:hidden"
           ngSrc="./assets/img/images/img-logo-mobile.svg"
@@ -22,43 +20,45 @@
           connections between companies and students.
         </p>
       </div>
-      <div class="mx-auto md:hidden">
-        <iframe width="300" height="336" src="https://www.youtube.com/embed/QERE8VJ7kAs" title="Wagademy Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <div class="mx-auto lg:ml-10">
+        <iframe
+          class="w-full w-[280px] h-[200px] md:w-[500px] md:h-[280px]"
+          src="https://www.youtube.com/embed/QERE8VJ7kAs"
+          title="Wagademy Demo Video"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
       </div>
-      <div class="flex gap-8 pt-16">
-        <div class="bg-primary h-28 w-28 rounded-lg px-2">
-          <p class="text-base-100 pt-9 text-center font-mono text-sm">
-            I’m student
-          </p>
-          <div class="flex flex-col items-center relative">
-            <img
-              ngSrc="./assets/icons/icon-scroll-pointer.svg"
-              alt="scroll pointer"
-              width="32"
-              height="40"
-            />
-            <i
-              class="bi bi-chevron-compact-down absolute text-[#FFFFFF] -bottom-1 animate-wiggle text-sm"
-            ></i>
-          </div>
+    </div>
+    <div class="flex gap-8 pb-8 pt-8 lg:pt-0 lg:pb-28">
+      <div class="bg-primary h-28 w-28 rounded-lg px-2">
+        <p class="text-base-100 pt-9 text-center font-mono text-sm">
+          I’m student
+        </p>
+        <div class="flex flex-col items-center relative">
+          <img
+            ngSrc="./assets/icons/icon-scroll-pointer.svg"
+            alt="scroll pointer"
+            width="32"
+            height="40"
+          />
+          <i
+            class="bi bi-chevron-compact-down absolute text-[#FFFFFF] -bottom-1 animate-wiggle text-sm"
+          ></i>
         </div>
-        <div
-          class="bg-neutral hover:bg-shadow text-base-100 h-28 w-28 cursor-pointer rounded-lg px-2 hover:shadow-lg"
-          [routerLink]="['/company']"
+      </div>
+      <div
+        class="bg-neutral hover:bg-shadow text-base-100 h-28 w-28 cursor-pointer rounded-lg px-2 hover:shadow-lg"
+        [routerLink]="['/company']"
+      >
+        <p
+          class="pt-4 text-center font-mono text-sm animate-slideDown text-base-100"
         >
-          <p
-            class="pt-4 text-center font-mono text-sm animate-slideDown text-base-100"
-          >
-            I’m company
-          </p>
-        </div>
+          I’m company
+        </p>
       </div>
-    </div>
-    <div class="hidden lg:block">
-      <iframe width="540" height="486" src="https://www.youtube.com/embed/QERE8VJ7kAs" title="Wagademy Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-    <div class="hidden md:block pt-16 pl-4 lg:hidden">
-      <iframe width="430" height="436" src="https://www.youtube.com/embed/QERE8VJ7kAs" title="Wagademy Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
   </div>
 </section>
