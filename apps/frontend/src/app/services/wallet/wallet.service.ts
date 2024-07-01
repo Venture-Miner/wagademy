@@ -3,7 +3,7 @@ import { Web3Modal } from '@web3modal/html';
 import { configureChains, createConfig, watchAccount } from '@wagmi/core';
 import { arbitrum, mainnet, polygon } from '@wagmi/core/chains';
 import { Subject } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import {
   EthereumClient,
   w3mConnectors,
