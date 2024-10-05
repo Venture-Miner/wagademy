@@ -29,18 +29,13 @@
       class="items-center justify-end xl:flex"
       [ngClass]="{ hidden: !showMenu }"
     >
-      <ul class="pr-4 pt-4 xl:pt-0">
-        <li class="text-base-100 font-mono text-sm font-bold">
-          <a [routerLink]="['/pages/home']">Home</a>
-        </li>
-      </ul>
       <div class="pt-4 xl:pt-0">
-        <button
+        <a
           class="btn btn-secondary text-base-100 text-xl w-full lg:w-48"
-          [routerLink]="['/account/sign-in']"
+          href='https://chat.wagademy.com'
         >
           Login
-        </button>
+        </a>
       </div>
     </div>
   </div>
