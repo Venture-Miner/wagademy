@@ -26,11 +26,8 @@ export class UserService extends BaseHttpService {
     super();
   }
 
-  create(createUserDto: CreateUserFrontendDto): Observable<CreateUserResponse> {
-    return this.http.post<CreateUserResponse>(
-      `${this.URL}/user`,
-      createUserDto
-    );
+  create(): Observable<CreateUserResponse> {
+    return this.http.post<CreateUserResponse>(`${this.URL}/user`, {});
   }
 
   createCompanyProfile(

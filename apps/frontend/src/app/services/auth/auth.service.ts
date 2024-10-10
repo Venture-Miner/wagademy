@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AccountTypeEnum, User } from '@wagademy/types';
 import { UserService } from '../user/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HttpError } from '../../shared/types/http-error';
 
 @Injectable({
   providedIn: 'root',
@@ -66,7 +68,7 @@ export class AuthService {
     userType: AccountTypeEnum;
   }) {
     const user = await firstValueFrom(
-      this.userService.create({ name: data.name, accountType: data.userType })
+      this.userService.create()
     );
     this.user.next(user);
     this.handleRouteToRedirect(user);
@@ -84,6 +86,18 @@ export class AuthService {
       if (!idToken) return;
       try {
         await this.loadUserData();
+      } catch (error) {
+        if (!(error instanceof HttpErrorResponse)) throw error;
+        // TODO: Throw error code in the api instead of handling it by message
+        const message = (error.error as HttpError).message;
+        if (
+          message === 'The authenticated user does not exist in the database.'
+        ) {
+          const user = await firstValueFrom(this.userService.create());
+          this.user.next(user);
+        } else {
+          throw error;
+        }
       } finally {
         const currentRoute = this.location.path();
         const authenticationRoutes = [
