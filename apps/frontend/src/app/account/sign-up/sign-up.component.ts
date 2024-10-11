@@ -89,6 +89,10 @@ export class SignUpComponent {
         userAttributes: {
           nickname: this.form.value.name,
           email: this.form.value.email,
+          profile:
+            this.userType === 'Company'
+              ? AccountTypeEnum.COMPANY
+              : AccountTypeEnum.PHYSICAL_PERSON,
         },
         autoSignIn: true,
       },

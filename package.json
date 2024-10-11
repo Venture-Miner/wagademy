@@ -7,6 +7,7 @@
     "frontend": "nx run frontend:serve",
     "ci:lighthouse": "lhci autorun",
     "build:frontend": "nx run frontend:build",
+    "build:backend": "nx run backend:build",
     "seed": "ts-node scripts/seed/seed.ts"
   },
   "private": true,

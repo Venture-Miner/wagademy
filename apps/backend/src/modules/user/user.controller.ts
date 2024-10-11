@@ -62,10 +62,9 @@ export class UserController {
   })
   create(
     @CognitoUser()
-    { sub: idRefAuth, email }: CognitoUserAttributes,
-    @Body() { name, accountType }: CreateUserDto
+    { sub: idRefAuth, email, nickname, profile }: CognitoUserAttributes,
   ) {
-    return this.userService.create({ idRefAuth, name, email, accountType });
+    return this.userService.create({ idRefAuth, name: nickname, email, accountType: profile });
   }
 
   @Post('create-profile')

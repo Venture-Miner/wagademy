@@ -9,6 +9,7 @@ export const payload: CognitoUserAttributes = {
   email: faker.internet.email(),
   sub: faker.string.uuid(),
   nickname: faker.internet.userName(),
+  profile: AccountTypeEnum.COMPANY,
 };
 
 export const dbUser: FindOneUserResponse = {
