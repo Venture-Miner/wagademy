@@ -1,92 +1,84 @@
-<section>
-  <div class="container group mx-auto px-10 py-4">
-    <div class="flex flex-col lg:flex-row pt-16">
-      <div class="w-full">
-        <img
-          class="mx-auto block md:hidden"
-          ngSrc="./assets/img/images/img-logo-mobile.svg"
-          width="57"
-          height="56"
-          alt="logo mobile"
-        />
-        <h1 class="text-base-100 font-sans text-2xl font-medium md:text-5xl">
-          Welcome to Wagademy
-        </h1>
-        <p
-          class="lg:text-base-200 text-base-100 pb-8 pt-6 font-sans text-base font-medium md:text-2xl"
-        >
-          Where educational innovation is the priority. Explore unique learning
-          experiences facilitated by cutting-edge technology, fostering
-          connections between companies and students.
-        </p>
-      </div>
-      <div class="mx-auto lg:ml-10">
-        <iframe
-          class="w-full w-[280px] h-[200px] md:w-[500px] md:h-[280px]"
-          src="https://www.youtube.com/embed/QERE8VJ7kAs"
-          title="Wagademy Demo Video"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-      </div>
-    </div>
-    <div class="flex gap-8 pb-8 pt-8 lg:pt-0 lg:pb-28">
-      <div class="bg-primary h-28 w-28 rounded-lg px-2">
-        <p class="text-base-100 pt-9 text-center font-mono text-sm">
-          I’m student
-        </p>
-        <div class="flex flex-col items-center relative">
-          <img
-            ngSrc="./assets/icons/icon-scroll-pointer.svg"
-            alt="scroll pointer"
-            width="32"
-            height="40"
-          />
-          <i
-            class="bi bi-chevron-compact-down absolute text-[#FFFFFF] -bottom-1 animate-wiggle text-sm"
-          ></i>
-        </div>
-      </div>
-      <div
-        class="bg-neutral hover:bg-shadow text-base-100 h-28 w-28 cursor-pointer rounded-lg px-2 hover:shadow-lg"
-        [routerLink]="['/company']"
+<div class="group py-4 container px-5 md:px-10 mx-auto">
+  <div class="flex flex-col lg:flex-row pt-16">
+    <div class="w-full">
+      <img
+        class="mx-auto block md:hidden"
+        ngSrc="./assets/img/images/img-logo-mobile.svg"
+        width="57"
+        height="56"
+        alt="logo mobile"
+      />
+      <h1 class="text-base-100 font-sans text-2xl font-medium md:text-5xl">
+        Welcome to Wagademy
+      </h1>
+      <p
+        class="lg:text-base-200 text-base-100 pb-8 pt-6 font-sans text-base font-medium md:text-2xl"
       >
-        <p
-          class="pt-4 text-center font-mono text-sm animate-slideDown text-base-100"
-        >
-          I’m company
-        </p>
-      </div>
+        Where educational innovation is the priority. Explore unique learning
+        experiences facilitated by cutting-edge technology, fostering
+        connections between companies and students.
+      </p>
+    </div>
+    <div class="mx-auto lg:ml-10">
+      <iframe
+        class="w-full w-[280px] h-[200px] md:w-[500px] md:h-[280px]"
+        src="https://www.youtube.com/embed/QERE8VJ7kAs"
+        title="Wagademy Demo Video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
     </div>
   </div>
-</section>
-<section class="bg-base-100">
-  <div class="py-8">
-    <p class="text-primary text-center font-sans text-sm">
-      CONNECTING THE FUTURE
-    </p>
-    <p
-      class="text-neutral px-5 pt-2 text-center font-sans text-4xl font-medium"
+  <div class="flex gap-8 pb-8 pt-8 lg:pt-0 lg:pb-28">
+    <div class="bg-primary h-28 w-28 rounded-lg px-2">
+      <p class="text-base-100 pt-9 text-center font-mono text-sm">
+        I’m student
+      </p>
+      <div class="flex flex-col items-center relative">
+        <img
+          ngSrc="./assets/icons/icon-scroll-pointer.svg"
+          alt="scroll pointer"
+          width="32"
+          height="40"
+        />
+        <i
+          class="bi bi-chevron-compact-down absolute text-[#FFFFFF] -bottom-1 animate-wiggle text-sm"
+        ></i>
+      </div>
+    </div>
+    <div
+      class="bg-neutral hover:bg-shadow text-base-100 h-28 w-28 cursor-pointer rounded-lg px-2 hover:shadow-lg"
+      [routerLink]="['/company']"
     >
-      Unlock Opportunities and Growth
-    </p>
-    <p
-      class="text-neutral mx-auto w-full px-5 pt-4 text-center font-mono md:w-1/2"
-    >
-      Our innovative platform connects companies and students, offering diverse
-      courses and digital certificates. Companies can advertise training
-      programs, gauge interest, and issue certificates as NFTs. For students, we
-      provide access to quality courses and recognized certificates, aiding in
-      their professional development.
-    </p>
+      <p
+        class="pt-4 text-center font-mono text-sm animate-slideDown text-base-100"
+      >
+        I’m company
+      </p>
+    </div>
   </div>
-</section>
-<section>
-  <div
-    class="container mx-auto flex flex-col justify-between px-10 py-4 md:flex-row"
+</div>
+<div class="py-8 bg-base-100">
+  <p class="text-primary text-center font-sans text-sm">
+    CONNECTING THE FUTURE
+  </p>
+  <p class="text-neutral px-5 pt-2 text-center font-sans text-4xl font-medium">
+    Unlock Opportunities and Growth
+  </p>
+  <p
+    class="text-neutral mx-auto w-full px-5 pt-4 text-center font-mono md:w-1/2"
   >
+    Our innovative platform connects companies and students, offering diverse
+    courses and digital certificates. Companies can advertise training programs,
+    gauge interest, and issue certificates as NFTs. For students, we provide
+    access to quality courses and recognized certificates, aiding in their
+    professional development.
+  </p>
+</div>
+<div class="container px-5 md:px-10 mx-auto">
+  <div class="flex flex-col justify-between py-4 md:flex-row">
     <div class="w-full pt-14 md:w-1/2 xl:pt-[140px]">
       <h2 class="text-base-100 pb-4 font-sans text-4xl font-medium">
         Unique Profile
@@ -119,11 +111,7 @@
       />
     </div>
   </div>
-</section>
-<section>
-  <div
-    class="container mx-auto flex flex-col-reverse justify-between px-10 py-4 md:flex-row"
-  >
+  <div class="flex flex-col-reverse justify-between py-4 md:flex-row">
     <div>
       <img
         ngSrc="./assets/img/student/img-student-block2.webp"
@@ -161,11 +149,7 @@
       </div>
     </div>
   </div>
-</section>
-<section>
-  <div
-    class="container mx-auto flex flex-col justify-between px-10 py-4 md:flex-row"
-  >
+  <div class="flex flex-col justify-between py-4 md:flex-row">
     <div class="w-full pt-14 md:w-1/2 xl:pt-[140px]">
       <h2 class="text-base-100 pb-4 font-sans text-4xl font-medium">
         Interview with AI
@@ -202,11 +186,7 @@
       />
     </div>
   </div>
-</section>
-<section>
-  <div
-    class="container mx-auto flex flex-col-reverse justify-between px-10 py-4 md:flex-row"
-  >
+  <div class="flex flex-col-reverse justify-between py-4 md:flex-row">
     <div>
       <img
         ngSrc="./assets/img/student/img-student-block4.webp"
@@ -237,11 +217,7 @@
       </div>
     </div>
   </div>
-</section>
-<section>
-  <div
-    class="container mx-auto flex flex-col justify-between px-10 py-4 md:flex-row"
-  >
+  <div class="flex flex-col justify-between py-4 md:flex-row">
     <div class="w-full pt-14 md:w-1/2 xl:pt-[140px]">
       <h2 class="text-base-100 pb-4 font-sans text-4xl font-medium">
         Explore Learning Opportunities and Enhance Your Skills
@@ -276,11 +252,7 @@
       />
     </div>
   </div>
-</section>
-<section>
-  <div
-    class="container mx-auto flex flex-col-reverse justify-between px-10 py-4 md:flex-row"
-  >
+  <div class="flex flex-col-reverse justify-between py-4 md:flex-row">
     <div>
       <img
         ngSrc="./assets/img/student/img-student-block6.webp"
@@ -315,4 +287,4 @@
       </div>
     </div>
   </div>
-</section>
+</div>
