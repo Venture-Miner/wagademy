@@ -1,6 +1,6 @@
 <nav class="bg-neutral w-full">
   <div
-    class="container mx-auto flex flex-wrap items-center justify-between px-5 py-4"
+    class="container mx-auto flex flex-wrap items-center justify-between px-5 md:px-10 py-4"
   >
     <div class="flex w-full justify-between xl:w-auto">
       <a [routerLink]="'/'">
@@ -31,15 +31,15 @@
     >
       <div class="pt-4 xl:pt-0">
         <a
-          class="btn btn-primary mx-4 text-base-100 text-xl w-full lg:w-24"
-          href='https://chat.wagademy.com'
+          class="btn btn-primary xl:mx-4 text-base-100 text-xl w-24"
+          href="https://chat.wagademy.com"
         >
           Chat
         </a>
       </div>
       <div class="pt-4 xl:pt-0">
         <button
-          class="btn btn-secondary text-base-100 text-xl w-full lg:w-48"
+          class="btn btn-secondary text-base-100 text-xl w-24 xl:w-48"
           [routerLink]="['/account/sign-in']"
         >
           Login
